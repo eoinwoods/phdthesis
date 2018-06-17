@@ -162,17 +162,17 @@
                 {SCHOOL OF ARCHITECTURE COMPUTING AND ENGINEERING}}
                 {SCHOOL OF ARCHITECTURE COMPUTING AND ENGINEERING}}
 \group       {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
-                {Computer Science and Informatics}}
-                {Computer Science and Informatics}}
+                {Computer Science and Informatics Group}}
+                {Computer Science and Informatics Group}}
 \GROUP       {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
-                {COMPUTER SCIENCE AND INFORMATICS}}
-                {COMPUTER SCIENCE AND INFORMATICS}}
+                {COMPUTER SCIENCE AND INFORMATICS GROUP}}
+                {COMPUTER SCIENCE AND INFORMATICS GROUP}}
 \faculty     {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
-                {Computer Science and Informatics}}
-                {Computer Science and Informatics}}
+                {Computer Science and Informatics Group}}
+                {Computer Science and Informatics Group}}
 \FACULTY     {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
-                {COMPUTER SCIENCE AND INFORMATICS}}
-                {COMPUTER SCIENCE AND INFORMATICS}}
+                {COMPUTER SCIENCE AND INFORMATICS GROUP}}
+                {COMPUTER SCIENCE AND INFORMATICS GROUP}}
 \addresses   {}
 \subject     {}
 \keywords    {}
