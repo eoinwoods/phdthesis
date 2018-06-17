@@ -149,30 +149,30 @@
 \examiner    {}
 \degree      {}
 \authors     {}
-\university  {\texorpdfstring{\href{University Web Site URL Here (include http://)}
-                {University Name}}
-                {University Name}}
-\UNIVERSITY  {\texorpdfstring{\href{University Web Site URL Here (include http://)}
-                {UNIVERSITY NAME (IN BLOCK CAPITALS)}}
-                {UNIVERSITY NAME (IN BLOCK CAPITALS)}}
-\department  {\texorpdfstring{\href{Department or School Web Site URL Here (include http://)}
-                {Department or School Name}}
-                {Department or School Name}}
-\DEPARTMENT  {\texorpdfstring{\href{Department or School Web Site URL Here (include http://)}
-                {DEPARTMENT OR SCHOOL NAME (IN BLOCK CAPITALS)}}
-                {DEPARTMENT OR SCHOOL NAME (IN BLOCK CAPITALS)}}
-\group       {\texorpdfstring{\href{Research Group Web Site URL Here (include http://)}
-                {Research Group Name}}
-                {Research Group Name}}
-\GROUP       {\texorpdfstring{\href{Research Group Web Site URL Here (include http://)}
-                {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}}
-                {RESEARCH GROUP NAME (IN BLOCK CAPITALS)}}
-\faculty     {\texorpdfstring{\href{Faculty Web Site URL Here (include http://)}
-                {Faculty Name}}
-                {Faculty Name}}
-\FACULTY     {\texorpdfstring{\href{Faculty Web Site URL Here (include http://)}
-                {FACULTY NAME (IN BLOCK CAPITALS)}}
-                {FACULTY NAME (IN BLOCK CAPITALS)}}
+\university  {\texorpdfstring{\href{http://www.uel.ac.uk}
+                {University of East London}}
+                {University of East London}}
+\UNIVERSITY  {\texorpdfstring{\href{http://www.uel.ac.uk}
+                {UNIVERSITY OF EAST LONDON}}
+                {UNIVERSITY OF EAST LONDON}}
+\department  {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace}
+                {School of Architecture Computing and Engineering}}
+                {School of Architecture Computing and Engineering}}
+\DEPARTMENT  {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace}
+                {SCHOOL OF ARCHITECTURE COMPUTING AND ENGINEERING}}
+                {SCHOOL OF ARCHITECTURE COMPUTING AND ENGINEERING}}
+\group       {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
+                {Computer Science and Informatics}}
+                {Computer Science and Informatics}}
+\GROUP       {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
+                {COMPUTER SCIENCE AND INFORMATICS}}
+                {COMPUTER SCIENCE AND INFORMATICS}}
+\faculty     {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
+                {Computer Science and Informatics}}
+                {Computer Science and Informatics}}
+\FACULTY     {\texorpdfstring{\href{https://www.uel.ac.uk/schools/ace/computer-science-and-informatics}
+                {COMPUTER SCIENCE AND INFORMATICS}}
+                {COMPUTER SCIENCE AND INFORMATICS}}
 \addresses   {}
 \subject     {}
 \keywords    {}
