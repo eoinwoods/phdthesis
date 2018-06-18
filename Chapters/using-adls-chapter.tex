@@ -16,19 +16,19 @@
 
   As explained in the previous section, this paper reports an industrial experience of applying ADL concepts to the description of a significant industrially developed information system.  Directly related work would be other similar case studies and experience reports.  On searching the research literature, we did not find any directly equivalent work, where an architectural description language was used to describe a large information system, although there have been published reports of ADLs being used to describe embedded or real-time systems (such as [8, 9]).
 
-  However given that as part of this project we decided to create our own notation for the architectural description, it is worth considering related work in the ADL field and why we didn’t choose to reuse an existing ADL.
+  However given that as part of this project we decided to create our own notation for the architectural description, it is worth considering related work in the ADL field and why we didn't choose to reuse an existing ADL.
 
   Over the past two decades, an increasing number of ADLs have been developed, largely within academia [10, 11]. Although some ADLs have been put to industrial use in specific domains [2, 3, 6, 12], the majority of ADL projects remain confined to laboratory-based case studies.
 
-  While ADLs originated in academia such as ACME [13]/ADML, ABACUS [14], Aesop [15], UniCon [16], Wright [17], GEN-VOCA [18], π-ADL [3], Rapide [19], SADL [20], xADL [21], ADLARS [22], ALI [23, 24], ArchiMate [25] and ByADL [1], to name a few, all exhibit novel approaches to architecture description, from support for interchange and interoperability to advanced architectural analysis capabilities, the vast majority tend to be vertically optimized, limiting their attractiveness in many industrial projects.  
+  While ADLs originated in academia such as ACME [13]/ADML, ABACUS [14], Aesop [15], UniCon [16], Wright [17], GEN-VOCA [18], \pi-ADL [3], Rapide [19], SADL [20], xADL [21], ADLARS [22], ALI [23, 24], ArchiMate [25] and ByADL [1], to name a few, all exhibit novel approaches to architecture description, from support for interchange and interoperability to advanced architectural analysis capabilities, the vast majority tend to be vertically optimized, limiting their attractiveness in many industrial projects.  
 
   It is important to state that many of these ADLs probably could be used in an industrial context, but there is often no strong reason to do so. In general, academic ADLs focus more on analytical evaluation and rigour while in this project, and many other industrial projects, the focus was more on accessibility, practicality, and the ability to rapidly obtain a reasonably complete view of the structure and behaviour of the system. Those ADLs that do support the kind of description we wanted to create (such as ACME and xADL) are general-purpose languages that are not used in mainstream practice. Accordingly, they would have needed a lot of investment in tailoring and extension to fit our requirements, not to mention the tool support development effort (such as providing drawing support in standard tools).  This meant the benefits we would have gained from using them did not appear to be large enough to justify the adoption overhead.
 
-  Considering these various factors together, our conclusion was that there wasn’t a strong reason to adopt a research ADL for this work and we judged that it was going to be simpler and quicker to develop our own special-purpose notation.
+  Considering these various factors together, our conclusion was that there wasn't a strong reason to adopt a research ADL for this work and we judged that it was going to be simpler and quicker to develop our own special-purpose notation.
 
   The use of ArchiMate [25] was also considered given the fairly wide spectrum it provides for enterprise architectural description. However, upon closer investigation, we found that the primitives in the ArchiMate language were not a particularly good fit given our need to describe system (i.e. software) architecture rather than enterprise architecture in this project. 
 
-  As mentioned above, outside the area of information systems, there have been a number of industrial applications of ADLs for embedded and real-time systems, from consumer electronics (e.g. Koala [6], π-ADL [3]) to aeronautics and automotive systems (e.g. AADL [12] and EAST-ADL [2]). The use of ADLs in these application domains has enabled automated system analysis, and automated code generation (e.g. MetaEdit+ [26]). However, given that such capabilities were less important for this project than our much simpler goals of easy adoption and straightforward system description, and the fact that these ADLs are specialised for embedded systems rather than large information systems, we did not feel that we should receive a return on the investment required to tailor and adopt them.  We discuss our reasoning for not reusing an existing ADL further in Section 5.
+  As mentioned above, outside the area of information systems, there have been a number of industrial applications of ADLs for embedded and real-time systems, from consumer electronics (e.g. Koala [6], \pi-ADL [3]) to aeronautics and automotive systems (e.g. AADL [12] and EAST-ADL [2]). The use of ADLs in these application domains has enabled automated system analysis, and automated code generation (e.g. MetaEdit+ [26]). However, given that such capabilities were less important for this project than our much simpler goals of easy adoption and straightforward system description, and the fact that these ADLs are specialised for embedded systems rather than large information systems, we did not feel that we should receive a return on the investment required to tailor and adopt them.  We discuss our reasoning for not reusing an existing ADL further in Section 5.
 
 \section{Background to the Work}
 
@@ -38,15 +38,15 @@
 
   At the start of the project, there was no overall unified system description, although some teams responsible for subsystems did have their own documentation. This meant that the operation and interconnectedness of the system was often difficult to judge and this was starting to hinder change and evolution.
 
-  The organization wanted to perform some wide ranging evolution and modernization of the system’s implementation and realized that a useful first step, to enable better intellectual control over the system, would be to capture a unified description of the system’s architecture.  This led to the project described in this paper being undertaken.
+  The organization wanted to perform some wide ranging evolution and modernization of the system's implementation and realized that a useful first step, to enable better intellectual control over the system, would be to capture a unified description of the system's architecture.  This led to the project described in this paper being undertaken.
 
 \section{Overview of the Project}
 
-  The lack of a unified system description and a new initiative to modernise and restructure parts of the system led senior managers to initiate a project to “document” the system.  At the outset it was not entirely clear what “document” meant, but discussion and exploration led to the conclusion that a current state architecture description was required (i.e. a description of the system’s architecturally significant elements, responsibilities and interactions, rather than more detailed documentation of the design of individual modules).
+  The lack of a unified system description and a new initiative to modernise and restructure parts of the system led senior managers to initiate a project to "document" the system.  At the outset it was not entirely clear what "document" meant, but discussion and exploration led to the conclusion that a current state architecture description was required (i.e. a description of the system's architecturally significant elements, responsibilities and interactions, rather than more detailed documentation of the design of individual modules).
 
   A team of two experienced architects was tasked with this project, with a remit to define an approach and then work with the software development teams to create the architecture description.
 
-  One immediate complication was the lack of a clearly defined use for the documentation once it was available. A number of senior managers considered the creation of the documentation to be important, but it wasn’t clear what they intended to use it for.  Specifically, it wasn’t clear if this was to be a living document, that the organization aspired to keep current, or a snapshot to be used for planning, which would then be deliberately abandoned.  The target audience also wasn’t well defined, so we did not know whether it was to be a senior management planning tool or a more detailed description to be used by designers for tasks like impact analysis. 
+  One immediate complication was the lack of a clearly defined use for the documentation once it was available. A number of senior managers considered the creation of the documentation to be important, but it wasn't clear what they intended to use it for.  Specifically, it wasn't clear if this was to be a living document, that the organization aspired to keep current, or a snapshot to be used for planning, which would then be deliberately abandoned.  The target audience also wasn't well defined, so we did not know whether it was to be a senior management planning tool or a more detailed description to be used by designers for tasks like impact analysis. 
 
   In order to make progress, some assumptions had to be made and these were:
 
@@ -58,7 +58,7 @@
 
 \end{enumerate}
 
-  A secondary open question was whether it would be useful to be able to automate the processing of the architecture description, which would require it to be captured in a parsable form with well-defined semantics.  There didn’t seem to be a compelling need to achieve this, although it would have allowed a number of interesting options, so it was decided to try to capture the information in a form that would be amenable to parsing later, but not to slow down the project by trying to investigate this in any detail.  In practice, this meant using structured textual representations rather than free form word processor documents.
+  A secondary open question was whether it would be useful to be able to automate the processing of the architecture description, which would require it to be captured in a parsable form with well-defined semantics.  There didn't seem to be a compelling need to achieve this, although it would have allowed a number of interesting options, so it was decided to try to capture the information in a form that would be amenable to parsing later, but not to slow down the project by trying to investigate this in any detail.  In practice, this meant using structured textual representations rather than free form word processor documents.
 
 
 \section{The Approach}
@@ -80,9 +80,9 @@
   \end{itemize}
 
 
-  Using a tailored version of UML, with a suitable UML profile was seriously considered as the architects leading the effort already knew UML and it would have provided a basis on which to build.  However, the organisation did not have the necessary UML tooling available to make the use of a tailored version of the language practical and even a tailored UML tool needs some background knowledge of UML in order to use it effectively, which was lacking in nearly all of the software development teams.  The use of generic UML without a profile wasn’t seriously considered because we knew it would meet with a lot of resistance and we would end up with significant divergence in the models that the teams would create.
+  Using a tailored version of UML, with a suitable UML profile was seriously considered as the architects leading the effort already knew UML and it would have provided a basis on which to build.  However, the organisation did not have the necessary UML tooling available to make the use of a tailored version of the language practical and even a tailored UML tool needs some background knowledge of UML in order to use it effectively, which was lacking in nearly all of the software development teams.  The use of generic UML without a profile wasn't seriously considered because we knew it would meet with a lot of resistance and we would end up with significant divergence in the models that the teams would create.
 
-  Existing ADLs such as xADL (see Section 2 above) were also briefly considered, but none of these appeared to offer any great benefit over UML for this particular situation and like UML, all of them would have needed significant tailoring and probably deployment of a modelling tool to make their use practical for this task.  The lack of clear benefits from the use of these languages for this project meant that there didn’t seem to be compelling reasons to use them and made their implementation costs difficult to justify.
+  Existing ADLs such as xADL (see Section 2 above) were also briefly considered, but none of these appeared to offer any great benefit over UML for this particular situation and like UML, all of them would have needed significant tailoring and probably deployment of a modelling tool to make their use practical for this task.  The lack of clear benefits from the use of these languages for this project meant that there didn't seem to be compelling reasons to use them and made their implementation costs difficult to justify.
 
   We also considered just letting teams use their own informal notations.  In principle, this would have removed one of the major points of resistance to the project and would have saved the effort of developing a notation.  However, this had already been attempted in the organisation and the results were so varied that the exercise did not yield a useful system-wide description, so we also discounted this option.
 
@@ -102,15 +102,19 @@
 
   Within the system, nearly all subsystems were comprised of the following types of elements:
 
-* Message driven servers that performed functional processing in response to events or requests arriving from a system-wide message bus;
+  \begin{itemise}
 
-* "Thick” clients that provided user interfaces and business logic (and typically communicated with the message driven servers via the system message bus);
+\item Message driven servers that performed functional processing in response to events or requests arriving from a system-wide message bus;
 
-* Web interface servers that provided web user interfaces (typically written as Java servlets or Perl modules);
+\item "Thick" clients that provided user interfaces and business logic (and typically communicated with the message driven servers via the system message bus);
 
-* Batch programs that performed some sort of periodic processing (such as end-of-day reporting); and 
+\item Web interface servers that provided web user interfaces (typically written as Java servlets or Perl modules);
 
-* Data loaders, which were a particular sort of batch program, which imported data into the system or moved data between subsystems.
+\item Batch programs that performed some sort of periodic processing (such as end-of-day reporting); and 
+
+\item Data loaders, which were a particular sort of batch program, which imported data into the system or moved data between subsystems.
+
+\end{itemize}
 
   The servers, batch programs and data loaders (and occasionally clients) would in turn normally have dependencies on a fairly large number of database objects (that is tables, views and stored procedures).
 
@@ -122,19 +126,22 @@
 
 \subsection{The Architectural Style}
 
-  An analysis of the system’s implementation revealed that it generally followed a set of discernable patterns created from a small number of types of architectural elements, which could loosely be described as an architectural style (taking the definition of architectural style from Shaw and Garlan [28] to be "a vocabulary of components and connector types, and a set of constraints on how they can be combined").  
+  An analysis of the system's implementation revealed that it generally followed a set of discernable patterns created from a small number of types of architectural elements, which could loosely be described as an architectural style (taking the definition of architectural style from Shaw and Garlan [28] to be "a vocabulary of components and connector types, and a set of constraints on how they can be combined").  
 
   To allow the element types of the system to be described, a few basic concepts were used to set the context and help people to understand the key abstractions:
 
-* System - the entire information system being described, which is a conceptual structure, composed of a number of interconnected subsystems that collectively provide its behaviour and qualities.
+\begin{itemize}
+\item System - the entire information system being described, which is a conceptual structure, composed of a number of interconnected subsystems that collectively provide its behaviour and qualities.
 
-* Subsystem - a subset of the system that has a well-defined, cohesive, set of responsibilities, and in most cases a well-defined boundary and set of interfaces to its services.
+\item Subsystem - a subset of the system that has a well-defined, cohesive, set of responsibilities, and in most cases a well-defined boundary and set of interfaces to its services.
 
-* Component - a tangible software artefact which is delivered to the production environment and which is "executed" in some way at runtime (whether directly or by being called). Nearly all components are binary releasable elements, tracked in the change management system. (Elsewhere in this paper we refer to “components” as “elements” in line with much of the software architecture literature)
+\item Component - a tangible software artefact which is delivered to the production environment and which is "executed" in some way at runtime (whether directly or by being called). Nearly all components are binary releasable elements, tracked in the change management system. (Elsewhere in this paper we refer to "components" as "elements" in line with much of the software architecture literature)
 
-* Connector - the mechanism by which two or more components collaborate (usually by passing data between them).  Examples are a messaging, a file system file, a database table, or a web service endpoint and invocation.
+\item Connector - the mechanism by which two or more components collaborate (usually by passing data between them).  Examples are a messaging, a file system file, a database table, or a web service endpoint and invocation.
 
-  It is worth noting that even though our definitions of concepts like “component” and “connector” were quite specific, most people didn’t really understand what we meant until we made the concepts very concrete with the specific types of component and connector that they were familiar with.
+\end{itemize}
+
+  It is worth noting that even though our definitions of concepts like "component" and "connector" were quite specific, most people didn't really understand what we meant until we made the concepts very concrete with the specific types of component and connector that they were familiar with.
 
   As mentioned above, the basic types of system element used within the system were user interface programs, servers, data stores, external entities and a fairly specific set of connector types were used to link them.  While these generic types of element sound fairly standard, what was interesting was the limited number of variations of them that were used in most of the system.  These element types are summarised in Table I.
 
@@ -222,9 +229,9 @@ System Messaging
 
 Dispatch and receipt of messages over the system message bus via a named messaging destination
 
-  In order to allow for the inevitable special cases that are found in a system of this scale, an “other” type was also allowed for both components and connectors, which could be annotated using a UML style stereotype to make its type clear.
+  In order to allow for the inevitable special cases that are found in a system of this scale, an "other" type was also allowed for both components and connectors, which could be annotated using a UML style stereotype to make its type clear.
 
-  Most architectural styles limit the element and connector configurations that they allow.  In this style, there weren’t really any such constraints defined formally, although there were combinations that were encouraged and discouraged (e.g. UI Clients should connect to Message Driven Servers, but not access the database).  However, most configurations of element and connector types could be found somewhere in the system! A number of the common patterns were captured as examples in the notation documentation.
+  Most architectural styles limit the element and connector configurations that they allow.  In this style, there weren't really any such constraints defined formally, although there were combinations that were encouraged and discouraged (e.g. UI Clients should connect to Message Driven Servers, but not access the database).  However, most configurations of element and connector types could be found somewhere in the system! A number of the common patterns were captured as examples in the notation documentation.
 
   A couple of examples of the patterns identified are shown in Figure 1. 
 
@@ -236,13 +243,13 @@ Dispatch and receipt of messages over the system message bus via a named messagi
 \end{figure}
   
 
-  The notation used to express the examples is explained more fully in the next section, but briefly triangular shapes represent user interfaces, rectangles represent server resident elements (servers, batch programs), files and databases are represented by the fairly conventional “record stack” and “drum” shapes, while connectors are represented by arrows using a variety of line types (the line type in example (a) being messaging, the line type in example (b) being stored data access).
+  The notation used to express the examples is explained more fully in the next section, but briefly triangular shapes represent user interfaces, rectangles represent server resident elements (servers, batch programs), files and databases are represented by the fairly conventional "record stack" and "drum" shapes, while connectors are represented by arrows using a variety of line types (the line type in example (a) being messaging, the line type in example (b) being stored data access).
 
-B	The Architecture Description Language
+\subsection{The Architecture Description Language}
 
-  Once the universe of required element and connector types was understood, we needed a notation that would allow instances of the style (i.e. the subsystems) to be clearly represented.  As explained earlier, we decided to define a custom notation because the initial discussions with the teams had made it clear that getting people to use a specific tool or invest much effort in learning the notation was going to be very difficult. This was a key reason for creating a very simple notation and “just drawing pictures” rather than trying to apply a general-purpose notation or create machine readable models.
+  Once the universe of required element and connector types was understood, we needed a notation that would allow instances of the style (i.e. the subsystems) to be clearly represented.  As explained earlier, we decided to define a custom notation because the initial discussions with the teams had made it clear that getting people to use a specific tool or invest much effort in learning the notation was going to be very difficult. This was a key reason for creating a very simple notation and "just drawing pictures" rather than trying to apply a general-purpose notation or create machine readable models.
 
-  Given people’s general enthusiasm for diagrams over text, we chose to create a graphical notation rather than a more formal textual one. We could have created an equivalent textual notation to provide an alternative concrete syntax, but we didn’t need one for this project and as we were not trying to create a reusable ADL we had no reason (or the time) to create alternative notations.
+  Given people's general enthusiasm for diagrams over text, we chose to create a graphical notation rather than a more formal textual one. We could have created an equivalent textual notation to provide an alternative concrete syntax, but we didn't need one for this project and as we were not trying to create a reusable ADL we had no reason (or the time) to create alternative notations.
 
   When defining the graphical detail of the notation, the advice in [27] were particularly useful, in particular the exhortation to avoid construct overload, deficit, redundancy or excess, the suggestion to systematically consider the visual variables of each shape (shape, size, colour, orientation, brightness and texture) and the need for deliberate selection of shapes so that their appearance suggested their meaning, to help achieve semantic transparency.
 
@@ -254,33 +261,31 @@ Figure 2.  ADL Element Types
 
   
 
-  A triangle was used as the base shape for user interfaces and a rectangle for server resident components.  The triangle was chosen as it hinted at the head and shoulders shape of a user and the triangles were then modified slightly for each type of user interface (the thick client having sharp corners, the web user interface having rounded corners as it blurs the distinction between “client” and “server” and the command line utility having a graphical representation of a command line interface added to it).  Similarly, a rectangle is the base shape for server elements (based on long accepted conventions) with a stereotype being used to indicate the type of server and a “lozenge” variant being used to indicate a data loader (hinting at pieces of data being transmitted through it).
+  A triangle was used as the base shape for user interfaces and a rectangle for server resident components.  The triangle was chosen as it hinted at the head and shoulders shape of a user and the triangles were then modified slightly for each type of user interface (the thick client having sharp corners, the web user interface having rounded corners as it blurs the distinction between "client" and "server" and the command line utility having a graphical representation of a command line interface added to it).  Similarly, a rectangle is the base shape for server elements (based on long accepted conventions) with a stereotype being used to indicate the type of server and a "lozenge" variant being used to indicate a data loader (hinting at pieces of data being transmitted through it).
 
   An arrow of some form was used to represent all of the connector types, with the arrowhead usually indicating the direction of data flow.  All connectors were defined to be one way connections, with the exception of data access connectors, which could indicate read and write activity with arrow heads at both ends of the connector if appropriate.  The convention for RPC connectors was defined to be a one-way arrow from the caller to the target.  No attempt was made to represent the various complicated possibilities of dependency and initiation of interaction using the connector symbols.  Each connector had to indicate what was carried over the connection, with message flows being annotated with a message data type, file and database connectors being annotated with table or record names, and RPC and direct invocation connectors being annotated with the name of the service or procedure they were calling.  Examples of the notation for the main connector types are shown in Figure 3. 
-
-
 
 Figure 3.  ADL Connector Types
 
   The RPC or direct procedure call is shown using a solid arrow, messaging is shown using a line with embedded dots, suggesting messages flowing over it, while data access is shown using a regular chain line, suggesting records being read or written over the connector.
 
-  A general mechanism used on elements and connectors was the stereotype, adopted from UML, where the type of an architectural element is made clear by annotating it with a type name using the convention “«type»” on the symbol concerned.  This allowed the casual reader to understand the types of element on the diagram without having to understand the notation and allowed new element types to be easily introduced.
+  A general mechanism used on elements and connectors was the stereotype, adopted from UML, where the type of an architectural element is made clear by annotating it with a type name using the convention "<<type>>" on the symbol concerned.  This allowed the casual reader to understand the types of element on the diagram without having to understand the notation and allowed new element types to be easily introduced.
 
   The semantics of the elements and connectors were generally based on the semantics of the corresponding element and connector implementations in the system: broadcast messaging in the system worked in a particular way, a relational database has well understood behaviour, a web service call is widely understood and a message driven server was a concept that most people understood with little further explanation.  Undoubtedly there were cases where elements on diagrams had surprising behaviour because they did not behave entirely as expected given their type, but on the whole, the resulting documents were good enough to form a useful architecture description.
 
-  In order to ensure that the process produced more than just pictures, we defined a set of required attributes for each type of element and connector.  Part of this task was defining enumerations of expected standard values for many of the attributes, again to standardise and simplify the process of recording the information (such as standard lists of data domains [“trading”, “counterparties”, “securities”, …], lists of programming languages in use [C++, Java, C-Sharp, Perl] and so on).
+  In order to ensure that the process produced more than just pictures, we defined a set of required attributes for each type of element and connector.  Part of this task was defining enumerations of expected standard values for many of the attributes, again to standardise and simplify the process of recording the information (such as standard lists of data domains ["trading", "counterparties", "securities", ...], lists of programming languages in use [C++, Java, C-Sharp, Perl] and so on).
 
   In order to simplify and standardise the subsystem descriptions, a set of wiki page templates and a comprehensive Microsoft Visio stencil were created, along with clear instructions, quick reference material and - most crucially - a fully worked example of the documentation for one subsystem.  This allowed a number of conventions, such as hyperlinking element names to allow navigation through the documents, to be illustrated and encouraged by example.  A hierarchy of empty wiki pages for the required subsystem descriptions was also created so that authors knew where to put their documents and so they could be unambiguously referenced.
 
   The result of this process was a relatively informal definition of a simple ADL with a graphical notation and set of well-defined conventions for storing the supporting text needed to explain and fully define the subsystem descriptions.  The ADL is tied very strongly to the particular architectural style of this system (its element and connector types) and we deliberately did not attempt to generalise the language, as this very tight link to the system to be described was one of its major strengths for our situation.  In this way, our ADL is rather like the ADLs defined to support specific implementation frameworks like DAOP-ADL [29] which was developed to describe DAOP applications [30] and CBabel [31] which was developed to allow the definition of CR-RIO applications [32].
 
-7	A CASE STUDY OF THE APPROACH IN USE
+\Section{A Case Study of the Approach in Use}
 
   The system described in the case study is the Asset Management System (AMS) a financial asset management system used by a fund manager to support making and executing investment decisions for a large-scale investment portfolio.  The example is based on a real subsystem from the case study, modified slightly in order to retain anonymity.
 
   The primary aim of the system is to allow a fund manager (or fund management team) to manage a portfolio of holdings in financial instruments (primarily equities in this case).  The system must allow them to view the content of their portfolios and to use analytical tools and market data (such as prices, volatilities, projected interest and foreign exchange rates and projected bond yields) to make investment decisions.  The system provides the ability for suggested changes to portfolios to be automatically calculated on demand or from a temporal schedule and also allows direct entry of orders to buy or sell securities to allow for investment strategies that are outside the scope of the system.  Once lists of orders to buy or sell securities are generated, the system allows them to be dispatched to another system for execution and it receives the results of the execution of those orders in return, to allow the current holdings to be updated.
 
-A	Architectural Description
+\subsection{Architectural Description}
 
   The functional structure of the AMS is described using our system-specific ADL notation in Figure 4. 
 
@@ -316,13 +321,13 @@ AMSdb
 
 Database
 
-The system database’s responsibility is to store the portfolio, analytical, market and (system) operational data that the system requires to operate.  It provides an SQL based DML interface to allow data to be inserted, manipulated or retrieved.
+The system database's responsibility is to store the portfolio, analytical, market and (system) operational data that the system requires to operate.  It provides an SQL based DML interface to allow data to be inserted, manipulated or retrieved.
 
 Job Processor
 
 Messaging Server
 
-The responsibilities of the Job Processor are to execute long running processing items (“jobs”) such as investment analytics and automated order list generation.  The processor can be configured to run particular jobs on temporal schedules and can also be requested to execute particular jobs on demand.  The processor provides a message based job control and status request interface and requires an SQL query based interface to the database.
+The responsibilities of the Job Processor are to execute long running processing items ("jobs") such as investment analytics and automated order list generation.  The processor can be configured to run particular jobs on temporal schedules and can also be requested to execute particular jobs on demand.  The processor provides a message based job control and status request interface and requires an SQL query based interface to the database.
 
 Market Data Loader
 
@@ -334,13 +339,13 @@ Order Gateway
 
 Messaging Server
 
-The responsibility of the Order Gateway is to accept incoming orders to buy and sell securities (including order parameters such as execution strategies and price limits), to forward these requests to a trading system for execution and then receive the execution reports (“fills”) indicating order execution and broadcast these to other interested parts of the system.  The gateway provides a message based order request interface and a broadcast status interface and it requires a message based interface to allow order submission to a trading system.
+The responsibility of the Order Gateway is to accept incoming orders to buy and sell securities (including order parameters such as execution strategies and price limits), to forward these requests to a trading system for execution and then receive the execution reports ("fills") indicating order execution and broadcast these to other interested parts of the system.  The gateway provides a message based order request interface and a broadcast status interface and it requires a message based interface to allow order submission to a trading system.
 
 TABLE III.  THE ELEMENTS OF THE AMS
 
-B	Example Scenario - Generate Order List
+\subsection{Example Scenario - Generate Order List}
 
-  The key functional scenario for this system is to allow a fund manager to generate an order list to “rebalance” a fund based on an analysis that identifies the theoretically optimal holdings for the portfolio and execute that set of buy and sell orders, reflecting the results in the portfolio.  The interactions required to implement this scenario are illustrated in Figure 5. 
+  The key functional scenario for this system is to allow a fund manager to generate an order list to "rebalance" a fund based on an analysis that identifies the theoretically optimal holdings for the portfolio and execute that set of buy and sell orders, reflecting the results in the portfolio.  The interactions required to implement this scenario are illustrated in Figure 5. 
 
   
 
@@ -384,7 +389,7 @@ Msg
 
 Rebalance Request
 
-The UI Server sends a request message to indicate that the portfolio should be “rebalanced”.  This is routed to the Job Processor. 
+The UI Server sends a request message to indicate that the portfolio should be "rebalanced".  This is routed to the Job Processor. 
 
 3
 
@@ -396,7 +401,7 @@ DB
 
 pmgmt and ordermgmt schemas
 
-The Job Processor receives the message and in response initiates a portfolio analysis job to identify the theoretical optimal holdings in the portfolio and generate buy and sell orders to move the portfolio to that state.  Portfolio state read from “pmgmt” and order lists written to “ordermgmt”
+The Job Processor receives the message and in response initiates a portfolio analysis job to identify the theoretical optimal holdings in the portfolio and generate buy and sell orders to move the portfolio to that state.  Portfolio state read from "pmgmt" and order lists written to "ordermgmt"
 
 4
 
@@ -418,7 +423,7 @@ AMSdb
 
 DB
 
-“ordermgmt” and “pmgmt” schemas
+"ordermgmt" and "pmgmt" schemas
 
 The UI Server accesses the database to get the new portfolio state and associated order list state
 
@@ -522,25 +527,28 @@ TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
 
   The interactions with different teams varied greatly, with some teams producing their documentation largely unaided, needing only some review and minor correction, while others were simply incapable or unwilling to produce what was needed and the architects ended up writing most of the documentation for these teams. 
 
-  The reasons for the problems encountered with development teams varied.  In some cases it was simply a lack of interest, often from the development manager who perhaps didn’t see the value of the deliverables.  However in other cases there seemed to be a genuine difficulty in understanding how to represent their subsystem.  In general this seemed to stem from an inability to abstract away from the implementation, resulting in a confusing mix of concrete and totally abstract concepts, which they then struggled to relate to each other.  None of these subsystems were very difficult to represent and in order to make progress the architects often stepped in and simply created the models.
+  The reasons for the problems encountered with development teams varied.  In some cases it was simply a lack of interest, often from the development manager who perhaps didnÔøΩt see the value of the deliverables.  However in other cases there seemed to be a genuine difficulty in understanding how to represent their subsystem.  In general this seemed to stem from an inability to abstract away from the implementation, resulting in a confusing mix of concrete and totally abstract concepts, which they then struggled to relate to each other.  None of these subsystems were very difficult to represent and in order to make progress the architects often stepped in and simply created the models.
 
   Another interesting problem was tooling.  Everyone in the organisation had access to the wiki and knew how to use it, so document authors could fill in the tables and text without any difficulty.  However, not everyone had access to Microsoft Visio and even of those that did, some obviously didn't know how to use it.  Again, the solution to this was simply for the architects overseeing the process to create diagrams for some subsystems.  This was a useful lesson and provided further evidence that avoiding UML and more specialised modelling tools had been a good decision.  In this organisation, requiring the use of UML and modelling tools would have been a significant barrier to getting architectural descriptions created.
 
   Over time, a significant and useful body of subsystem descriptions emerged and this allowed the architects to create a summary level architecture description that showed how the subsystems related to each other.  Some use of scripting to process the wiki subsystem descriptions and drawing tool macros to generate parts of the summary level diagrams allowed some degree of automation, although it was still a fairly manual process.
 
-   The process of capturing the architecture description took about six months, with the architects working on it approximately 60% of their time and the development teams working on it as their project schedules allowed.
+   The process of capturing the architecture description took about six months, with the architects working on it approximately 60\percent of their time and the development teams working on it as their project schedules allowed.
 
 \subsection{The Results of the Project}
 
   The outputs of the project were as follows.
 
-* A fairly consistent architecture description for most of the system that provided an accurate and largely complete view of its subsystems, their components and their dependencies.  Each subsystem was described using a standardised approach, which captured the same information for each one and presented it in a consistent manner through the use of the templates provided.  This made the information provided easy to navigate and check for completeness.
+\begin{itemize}
+\item A fairly consistent architecture description for most of the system that provided an accurate and largely complete view of its subsystems, their components and their dependencies.  Each subsystem was described using a standardised approach, which captured the same information for each one and presented it in a consistent manner through the use of the templates provided.  This made the information provided easy to navigate and check for completeness.
 
-* An informal definition of the architectural style used across most of the system and the typical patterns used when implementing it.
+\item An informal definition of the architectural style used across most of the system and the typical patterns used when implementing it.
 
-* A degree of visibility and understanding of the structure, scale and interconnectedness of the system which hadn't been achieved before.  The consistent presentation of system design information in a single location allowed the overall system structure to be more easily understood compared to the previous inconsistent descriptions on scattered wikis and web sites.  This appeared to allow a number of senior technical managers to achieve new insights into the system.
+\item A degree of visibility and understanding of the structure, scale and interconnectedness of the system which hadn't been achieved before.  The consistent presentation of system design information in a single location allowed the overall system structure to be more easily understood compared to the previous inconsistent descriptions on scattered wikis and web sites.  This appeared to allow a number of senior technical managers to achieve new insights into the system.
 
-* An insight into the degree of implementation uniformity between the different subsystems of the application.  While many subsystems were implemented in a very similar way, like any large system (particularly one which has had other applications integrated into it), parts of this application were implemented in ways that didn’t follow the normal set of conventions.  While there was already a general awareness that these less standard subsystems existed, the models made it easier for senior technical staff to gain visibility of this and decide whether they wished to direct any changes to the application as a result.
+\item An insight into the degree of implementation uniformity between the different subsystems of the application.  While many subsystems were implemented in a very similar way, like any large system (particularly one which has had other applications integrated into it), parts of this application were implemented in ways that didn't follow the normal set of conventions.  While there was already a general awareness that these less standard subsystems existed, the models made it easier for senior technical staff to gain visibility of this and decide whether they wished to direct any changes to the application as a result.
+
+\end{itemize}
 
   As mentioned earlier, the project did not have particularly clear goals for the architecture description once developed.  A number of people did find it insightful and there seemed to be a general consensus that it was a useful description to have.  However organisational changes then meant that the architects involved moved on to other work, so the project effectively came to an end.  Since then however another group within the firm has adopted the architectural description and continued its use and maintenance (primarily to support production operation of the system, a use which was not foreseen at the outset of the project).
 
@@ -552,9 +560,9 @@ TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
 
   As the project neared completion we started to validate what was being produced with some of the important stakeholders, particularly the senior technical managers in the organisation.  To do this we met with them and demonstrated what was being produced and what the completed architectural description would contain, discussing possible uses of it (such as impact analysis, pre-implementation reviews, incident post-mortems and regulatory enquiries).  We were pleased to find that this stakeholder group reacted positively to what they were shown, with responses ranging from fairly neutral (where the possible usefulness was acknowledged but no specific use of it particularly interested them) to very positive (where they wanted to start using it immediately).  Given this informal but consistently positive sentiment, we felt that our notation and approach had been validated (an outcome which was anything but certain at the start of the project, when the use of a specific notation and a highly prescriptive form for the documentation had been viewed as very risky). 
 
-  A factor that was constant throughout the project was that teams who had the ability to identify clear abstractions for their subsystems also appeared to find the ADL helpful and straightforward to use, as the ADL gave them a clearly defined way to represent their models and they didn’t have any difficulty in representing their models using it.  These teams tended to create their models with little or no assistance once they’d asked a few clarifying questions about the purpose of the models and the semantics of the notation.
+  A factor that was constant throughout the project was that teams who had the ability to identify clear abstractions for their subsystems also appeared to find the ADL helpful and straightforward to use, as the ADL gave them a clearly defined way to represent their models and they didn't have any difficulty in representing their models using it.  These teams tended to create their models with little or no assistance once they'd asked a few clarifying questions about the purpose of the models and the semantics of the notation.
 
-  In contrast, teams who struggled to identify good abstractions never really grasped how to use the ADL and needed constant assistance, to the point of needing to have parts of their architectural descriptions completely rewritten for them.   What was interesting about this stark contrast in modelling ability was that we could find no obvious factor to explain it in terms of educational background, age, team size, technology preferences, type of subsystem, geographical location or any other relevant factor.  We did observe that even in teams that produced good models, the ability and enthusiasm to do this varied and even for large subsystems we found that it tended to be one or two people in a team who did all of the modelling on behalf of the rest of the team.  We don’t know whether there were many other people in those teams who would have done an equally good job, but based on hallway conversations, we suspect not.  Our conclusion was that relatively few people in the general population of software engineers we worked with find modelling straightforward, but we were not sure why this was the case.
+  In contrast, teams who struggled to identify good abstractions never really grasped how to use the ADL and needed constant assistance, to the point of needing to have parts of their architectural descriptions completely rewritten for them.   What was interesting about this stark contrast in modelling ability was that we could find no obvious factor to explain it in terms of educational background, age, team size, technology preferences, type of subsystem, geographical location or any other relevant factor.  We did observe that even in teams that produced good models, the ability and enthusiasm to do this varied and even for large subsystems we found that it tended to be one or two people in a team who did all of the modelling on behalf of the rest of the team.  We don't know whether there were many other people in those teams who would have done an equally good job, but based on hallway conversations, we suspect not.  Our conclusion was that relatively few people in the general population of software engineers we worked with find modelling straightforward, but we were not sure why this was the case.
 
   We interpreted this experience as validation of the approach that had been used.  People who could create models and knew what they wanted to represent were able to use the ADL effectively with minimal training, so it was obviously usable by mainstream practitioners.  On the other hand, the approach did not help those people who found it difficult to create a model.  It had been hoped that the straightforward and prescriptive nature of the approach would guide people to create useful models, even if they did not find modelling easy, and it was a disappointment that the approach failed to achieve this.
 
@@ -562,9 +570,9 @@ TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
 
 * Create a Catalogue of the Current State - the project created the first comprehensive description of the system and so provided a very useful descriptive catalogue of the current state of the architecture.  The weakness of the architectural description as a catalogue was that it was only as comprehensive as the authors of each piece decided to make it.  However, it was possible to cross check it against a number of systems that were known to contain complete lists of the elements in the production system (as they were used for automated tasks relating to deployment).  Sampling about 30 percent of the architectural description and cross checking this against the lists of deployment elements revealed a high degree of completeness, so confidence in its use as a catalogue was high.
 
-* Allow Impact Analysis - the architectural description quickly proved its worth for impact analysis and helped considerably with the process of understanding the impact of proposed changes.  This was primarily due to the fact that it allowed the interconnectedness of system elements to be quickly assessed, information that hadn’t been easy to find before.  An example of this was a small project to migrate the interface to an important internal service from a legacy RPC technology to the currently strategic message based interface.  The service interfaces were designed so that they could be used in parallel and the plan was to offer both and then slowly migrate users of the service to the new version.  The problem with this was the time it was going to take to find all of the users of the service and so the length of time that the parallel interfaces would be needed.  The model was in a late state of development when this project started to think about migration and they were able to use it to discover nearly all of the clients of their service.  So rather than relying on a service provider keeping track of the users of the service, the model provided a structure to allow the users of the service to declare their interest in the services they used, which was a much more effective approach.
+* Allow Impact Analysis - the architectural description quickly proved its worth for impact analysis and helped considerably with the process of understanding the impact of proposed changes.  This was primarily due to the fact that it allowed the interconnectedness of system elements to be quickly assessed, information that hadn't been easy to find before.  An example of this was a small project to migrate the interface to an important internal service from a legacy RPC technology to the currently strategic message based interface.  The service interfaces were designed so that they could be used in parallel and the plan was to offer both and then slowly migrate users of the service to the new version.  The problem with this was the time it was going to take to find all of the users of the service and so the length of time that the parallel interfaces would be needed.  The model was in a late state of development when this project started to think about migration and they were able to use it to discover nearly all of the clients of their service.  So rather than relying on a service provider keeping track of the users of the service, the model provided a structure to allow the users of the service to declare their interest in the services they used, which was a much more effective approach.
 
-* Communicate - the architectural description was quickly recognised to be a comprehensive knowledge base of the system’s design information and so helped inter-team communication (when people in one team could use it to understand another team’s subsystem).  An example of the model being used for this sort of collaboration was when a new application, which had been acquired as part of the acquisition of another firm, was being integrated into the existing application as a new subsystem.  The existing models helped the new team see how existing subsystems were integrated with each other and the model that the new team created of their subsystem helped the existing teams to understand what was being added to the system and how it might be used.  The architectural description also acted as a single place where further information could be gathered.  As mentioned earlier, the architects involved in creating the architectural description moved onto other work soon after its initial creation, however it does appear to have continued to be used, to grow and to evolve, suggesting that it did fulfil this role.  Eventually it was adopted by the Production Services team in the firm, due to the value that they got from having up to date descriptions of the structure and dependencies of each application, for support tasks.
+* Communicate - the architectural description was quickly recognised to be a comprehensive knowledge base of the system's design information and so helped inter-team communication (when people in one team could use it to understand another team's subsystem).  An example of the model being used for this sort of collaboration was when a new application, which had been acquired as part of the acquisition of another firm, was being integrated into the existing application as a new subsystem.  The existing models helped the new team see how existing subsystems were integrated with each other and the model that the new team created of their subsystem helped the existing teams to understand what was being added to the system and how it might be used.  The architectural description also acted as a single place where further information could be gathered.  As mentioned earlier, the architects involved in creating the architectural description moved onto other work soon after its initial creation, however it does appear to have continued to be used, to grow and to evolve, suggesting that it did fulfil this role.  Eventually it was adopted by the Production Services team in the firm, due to the value that they got from having up to date descriptions of the structure and dependencies of each application, for support tasks.
 
   Based on this fairly informal assessment, we judged the project to have met the goals we set for ourselves and the architectural description became a useful resource within the organisation, as a centralised and standardised source of design information for the system.
 
@@ -578,15 +586,15 @@ TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
 
 * The more specialised an ADL is, and so the closer it matches the implementation style of the system being modelled, the easier people seem to find it to use.  While at first glance this sounds like an obvious point, it is contrary to the conventional industrial approach of using a general modelling language like UML or SysML and also contrasts with the domain independent nature of most academically developed ADLs.
 
-* Carefully designing the detail of the graphical notation pays off.  Using shapes that hint at their meaning and using a range of graphical dimensions to differentiate shapes helps people to remember them, even if they don’t guess the link between the shape and the concept themselves.  Again, this is not reflected in mainstream notations like UML or most existing ADLs, where little effort is made to identify meaningful symbols for concepts.
+* Carefully designing the detail of the graphical notation pays off.  Using shapes that hint at their meaning and using a range of graphical dimensions to differentiate shapes helps people to remember them, even if they donÔøΩt guess the link between the shape and the concept themselves.  Again, this is not reflected in mainstream notations like UML or most existing ADLs, where little effort is made to identify meaningful symbols for concepts.
 
 * Consistency in the notation is very important and having a base shape for a general concept with refinements to it for different sub-concepts appears to help people considerably when interpreting the diagrams.
 
-* Providing high quality support materials including an example-based description of the approach and notation, a number of realistic completed examples and a set of templates for new documents is very important.  We found repeatedly that people are much better at “filling in the gaps” rather than following a set of instructions and creating something from scratch.
+* Providing high quality support materials including an example-based description of the approach and notation, a number of realistic completed examples and a set of templates for new documents is very important.  We found repeatedly that people are much better at ÔøΩfilling in the gapsÔøΩ rather than following a set of instructions and creating something from scratch.
 
 * Utilising familiar tools helps with the acceptance of the approach.  In this particular organisation, there were no complaints or difficulties with the use of a wiki for the text and tables information, whereas a very widely used commercial drawing tool (Visio) caused problems, even with a carefully tailored template, because it was not widely used in the organisation already.
 
-  These lessons aren’t all that surprising but the importance of what seemed to be quite minor things (such as worked examples and quick reference cards) is important and is useful to bear in mind for the future.  The importance of matching the ADL to the specific domain being modelled is also a lesson that is not reflected in most modelling languages today, which tend towards the general rather than the specific.  
+  These lessons arenÔøΩt all that surprising but the importance of what seemed to be quite minor things (such as worked examples and quick reference cards) is important and is useful to bear in mind for the future.  The importance of matching the ADL to the specific domain being modelled is also a lesson that is not reflected in most modelling languages today, which tend towards the general rather than the specific.  
 
   Given the relative success of this project, it is natural to ask how generally applicable its results are and how repeatable it is likely to be.  Given what we learned during the project, particularly the fact that the specialised nature of the notation was a key factor in its success, we feel that these lessons may well have general applicability, but only in the broad sense.  People like to be guided and they like familiar tools and techniques.  However the specific tools or techniques that work will be specific to each environment and people in different environments will have different levels of enthusiasm for learning new approaches.  However, when trying to get a significant amount of work done by people who are agnostic to the approach, familiarity and accessibility appear to help greatly with acceptance.
 
@@ -604,7 +612,7 @@ TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
 
   It is worth noting that our experiences from this work and our resulting suggestions are similar to the conclusions of a major academic survey of practitioner requirements for ADLs [33], which suggests that these lessons and requirements reflect the needs of a significant number of industrial software architects.
 
-  Beyond the experience we have gained in applying architectural description techniques to a large scale problem, the particular notation and approach used in this paper may be of use to others, but as explained earlier in the paper, this wasn’t a goal of the project. While some of the aspects of the notation invented will be generally familiar (e.g. servers that are driven by messaging) the overall set of element types is specific to one environment and may well not be directly useful elsewhere.  Certainly we did not set out to contribute yet another general purpose ADL to the world and so reuse of the notation was not considered during its development.  We report this project in order to describe a successful application of the concepts of architectural description notations, to record the factors that we believe made the project successful and to capture the lessons learned and conclusions drawn from the experience.
+  Beyond the experience we have gained in applying architectural description techniques to a large scale problem, the particular notation and approach used in this paper may be of use to others, but as explained earlier in the paper, this wasnÔøΩt a goal of the project. While some of the aspects of the notation invented will be generally familiar (e.g. servers that are driven by messaging) the overall set of element types is specific to one environment and may well not be directly useful elsewhere.  Certainly we did not set out to contribute yet another general purpose ADL to the world and so reuse of the notation was not considered during its development.  We report this project in order to describe a successful application of the concepts of architectural description notations, to record the factors that we believe made the project successful and to capture the lessons learned and conclusions drawn from the experience.
 
 \section{Summary And Conclusions}
 
@@ -622,7 +630,7 @@ TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
 
 [2]	P. Cuenot, P. Frey, R. Johansson, H. Lonn, Y. Papadopoulos, M.-O. Reiser, et al., "The EAST-ADL architecture description language for automotive embedded software," in Proceedings of the 2007 International Dagstuhl conference on Model-based engineering of embedded real-time systems, Dagstuhl Castle, Germany, 2010, pp. 297-307.
 
-[3]	F. Oquendo, "π-ADL: an Architecture Description Language based on the higher-order typed π-calculus for specifying dynamic and mobile software architectures," ACM SIGSOFT Software Engineering Notes, vol. 29, pp. 1-14, 2004.
+[3]	F. Oquendo, "ÔøΩ-ADL: an Architecture Description Language based on the higher-order typed ÔøΩ-calculus for specifying dynamic and mobile software architectures," ACM SIGSOFT Software Engineering Notes, vol. 29, pp. 1-14, 2004.
 
 [4]	R. Bashroush, I. Spence, P. Kilpatrick, and T. Brown, "Towards More Flexible Architecture Description Languages for Industrial Applications," in EWSA 2006. vol. 4344, V. Gruhn and F. Oquendo, Eds., ed Nantes, France: Springer-Verlag, 2006, pp. 212-219.
 
