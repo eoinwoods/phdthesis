@@ -34,7 +34,7 @@
 
   This project was undertaken in a financial services firm that has developed a large custom information system to run its business.  The software has been developed over a period of about 15 years and has grown from quite modest beginnings to the large system it is today, comprising millions of lines of code, storing several terabytes of information.  The system includes software modules that have been developed from scratch within the organization along with modules that have been acquired as a result of organizational acquisitions and that have been modified to integrate with the rest of the system.
 
-  Today, the system comprises about 20 major subsystems and over 10 million lines of Java, C++, C-Sharp and Perl, sharing a large multi-terabyte relational database.  Although some members of staff who worked on the system in its early days are still with the firm (and actively involved with the system) it has grown to a size that means no individual understands it all, even at a reasonably high level of abstraction.
+  Today, the system comprises about 20 major subsystems and over 10 million lines of Java, C++, C\# and Perl, sharing a large multi-terabyte relational database.  Although some members of staff who worked on the system in its early days are still with the firm (and actively involved with the system) it has grown to a size that means no individual understands it all, even at a reasonably high level of abstraction.
 
   At the start of the project, there was no overall unified system description, although some teams responsible for subsystems did have their own documentation. This meant that the operation and interconnectedness of the system was often difficult to judge and this was starting to hinder change and evolution.
 
@@ -143,105 +143,75 @@
 
   It is worth noting that even though our definitions of concepts like "component" and "connector" were quite specific, most people didn't really understand what we meant until we made the concepts very concrete with the specific types of component and connector that they were familiar with.
 
-  As mentioned above, the basic types of system element used within the system were user interface programs, servers, data stores, external entities and a fairly specific set of connector types were used to link them.  While these generic types of element sound fairly standard, what was interesting was the limited number of variations of them that were used in most of the system.  These element types are summarised in Table I.
+  As mentioned above, the basic types of system element used within the system were user interface programs, servers, data stores, external entities and a fairly specific set of connector types were used to link them.  While these generic types of element sound fairly standard, what was interesting was the limited number of variations of them that were used in most of the system.  These element types are summarised in Table \ref{table:archelemtypes}.
 
   
+\begin{table}
+\caption{Types of Architectural Elements}
+\label{table:archelemtypes}
+\footnotesize
 
-TABLE I.  TYPES OF ARCHITECTURAL ELEMENTS
+\begin{tabular}{l p{10cm}}
 
-User Interfaces
+User Interfaces \\
+\cline{1-1}
+& \\
+GUI   & A traditional GUI client written in Java Swing, C\# WebForms or C++ Motif. \\
+WebUI & A user interface implemented as a set of web pages (typically as a set of CGI scripts or a Java webapp) \\
+Command Line & A user interface implemented as a command line program, such as a script or a Unix command line utility \\
+& \\
+Servers \\
+\cline{1-1}
+& \\
+Message Driven Server & A server whose operation is driven by the receipt of messages from the system message bus \\
+Server                &  A server whose operation is driven by a mechanism other than messages (such as RPCs, database polling or temporal schedules) \\
+Batch Program         & A program that is run from a scheduler and performs its operation in a single execution, without waiting for other system elements to perform any operations or for human intervention. \\
+Data Loader           & A program whose primary purpose is to extract data from a source and move it to a destination, typically transforming it in some way during the transmission. \\
+& \\
+Data Stores  \\
+\cline{1-1}
+& \\
+System database   &  The shared system database or a set of tables from it \\
+File              & A file on the file system \\
+& \\
+External Entities  \\
+\cline{1-1}
+& \\
+Subsystem            & Another subsystem that communicates with this one in some way \\
+External System      & An information system outside our system that a subsystem communicates with in some way \\
+External Data Source & A Data Source outside our system that a subsystem receives data from (such as a source of security prices)
+\end{tabular}
+\end{table}
 
-- GUI
+The fairly restricted set of inter-element connectors in use throughout the system is described in Table \ref{table:archconntypes}.
 
-A traditional GUI client written in Java Swing, C-Sharp WebForms or C++ Motif.
 
-- WebUI
+\begin{table}
+\caption{Types of Architectural Connectors}
+\label{table:archconntypes}
+\footnotesize
+\begin{tabular}{l p{10cm}}
 
-A user interface implemented as a set of web pages (typically as a set of CGI scripts or a Java webapp)
-
-- Command Line
-
-A user interface implemented as a command line program, such as a script or a Unix command line utility
-
-Servers
-
-- Message Driven Server
-
-A server whose operation is driven by the recipt of messages from the system message bus
-
-- Server 
-
-A server whose operation is driven by a mechanism other than messages (such as RPCs, database polling or temporal schedules)
-
-- Batch Program
-
-A program that is run from a scheduler and performs its operation in a single execution, without waiting for other system elements to perform any operations or for human intervention.
-
-- Data Loader
-
-A program whose primary purpose is to extract data from a source and move it to a destination, typically transforming it in some way during the transmission.
-
-Data Stores
-
-- System database
-
-The shared system database or a set of tables from it
-
-- File
-
-A file on the file system
-
-External Entities
-
-- Subsystem
-
-Another subsystem that communicates with this one in some way
-
-- External System
-
-An information system outside our system that a subsystem communicates with in some way
-
-- External Data Source
-
-A Data Source outside our system that a subsystem receives data from (such as a source of security prices)
-
-  The fairly restricted set of inter-element connectors in use throughout the system is described in Table II.
-
-TABLE II.  TYPES OF ARCHITECTURAL CONNECTORS
-
-RPC
-
-A synchronous inter-process procedure call (usually XML over HTTP)
-
-Direct Invocation
-
-An in-proess direct procedure invocation (calling a library)
-
-Database Data Flow
-
-Writing data to a database table or tables to allow it to be used by another element
-
-File Data Flow
-
-Writing data to a filesystem file to allow it to be used by another element
-
-System Messaging
-
-Dispatch and receipt of messages over the system message bus via a named messaging destination
+RPC                & A synchronous inter-process procedure call (usually XML over HTTP) \\
+Direct Invocation  & An in-process direct procedure invocation (calling a library) \\
+Database Data Flow & Writing data to a database table or tables to allow it to be used by another element \\
+File Data Flow     & Writing data to a filesystem file to allow it to be used by another element \\
+System Messaging   &  Dispatch and receipt of messages over the system message bus via a named messaging destination \\
+\end{tabular}
+\end{table}
 
   In order to allow for the inevitable special cases that are found in a system of this scale, an "other" type was also allowed for both components and connectors, which could be annotated using a UML style stereotype to make its type clear.
 
   Most architectural styles limit the element and connector configurations that they allow.  In this style, there weren't really any such constraints defined formally, although there were combinations that were encouraged and discouraged (e.g. UI Clients should connect to Message Driven Servers, but not access the database).  However, most configurations of element and connector types could be found somewhere in the system! A number of the common patterns were captured as examples in the notation documentation.
 
-  A couple of examples of the patterns identified are shown in Figure 1. 
+  A couple of examples of the patterns identified are shown in Figure \ref{figure:adlnotation1}. 
 
-  
-\begin{figure}[h!]
+\begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{Figures/adls-figure1.pdf}
+\includegraphics[width=10cm]{Figures/adls-figure1}
 \caption{Examples of the ADL Notation Illustrating Preferred Configurations}
-\end{figure}
-  
+\label{figure:adlnotation1}
+\end{figure}  
 
   The notation used to express the examples is explained more fully in the next section, but briefly triangular shapes represent user interfaces, rectangles represent server resident elements (servers, batch programs), files and databases are represented by the fairly conventional "record stack" and "drum" shapes, while connectors are represented by arrows using a variety of line types (the line type in example (a) being messaging, the line type in example (b) being stored data access).
 
@@ -253,27 +223,36 @@ Dispatch and receipt of messages over the system message bus via a named messagi
 
   When defining the graphical detail of the notation, the advice in [27] were particularly useful, in particular the exhortation to avoid construct overload, deficit, redundancy or excess, the suggestion to systematically consider the visual variables of each shape (shape, size, colour, orientation, brightness and texture) and the need for deliberate selection of shapes so that their appearance suggested their meaning, to help achieve semantic transparency.
 
-  We created the graphical notation by selecting a base shape for each major type of element (server, user interface, data store, external entity) and designing a variation of the shape for each subtype of the element.  The diagrams were likely to be printed in black and white, so brightness and colour were used in a very limited way (just being used as an informal diagrammatic annotation, rather than having a predefined meaning).  Each element had to have a name, shown on its symbol and optionally a stereotype (discussed below).  Examples of the notation for some of the more important element types are shown in Figure 2. 
-
+  We created the graphical notation by selecting a base shape for each major type of element (server, user interface, data store, external entity) and designing a variation of the shape for each subtype of the element.  The diagrams were likely to be printed in black and white, so brightness and colour were used in a very limited way (just being used as an informal diagrammatic annotation, rather than having a predefined meaning).  Each element had to have a name, shown on its symbol and optionally a stereotype (discussed below).  Examples of the notation for some of the more important element types are shown in Figure \ref{figure:adlelementtypes}. 
   
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{Figures/adls-figure2}
+\caption{ADL Element Types}
+\label{figure:adlelementtypes}
+\end{figure}  
 
-Figure 2.  ADL Element Types
-
-  
 
   A triangle was used as the base shape for user interfaces and a rectangle for server resident components.  The triangle was chosen as it hinted at the head and shoulders shape of a user and the triangles were then modified slightly for each type of user interface (the thick client having sharp corners, the web user interface having rounded corners as it blurs the distinction between "client" and "server" and the command line utility having a graphical representation of a command line interface added to it).  Similarly, a rectangle is the base shape for server elements (based on long accepted conventions) with a stereotype being used to indicate the type of server and a "lozenge" variant being used to indicate a data loader (hinting at pieces of data being transmitted through it).
 
-  An arrow of some form was used to represent all of the connector types, with the arrowhead usually indicating the direction of data flow.  All connectors were defined to be one way connections, with the exception of data access connectors, which could indicate read and write activity with arrow heads at both ends of the connector if appropriate.  The convention for RPC connectors was defined to be a one-way arrow from the caller to the target.  No attempt was made to represent the various complicated possibilities of dependency and initiation of interaction using the connector symbols.  Each connector had to indicate what was carried over the connection, with message flows being annotated with a message data type, file and database connectors being annotated with table or record names, and RPC and direct invocation connectors being annotated with the name of the service or procedure they were calling.  Examples of the notation for the main connector types are shown in Figure 3. 
+  An arrow of some form was used to represent all of the connector types, with the arrowhead usually indicating the direction of data flow.  All connectors were defined to be one way connections, with the exception of data access connectors, which could indicate read and write activity with arrow heads at both ends of the connector if appropriate.  The convention for RPC connectors was defined to be a one-way arrow from the caller to the target.  No attempt was made to represent the various complicated possibilities of dependency and initiation of interaction using the connector symbols.  Each connector had to indicate what was carried over the connection, with message flows being annotated with a message data type, file and database connectors being annotated with table or record names, and RPC and direct invocation connectors being annotated with the name of the service or procedure they were calling.  Examples of the notation for the main connector types are shown in Figure \ref{figure:adlconnectortypes}. 
 
-Figure 3.  ADL Connector Types
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{Figures/adls-figure3}
+\caption{ADL Connector Types}
+\label{figure:adlconnectortypes}
+\end{figure}  
+
 
   The RPC or direct procedure call is shown using a solid arrow, messaging is shown using a line with embedded dots, suggesting messages flowing over it, while data access is shown using a regular chain line, suggesting records being read or written over the connector.
 
-  A general mechanism used on elements and connectors was the stereotype, adopted from UML, where the type of an architectural element is made clear by annotating it with a type name using the convention "<<type>>" on the symbol concerned.  This allowed the casual reader to understand the types of element on the diagram without having to understand the notation and allowed new element types to be easily introduced.
+  A general mechanism used on elements and connectors was the stereotype, adopted from UML, where the type of an architectural element is made clear by annotating it with a type name using the 
+convention "{\guillemotleft}type{\guillemotright}" on the symbol concerned.  This allowed the casual reader to understand the types of element on the diagram without having to understand the notation and allowed new element types to be easily introduced.
 
   The semantics of the elements and connectors were generally based on the semantics of the corresponding element and connector implementations in the system: broadcast messaging in the system worked in a particular way, a relational database has well understood behaviour, a web service call is widely understood and a message driven server was a concept that most people understood with little further explanation.  Undoubtedly there were cases where elements on diagrams had surprising behaviour because they did not behave entirely as expected given their type, but on the whole, the resulting documents were good enough to form a useful architecture description.
 
-  In order to ensure that the process produced more than just pictures, we defined a set of required attributes for each type of element and connector.  Part of this task was defining enumerations of expected standard values for many of the attributes, again to standardise and simplify the process of recording the information (such as standard lists of data domains ["trading", "counterparties", "securities", ...], lists of programming languages in use [C++, Java, C-Sharp, Perl] and so on).
+  In order to ensure that the process produced more than just pictures, we defined a set of required attributes for each type of element and connector.  Part of this task was defining enumerations of expected standard values for many of the attributes, again to standardise and simplify the process of recording the information (such as standard lists of data domains ["trading", "counterparties", "securities", ...], lists of programming languages in use [C++, Java, C\#, Perl] and so on).
 
   In order to simplify and standardise the subsystem descriptions, a set of wiki page templates and a comprehensive Microsoft Visio stencil were created, along with clear instructions, quick reference material and - most crucially - a fully worked example of the documentation for one subsystem.  This allowed a number of conventions, such as hyperlinking element names to allow navigation through the documents, to be illustrated and encouraged by example.  A hierarchy of empty wiki pages for the required subsystem descriptions was also created so that authors knew where to put their documents and so they could be unambiguously referenced.
 
@@ -287,231 +266,87 @@ Figure 3.  ADL Connector Types
 
 \subsection{Architectural Description}
 
-  The functional structure of the AMS is described using our system-specific ADL notation in Figure 4. 
+  The functional structure of the AMS is described using our system-specific ADL 
+notation in Figure \ref{figure:amsdiagram}. 
 
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{Figures/adls-figure4}
+\caption{The Asset Management Systems}
+\label{figure:amsdiagram}
+\end{figure}  
+
+The elements of this architectural structure are described in Table \ref{table:amselements}. 
   
+\begin{table}
+\caption{Elements of the Asset Management System}
+\label{table:amselements}
+\footnotesize
+\begin{tabular}{l l p{7cm}}
+Element Name & Type & Description \\
+\hline
 
-  
+Portfolio GUI      & GUI              & The responsibilities of the Graphical User Interface (GUI) are to provide the asset managers using the system with the ability to view and analyse their portfolios, to request (and monitor progress of) long running system operations (such as order generation) and to check, enter, dispatch and monitor orders that go for execution to trading systems.  The GUI provides a human interface and requires an RPC interface to the UI Server to provide it with services and data. \\
 
-Figure 4.  The Asset Management System
+UI Server          & Messaging Server & The responsibility of the UI Server is to provide the data access facilities that the UI requires (accessing data from the AMSdb internal database) and to dispatch requests for orders or for long running work (such as analysis processing) to be carried out by other parts of the system.  The UI Server provides an RPC interface to expose its provided services to the GUI and requires an SQL query interface to the system database and a messaging interface to allow it to request and monitor order dispatch and long running work. \\
 
-  The elements of this architectural structure are described in TABLE III. 
+AMSdb              & Database         & The system database's responsibility is to store the portfolio, analytical, market and (system) operational data that the system requires to operate.  It provides an SQL based DML interface to allow data to be inserted, manipulated or retrieved. \\
 
-  
+Job Processor      & Messaging Server & The responsibilities of the Job Processor are to execute long running processing items ("jobs") such as investment analytics and automated order list generation.  The processor can be configured to run particular jobs on temporal schedules and can also be requested to execute particular jobs on demand.  The processor provides a message based job control and status request interface and requires an SQL query based interface to the database. \\
 
-Element Name
+Market Data Loader & Loader           & The responsibility of the Market Data Loader (MDL) is to retrieve various forms of market data from an internal Market Data Source system and load the data into the database, handling versioning and business date identification as part of the loading process.  The datasets required include securities prices, bond yields, interest rates, FX rates, volatilities, correlations and so on.  The loader requires a data retrieval interface to the MDL system, allowing data sets to be retrieved on demand. \\
 
-Type
-
-Description
-
-Portfolio GUI
-
-GUI
-
-The responsibilities of the Graphical User Interface (GUI) are to provide the asset managers using the system with the ability to view and analyse their portfolios, to request (and monitor progress of) long running system operations (such as order generation) and to check, enter, dispatch and monitor orders that go for execution to trading systems.  The GUI provides a human interface and requires an RPC interface to the UI Server to provide it with services and data.
-
-UI Server
-
-Messaging Server
-
-The responsibility of the UI Server is to provide the data access facilities that the UI requires (accessing data from the AMSdb internal database) and to dispatch requests for orders or for long running work (such as analysis processing) to be carried out by other parts of the system.  The UI Server provides an RPC interface to expose its provided services to the GUI and requires an SQL query interface to the system database and a messaging interface to allow it to request and monitor order dispatch and long running work.
-
-AMSdb
-
-Database
-
-The system database's responsibility is to store the portfolio, analytical, market and (system) operational data that the system requires to operate.  It provides an SQL based DML interface to allow data to be inserted, manipulated or retrieved.
-
-Job Processor
-
-Messaging Server
-
-The responsibilities of the Job Processor are to execute long running processing items ("jobs") such as investment analytics and automated order list generation.  The processor can be configured to run particular jobs on temporal schedules and can also be requested to execute particular jobs on demand.  The processor provides a message based job control and status request interface and requires an SQL query based interface to the database.
-
-Market Data Loader
-
-Loader
-
-The responsibility of the Market Data Loader (MDL) is to retrieve various forms of market data from an internal Market Data Source system and load the data into the database, handling versioning and business date identification as part of the loading process.  The datasets required include securities prices, bond yields, interest rates, FX rates, volatilities, correlations and so on.  The loader requires a data retrieval interface to the MDL system, allowing data sets to be retrieved on demand.
-
-Order Gateway 
-
-Messaging Server
-
-The responsibility of the Order Gateway is to accept incoming orders to buy and sell securities (including order parameters such as execution strategies and price limits), to forward these requests to a trading system for execution and then receive the execution reports ("fills") indicating order execution and broadcast these to other interested parts of the system.  The gateway provides a message based order request interface and a broadcast status interface and it requires a message based interface to allow order submission to a trading system.
-
-TABLE III.  THE ELEMENTS OF THE AMS
+Order Gateway      & Messaging Server & The responsibility of the Order Gateway is to accept incoming orders to buy and sell securities (including order parameters such as execution strategies and price limits), to forward these requests to a trading system for execution and then receive the execution reports ("fills") indicating order execution and broadcast these to other interested parts of the system.  The gateway provides a message based order request interface and a broadcast status interface and it requires a message based interface to allow order submission to a trading system.
+\end{tabular}
+\end{table}
 
 \subsection{Example Scenario - Generate Order List}
 
-  The key functional scenario for this system is to allow a fund manager to generate an order list to "rebalance" a fund based on an analysis that identifies the theoretically optimal holdings for the portfolio and execute that set of buy and sell orders, reflecting the results in the portfolio.  The interactions required to implement this scenario are illustrated in Figure 5. 
+  The key functional scenario for this system is to allow a fund manager to generate an order list to "rebalance" a fund based on an analysis that identifies the theoretically optimal holdings for the portfolio and execute that set of buy and sell orders, reflecting the results in the portfolio.  The interactions required to implement this scenario are illustrated in Figure \ref{figure:rebalanceinteractions}. 
 
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{Figures/adls-figure5}
+\caption{Portfolio Rebalance Scenario Interactions}
+\label{figure:rebalanceinteractions}
+\end{figure}
+
+The interactions between system elements necessary to implement this scenario are described in Table \ref{table:amsinteractions}. 
   
+\begin{table}
+\caption{Interactions for the Portfolio Rebalance Scenario}
+\label{table:amsinteractions}
+\footnotesize
+\begin{tabular}{l l l l p{2cm} p{5cm}}
+Step & From & To & Type & Connector & Description \\
+\hline
 
-  
+1 & GUI & UI Server & RPC & portfolio service & Fund manager selects a portfolio and instructs the system to create an order list for it.  The GUI invokes an RPC indicating that the indicated portfolio should be rebalanced. \\
 
-Figure 5.  Portfolio Rebalance Scenario Interactions
+2 & UI Server & Job Processor & Msg & Rebalance Request & The UI Server sends a request message to indicate that the portfolio should be "rebalanced".  This is routed to the Job Processor. \\
 
-  The interactions between system elements necessary to implement this scenario are described in TABLE IV. 
+3 & Job Processor & AMSdb & DB & pmgmt and ordermgmt schemas & The Job Processor receives the message and in response initiates a portfolio analysis job to identify the theoretical optimal holdings in the portfolio and generate buy and sell orders to move the portfolio to that state.  Portfolio state read from "pmgmt" and order lists written to "ordermgmt" \\
 
-Step
+4 & Job Processor & UI Server & Msg & OrderList Update & The Job Processor sends a status message indicating that new order lists exist, which is routed to the UI Server \\
 
-From
+5 & UI Server & AMSdb & DB & ordermgmt and pmgmt schemas & The UI Server accesses the database to get the new portfolio state and associated order list state \\
 
-To
+6 & GUI & UI Server & RPC & portfolio service & The GUI calls the UI Server for a status update and gets details of the new order list in return \\
 
-Type
+7 & GUI & UI Server & RPC & portfolio service & The GUI makes an RPC call to the UI Server to indicate that the order list should be traded \\
 
-Connector
+8 & UI Server & Order Gateway & Msg & Execution Request & The UI Server creates a message to request the order list to be traded (including the list of orders) which is routed to the Order Gateway \\
 
-Description
+9 & Order Gateway & Trading System & - & - & The Order Gateway sends the orders to an external trading system and receives status updates in return as the orders are executed \\
 
-1
+10 & Order Gateway & UI Server & Msg & Execution Report & As the Order Gateway gets execution updates, it creates execution report messages which are routed to the UI Server \\
 
-GUI
+11 & UI Server & AMSdb & DB & pmgmt and ordermgmt schemas & The UI Server updates the database with the status of the orders and the effect on the portfolio \\
 
-UI Server
+12 & GUI & UI Server & RPC & portfolioservice & The GUI makes RPC calls to the UI Server and gets the updated status of the orders and the changes to the portfolio in its response \\
 
-RPC
-
-portfolio service
-
-Fund manager selects a portfolio and instructs the system to create an order list for it.  The GUI invokes an RPC indicating that the indicated portfolio should be rebalanced.
-
-2
-
-UI Server
-
-Job Processor
-
-Msg
-
-Rebalance Request
-
-The UI Server sends a request message to indicate that the portfolio should be "rebalanced".  This is routed to the Job Processor. 
-
-3
-
-Job Processor
-
-AMSdb
-
-DB
-
-pmgmt and ordermgmt schemas
-
-The Job Processor receives the message and in response initiates a portfolio analysis job to identify the theoretical optimal holdings in the portfolio and generate buy and sell orders to move the portfolio to that state.  Portfolio state read from "pmgmt" and order lists written to "ordermgmt"
-
-4
-
-Job Processor
-
-UI Server
-
-Msg
-
-OrderList Update
-
-The Job Processor sends a status message indicating that new order lists exist, which is routed to the UI Server
-
-5
-
-UI Server
-
-AMSdb
-
-DB
-
-"ordermgmt" and "pmgmt" schemas
-
-The UI Server accesses the database to get the new portfolio state and associated order list state
-
-6
-
-GUI
-
-UI Server
-
-RPC
-
-portfolio service
-
-The GUI calls the UI Server for a status update and gets details of the new order list in return
-
-7
-
-GUI
-
-UI Server
-
-RPC
-
-portfolioservice
-
-The GUI makes an RPC call to the UI Server to indicate that the order list should be traded
-
-8
-
-UI Server
-
-Order Gateway
-
-Msg
-
-Execution Request
-
-The UI Server creates a message to request the order list to be traded (including the list of orders) which is routed to the Order Gateway
-
-9
-
-Order Gateway
-
-Trading System
-
--
-
--
-
-The Order Gateway sends the orders to an external trading system and receives status updates in return as the orders are executed
-
-10
-
-Order Gateway
-
-UI Server
-
-Msg
-
-Execution Report
-
-As the Order Gateway gets execution updates, it creates execution report messages which are routed to the UI Server
-
-11
-
-UI Server
-
-AMSdb
-
-DB
-
-pmgmt and ordermgmt schemas
-
-The UI Server updates the database with the status of the orders and the effect on the portfolio
-
-12
-
-GUI
-
-UI Server
-
-RPC
-
-portfolioservice
-
-The GUI makes RPC calls to the UI Server and gets the updated status of the orders and the changes to the portfolio in its response
-
-TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
+\end{tabular}
+\end{table}
 
   A full architectural description for a subsystem would also include a lot of operational and implementation oriented information such as links to operational instructions, links to source code control systems and automated build systems and links to test specifications and results.  We do not attempt to reproduce any of that here as the majority of such information was in the form of links to other internal systems and nearly all of the information is context dependent and so not particularly meaningful outside the organisation operating the system.
 
@@ -588,21 +423,21 @@ TABLE IV.  INTERACTION DESCRIPTIONS FOR THE PORTFOLIO REBALANCE SCENARIO
   
 \begin{itemize}
 
-\item \item A specialised ADL can have benefits over a general modelling language like UML and even a simple ADL can be used to create useful results.
+\item A specialised ADL can have benefits over a general modelling language like UML and even a simple ADL can be used to create useful results.
 
 \item The more specialised an ADL is, and so the closer it matches the implementation style of the system being modelled, the easier people seem to find it to use.  While at first glance this sounds like an obvious point, it is contrary to the conventional industrial approach of using a general modelling language like UML or SysML and also contrasts with the domain independent nature of most academically developed ADLs.
 
-\item Carefully designing the detail of the graphical notation pays off.  Using shapes that hint at their meaning and using a range of graphical dimensions to differentiate shapes helps people to remember them, even if they don�t guess the link between the shape and the concept themselves.  Again, this is not reflected in mainstream notations like UML or most existing ADLs, where little effort is made to identify meaningful symbols for concepts.
+\item Carefully designing the detail of the graphical notation pays off.  Using shapes that hint at their meaning and using a range of graphical dimensions to differentiate shapes helps people to remember them, even if they don't guess the link between the shape and the concept themselves.  Again, this is not reflected in mainstream notations like UML or most existing ADLs, where little effort is made to identify meaningful symbols for concepts.
 
 \item Consistency in the notation is very important and having a base shape for a general concept with refinements to it for different sub-concepts appears to help people considerably when interpreting the diagrams.
 
-\item Providing high quality support materials including an example-based description of the approach and notation, a number of realistic completed examples and a set of templates for new documents is very important.  We found repeatedly that people are much better at �filling in the gaps� rather than following a set of instructions and creating something from scratch.
+\item Providing high quality support materials including an example-based description of the approach and notation, a number of realistic completed examples and a set of templates for new documents is very important.  We found repeatedly that people are much better at "filling in the gaps" rather than following a set of instructions and creating something from scratch.
 
 \item Utilising familiar tools helps with the acceptance of the approach.  In this particular organisation, there were no complaints or difficulties with the use of a wiki for the text and tables information, whereas a very widely used commercial drawing tool (Visio) caused problems, even with a carefully tailored template, because it was not widely used in the organisation already.
 
 \end{itemize}
 
-  These lessons aren�t all that surprising but the importance of what seemed to be quite minor things (such as worked examples and quick reference cards) is important and is useful to bear in mind for the future.  The importance of matching the ADL to the specific domain being modelled is also a lesson that is not reflected in most modelling languages today, which tend towards the general rather than the specific.  
+  These lessons aren't all that surprising but the importance of what seemed to be quite minor things (such as worked examples and quick reference cards) is important and is useful to bear in mind for the future.  The importance of matching the ADL to the specific domain being modelled is also a lesson that is not reflected in most modelling languages today, which tend towards the general rather than the specific.  
 
   Given the relative success of this project, it is natural to ask how generally applicable its results are and how repeatable it is likely to be.  Given what we learned during the project, particularly the fact that the specialised nature of the notation was a key factor in its success, we feel that these lessons may well have general applicability, but only in the broad sense.  People like to be guided and they like familiar tools and techniques.  However the specific tools or techniques that work will be specific to each environment and people in different environments will have different levels of enthusiasm for learning new approaches.  However, when trying to get a significant amount of work done by people who are agnostic to the approach, familiarity and accessibility appear to help greatly with acceptance.
 
