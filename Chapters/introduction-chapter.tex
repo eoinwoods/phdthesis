@@ -20,6 +20,7 @@ Finally, so far, energy efficiency rarely features as an end-user requirement or
     \item European Commission JRC Insitute for Energy and Transport. (2015). The European Code of Conduct for Energy Efficiency in Data Centres. European Commission. Retrieved from http://iet.jrc.ec.europa.eu/energyefficiency/ict-codes-conduct/data-centres-energy-efficiency
     \item Evans, D. (2008). The Internet of Things Infographic. Retrieved October 23, 2015, from CISCO: http://blogs.cisco.com/diversity/the-internet-of-things-infographic
     \item The Green Grid. (2015). The Green Grid Data Centre Maturity Model. Retrieved from http://www.thegreengrid.org/en/Global/Content/white-papers/DataCenterMaturityModel
+    \item \citation{Reference2} %dummy reference
 \end{itemize}
 
 
@@ -27,12 +28,12 @@ Finally, so far, energy efficiency rarely features as an end-user requirement or
 
 This work aims to answer four specific research questions, namely:
 
-\begin{labeling}{RQ1}
+\begin{description}
 \item [RQ1] What ADLs exist and can they be used to reason about the energy properties of a system?
 \item [RQ2] Assuming that the answer to RQ1 is "yes" then how do we achieve this?  Otherwise how can architects prioritise their attention on energy efficiency.
 \item [RQ3] What design guidelines can we create to guide architects to improve energy efficiency of their systems?
 \item [RQ4] How can we raise awareness of application energy consumption during operation?
-\end{labeling}
+\end{description}
 
 In order to answer these questions, the work has involved the investigation of the use of ADLs for large scale architectural description, the identification of practical advice for how architects can focus attention on critical topics (such as energy efficiency) and the creation of a practical approach for estimating the energy usage of an application processing inbound requests.
 
@@ -43,8 +44,6 @@ In order to answer these questions, the work has involved the investigation of t
 \section{Structure of Thesis}
 
 This thesis is structured into 9 chapters, each presenting a specific aspect of the research work.
-
-\begin{description}
 
 \emph{Chapter 1} is this introductory chapter, setting the motivation and context for the work, defining the research questions, explaining the research approach and explaining the structure of the thesis.
 
@@ -58,11 +57,11 @@ This thesis is structured into 9 chapters, each presenting a specific aspect of 
 
 \emph{Chapter 6} explores the topic of how application energy usage can be monitored and estimated during the operation of a system and presents a theoretical model for solving this problem.
 
-Chapter 7 (Implementation of application Energy Monitoring) - the model and Apollo
+\emph {Chapter 7} presents a practical implementation of the energy estimation model, specialised to estimating energy usage of a group of microservices processing incoming requests.
 
-Chapter 8 (Validation of Application Energy Monitoring) - reporting testing.  Validation involves running scenarios and using Apollo to get answers.  Then create another way of estimating the resource usage of the "transactions" independently and comparing the two.  For example, run multiple services on one machine, burn 10 sec of CPU in one, 20 sec in the other, then in an enclosing window, Apollo should be reporting a ratio of 2:1 for their usage.
+\emph{Chapter 8} presents the work performed to validate the model implementation technology, which involved running a number of non-trival scenarios and using the tool to estimate their energy usage, while also deriving the same estimation through a separate, independent technique, using these secondary estimations to validate the outputs of the model and the tool.
 
-Chapter 9 (Conclusions and Future Work) - summarise the RQ, the work, the answers and point to future work for each.
+\emph {Chapter 9} summarises the research work, draws conclusions from it to answer the research questions and discusses possible future research work in each area.
 
 
 
