@@ -1,0 +1,480 @@
+\chapter{Prioritising Architectural Effort}
+
+\section{Introduction}
+
+In our research and practice in the field of software architecture, we have noticed and experienced how complex it is for software architects to prioritise their work.  The software architect's responsibilities are broad and in principle they can be involved in almost any technical aspect of a project from requirements to operational concerns.
+
+However, we also observe that successful software architects appear to be very good at focusing their effort effectively, which led us to wonder how they achieve this.  They may use generic time management techniques (like [2]) but we were interested in whether there are common role-specific heuristics which could be taught to new architects.
+
+We decided to investigate this via a questionnaire-based study of a group of experienced architects.  We discovered that there are common heuristics which experienced architects use to prioritise their work and we created a model to capture them.  We then validated the model via an online questionnaire with a much wider group of practitioners and refined the model based on their input.
+
+In this paper, we explain the approach we took and present both the initial model that we created from the results of the interview process and the final, refined, model that we created after the validation process.  The contribution of our work is not specifically the heuristics in our model, indeed most of them are quite familiar to experienced practitioners, but rather the organisation of the heuristics and the validation that they are used by experienced practitioners to guide their work.  We believe that this makes the model a useful reminder for experienced practitioners and an effective teaching aid for new architects who are learning how to perform the role.
+
+\section{Related Work}
+
+When we started investigating this topic, we were primarily interested in how practitioners really worked; However, we also performed a literature search to find related work from the research community.
+We did not find any studies investigating the specific topic we were interested in, but an entire architectural method which is directly relevant to helping architects focus their attention is Risk and Cost-Driven Architecture (RCDA) [11].  This method transforms the architect's approach from defining finished architectural structures at the start of a project, to working throughout the project to provide a stream of decisions, using the risk and cost of open decisions to prioritise the architect's work.  We were also interested in finding some very specific advice from a very experienced architect and researcher [9] that architects should spend 50\% of their time on architecting, 25\% on inbound communication and 25\% on outbound communication.  However, this is anecdotal advice based on personal experience, rather than the sort of survey-based study that we wished to run.
+
+In the research domain, we found a research community interested in prioritisation of requirements [4, 6] and a literature review summarising the research in this area in 2014 [1].  Prioritising requirements is clearly related to how an architect should focus their attention, but it is only one of a range of possible factors that they could use, so this area of research did not appear to be very relevant to our investigation.
+
+Finally, there is a large amount of mainstream business and self-help literature on time management (such as the well-known [1] and [8]); However, we were interested in providing more tailored and prescriptive advice to software architects specifically rather than this sort of more general advice.
+
+\section{Research Method}
+
+When planning this research, we selected a qualitative research approach because we needed to explore the "lived-experiences" of expert practitioners by asking them questions to encourage reflection and insight [12] rather than assessing performance or alignment with specific practices via quantitative means.
+
+The process was organised into four distinct stages.
+
+\begin{description}
+	\item [Stage 1] gathering primary data using semi-structured interviews with practitioners.
+	\item [Stage 2] analysis of the primary data and creation of a preliminary model.
+	\item [Stage 3] validation of the preliminary model via a structured online questionnaire, completed by practitioners in relevant architecture roles (primarily software, solution and enterprise architects).
+	\item [Stage 4] analysis of the validation data and refinement of the preliminary model into a final, validated model.
+\end{description}
+
+We chose to gather our primary data using semi-structured interviews, where we provided the interviewees with a written introduction to the question we wanted to answer and then some specific questions to start their thought processes. 
+
+The analysis of the primary data was performed using a simple application of Grounded Theory as it is a suitable method for theory building, to understand the relationships between abstract concepts [5], which described our situation and needs very closely.  We performed initial coding on the primary data and then refined this with a focused coding exercise.  As suggested in [12], the process of collection and analysis was a parallel, iterative process, rather than a linear one with fixed phases.  
+
+This exercise produced a set of themes that classify the heuristics that the architects use, as well as the heuristics themselves.  A heuristic had to be mentioned by at least three of the participants (which represented a third of them) for us to consider it significant enough to be included in the model.  We combined the themes and heuristics to form a simple model (the "preliminary model") of how experienced architects go about prioritizing their effort. 
+
+Once we had the preliminary model available, we published it at a research conference [15] and via a LinkedIn post (https://www.linkedin.com/pulse/focusing-software-architects-attention-eoin-woods) and created an online questionnaire aimed at architecture practitioners to allow them to evaluate and comment on the usefulness of the model.  We publicised the survey via LinkedIn, Twitter and via direct email to our network of architecture practitioners.
+
+We received 84 responses to the survey, containing answers to our closed-ended questions to evaluate the usefulness of the model and also received answers to open-ended questions in 50 of the responses.  We used the closed-ended questions to evaluate the usefulness of the model and analysed the open-ended responses to identify themes which needed to be addressed by the model.
+
+The model was validated strongly across respondents from different locations, with different amounts of experience and from different architectural specialisations. Additionally, a small number of themes emerged from the answers to the open-ended questions.  These themes for improving the model were used to revise and extend it slightly, creating an improved final version that reflected the input from the respondents.
+
+A description of the four stages of the research method is presented below, along with the final version of the architectural effort prioritisation model.
+
+\section{Stage 1 - The Initial Study}
+
+Our primary data gathering was performed using a semi-structured, face-to-face survey of 8 experienced software architecture practitioners working across 4 countries.
+
+We found the participants by approaching suitable individuals from our professional networks.  We were looking for practitioners who had a minimum of 10 years' professional experience and who worked as architects in the information systems domain (rather than architects from \textendash for example \textendash embedded systems).  
+
+We focused on the information systems domain because we know from experience that working practices differ between professional domains like information systems and embedded systems.  Hence, we thought it was more likely that we could create a useful model if we limited ourselves to one broad domain, at least initially. 
+
+We deliberately selected candidates that we knew differed from each other in organisation, specialisation and geography to get a reasonably diverse population and avoid obvious sample bias (we discuss the threat of sample bias further in Section \ref{sec:threats}).
+
+Some characteristics of the participants in the study are summarised in the graphs in Fig. 1.  As can be seen, they represent a range of experience, role type and country.
+  
+ 
+Fig. 1. Study Participants (8 in total)
+
+All of our initial practitioner set had over 10 years of post-graduate experience and some had over 30 years of experience, so ensuring that they all had a significant amount of professional practice upon which to base their answers.
+
+We deliberately selected software and enterprise architects because this is who the model was primarily aimed at serving.
+
+We approached individuals in a number of countries to try to minimise the risk that we would reflect practice only in one country, although we did not manage to gain representation from beyond North America and Europe.
+
+We used a semi-structured interview format with a written introduction to the question which each interviewee read before being asked a standard set of open-ended questions which explored how they went about prioritisation of architecture work and any specific factors that they used to guide them.  
+
+The question we asked was "how can the architect concentrate their attention so that they are most effective?" The more specific questions used to stimulate the thought process were: 
+
+\begin{itemize}
+	\item How do you go about this in your work? 
+	\item What factors do you consider when prioritising your attention? 
+	\item Do you consider what to focus on?   Or what not to focus on? 
+	\item For example, how do you prioritise architectural governance compared to other aspects of the project?
+\end{itemize}
+
+The interviewer asked additional questions to understand the answers fully or to encourage the interviewee to add more detail or fill in ambiguous aspects of the answer.
+
+The process of initial coding of the primary data resulted in 25 items, which could be associated with at least one of the interviews.  A further focused coding process revealed that there were 9 underlying heuristics which appeared to be significant to the participants in the study. Then, a further analysis iteration lead to the identification of three categories of prioritisation heuristic which we use to structure our model.
+
+\section{Stage 2 - Preliminary Model for Prioritising Architectural Effort}
+
+\subsection{The Preliminary Model}
+
+Our preliminary heuristic model for focusing architectural effort is shown in Fig. 2.
+ 
+Fig. 2. Preliminary Model for Focusing Architectural Attention
+
+The three categories of heuristic that the study revealed were firstly, the need to focus on stakeholder needs, secondly, the importance of considering risks when deciding on where to focus effort, and finally the importance of spending time to achieve effective delegation of responsibilities.  These categories form the structure of our model and remind the architect of the general ways in which they should prioritise their efforts. The categories and heuristics are explained in more detail in section \ref{sec:prelim-model-content}.
+
+It is important to understand the nature of this model and how it should be used.  It is not a prescriptive process for architects to follow or a process for developing an architecture.  This model is an aide memoir to organise and present a set of heuristics that experienced architecture practitioners appear to find useful when prioritising their work.  While we believe this to be a useful model to teach trainee architects, and a useful reminder for experienced architects, it is necessary to apply the model in a context-sensitive manner, within whatever method that the architect is using to develop software architectures.
+
+\subsection{Content of the Preliminary Model}
+\label{sec:prelim-model-content}
+
+\subsubsection{Understand the Stakeholder Needs and Priorities}
+
+The first theme which emerged strongly in our study was focusing on the needs and priorities of the stakeholders involved in the situation.  The principle that architecture work involves working closely with stakeholders is widely agreed [3, 13] and this theme reinforces that. Architects need to focus significant effort to make sure that stakeholder needs and priorities are understood to maximise focus on the critical success factors for a project and maximise the chances of its timely completion.  Based on the study, three specific heuristics to achieve this were identified:
+
+\begin{itemize}
+	\item \emph{Consider the whole stakeholder community}. Spend time understanding the different groups in the stakeholder community and avoid the mistake of just considering obvious stakeholder groups like end-users, acquirers and the development team.  As the architecture methods referenced above note, ignoring important stakeholders (like operational staff or auditors) can prevent the project meeting its goals and cause significant problems on the path to production operation.
+	\item \emph{Ensure that the needs of the delivery team are understood and met}.  Spend sufficient time to ensure that the delivery team can be effective.  What is the team good at?  What does it know?  What does it not know?  What skill and knowledge gaps does it have?  These areas need attention early in the project so that architecture work avoids risks caused by the capabilities of the team and that time is taken to support and develop the team to address significant weaknesses.
+	\item \emph{Understand the perspective and perceptions of the acquirers of the system}.  Acquirers are a key stakeholder group who judge its success and usually have strategic and budgetary control, so can halt the project before delivery if they are unhappy.  Specifically addressing this group's needs, perceptions and concerns emerged as an important factor for some of the experienced architects in our study.  Acquirers are often distant from the day-to-day reality of a project and need clear communication to understand their concerns and ensure that they have a realistic view of the project.
+\end{itemize}
+
+\subsubsection{Prioritise Effort According to Risks}
+
+During a project, an effective approach to prioritising architectural attention is to use a risk-driven approach to identify the most important tasks.  If the significant risks are understood and mitigated, then enough architecture work has probably been completed.  If significant risks are open, then more architecture work is needed. The specific heuristics to consider for risk assessment are:
+
+\begin{itemize}
+	\item \emph{Consider external dependencies}.  Understand your external dependencies because you have little control over them and they need architectural attention early in the project and whenever things change.
+	\item \emph{Look for novel aspects of domain, problem and solution}.  Another useful heuristic, from the experience of our study participants, is to focus on novelty in your project.  What is unfamiliar?  What problems have you not solved before?  Which technology is unproven?  The answers to these questions highlight risks and the participants in our study used them to direct their effort to the most important risks to address.
+	\item \emph{Identify the high impact decisions}.  Prioritise architecture work that will help to mitigate risks where many people would be affected by a problem (e.g. problems with the development environment or problems that will prevent effective operation) or where the risk could endanger the programme (e.g. missing regulatory constraints).
+	\item \emph{Analyse your local situation for risks}.  Consider the local factors unique to your situation, which you will be aware of due to the knowledge you have of the domain, problem and solution.  It is impossible to give more specific guidance on this heuristic as every situation is different, but the participants in our study noted the importance of "situational awareness" [14] that allows the architect to find and address the risks specific to the local environment (perhaps due to organisational factors, specific technical challenges, domain complexities or business constraints).
+\end{itemize}
+
+\subsubsection{Delegate as Much as Possible}
+
+Delegation was an unexpected theme that emerged from our study. The architects who mentioned this theme viewed themselves as a potential bottleneck in a project and delegation and empowerment of others was a way to minimise this.  Delegation was also seen as a way of freeing the architect to focus on the aspects of the project that they had to focus on rather than all the other aspects that they could possibly get involved in.
+
+The general message of this theme is to delegate as much architecture work as possible to the person or group best suited to perform it, to prevent individuals becoming project bottlenecks, allow architects to spend more time on risk identification and mitigation, and to spread architectural knowledge through the organisation.  The heuristics that were identified to help achieve this are:
+
+\begin{itemize}
+	\item \emph{Empower the development teams}. To allow delegation and work sharing, architects need to empower (and trust) the teams they work with.  This allows governance to become a shared responsibility and architecture to be viewed as an activity rather than something that is only performed by one person or a small group.  This causes architectural knowledge, effort and accountability to be spread across the organisation, creates shared ownership, reduces the load on any one individual and prevents reliance on a single individual from delaying progress.
+	\item \emph{Create groups to take architectural responsibilities}.  A related heuristic is to formalise delegation somewhat and create groups of people to be accountable for specific aspects of architectural work.  For example, in a large development programme, an architecture review board can be created to review and approve significant architectural decisions.  Such a group can involve a wide range of expertise from across the programme and beyond, so freeing a lead architect from much of the effort involved in gathering and understanding the details of key decisions, while maintaining effective oversight to allow risks to be controlled and technical coherence maintained.  Similarly, a specific group of individuals could be responsible for resilience and disaster recovery for a large programme, allowing them to specialise and focus on this complex area, and allowing a lead architect to confidently delegate to them, knowing that they will have the focus and expertise to address this aspect of the architecture.
+\end{itemize}
+
+\section{Stage 3 - Validating the Preliminary Model}
+
+\subsection{The Questionnaire}
+
+Once we had a preliminary model, we wanted to validate its usefulness with a much larger group of experienced practitioners.  This was conducted using a structured online questionnaire.  The questionnaire asked the respondents to read the model and then comment on its credibility and usefulness.  We asked both closed questions, that asked respondents to rate the model on 5 point scales, and open-ended questions that allowed the respondents to consider whether there were aspects of focusing attention that we had missed and also to collect general comments on the model.  Finally, we asked some closed classification questions to allow us to understand who had completed the survey, while preserving their anonymity if desired.
+
+We asked three closed-ended questions to find out whether the respondent thought that the model was credible and useful.  These questions and the possible responses were:
+
+\begin{description}
+	\item [Q1] "Is this model similar to how you focus architectural attention in your work already?" (Not at all similar / Not Very Similar / Somewhat Similar / Quite Similar / Very Similar)
+	\item [Q2] "Would you find this model helpful in guiding architectural attention for maximum benefit?" (Definitely Not / Probably Not / Possibly / Probably Yes / Definitely Yes)
+	\item [Q3] "Are the areas of risk mentioned in the "Prioritise time according to risks" activity valuable?" (Definitely Not / Probably Not / Somewhat / Probably Yes / Definitely Yes)
+\end{description}
+
+The open-ended questions that we asked were:
+
+\begin{description}
+	\item [Q4] "Are there other general areas of risk that should be added to "Prioritise time according to risks" that would be applicable to most (information) systems and environments? If so please list and briefly explain them."
+	\item [Q5] "Are there any significant factors missing from the model which you use to focus your architectural work?"
+	\item [Q6] "Do you have any other comments on the  model or the survey"
+\end{description}
+
+The closed-ended questions we asked to allow us to classify the respondents and their possible answers were:
+
+\begin{description}
+	\item [Q7] "What environment do you work in?"
+	\begin{itemize}
+		\item Industry (developing systems, consultancy and related work)
+		\item Industrial Research (working in a research environment for an industrial employer) 
+		\item Academic (teaching or researching in university or similar environments)
+		\item Other (please specify)
+	\end{itemize}
+	\item [Q8] How many years of post-graduation experience do you have?
+	\begin{itemize}
+		\item 1-5 years
+		\item 5-10 years
+		\item 10-15 years
+		\item 15-20 years
+		\item More than 20 years
+    \end{itemize}
+	\item [Q9] What is your main job role?
+	\begin{itemize}
+		\item Software Architect
+		\item Enterprise Architect
+		\item Software Designer
+		\item Researcher
+		\item Other (please specify)
+    \end{itemize}
+	\item [Q10] Where in the world are you based?
+	\begin{itemize}
+		\item North America
+		\item South America 
+		\item Europe (including UK) 
+		\item Middle-East and Africa 
+		\item Asia-Pacific
+		\item Other (please specify)
+	\end{itemize}
+\end{description}
+
+We also invited them to leave an email address if they wanted to be informed of the outcome of the study and provided a free text box for any final comments or questions.  We did not view the email address and the final text box as survey data for the purposes of analysis.
+
+Having trialled the questionnaire ourselves and with two other individuals, we expected most respondents to take 10 – 15 minutes to complete it.
+
+\subsection{The Respondents}
+
+To use the questionnaire to validate the model, we needed to find a suitable set of architects who could read it and complete the survey for us.  We found our respondents via two main activities.  
+Firstly, we wrote a LinkedIn post (https://www.linkedin.com/pulse/focusing-software-architects-attention-eoin-woods/) which provided an outline of the model, explained that we wanted to validate it and who we wanted to participate, and provided a link to the survey.  This was posted from my account and so tended to appear in the LinkedIn news feed of practitioners, as my LinkedIn network contains many more practitioners than researchers.  The post was further publicized via Twitter and Facebook to reach a larger audience.  This step was moderately successful, with the post being viewed about 700 times and about 25 people completing the survey successfully.
+
+To gain more responses to the survey, the second activity was a targeted email sent to individuals that we knew personally and who we knew were practicing software related architects (including software, solution and enterprise architects).  This second activity resulted in about 60 more responses to the survey.
+
+In total, we received 84 completed surveys.
+
+The job roles of the respondents are summarized in Figure 3.  About a third of the respondents identified themselves as software architects, about a quarter as enterprise architects, about 12\% as software designers, 10\% as solution architects, and 5\% as technical architects.  Four respondents did not complete this answer and four had other job titles (a risk assessor, a technical manager and systems engineer, a project manager and a strategy consultant).
+ 
+Figure 3 - Respondent Roles
+
+The work environments of the respondents were overwhelmingly industrial (we viewed those building systems in the public sector as part of "industry"), with only one respondent having a purely academic work environment.  Five respondents did not provide an answer to this question.  Of these five, two were from German IP addresses, one Swiss and two UK addresses.  Four were from private ISP connections and one was from a UK public sector body, which, with another respondent who identified themselves as working in the public sector, suggested there were at least two public sector respondents.
+ 
+Figure 4 - Respondent Work Environments
+
+We had some geographical distribution of respondents, as shown in Figure 5, although there is a clear bias towards Europe, almost certainly caused by our professional networks being centred in Europe.  55\% of respondents identified themselves as coming from Europe, 30\% from the Americas and only 7\% from Asia-Pacific and a single correspondent from the Middle-East and Africa.
+ 
+Figure 5 - Respondent Geographies
+
+To delve a little deeper, we checked the geographical location of the respondents' IP addresses using the well-known "geoiplookup" command line tool (http://geoiplookup.net/).  Of the four respondents who did not answer the question, the IP addresses they were using were in the UK (two), Germany (one) and Switzerland (one).  While this does not prove that the respondents work in those countries (they could have been travelling away from home) it does make it likely that they are from Europe, taking the European percentage to about 60\%.
+ 
+Figure 6 - Respondent IP Address Locations
+
+The result of using the respondents' IP address geographical locations to find which countries the questionnaire was completed form is shown in Figure 6.  While we must be cautious in assuming that these geographical locations are necessarily the locations of the respondents' homes and workplaces, it is a useful cross-check on the data.  We can see that 20 countries are represented, with 6 countries having 4 correspondents or more (which is roughly 5\% of the survey size).  These larger 6 countries are the UK, Canada, the USA, Germany, the Netherlands, Sweden, Australia and Romania.  Ten of the countries (Brasil, China, Columbia, France, India, Israel, Switzerland, Turkey and Uruguay) only had one survey completed from one of their IP addresses.  Just over 55\% of the responses were from IP addresses located in four countries, the UK (20\%), Canada (15\%), the USA (12\%) and Germany (11\%).
+
+We discuss the possible impact of geographical location more when we consider threats to validity, later in the paper, but we think it is fair to say that we achieved good cross-geographic participation, but still ended up with a strong bias to Western Europe and North America.
+
+The final classification we asked our respondents for was the number of years of experience that they had.  We asked this to ensure that participants had a significant amount of professional practice upon which to base their evaluation of the model and to allow us to understand if there are differences in the value of the model to architects with different amounts of experience.  The degree of experiences for our respondents is summarized in Figure 7.
+ 
+Figure 7 - Years of Experience of Respondents
+
+The obvious first impression is that our respondents were overwhelmingly experienced people, with over half of them (55\%) having at least 20 years of post-graduation experience.  At the other extreme only one respondent had less than 5 years of experience.  About 7\% had 5 to 10 years of experience, 15\% had 10 to 15 years and about 17\% had 15 to 20 years.  Four of our correspondents did not answer this question.
+
+\subsection{The Results}
+
+As mentioned earlier, we structured the questionnaire into two distinct parts, the closed-ended questions that asked people to rate the usefulness of the model and the open-ended questions that asked whether we had missed important risk areas to use with the prioritization heuristic or whether there were any significant aspects of prioritization that were completely missing from the model.
+
+In this section, we review and analyse the responses for the closed-ended questions in the survey.
+The first question we asked was to find out if the model was similar to how experienced architects already focused their attention, which would suggest that the model was credible and, if we assume that experienced architects are probably effective, a useful guide for less experienced architects, early in their career.  The responses we received from all of the respondents are summarized in Figure 8.
+ 
+Figure 8 - How Similar the Model is to Existing Practice
+
+Considering all of the responses, the model validates quite strongly against the participants' existing practice, with 75\% of respondents stating that it was "very similar" or "quite similar" to their existing approach for focusing attention in their architecture work.  20\% said it was "somewhat similar", 5\% said it was not very similar to how they worked, and no respondents replied "not at all similar".
+
+Given that we were interested in attracting experienced architects to validate the model, we were also interested in finding out whether the number of years of experience altered their view of how similar the model was to how they worked.  The summary of this information is shown in Table 1.
+
+
+	Not at All Similar	Not Very Similar	Somewhat Similar	Quite Similar	Very Similar
+1 to 5 Years				1 (100%)	
+5 to 10 Years		1 (17%)	2 (33%)	1 (17%)	2 (33%)
+10 to 15 Years		1 (8%)	3 (25%)	7 (58%)	 1 (8%)
+15 to 20 Years			1 (7%)	11 (79%)	2 (14%)
+More than 20 Years		2 (4%)	10 (21%)	22 (47%)	13 (28%)
+
+Table 1 - Similarity of the Model to Practice by Experience Level
+
+The table shows how many respondents, grouped by years of experience, rated the model at each similarity level, compared to their own approach to prioritizing their work.  The 4 participants who did not indicate their experience level are excluded from this table.  The percentage values are the percentage of the participants in the current row that the value represents.
+
+We are primarily interested in the top three groups, which is architects with at least 10 years of experience.  What we can see from this data is that the degree of similarity between the model and the architect's current practice does vary between these three groups, with 66\% of the 10 – 15 year group rating it as "quite similar" or "very similar", 93\% of the 15 – 20 years group rating it at this level and 75\% of the 20+ year group rating it in this way.  So, all three groups validate quite strongly, but it seems to reflect most strongly how the 15+ year groups work.
+
+The second question moved on to try to establish, whether the respondents thought that model would be useful in practice.  A summary of the answers to this question across all responses is shown in Figure 9.
+ 
+Figure 9 - Helpfulness of the Model
+
+Across all of the respondents, 70\% said that it was definitely or probably useful, which we interpret as a strong overall validation of the model.  The remaining respondents mainly stated that they might "possibly" find it useful.  Only 3 respondents said "probably not" and none said "definitely not".
+We were interested in how the utility of the model might vary by the experience of the respondent, so we performed similar analysis by experience group to that performed for the previous question.  The results are shown in Table 2.
+
+	Definitely Not	Probably Not	Possibly	Probably Yes	Definitely Yes
+1 to 5 Years					1 (100%)
+5 to 10 Years		1 (17%) 	3 (50%)	2 (33%)	
+10 to 15 Years			4 (33%)	5 (42%)	3 (25%)
+15 to 20 Years			4 (29%)	5 (36%)	5 (36%)
+More than 20 Years		2 (4%)	10 (26%)	23 (43%)	12 (26%)
+
+Table 2 - Helpfulness of the Model by Experience Level
+
+Again, focusing on the architects with at least 10 years of experience, 67\% of the 10 to 15 year experience group believe the model is "probably" or "definitely" useful, 72\% of the 15 to 20 year group also rate it at this level, while 69\% of the most experienced, 20+ years of experience group, believe it is "probably" or "definitely" useful.  A strong majority of respondents in all three groups appear to find the model useful, with the strongest validation coming from the 15 – 20 years of experience group.
+Finally, we wanted to check that the areas of risk we had identified as important within the "prioritise time according to risks" heuristic were valuable to a practicing architect.  The results of the corresponding question in the survey across all respondents are shown in Figure 10.
+ 
+Figure 10 - Validation of Risk Prioritisation Areas
+
+In this case we did have one very strong negative opinion ("definitely not") but this was a single individual (an enterprise architect in the 10 – 15 years of experience group, who commented in the open-ended questions that he did not believe that it was possible to define general software development risks in a useful way).
+
+Beyond this response, 80\% of respondents believe that the areas of risk were "definitely" or "probably" valuable, suggesting that this aspect of the model should be of value to many practitioners.
+
+Again, we analysed the responses by experience level of the respondent, which is shown in Figure 11.
+
+	Definitely Not	Probably Not	Somewhat	Probably Yes	Definitely Yes
+1 to 5 Years					1 (100%)
+5 to 10 Years		1 (17%) 	1 (17%)	2 (33%)	2 (33%)
+10 to 15 Years	1 (8%)			5 (42%)	6 (50%)
+15 to 20 Years			3 (21%)	6 (43%)	5 (36%)
+More than 20 Years		2 (4%)	9 (19%)	17 (36%)	19 (40%)
+
+Figure 11 - Value of Risk Factors by Experience Level
+
+Looking at the architects with more than 10 years experience, we still see a high degree of validation (92\% of 10 to 15 year experience respondents, 79\% of 15 to 20 year respondents and 76\% of respondents with more than 20 years of experience saying "probably yes" or "definitely yes") but there is a larger range of opinion than before.
+
+We had the single individual who strongly disagreed with the risk factors being valuable in the 10 – 15 year group, 3 respondents in the 15 to 20 years of experience group only feeling that they were "somewhat" valuable and 11 respondents with more than 20 years of experience stating that the factors were "somewhat" or "probably not" valuable.
+
+This said, we still feel that the degree of validation that the model received across all of the experience levels indicates that the model has a high possibility of being useful to at least a majority of practitioners.
+
+We were also interested to investigate if the key question of how useful the model was would vary significantly between our different respondent groups, particularly by job family and geography, which might suggest that the model aligned better with certain types of architecture work or practice in certain parts of the world.
+
+We have analysed the responses to the question "Would you find this model helpful in guiding architectural attention for maximum benefit?" by role type and the results are shown in Table 3 and Figure 12.
+
+	Definitely Not	Probably Not	Possibly	Probably Yes	Definitely Yes
+Software Architect		1 (3%)	11 (35%)	13 (42%)	6 (19%)
+Software Designer		1 (10%)	2 (20%)	5 (50%)	2 (20%)
+Solution Architect			2 (25%)	5 (63%)	1 (12%)
+Technical Architect				2 (50%)	2 (50%)
+Enterprise Architect		1 (4%)	4 (17%)	9 (39%)	9 (39%)
+
+Table 3 - Usefulness of the Model by Role Type
+ 
+Figure 12 - Usefulness of the Model by Role Type
+
+As can be seen, all of the respondent role groups validated the model as "probably" or "definitely" useful, with the lowest validation (interestingly) coming from the Software Architect group, where 61\% of the respondents indicated this level of agreement (although nearly all of the remaining respondents were neutral – "possibly" – rather than negative).  In the Software Designer group 70\% of respondents, in the Solution Architect group 75\%, in the Technical Architect group 100\% and in the Enterprise Architect group 78\% of respondents considered the model to be "definitely" or "probably" useful.
+
+Turning to the possible influence of geographical location, we analysed the same question as to the usefulness of the model by the respondents, by the geographical location that the respondents told us they were from.  The results are summarized in Table 4 and Figure 13.
+
+	Definitely Not	Probably Not	Possibly	Probably Yes	Definitely Yes
+Americas			6 (23\%)	10 (38\%)	10 (38\%)
+Asia-Pacific			3 (50\%)	3 (50\%)	
+Europe (inc. UK)		3 (6\%)	11 (23\%)	22 (45\%)	11 (23\%)
+Middle-East \& Africa			1 (100\%)		
+
+Table 4 - Usefulness of the Model by Geography
+ 
+Figure 13 - Usefulness of the Model by Geography
+
+In this analysis we have included all of the regions, but in reality the data for the Middle-East and Africa and Asia-Pacific is difficult to use with confidence as there were very few respondents from these regions (1 from ME\&A and 6 from APAC).  Therefore, while recognizing the importance of these regions and their contribution to contemporary software engineering, we focus on Europe and the Americas for the purposes of this specific analysis.
+
+We had 26 respondents from the Americas and 69 from Europe (including the UK).  Both of these contributions are large enough to be significant, being 31\% and 82\% of the total responses, respectively.
+
+Of these significant geographical groups, the group from the Americas validated the usefulness of the model more strongly, with 76\% of respondents indicating that the model was "definitely" or "probably" useful.  For the European group, 68\% of the respondents indicated that the model was "definitely" or "probably" useful.
+
+We interpret this data as suggesting that the model validates well in both the Americas and in Europe and should be useful in both regions.  The data we have suggests that it should also be useful in Asia-Pacific as 50\% of respondents indicated it would be useful, while in contrast it may not be useful in ME\&A as our single respondent from that region indicated it was "probably not" useful; However, we do not have enough respondents from these regions to draw meaningful conclusions.  To investigate the usefulness of the model in APAC and the Middle-East and Africa would require a further study.
+
+In summary, having analysed the answers to the closed-ended answers in our survey, we conclude that our model is likely to be credible and useful in Europe and the Americas and broadly aligns with the prioritization approach used by many experienced architects in those regions.
+We view this as a successful validation of the model; However, we were also interested in how the model could be improved and so we used the responses to the open-ended questions in the survey to find themes which we could include in a refined model.
+
+\subsection{Analysing the Open-Ended Responses}
+\label{sec:openended}
+
+As explained earlier, we asked two important open-ended, questions, Q4, to identify missing risk factors from the "prioritise time according to risks" heuristic ("are there other general areas of risk that should be added to "prioritise time according to risks" that would be applicable to most (information) systems and environments?") and Q5, to ask whether we had missed any important aspect of the model entirely ("are there any significant factors missing from the model which you use to focus your architectural work?").
+
+We had 44 responses to Q4, about missing aspects of the model, and 51 responses to Q5, about missing areas of risk.
+
+Given the nature of these responses, we again used grounded theory style analysis to analyse them, coding each one initially using straightforward, descriptive labels, directly reflecting the language used in the response, then refining this with further coding steps, to identify higher-level categories to allow the responses to be collected into meaningful groups.
+
+For the first question, Q4, we initially coded the responses to 37 distinct categories, plus two null categories for the initial coding of "None" and "General Comment" for those responses which were present but did not specify a new risk area or just made a general comment.  The responses suggested a diverse range of possible risk areas, and when we refined the coding to find common concepts, this resulted in 24 higher level categories.  We attempted to refine this further but did not find further meaningful refinements as we tried further rounds of coding (we judged that we had reached "theoretical saturation" with the data).   In addition, we had a very long "tail" of concepts with only a single mention in the responses, leaving us with 5 categories that had 4 responses or more: Organisational Environment (11 occurrences), Stakeholders (6 occurrences), Cost (6 occurrences), Time (4 occurrences), External Environment (4 occurrences).  We chose to focus on categories with at least 4 occurrences as this represents approximately 5\% of the total respondents to the survey and we judged this to be high enough to warrant consideration.
+
+In the context of a survey with over 80 responses, none of the categories of response for missing risk factors was universally viewed as important, but we felt that it was important to reflect the fact that these four factors had been independently identified by a number of people.  Therefore, we decided to integrate these new factors into the refined version of the model.
+
+For the second open-ended question, Q5, on missing aspects of the model, we initially coded the responses into 43 distinct categories, again plus "None" and "General Comment".  As we continued with the process of refining the coding further, we ended up with 26 higher level categories.  As with the responses to Q4, many of the categories were only mentioned once and only four were mentioned 4 times or more: Team Effectiveness (10), Benefits (7), Stakeholders (6) and Time (5).  Of these factors, "Stakeholders" are already a significant factor in the model and the comments provided in these cases were suggesting a particular emphasis on certain stakeholders or method of dealing with stakeholders.  The specific suggestions were all different and stakeholder needs and priorities are already a significant part of the model, so we did not feel that a new model element was needed, but we simply need to review the detailed comments and ensure that they are reflected in the existing elements of the model.
+
+In this context, we felt that adding a completely new aspect to the model was a significant step and so we only wanted to consider this for aspects which had been identified as important by a significant number of respondents to the survey.  On this basis, we decided to add a new element to the model to reflect the "Team Effectiveness" theme as it was the only additional candidate aspect that at least 10\% of the respondents had identified as important.
+
+Finally, we also received 37 general comments in the open-ended question at the end of the survey along with another 14 responses to the other open-ended questions which we judged to be general comments rather than specific answers to those earlier questions, making a total of 51 general comments.  We do not view these responses as part of the validation of the model, but some of them did provide useful commentary on the work.  Again, we used a grounded theory style coding approach to analyse the data and this resulted in 23 categories of comment.  Like the other open-ended questions, most of these categories were not judged as significant because less than four respondents mentioned them.
+
+The categories which had four or more respondents were general Positive Comments such as "nice and simple model" (14), comments on the How the Architect Should Work, such as "an architect must help implement what he/she helped to decide" (6) and comments on the Presentation of the Model, such as "this model […] does appear to be a rather linear, and distinct,  in reality it [the process] is quiet (sic) iterative and overlapping" (5).
+
+We found all of the general comments interesting and potentially useful, but most of them did not lead us to conclude that further changes were needed to the model.  The exception was the group of comments categorized as Presentation of the Model.  These 5 comments suggested that the respondents interpreted our graphical presentation of the model as indicating a linear "upfront" process.  In fact, we had meant to communicate exactly the opposite through our diagram, and indicate that the process is iterative and continuous, happening right through the project's lifecycle.  We took this as an important indicator that we needed to change the graphical representation of the model and also describe its intended iterative and continuous nature more clearly in the supporting text.
+
+\section{Stage 4 - The Refined Model for Prioritising Architectural Effort}
+
+We took the outputs of the open-ended question analysis described in section \ref{sec:openended} and used them to add missing features of the model, improve the list of risks to suggest for time prioritisation and improve the model using the advice provided in the general comment responses to the survey.
+The result of these additions is a refined model for prioritising architectural effort, with an additional feature of the model, "Team Effectiveness" and a refined list of risks for time prioritisation.  As mentioned earlier, we also decided to alter the graphical presentation of the model to try to emphasise that it is not a linear "process" but rather a set of activities to be performed throughout the project lifecycle.  The refined model is shown in Figure 14.
+ 
+Figure 14 - Refined Model for Prioritising Architectural Attention
+
+The model is comprised of 4 aspects, Stakeholder Needs and Priorities, Prioritise Time According to Risks, Delegate as Much as Possible and Team Effectiveness.  Each aspect is a theme which our initial interviewees and the later survey respondents find useful when considering how to prioritise their architectural work.  The details of each theme are described in the subsections below. 
+
+The idea of the model is to provide a guide for new architects, or an aide-memoir for experienced architects, on how to prioritise their architectural work in order to maximise its effectiveness.  It is not a process or a step to be followed in an architectural "method" but rather these are themes for effective effort prioritisation that should be repeatedly considered during the lifecycle of a project.
+As with any set of heuristics, they can only be a generalised starting point and need to be considered, interpreted and applied in a context specific way by the architects and teams who use them.  However, they have validated well against a reasonably broad survey of experienced, practicing architects and so we believe that they are a useful starting point upon which to build a personal approach for prioritisation.
+
+\subsection{Stakeholder Needs and Priorities}
+
+The first theme which emerged strongly in our study was focusing on the needs and priorities of the stakeholders involved in the situation.  The principle that architecture work involves working closely with stakeholders is widely agreed [3, 13] and this theme reinforces that. Architects need to focus significant effort to make sure that stakeholder needs and priorities are understood to maximise focus on the critical success factors for a project and maximise the chances of its success.  Three specific heuristics to achieve this which emerged from the study are:
+
+\begin{itemize}
+	\item \emph{Consider the whole stakeholder community}. Spend time understanding the different groups in the stakeholder community and avoid the mistake of just considering obvious stakeholder groups like end-users, acquirers and the development team.  As the architecture methods referenced above note, ignoring important stakeholders (like operational staff or auditors) can prevent the project meeting its goals and cause significant problems on the path to production operation.
+	\item \emph{Ensure that the needs of the delivery team are understood and met}.  Spend sufficient time to ensure that the delivery team can be effective.  What is the team good at?  What does it know?  What does it not know?  What skill and knowledge gaps does it have?  These areas need attention early in the project so that architecture work avoids risks caused by the capabilities of the team and that time is taken to support and develop the team to address significant weaknesses.
+	\item \emph{Understand the perspective and perceptions of the acquirers of the system}.  Acquirers are a key stakeholder group who judge its success and usually have strategic and budgetary control, so can halt the project before delivery if they are unhappy.  Specifically addressing this group's needs, perceptions and concerns emerged as an important factor for some of the experienced architects in our study.  Acquirers are often senior managers and so may be distant from the day-to-day reality of a project and need regular, targeted, clear communication to understand their concerns and ensure that they have a realistic view of the project. 
+\end{itemize}
+
+\subsection{Prioritise Effort According to Risks}
+
+During a project, an effective approach to prioritising architectural attention is to use a risk-driven approach to identify the most important tasks.  If the significant risks are understood and mitigated, then enough architecture work has probably been completed.  If significant risks are open, then more architecture work is needed. The specific heuristics to consider for risk assessment are:
+
+\begin{description}
+	\item \emph{Risks from external dependencies}.  Understand your external dependencies because you have little control over them and they need architectural attention early in the project and whenever things change.
+	\item \emph{Risks from novel aspects of the domain, problem or solution}.  Another useful heuristic, from the experience of our study participants, is to focus on novelty in your project.  What is unfamiliar?  What problems have you not solved before?  Which technology is unproven? The answers to these questions highlight risks and the participants in our study used them to direct their effort to the most important risks to address.
+	\item \emph{Risks in organisational environment}.  Each organisation is different and there are nearly always risks specific to an environment such as the internal political situation, what is possible in the organisational culture, and the maturity of the organisation with respect to architecture, change and risk.  Different organisations also have different cultures and capabilities for funding change, which can create risks.  The speed which different sorts of risk and difficulties can be addressed can also be affected by organisational factors and so may cause you to change where you focus attention.  Participants in our study noted the importance of "situational awareness" [13] that allows the architect to find and address the risks specific to their organisational environment.
+	Risks from external environment.  Nearly all organisations exist in a complex ecosystem of interacting partners, customers regulators, competitors and other actors and they can be a source of risk for many systems, as can general trends and changes in the industry that the organisation exists within (such as changing regulatory environment or industry-wide pressures such as reducing margins on products or services). 
+	\item \emph{Risks related to cost and time}.  Most architects will report that they are often expected to achieve challenging goals in unrealistic timescales or with unrealistic cost estimations.  Many of our study participants reported that they needed to focus significant attention on risks resulting from cost and time.
+	\item \emph{Identify the high impact decisions}.  Prioritise architecture work that will help to mitigate risks where many people would be affected by a problem (e.g. problems with the development environment or problems that will prevent effective operation) or where the risk could endanger the programme (e.g. missing regulatory constraints).
+\end{description}
+
+\subsection{Delegate as Much as Possible}
+
+Delegation was an unexpected theme that emerged from our study. The architects who mentioned this theme viewed themselves as a potential bottleneck in a project and delegation and empowerment of others was a way to minimize this.  Delegation was also seen as a way of freeing the architect to focus on the aspects of the project that they had to focus on rather than all the other aspects that they could possibly get involved in.
+
+The general message of this theme is to delegate as much architecture work as possible to the person or group best suited to perform it, to prevent individuals becoming project bottlenecks, allow architects to spend more time on risk identification and mitigation, and to spread architectural knowledge through the organisation.  The heuristics that were identified to help achieve this are:
+
+\begin{description}
+	\item \emph{Empower the development teams}. To allow delegation and work sharing, architects need to empower (and trust) the teams that they work with.  This allows governance to become a shared responsibility and architecture to be viewed as an activity rather than something that is only performed by one person or a small group.  This causes architectural knowledge, effort and accountability to be spread across the organisation, creates shared ownership, reduces the load on any one individual and prevents reliance on a single individual from delaying progress.
+	\item \emph{Create groups to take architectural responsibilities}.  A related heuristic is to formalise delegation somewhat and create groups of people to be accountable for specific aspects of architectural work.  For example, in a large development programme, an architecture review board can be created to review and approve significant architectural decisions.  Such a group can involve a wide range of expertise from across the programme and beyond, so freeing a lead architect from much of the effort involved in gathering and understanding the details of key decisions, while maintaining effective oversight to allow risks to be controlled and technical coherence maintained.  Similarly, a specific group of individuals could be responsible for resilience and disaster recovery for a large programme, allowing them to specialise and focus on this complex area, and allowing a lead architect to confidently delegate to them, knowing that they will have the focus and expertise to address this aspect of the architecture.
+\end{description}
+
+\subsection{Team Effectiveness}
+
+A theme that emerged when we validated our initial model with a wider group was the need to focus attention on making sure that the overall development team was as effective as possible.  The participants who indicated the importance of this factor were concerned with the need to develop the individuals in the team and to ensure that the team was as diverse as possible, to allow it to use a range of skills and perspectives when innovating and solving problems.
+
+Other aspects of this theme that participants were concerned with were the importance of architecture work being used to quickly unblock the team when it hit difficulties and the importance of technical leaders, like the architect, to step in when needed to make sure that the team was functioning well and to address any dysfunctional behaviour observed.
+
+The heuristics that the participants identified as being important for focusing architectural attention to achieve team effectiveness were:
+\begin{description}
+	\item \emph{Develop the team through mentoring}.  Every team should be on a collective journey towards improvement and hopefully every individual in a team is on a similar personal journey to be the best that they can be.  People doing architecture work tend to be some of the most experienced people in a team and so a valuable and important area to focus attention, in order to achieve a highly effective team, is to spend time developing the individuals in the team, and the team as a whole, through thoughtful, intentional mentoring.
+	\item \emph{Achieve team diversity for better innovation and problem-solving}.  In order to innovate and identify good solutions to problems, it is valuable to have a range of experience, perspectives and skills in the team.  Our study participants indicated that a valuable use of architectural time is to spend time building diverse teams that can achieve this.
+	\item \emph{Remove blockers preventing team progress}.  Development and support teams often tend up blocked by technical or organisational factors, so spending time resolving these problems is a valuable focus for many architects.
+	\item \emph{Address dysfunction in teams}.  Sometimes teams do not work well and it requires someone who is close to the team, and respected by them, but outside the team structure, to identify the problem and suggest solutions.  Some architects work directly in individual teams and are not well placed to do this, but people doing architecture work are often close to the teams but outside their structure, and have the respect, soft-skills and experience to resolve team problems.  This use of architectural time can have huge benefits when dysfunctional behaviour is observed in teams.
+\end{description}
+
+\section{Threats to Validity}
+\label{sec:threats}
+
+We designed and conducted this study carefully to provide us with a useful model and a reliable evaluation of it, avoiding bias as much as possible.  Specific steps we took to produce a reliable evaluation of the model included focusing on the practitioner community (as they are the intended users of the model), focusing on experienced respondents who have the experience to evaluate the model, finding a reasonably large, geographically distributed group to validate it for us, structuring the questionnaire to allow disagreement as well as confirmation, and analysing the results in a careful, structured manner to allow the data to lead us to the conclusions, to avoid the danger of us subconsciously using it to validate an opinion we already held.  However, we acknowledge that there are potential limitations to any qualitative study, including ours, which can result in threats to our study's validity.
+
+There are four main types of threat to the validity of a study like this, namely construct, internal, 
+external and conclusion validity as defined in [10]. 
+
+Construct validity is concerned with the relationship between theory and observation.  A commonly recurring threat when using questionnaires is the phrasing of the text, the questions and the responses for the closed-ended questions.  A second threat is where too many closed-ended questions are used and respondents cannot find suitable responses in the set that are available.  We addressed potential problems with wording by keeping the amount of text in the questionnaire as small as possible and using simple language that directly referenced the model.  The model itself was derived from the language and concepts that emerged from the semi-structured interviews.  We also tested the questionnaire ourselves and on a small number of other architects that we knew, to ensure that their interpretation of the questionnaire was as we expected and we refined the language slightly as a result.  We mitigated the possible problem of participants being unable to express their opinions through the closed-ended questions by limiting the closed-ended questions to being simple ratings and then providing open-ended questions for the participants to explain, expand or clarify their answers.
+
+Internal validity is concerned with the validity of the causality relationship between the observations and the outcomes of the study.  We addressed this by using very straightforward analysis approaches, both for the statistical data analysis and for the analysis of open-ended answers, so the threats to the correctness of the analysis we performed are minor.  We also reviewed all of the answers from each respondent to ensure that they formed a credible and consistent set (which all did), so validating that the respondents understood the process and were expressing a coherent opinion.  To avoid possible misunderstanding we provided a clear definition of the model, links to additional information, trialled the questionnaire with people we knew, and included open-ended questions to allow respondents to express opinions that could not be easily captured using the closed-ended questions.
+
+External validity is concerned with the generalisability of the results of the study.  The key risk we identified relating to external validity is an unrepresentative respondent population or a respondent population who lack competence in software architecture and so cannot validate the model effectively.  We mitigated these risks by finding a relatively large respondent population, who are distributed geographically, although as noted earlier, nearly all of the respondents came from Europe and the Americas.  So a residual risk we continue to have is the lack of representation from Asia, in particular countries like India, China and Singapore, with significant software engineering populations and the potential for significant cultural differences from Europe and the Americas.  We mitigated the concerns around experience and competence by targeting experienced architects and architects in our extended professional network, who we knew to be experienced and highly competent.  We know a significant percentage of the respondents at least slightly and through some informal sampling of employing organisations and job titles, have a high degree of confidence in the ability of our study participants to validate or critique the model correctly.  This leaves us with a residual risk that our extended network may be more likely to think similarly than a truly random sample, but anecdotally we do not believe that they are significantly different to most practitioners we have met over the years and we believe this trade-off to ensure credible study participants is the correct one.
+
+Conclusion validity is concerned with the validity of the relationship between the data obtained in the study and the conclusions that have been drawn from it.  The threats that we identified in this area are whether we asked the right questions at each stage of the study, whether we made mistakes in analysing the data, and whether we introduced unconscious bias into the study which could invalidate our conclusions.  We mitigated the possibility of asking the wrong questions by using a semi-structured interview in the first stage and providing extensive opportunity for open-ended responses in the third stage.  We acknowledge that we could have made mistakes in our analysis and processing of the data, but we mitigated this by reviewing and cross checking our work and using a simple, repeatable process which was straightforward to follow.  The largest risk to conclusion validity is probably the chance of introducing unconscious bias, as much of the study involved interpreting open-ended responses from the interviews and the questionnaire.  We attempted to mitigate this risk through the use of the grounded theory process, which helped us to be led by the data rather than trying to fit the data into a pre-existing theory.  We also reviewed our conclusions several times and repeated parts of the analysis if we felt that there was any danger of an alternative outcome being more representative.  We also did not have any preconceived ideas about the likely outcome of this study at the beginning, so did not have an underlying theory we were trying to validate.  Overall, we do not feel that we have been likely to introduce unconscious bias in the study, but we accept that it is hard to be certain that this did not occur at all.
+
+In summary, we have designed and executed the study carefully, but do acknowledge that there are a number of threats to its validity which could threaten the generalizability of our results.  Probably the most severe threat to global applicability of the model is the lack of study participants from Asia.  However, this threat does not suggest that the model will not be useful in Europe and North America, which would still be a very valuable outcome.
+
+\section{Future Work}
+
+The refined model is now ready for dissemination to the practitioner community to see if it proves as useful in practice as our survey of the preliminary model suggests.  To reach the practitioner community, we will publish the model in a less formal style via posts on mainstream Internet sites (such as medium.com, LinkedIn and Twitter).  We will also try to publish a summary of it in practitioner-oriented publications and publicise it through conference sessions at practitioner conferences, if it proves to be of interest to programme selection committees.
+
+After practitioner oriented publication, we are also interested in extending the Stage 3 questionnaire to architects in other geographical locations to compare and explore whether they react in the same way to the model as their colleagues in Europe and the Americas.
+
+Beyond this, it would be interesting to survey practitioners who have used the model in the future, after they have been using it for some time.  This would allow us to understand whether its usefulness was borne out in practice and to find out what the practitioners are actually using it for (for example, whether it is used more as a training aid or as a personal aide memoir) and which industries and architectural job types are using it.
+
+\section{Conclusion}
+
+Our experience and informal discussion with architects over many years suggested that they find it difficult to decide how to focus their effort to maximise their effectiveness.  We were interested in how experienced practitioners solved this problem and whether there were commonly used heuristics.  To investigate this, we used a four-step process of investigation.
+
+We started with a semi-structured interview process with eight experienced practitioners.  The conclusion of the initial study was that there are some shared heuristics which practitioners use, but that the community of practicing architects is not aware that the heuristics are common and shared.  We found that the heuristics clustered into three groups: focus the architects attention on stakeholders, use their time to address specific risks and delegate as much as possible, in order to give them as much time for architecture work as possible.
+
+We then created a simple structured model to capture and explain the heuristics that emerged from the initial study and we published this via Internet social media channels.  In the next step, we asked practitioners to complete a survey to comment on the usefulness of the model and whether anything had been missed.  84 responses were received to the survey, mainly from European and North American software, solution and enterprise architects with over 10 years of professional experience.
+
+When we analysed the survey responses we found that the model validated well, as 70\% of the practitioners who responded to the survey think it would probably or definitely be useful, but we found that we had missed several important risk factors which are commonly used for prioritisation and we had missed an entire element of prioritising effort, which is the need to spend time to ensure overall team effectiveness.  We added these missing elements to the model.
+
+These findings are not completely unexpected and many of the heuristics in the model are familiar.  However, neither the participants or ourselves knew that these were the important, shared heuristics before we undertook the study, so we believe that the model we have created will have value as a teaching aid and as an aide memoir for experienced practitioners.  
+
+We now plan to publicise the model via Internet social media and publishing sites, practitioner publications and possibly practitioner conferences.  If the model gains some acceptance over a period of time, there would be value in a future survey of its users to review the model's usefulness after experience of using it.
+
+\section{References for this Chapter}
+\begin{enumerate}
+	\item Achimugu, P., Selamat, A., Ibrahim, R., Mahrin, M.: A systematic literature review of software requirements prioritization research, Information and Software Technology, Volume 56, Issue 6, June 2014, Pages 568-585.
+	\item Allen, D.: Getting Things Done: The Art of Stress-free Productivity. 2nd edn. Piatkus (2015).
+	\item Bass L., Clements, P., Kazman, R.: Software architecture in practice.  3rd edn.  Addison Wesley, Upper Saddle River, NJ (2012).
+	\item Berander, P., Andrews, A.: Requirements prioritization. In: Aurum, A., Wohlin, C. (eds) Engineering and managing software requirements., pp. 69-94. Springer, Heidelberg (2005).
+	\item Charmaz, K.: Constructing grounded theory: A practical guide through qualitative analysis. Sage, London (2006).
+	\item Herrmann, A., Daneva, M.: Requirements prioritization based on benefit and cost prediction: an agenda for future research. In: Tetsuo, T. (ed) International Requirements Engineering, 2008. RE'08. 16th IEEE. IEEE, 2008.
+	\item Karlsson, J., Ryan K.: A cost-value approach for prioritizing requirements. IEEE Software 14(5) 67-74 (1997).
+	\item Koch, K.: The 80/20 Principle: The Secret of Achieving More with Less.  Nicholas Brearley Publishing (2007).
+	\item Kruchten, P.: What do software architects really do?, The Journal of Systems and Software, 81(12), 2413–2416 (2008)
+	\item Matt, G.E., Cook, T.D.: Threats to the validity of research synthesis. Cooper, H., Hedges, L.V. (eds) The Handbook of Research Synthesis, pp. 503-520.  Russell Sage Foundation, New York. 503-520 (1994)
+	\item Poort, E.R., van Vliet H.: RCDA: Architecting as a risk-and cost management discipline. Journal of Systems and Software 85(9) 1995-2013 (2012).
+	\item Reimer, F.J., Quartaroli, M.T., Lapan, S.D.: Qualitative Research: An Introduction to Methods and Designs.  Wiley, London (2012).
+	\item Rozanski, N., Woods, E.: Software systems architecture, working with stakeholders using viewpoints and perspectives, 2nd edn.  Addison Wesley, Upper Saddle River, NJ (2011).
+	\item Wikipedia, Situational Awareness, https://en.wikipedia.org/wiki/Situation\_awareness, last accessed 2017/04/10.
+	\item Woods, E., Bashroush, R.: A Model for Prioritization of Software Architecture Effort. In: Lopes A., de Lemos R. (eds) Software Architecture. ECSA 2017. Lecture Notes in Computer Science, vol 10475, August 2017. Springer.
+\end{enumerate}
+
