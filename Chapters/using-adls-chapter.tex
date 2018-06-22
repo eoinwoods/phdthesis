@@ -4,7 +4,7 @@
 
 Dummy citation for compilation: \citation{reference1}
 
-  There has been a great deal of academic and some industrial research into the definition of Architecture Description Languages (ADLs) to assist with the difficult task of clearly defining the architecture of software intensive systems and there is still a significant amount of such research underway today \cite{diruscio2010-byadl, cuenot2010-east, oquendo2004-piadl}.  However, there is limited evidence of significant industrial use of the ADLs that have been produced, which we believe is for a number of reasons \cite{bashroush2006-flexibleadls, } including the narrow focus of most ADLs and the mismatch between their strengths and the needs of practitioners.  This is particularly marked in the information systems domain, where it is difficult to find any large-scale use of ADLs, whereas there has been some documented use of ADLs in embedded and real-time systems [3, 6, 7].
+  There has been a great deal of academic and some industrial research into the definition of Architecture Description Languages (ADLs) to assist with the difficult task of clearly defining the architecture of software intensive systems and there is still a significant amount of such research underway today \cite{diruscio2010-byadl, cuenot2010-east, oquendo2004-piadl}.  However, there is limited evidence of significant industrial use of the ADLs that have been produced, which we believe is for a number of reasons \cite{bashroush2006-flexibleadls, woods2005-adlwg} including the narrow focus of most ADLs and the mismatch between their strengths and the needs of practitioners.  This is particularly marked in the information systems domain, where it is difficult to find any large-scale use of ADLs, whereas there has been some documented use of ADLs in embedded and real-time systems \cite{oquendo2004-piadl, vanommering2000-koala, allen2002-rtsystems}.
 
   In this paper, we report on the experience gained from the creation of a large architectural description for a complicated information system, in an environment where there was no existing use of UML, SysML or specialist ADLs and where it was felt that such approaches would not be successful.  We describe the experience of that project, which was used as an opportunity to explore the use of a simple, domain specific, architecture description notation in an industrial context.
 
@@ -16,21 +16,29 @@ Dummy citation for compilation: \citation{reference1}
 
 \section{Related Work}
 
-  As explained in the previous section, this paper reports an industrial experience of applying ADL concepts to the description of a significant industrially developed information system.  Directly related work would be other similar case studies and experience reports.  On searching the research literature, we did not find any directly equivalent work, where an architectural description language was used to describe a large information system, although there have been published reports of ADLs being used to describe embedded or real-time systems (such as [8, 9]).
+  As explained in the previous section, this paper reports an industrial experience of applying ADL concepts to the description of a significant industrially developed information system.  Directly related work would be other similar case studies and experience reports.  On searching the research literature, we did not find any directly equivalent work, where an architectural description language was used to describe a large information system, although there have been published reports of ADLs being used to describe embedded or real-time systems (such as \cite{feiler2000-realtime,lonn2004-east}).
 
   However given that as part of this project we decided to create our own notation for the architectural description, it is worth considering related work in the ADL field and why we didn't choose to reuse an existing ADL.
 
-  Over the past two decades, an increasing number of ADLs have been developed, largely within academia [10, 11]. Although some ADLs have been put to industrial use in specific domains [2, 3, 6, 12], the majority of ADL projects remain confined to laboratory-based case studies.
+  Over the past two decades, an increasing number of ADLs have been developed, largely within academia 
+  \cite{medvidovic2000-adlcomparison, clements1996-adlsurvey}. Although some ADLs have been put to industrial use in specific domains
+\cite{cuenot2010-east, oquendo2004-piadl, vanommering2000-koala, sae2009-aadl}, the 
+majority of ADL projects remain confined to laboratory-based case studies.
 
-  While ADLs originated in academia such as ACME [13]/ADML, ABACUS [14], Aesop [15], UniCon [16], Wright [17], GEN-VOCA [18], $\pi$-ADL [3], Rapide [19], SADL [20], xADL [21], ADLARS [22], ALI [23, 24], ArchiMate [25] and ByADL [1], to name a few, all exhibit novel approaches to architecture description, from support for interchange and interoperability to advanced architectural analysis capabilities, the vast majority tend to be vertically optimized, limiting their attractiveness in many industrial projects.  
+  While ADLs originated in academia such as ACME \cite{garlan1997-acme}/ADML, 
+  ABACUS \cite{dunsire2005-abacus}, Aesop \cite{garlan1994-aesop}, 
+  UniCon \cite{shaw1996-unicon}, Wright \cite{allen1996-wright}, GEN-VOCA \cite{batory1997-genvoca}, $\pi$-ADL \cite{oquendo2004-piadl}, Rapide \cite{luckham1995-rapideexample}, SADL \cite{moriconi1997-sadl}, 
+  xADL \cite{khare2001-xadl}, ADLARS \cite{bashroush2005-adlars}, ALI \cite{bashroush2008-ali}, 
+  ArchiMate \cite{lankhorst2009-archimate} and ByADL \cite{diruscio2010-byadl}, to name a few, all exhibit novel approaches to architecture description, from support for interchange and interoperability to advanced architectural analysis capabilities, the vast majority tend to be vertically optimized, limiting their attractiveness in many industrial projects.  
 
   It is important to state that many of these ADLs probably could be used in an industrial context, but there is often no strong reason to do so. In general, academic ADLs focus more on analytical evaluation and rigour while in this project, and many other industrial projects, the focus was more on accessibility, practicality, and the ability to rapidly obtain a reasonably complete view of the structure and behaviour of the system. Those ADLs that do support the kind of description we wanted to create (such as ACME and xADL) are general-purpose languages that are not used in mainstream practice. Accordingly, they would have needed a lot of investment in tailoring and extension to fit our requirements, not to mention the tool support development effort (such as providing drawing support in standard tools).  This meant the benefits we would have gained from using them did not appear to be large enough to justify the adoption overhead.
 
   Considering these various factors together, our conclusion was that there wasn't a strong reason to adopt a research ADL for this work and we judged that it was going to be simpler and quicker to develop our own special-purpose notation.
 
-  The use of ArchiMate [25] was also considered given the fairly wide spectrum it provides for enterprise architectural description. However, upon closer investigation, we found that the primitives in the ArchiMate language were not a particularly good fit given our need to describe system (i.e. software) architecture rather than enterprise architecture in this project. 
+  The use of ArchiMate \cite{lankhorst2009-archimate} was also considered given the fairly wide spectrum it provides for enterprise architectural description. However, upon closer investigation, we found that the primitives in the ArchiMate language were not a particularly good fit given our need to describe system (i.e. software) architecture rather than enterprise architecture in this project. 
 
-  As mentioned above, outside the area of information systems, there have been a number of industrial applications of ADLs for embedded and real-time systems, from consumer electronics (e.g. Koala [6], $\pi$-ADL [3]) to aeronautics and automotive systems (e.g. AADL [12] and EAST-ADL [2]). The use of ADLs in these application domains has enabled automated system analysis, and automated code generation (e.g. MetaEdit+ [26]). However, given that such capabilities were less important for this project than our much simpler goals of easy adoption and straightforward system description, and the fact that these ADLs are specialised for embedded systems rather than large information systems, we did not feel that we should receive a return on the investment required to tailor and adopt the©m.  We discuss our reasoning for not reusing an existing ADL further in Section 5.
+  As mentioned above, outside the area of information systems, there have been a number of industrial applications of ADLs for embedded and real-time systems, from consumer electronics (e.g. 
+  Koala \cite{vanommering2000-koala}, $\pi$-ADL \cite{oquendo2004-piadl}) to aeronautics and automotive systems (e.g. AADL \cite{sae2009-aadl} and EAST-ADL \cite{cuenot2010-east}). The use of ADLs in these application domains has enabled automated system analysis, and automated code generation (e.g. MetaEdit+ \cite{smolander1991-metaedit}). However, given that such capabilities were less important for this project than our much simpler goals of easy adoption and straightforward system description, and the fact that these ADLs are specialised for embedded systems rather than large information systems, we did not feel that we should receive a return on the investment required to tailor and adopt the©m.  We discuss our reasoning for not reusing an existing ADL further in Section 5.
 
 \section{Background to the Work}
 
@@ -98,7 +106,7 @@ Dummy citation for compilation: \citation{reference1}
 
   We found that a wiki provides a lot of the flexibility of a word processor, but can also provide basic mechanisms to allow structuring, templating and cross referencing via simple conventions and most software developers find them very easy to use.
 
-  What a wiki does not usually provide is any support for graphical notations, but the diagrams are the part of the architecture description that people spend the most time creating and reading, so they are important to get right.  As explained already, having considered the options available, it was decided to create a new highly constrained graphical notation that would encourage the creation of graphical models at the right level of abstraction.  In order to create a consistent notation that was easy to use, the guidance in [27] was followed in order to design the notation systematically.
+  What a wiki does not usually provide is any support for graphical notations, but the diagrams are the part of the architecture description that people spend the most time creating and reading, so they are important to get right.  As explained already, having considered the options available, it was decided to create a new highly constrained graphical notation that would encourage the creation of graphical models at the right level of abstraction.  In order to create a consistent notation that was easy to use, the guidance in \cite{moody2009-notations} was followed in order to design the notation systematically.
 
   The whole project, and in particular the definition of the graphical notation, was helped by the fact that while the system had grown rather organically, it had evolved according to a specific set of architectural constraints that could loosely be identified as an architectural style.  This had limited the degree of implementation diversity and so reduced the number of concepts that it was necessary to represent in the description language.
 
@@ -128,7 +136,7 @@ Dummy citation for compilation: \citation{reference1}
 
 \subsection{The Architectural Style}
 
-  An analysis of the system's implementation revealed that it generally followed a set of discernable patterns created from a small number of types of architectural elements, which could loosely be described as an architectural style (taking the definition of architectural style from Shaw and Garlan [28] to be "a vocabulary of components and connector types, and a set of constraints on how they can be combined").  
+  An analysis of the system's implementation revealed that it generally followed a set of discernable patterns created from a small number of types of architectural elements, which could loosely be described as an architectural style (taking the definition of architectural style from Shaw and Garlan \cite{shaw1996-softwarearch} to be "a vocabulary of components and connector types, and a set of constraints on how they can be combined").  
 
   To allow the element types of the system to be described, a few basic concepts were used to set the context and help people to understand the key abstractions:
 
@@ -223,7 +231,7 @@ System Messaging   &  Dispatch and receipt of messages over the system message b
 
   Given people's general enthusiasm for diagrams over text, we chose to create a graphical notation rather than a more formal textual one. We could have created an equivalent textual notation to provide an alternative concrete syntax, but we didn't need one for this project and as we were not trying to create a reusable ADL we had no reason (or the time) to create alternative notations.
 
-  When defining the graphical detail of the notation, the advice in [27] were particularly useful, in particular the exhortation to avoid construct overload, deficit, redundancy or excess, the suggestion to systematically consider the visual variables of each shape (shape, size, colour, orientation, brightness and texture) and the need for deliberate selection of shapes so that their appearance suggested their meaning, to help achieve semantic transparency.
+  When defining the graphical detail of the notation, the advice in \cite{moody2009-notations} was particularly useful, in particular the exhortation to avoid construct overload, deficit, redundancy or excess, the suggestion to systematically consider the visual variables of each shape (shape, size, colour, orientation, brightness and texture) and the need for deliberate selection of shapes so that their appearance suggested their meaning, to help achieve semantic transparency.
 
   We created the graphical notation by selecting a base shape for each major type of element (server, user interface, data store, external entity) and designing a variation of the shape for each subtype of the element.  The diagrams were likely to be printed in black and white, so brightness and colour were used in a very limited way (just being used as an informal diagrammatic annotation, rather than having a predefined meaning).  Each element had to have a name, shown on its symbol and optionally a stereotype (discussed below).  Examples of the notation for some of the more important element types are shown in Figure \ref{figure:adlelementtypes}. 
   
@@ -258,7 +266,7 @@ convention "{\guillemotleft}type{\guillemotright}" on the symbol concerned.  Thi
 
   In order to simplify and standardise the subsystem descriptions, a set of wiki page templates and a comprehensive Microsoft Visio stencil were created, along with clear instructions, quick reference material and - most crucially - a fully worked example of the documentation for one subsystem.  This allowed a number of conventions, such as hyperlinking element names to allow navigation through the documents, to be illustrated and encouraged by example.  A hierarchy of empty wiki pages for the required subsystem descriptions was also created so that authors knew where to put their documents and so they could be unambiguously referenced.
 
-  The result of this process was a relatively informal definition of a simple ADL with a graphical notation and set of well-defined conventions for storing the supporting text needed to explain and fully define the subsystem descriptions.  The ADL is tied very strongly to the particular architectural style of this system (its element and connector types) and we deliberately did not attempt to generalise the language, as this very tight link to the system to be described was one of its major strengths for our situation.  In this way, our ADL is rather like the ADLs defined to support specific implementation frameworks like DAOP-ADL [29] which was developed to describe DAOP applications [30] and CBabel [31] which was developed to allow the definition of CR-RIO applications [32].
+  The result of this process was a relatively informal definition of a simple ADL with a graphical notation and set of well-defined conventions for storing the supporting text needed to explain and fully define the subsystem descriptions.  The ADL is tied very strongly to the particular architectural style of this system (its element and connector types) and we deliberately did not attempt to generalise the language, as this very tight link to the system to be described was one of its major strengths for our situation.  In this way, our ADL is rather like the ADLs defined to support specific implementation frameworks like DAOP-ADL \cite{pinto2003-daopadl} which was developed to describe DAOP applications \cite{pinto2001-daop} and CBabel \cite{rademaker2005-cbabel} which was developed to allow the definition of CR-RIO applications \cite{loques2004-crrio}.
 
 \section{A Case Study of the Approach in Use}
 
@@ -457,7 +465,8 @@ Step & From & To & Type & Connector & Description \\
 \item As well as the language and tools, develop the materials that people will need in order to successfully adopt the language for practical use.  This includes task oriented training material, quick reference guides and plenty of samples which show the value of the language in use and provide people will examples of how to use it well (which they will almost certainly copy).
 \end{itemize}
 
-  It is worth noting that our experiences from this work and our resulting suggestions are similar to the conclusions of a major academic survey of practitioner requirements for ADLs [33], which suggests that these lessons and requirements reflect the needs of a significant number of industrial software architects.
+  It is worth noting that our experiences from this work and our resulting suggestions are similar to the conclusions of a major academic survey of practitioner requirements for 
+  ADLs \cite{malavolta2013-industryadlneeds}, which suggests that these lessons and requirements reflect the needs of a significant number of industrial software architects.
 
   Beyond the experience we have gained in applying architectural description techniques to a large scale problem, the particular notation and approach used in this paper may be of use to others, but as explained earlier in the paper, this wasn't a goal of the project. While some of the aspects of the notation invented will be generally familiar (e.g. servers that are driven by messaging) the overall set of element types is specific to one environment and may well not be directly useful elsewhere.  Certainly we did not set out to contribute yet another general purpose ADL to the world and so reuse of the notation was not considered during its development.  We report this project in order to describe a successful application of the concepts of architectural description notations, to record the factors that we believe made the project successful and to capture the lessons learned and conclusions drawn from the experience.
 
@@ -471,72 +480,3 @@ Step & From & To & Type & Connector & Description \\
 
   Having said that, the factor that appeared to make the approach generally successful was focusing on describing the specific structures in the system of interest, rather than trying to create a general-purpose approach, which would be effective for other uses too.  Other factors which contributed to the success of the approach were its simplicity (which traded sophistication for accessibility), a carefully designed, consistent graphical notation, the availability of a large amount of tutorial and reference material to guide document authors, and the use of very familiar tools, which users of the notation were already familiar with.
 
-\section{References}
-
-[1]	D. Di Ruscio, I. Malavolta, H. Muccini, P. Pelliccione, and A. Pierantonio, "ByADL: an MDE framework for building extensible architecture description languages," in Proceedings of the 4th European Conference on Software Architecture, Copenhagen, Denmark, 2010, pp. 527-531.
-
-[2]	P. Cuenot, P. Frey, R. Johansson, H. Lonn, Y. Papadopoulos, M.-O. Reiser, et al., "The EAST-ADL architecture description language for automotive embedded software," in Proceedings of the 2007 International Dagstuhl conference on Model-based engineering of embedded real-time systems, Dagstuhl Castle, Germany, 2010, pp. 297-307.
-
-[3]	F. Oquendo, "ï¿½-ADL: an Architecture Description Language based on the higher-order typed ï¿½-calculus for specifying dynamic and mobile software architectures," ACM SIGSOFT Software Engineering Notes, vol. 29, pp. 1-14, 2004.
-
-[4]	R. Bashroush, I. Spence, P. Kilpatrick, and T. Brown, "Towards More Flexible Architecture Description Languages for Industrial Applications," in EWSA 2006. vol. 4344, V. Gruhn and F. Oquendo, Eds., ed Nantes, France: Springer-Verlag, 2006, pp. 212-219.
-
-[5]	E. Woods and R. Hilliard, "Architecture Description Languages in Practice," in the 5th Working IEEE/IFIP Conference on Software Architecture (WICSA 2005), Pittsburgh, PA, 2005, pp. 243 - 246.
-
-[6]	R. van Ommering, F. van der Linden, J. Kramer, and J. Magee, "The Koala component model for consumer electronics software," IEEE Computer, vol. 33, pp. 78-85, 2000.
-
-[7]	R. Allen, S. Vestal, D. Cornhill, and B. Lewis, "Using an architecture description language for quantitative analysis of real-time systems," in Proceedings of the 3rd international workshop on Software and performance, Rome, Italy, 2002, pp. 203-210.
-
-[8]	P. Feiler, B. Lewis, and S. Vestal, "Improving Predictability in Embedded Real-Time Systems," Software Engineering Institute, Carnegie Mellon University, Pittsburgh, Pennsylvania2000.
-
-[9]	H. Lonn, T. Saxena, M. Torngren, and M. Nolin, "Far east: Modeling an automotive software architecture using the east adl," 2004.
-
-[10]	N. Medvidovic and R. N. Taylor, "A classification and comparison framework for software architecture description languages," IEEE Transactions on Software Engineering, vol. 26, pp. 70-93, 2000.
-
-[11]	P. C. Clements, "A Survey of Architecture Description Languages," in Proceedings of the 8th International Workshop on Software Specification and Design, 1996, p. 16.
-
-[12]	"Standard AS5506/1: SAE Architecture Analysis and Design Language (AADL)," ed: SAE International, 2006.
-
-[13]	D. Garlan, R. T. Monroe, and D. Wile, "Acme: architectural description of component-based systems," in Foundations of component-based systems, T. L. Gary and S. Murali, Eds., ed: Cambridge University Press, 2000, pp. 47-67.
-
-[14]	K. Dunsire, T. O'Neill, M. Denford, and J. Leaney, "The ABACUS Architectural Approach to Computer-Based System and Enterprise Evolution," in Proceedings of the 12th IEEE International Conference and Workshops on Engineering of Computer-Based Systems, 2005, pp. 62-69.
-
-[15]	R. Allen, "A Formal Approach to Software Architecture," PhD thesis, Computer Science, CMU, Pittsburgh, 1997.
-
-[16]	M. Shaw, R. DeLine, and G. Zelesnik, "Abstractions and implementations for architectural connections," in Proceedings of the 3rd International Conference on Configurable Distributed Systems, Annapolis, Maryland, 1996, pp. 2-10.
-
-[17]	R. Allen and D. Garlan, "The Wright Architectural Specification Language," Carnegie Mellon University, Software Engineering Institute, Pittsburgh, PA1996.
-
-[18]	D. Batory and B. J. Geraci, "Composition Validation and Subjectivity in GenVoca Generators," IEEE Transactions on Software Engineering, vol. 23, pp. 67-82, 1997.
-
-[19]	D. C. Luckham, J. J. Kenney, L. M. Augustin, J. Vera, D. Bryan, and W. Mann, "Specification and analysis of system architecture using Rapide," IEEE Transactions on Software Engineering, vol. 21, pp. 336-354, 1995.
-
-[20]	M. Moriconi and R. A. Riemenschneider, "Introduction to SADL 1.0: A Language for Specifying Software Architecture Hierarchies," SRI International,1997.
-
-[21]	R. Khare, M. Guntersdorfer, P. Oreizy, N. Medvidovic, and R. N. Taylor, "xADL: enabling architecture-centric tool integration with XML," in Proceedings of the 34th Annual Hawaii International Conference on System Sciences, 2001, p. 9 pp.
-
-[22]	R. Bashroush, T. J. Brown, I. Spence, and P. Kilpatrick, "ADLARS: An Architecture Description Language for Software Product Lines," in Proceedings of the 29th NASA/IEEE Software Engineering Workshop (SEW'29), Greenbelt, MD, 2005, pp. 163-173.
-
-[23]	R. Bashroush, I. Spence, P. Kilpatrick, T. Brown, W. Gilani, and M. Fritzsche, "ALI: An Extensible Architecture Description Language for Industrial Applications," in Proceedings of the 15th IEEE International Conference on Engineering of Computer-Based Systems (ECBS), Belfast, UK, 2008, pp. 297-304.
-
-[24]	R. Bashroush and I. Spence, "An Extensible ADL for Service-Oriented Architectures," in Information Systems Development - Towards a Service-Provision Society, G. A. Papadopoulos, W. Wojtkowski, W. G. Wojtkowski, S. Wrycza, and J. Zupancic, Eds., ed New York: Springer, 2009, pp. 227-237.
-
-[25]	M. M. Lankhorst, H. A. Proper, and H. Jonkers, "The Architecture of the ArchiMate Language," in Proceedings of the 10th International Workshop on Enterprise, Business-Process and Information Systems Modeling (BPMDS 2009) held at CAiSE, Amsterdam, Netherlands, 2009, pp. 367-380.
-
-[26]	K. Smolander, K. Lyytinen, V.-P. Tahvanainen, and P. Marttiin, "MetaEdit: a flexible graphical environment for methodology modelling," in Proceedings of the 3rd International Conference on Advanced Information Systems Engineering, Trondheim, Norway, 1991, pp. 168-193.
-
-[27]	D. Moody, "The "Physics" of Notations: Toward a Scientific Basis for Constructing Visual Notations in Software Engineering," IEEE Transactions on Software Engineering, vol. 35, pp. 756-779, 2009.
-
-[28]	M. Shaw and D. Garlan, Software architecture: perspectives on an emerging discipline vol. 1: Prentice Hall Englewood Cliffs, 1996.
-
-[29]	M. Pinto, L. Fuentes, and J.-M. Troya, "DAOP-ADL : An Architecture Description Language for Dynamic Component and Aspect-Based Development," in 2nd international conference on Generative programming and component engineering (GPCE '03), Erfurt, Germany, 2003, pp. 118-137.
-
-[30]	M. Pinto, L. Fuentes, and J. M. Troya, "Towards an aspect-oriented framework in the design of collaborative virtual environments," in Distributed Computing Systems, 2001. FTDCS 2001. Proceedings. The Eighth IEEE Workshop on Future Trends of, 2001, pp. 9-15.
-
-[31]	C. Braga and A. Sztajnberg, "Towards a Rewriting Semantics for a Software Architecture Description Language," Electronic Notes in Theoretical Computer Science, vol. 95, pp. 149-168, 2004.
-
-[32]	O. Loques and A. Sztajnberg, "Customizing component-based architectures by contract," in Component Deployment, ed: Springer, 2004, pp. 18-34.
-
-[33]	I. Malavolta, P. Lago, H. Muccini, P. Pelliccione, and A. Tang, "What industry needs from architectural languages: A survey," Software Engineering, IEEE Transactions on, vol. 39, pp. 869-891, 2013.
-
- 
