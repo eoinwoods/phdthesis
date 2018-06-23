@@ -406,7 +406,14 @@ Turning to the possible influence of geographical location, we analysed the same
 \label{table:usefulnessbygeo}
 \footnotesize
 \begin{tabular}{l p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm}}
- & Definitely Not & Probably Not & Possibly & Probably Yes & Definitely Yes \\
+% slightly experimental bit here - aligns headers centrally and leaves the
+% others with default alignment from the definition above
+% https://tex.stackexchange.com/questions/2924/how-to-align-table-headers-differently-than-all-other-table-cells
+ & \centering Definitely Not & 
+   \centering Probably Not & 
+   \centering Possibly & 
+   \centering Probably Yes & 
+   \centering Definitely Yes \tabularnewline
 Americas              & &         & 6 (23\%)  & 10 (38\%) & 10 (38\%) \\
 Asia-Pacific          & &         & 3 (50\%)  & 3 (50\%)  & \\
 Europe (inc. UK)      & & 3 (6\%) & 11 (23\%) & 22 (45\%) & 11 (23\%) \\
