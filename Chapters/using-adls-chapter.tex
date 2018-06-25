@@ -2,23 +2,45 @@
 
 \section{Introduction}
 
-Dummy citation for compilation: \citation{reference1}
-
   There has been a great deal of academic and some industrial research into the definition of Architecture Description Languages (ADLs) to assist with the difficult task of clearly defining the architecture of software intensive systems and there is still a significant amount of such research underway today \cite{diruscio2010-byadl, cuenot2010-east, oquendo2004-piadl}.  However, there is limited evidence of significant industrial use of the ADLs that have been produced, which we believe is for a number of reasons \cite{bashroush2006-flexibleadls, woods2005-adlwg} including the narrow focus of most ADLs and the mismatch between their strengths and the needs of practitioners.  This is particularly marked in the information systems domain, where it is difficult to find any large-scale use of ADLs, whereas there has been some documented use of ADLs in embedded and real-time systems \cite{oquendo2004-piadl, vanommering2000-koala, allen2002-rtsystems}.
 
-  In this paper, we report on the experience gained from the creation of a large architectural description for a complicated information system, in an environment where there was no existing use of UML, SysML or specialist ADLs and where it was felt that such approaches would not be successful.  We describe the experience of that project, which was used as an opportunity to explore the use of a simple, domain specific, architecture description notation in an industrial context.
+  In order to investigate research question RQ1 ("What ADLs exist and can they be used to reason about the energy properties of a system?") we wanted to apply one or more of the ADLs from the research literature to the description of a significant system.  In this chapter, we describe the context of the work and the work itself, which led to the conclusion that existing ADLs would not be effective, and the definition of a simpler, more specific notation which was used to describe the system.
 
-  This paper explains the context of the project and the work undertaken during it, including the definition of a simple graphical notation and the experience of using the ADL with software development teams to produce architecture description documents.  We also reflect on the experience in order to identify the lessons learned and discuss why we did not attempt to reuse an existing ADL from the many that can be found in the research literature.
+  This chapter is structured into an explanation of the context of the work, an introduction to the project that we undertook as the case study, an explantation of how we selected an architectural description language to use, a description of the architectural description language we created, the case study of the application of the language, the experience we gained, the lessons we learned and the validation of the work and its use to answer the research question.
 
-  The specific contribution of this work is to describe the experience of creating a large industrial architectural description intended for long-term use and the factors that we found to be important in successfully achieving this.  While we did create a specific notation and structuring approach for the project, this was a side effect of the project, not its goal, and our intention is not to contribute yet another general purpose ADL to the research literature.  In fact, as we explain at the end of the paper, based on this specific experience, we concluded that general purpose ADLs might be less useful for industrial use than has been previously assumed; the ADL we created is described here merely to explain what we found to be effective in this project.
+  \section{Context of the Work}
 
-  In the next section we present an overview of related work on ADLs in both industry and academia. Section 3 provides background information about the work and the context of the project. Section 4 then explained the rationale and drivers of the project. The approach used is described in section 5. The ADL design, along with the system architectural style is presented in section 6. A case study is then presented in section 7. The experience and lessons learned from the project are discussed in sections 8 and 9 respectively. Finally, section 9 completes the paper with the summary and conclusion. 
+  The case study was undertaken in a financial services firm that has developed a large custom information system to run its business.  The software has been developed over a period of about 15 years and has grown from quite modest beginnings to the large system it is today, comprising millions of lines of code, storing several terabytes of information.  The system includes software modules that have been developed from scratch within the organization along with modules that have been acquired as a result of organizational acquisitions and that have been modified to integrate with the rest of the system.
 
-\section{Related Work}
+  Today, the system comprises about 20 major subsystems and over 10 million lines of Java, C++, C\# and Perl, sharing a large multi-terabyte relational database.  Although some members of staff who worked on the system in its early days are still with the firm (and actively involved with the system) it has grown to a size that means no individual understands it all, even at a reasonably high level of abstraction.
 
-  As explained in the previous section, this paper reports an industrial experience of applying ADL concepts to the description of a significant industrially developed information system.  Directly related work would be other similar case studies and experience reports.  On searching the research literature, we did not find any directly equivalent work, where an architectural description language was used to describe a large information system, although there have been published reports of ADLs being used to describe embedded or real-time systems (such as \cite{feiler2000-realtime,lonn2004-east}).
+  At the start of the project, there was no overall unified system description, although some teams responsible for subsystems did have their own documentation. This meant that the operation and interconnectedness of the system was often difficult to judge and this was starting to hinder change and evolution.
 
-  However given that as part of this project we decided to create our own notation for the architectural description, it is worth considering related work in the ADL field and why we didn't choose to reuse an existing ADL.
+  The organization wanted to perform some wide ranging evolution and modernization of the system's implementation and realized that a useful first step, to enable better intellectual control over the system, would be to capture a unified description of the system's architecture.  This led to the project described in this paper being undertaken.
+
+\section{Overview of the Project}
+
+  The lack of a unified system description and a new initiative to modernise and restructure parts of the system led senior managers to initiate a project to create some descriptive documentation for the system.  At the outset it was not entirely clear what sort of documentation was needed, but discussion and exploration led to the conclusion that a current state architecture description was required.  The discussions led us to conclude that the documentation needed to provide a description of the system's architecturally significant elements, responsibilities and interactions, rather than more detailed documentation of the design of individual modules.
+
+  Having gained a senior management remit to proceed, we defined an approach and then worked with the software development teams to create the architecture description.
+
+  In order to have some clear goals and overcome some ambiguity in the goals of the work, some assumptions had to be made and these were:
+
+ \begin{enumerate}
+
+\item The point of the exercise was to (a) understand what was there today (catalogue); (b) allow change to be planned (allow impact analysis); and (c) provide a reference for people to build knowledge (communicate); and
+
+\item The audience for the completed documentation was architects, designers and development teams, so precision and completeness were important attributes.
+
+\end{enumerate}
+
+  A secondary open question was whether it would be useful to be able to automate the processing of the architecture description, which would require it to be captured in a parsable form with well-defined semantics.  There didn't seem to be a compelling need to achieve this, although it would have allowed a number of interesting options, so it was decided to try to capture the information in a form that would be amenable to parsing later, but not to slow down the project by trying to investigate this in any detail.  In practice, this meant using structured textual representations rather than free form word processor documents.
+
+\section{Selecting an Architectural Description Language}
+
+  As is clear from the conclusions of the ADLs literature review in section \ref{sec:adl-lit-review} a large number of ADLs have been developed in an academic context, which we considered for use in our work.
+
+  We started our consideration of ADLs by looking for a case study that had attempted to apply ADLs in a large industrial context, however we could not find any published case studies that report on an architectural description language being used to describe a large information system. There have been a number of published reports of ADLs being used to describe embedded or real-time systems (such as \cite{feiler2000-realtime,lonn2004-east}) but these systems differ significantly from a large information system, with different concerns and requirements of an ADL.
 
   Over the past two decades, an increasing number of ADLs have been developed, largely within academia 
   \cite{medvidovic2000-adlcomparison, clements1996-adlsurvey}. Although some ADLs have been put to industrial use in specific domains
@@ -31,46 +53,15 @@ majority of ADL projects remain confined to laboratory-based case studies.
   xADL \cite{khare2001-xadl}, ADLARS \cite{bashroush2005-adlars}, ALI \cite{bashroush2008-ali}, 
   ArchiMate \cite{lankhorst2009-archimate} and ByADL \cite{diruscio2010-byadl}, to name a few, all exhibit novel approaches to architecture description, from support for interchange and interoperability to advanced architectural analysis capabilities, the vast majority tend to be vertically optimized, limiting their attractiveness in many industrial projects.  
 
-  It is important to state that many of these ADLs probably could be used in an industrial context, but there is often no strong reason to do so. In general, academic ADLs focus more on analytical evaluation and rigour while in this project, and many other industrial projects, the focus was more on accessibility, practicality, and the ability to rapidly obtain a reasonably complete view of the structure and behaviour of the system. Those ADLs that do support the kind of description we wanted to create (such as ACME and xADL) are general-purpose languages that are not used in mainstream practice. Accordingly, they would have needed a lot of investment in tailoring and extension to fit our requirements, not to mention the tool support development effort (such as providing drawing support in standard tools).  This meant the benefits we would have gained from using them did not appear to be large enough to justify the adoption overhead.
+  It is possible that many of these ADLs could be used in an industrial context, but there is often no strong reason to do so and in our specific situation, we did not believe that any of them would bring enough benefit to make the risk of what was likely to be a difficult adoption process attractive. In general, academic ADLs focus more on analytical evaluation and rigour while in this project, and many other industrial projects, the focus was more on accessibility, practicality, and the ability to rapidly obtain a reasonably complete view of the structure and behaviour of the system. Those ADLs that do support the kind of description we wanted to create (such as ACME and xADL) are general-purpose languages that are not used in mainstream practice. This means that they would have needed a lot of investment in tailoring and extension to fit our requirements, as well as significant investment in a tool support development effort (such as providing drawing support in standard tools).  This meant the benefits we would have gained from using them did not appear to be large enough to justify the adoption overhead and risk to the project.
 
-  Considering these various factors together, our conclusion was that there wasn't a strong reason to adopt a research ADL for this work and we judged that it was going to be simpler and quicker to develop our own special-purpose notation.
+  The use of ArchiMate \cite{lankhorst2009-archimate} was also considered given the fairly wide spectrum it provides for enterprise architectural description. However, upon closer investigation, we found that the primitives in the ArchiMate language were not a particularly good fit given our need to describe system (i.e. software) architecture rather than enterprise architecture.
 
-  The use of ArchiMate \cite{lankhorst2009-archimate} was also considered given the fairly wide spectrum it provides for enterprise architectural description. However, upon closer investigation, we found that the primitives in the ArchiMate language were not a particularly good fit given our need to describe system (i.e. software) architecture rather than enterprise architecture in this project. 
+  It is also important to acknowledge that outside the area of information systems, there have been a number of industrial applications of ADLs for embedded and real-time systems, from consumer electronics (e.g. 
+  Koala \cite{vanommering2000-koala}, $\pi$-ADL \cite{oquendo2004-piadl}) to aeronautics and automotive systems (e.g. AADL \cite{sae2009-aadl} and EAST-ADL \cite{cuenot2010-east}). We investigated these situations through the published research literature and noted that the use of ADLs in these application domains has enabled automated system analysis, and automated code generation (e.g. MetaEdit+ \cite{smolander1991-metaedit}). This could well be one of the reasons that these applications of ADL technology were successful.  However, given that analysis and code generation were not goals of this project and that our priorities were straightforward system description with easy and low-cost adoption we did not feel that we could reproduce the success of these case studies given the published ADLs we had available to us.
 
-  As mentioned above, outside the area of information systems, there have been a number of industrial applications of ADLs for embedded and real-time systems, from consumer electronics (e.g. 
-  Koala \cite{vanommering2000-koala}, $\pi$-ADL \cite{oquendo2004-piadl}) to aeronautics and automotive systems (e.g. AADL \cite{sae2009-aadl} and EAST-ADL \cite{cuenot2010-east}). The use of ADLs in these application domains has enabled automated system analysis, and automated code generation (e.g. MetaEdit+ \cite{smolander1991-metaedit}). However, given that such capabilities were less important for this project than our much simpler goals of easy adoption and straightforward system description, and the fact that these ADLs are specialised for embedded systems rather than large information systems, we did not feel that we should receive a return on the investment required to tailor and adopt the©m.  We discuss our reasoning for not reusing an existing ADL further in Section 5.
-
-\section{Background to the Work}
-
-  This project was undertaken in a financial services firm that has developed a large custom information system to run its business.  The software has been developed over a period of about 15 years and has grown from quite modest beginnings to the large system it is today, comprising millions of lines of code, storing several terabytes of information.  The system includes software modules that have been developed from scratch within the organization along with modules that have been acquired as a result of organizational acquisitions and that have been modified to integrate with the rest of the system.
-
-  Today, the system comprises about 20 major subsystems and over 10 million lines of Java, C++, C\# and Perl, sharing a large multi-terabyte relational database.  Although some members of staff who worked on the system in its early days are still with the firm (and actively involved with the system) it has grown to a size that means no individual understands it all, even at a reasonably high level of abstraction.
-
-  At the start of the project, there was no overall unified system description, although some teams responsible for subsystems did have their own documentation. This meant that the operation and interconnectedness of the system was often difficult to judge and this was starting to hinder change and evolution.
-
-  The organization wanted to perform some wide ranging evolution and modernization of the system's implementation and realized that a useful first step, to enable better intellectual control over the system, would be to capture a unified description of the system's architecture.  This led to the project described in this paper being undertaken.
-
-\section{Overview of the Project}
-
-  The lack of a unified system description and a new initiative to modernise and restructure parts of the system led senior managers to initiate a project to "document" the system.  At the outset it was not entirely clear what "document" meant, but discussion and exploration led to the conclusion that a current state architecture description was required (i.e. a description of the system's architecturally significant elements, responsibilities and interactions, rather than more detailed documentation of the design of individual modules).
-
-  A team of two experienced architects was tasked with this project, with a remit to define an approach and then work with the software development teams to create the architecture description.
-
-  One immediate complication was the lack of a clearly defined use for the documentation once it was available. A number of senior managers considered the creation of the documentation to be important, but it wasn't clear what they intended to use it for.  Specifically, it wasn't clear if this was to be a living document, that the organization aspired to keep current, or a snapshot to be used for planning, which would then be deliberately abandoned.  The target audience also wasn't well defined, so we did not know whether it was to be a senior management planning tool or a more detailed description to be used by designers for tasks like impact analysis. 
-
-  In order to make progress, some assumptions had to be made and these were:
-
- \begin{enumerate}
-
-\item The point of the exercise was to (a) understand what was there today (catalogue); (b) allow change to be planned (allow impact analysis); and (c) provide a reference for people to build knowledge (communicate); and
-
-\item The audience for the completed documentation was architects, designers and development teams, so precision and completeness were important attributes.
-
-\end{enumerate}
-
-  A secondary open question was whether it would be useful to be able to automate the processing of the architecture description, which would require it to be captured in a parsable form with well-defined semantics.  There didn't seem to be a compelling need to achieve this, although it would have allowed a number of interesting options, so it was decided to try to capture the information in a form that would be amenable to parsing later, but not to slow down the project by trying to investigate this in any detail.  In practice, this meant using structured textual representations rather than free form word processor documents.
-
-
+Considering the combination of these factors, our conclusion was that adopting one of the existing research ADLs was unlikely to be successful and could well endanger the success of the work.  Therefore we judged that it was going to be simpler and safer to develop our own special-purpose notation and this was much more likely to result in a useful case study.  
+  
 \section{The Approach}
 
   When the software development teams were approached to discuss their involvement with the project, it quickly became clear that while there was general enthusiasm for the idea, there was very little appetite for actually performing the work required.  This led us to the conclusion that the tolerance of the development teams for learning new concepts or reworking outputs would be very low.  Hence, it was going to be necessary to identify a simple, low-ceremony approach that was highly prescriptive in order to minimize the possibility of teams producing inconsistent artefacts that would need to be reworked.
@@ -469,6 +460,10 @@ Step & From & To & Type & Connector & Description \\
   ADLs \cite{malavolta2013-industryadlneeds}, which suggests that these lessons and requirements reflect the needs of a significant number of industrial software architects.
 
   Beyond the experience we have gained in applying architectural description techniques to a large scale problem, the particular notation and approach used in this paper may be of use to others, but as explained earlier in the paper, this wasn't a goal of the project. While some of the aspects of the notation invented will be generally familiar (e.g. servers that are driven by messaging) the overall set of element types is specific to one environment and may well not be directly useful elsewhere.  Certainly we did not set out to contribute yet another general purpose ADL to the world and so reuse of the notation was not considered during its development.  We report this project in order to describe a successful application of the concepts of architectural description notations, to record the factors that we believe made the project successful and to capture the lessons learned and conclusions drawn from the experience.
+
+\section{Validation}
+
+TODO
 
 \section{Summary And Conclusions}
 
