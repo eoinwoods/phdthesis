@@ -11,6 +11,8 @@
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
 \usepackage{vector}  % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
 \hypersetup{urlcolor=black, colorlinks=false}  
+\usepackage{caption} 
+\usepackage{subcaption} % This relies on commenting out line 111 in Thesis.cls to remove "subfigure"
 
 % This is to allow alignment (left, right, centre) of width-defined columns
 \usepackage{array}
@@ -145,6 +147,8 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 \input{Chapters/using-adls-chapter} % Case Study
 
 \input{Chapters/prioritisation-chapter} % Focusing Architectural Attention
+
+\input{Chapters/conclusions-chapter}
 
 %% ----------------------------------------------------------------
 % Now begin the Appendices, including them as separate files
