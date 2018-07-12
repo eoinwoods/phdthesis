@@ -13,35 +13,53 @@ The problem for the software engineering practitioner is that their interest sit
 
 The modern trend towards microservice-based systems [REF] makes things more complicated for the practitioner.  While it was possible to see ways of using program energy estimation approaches with monolithic applications, this quickly becomes overwhelming with a microservice-based system, due to the number of possible pieces of the system that could be involved in processing a workload or request.
 
-In this chapter, we outline the design for a piece of technology that we have designed to address this problem by fairly allocating the energy usage of a host machine to the application elements running on it.  Using modern microservice and operating system technology including containers, tracing and resource monitoring, combined with energy statistics for a machine, we can provide the host operator and the software architect with reliable estimates of the energy allocation of a machine's total consumption required to process requests for an application running on it.  This allows cost estimation and the evaluation of architectural alternatives to minimise energy consumption.
+In this chapter, we present the design for a piece of technology that we have designed to address this problem by fairly allocating the energy usage of a host machine to the application elements running on it.  Using modern microservice and operating system technology including containers, tracing and resource monitoring, combined with energy statistics for a machine, we can provide the host operator and the software architect with reliable estimates of the energy allocation of a machine's total consumption required to process requests for an application running on it.  This allows cost estimation and the evaluation of architectural alternatives to minimise energy consumption.
 
-\section{Motivation and Contribution}
+\section{Motivation}
 
 There are several reasons to seek a method of estimating energy usage by software applications, but two immediate motivating examples in our case are cost estimation and architectural evaluation.
 
-Today, the energy consumption of an application is not taken into account when considering its cost to operate and so there is little motivation for the software architect to understand and minimize their application?s energy footprint.  This prevents large possible reductions in energy usage and its associated resources of environmental impact and cost.
+Today, the energy consumption of an application is not taken into account when considering its cost to operate and so there is little motivation for the software architect to understand and minimize their application's energy footprint.  This prevents large possible reductions in energy usage and its associated resources of environmental impact and cost.
 
 Even where the architect is interested in the energy usage of their application, no mainstream and practical approach for estimating the energy usage of software at the application level is available.  This means that for applications where a significant number of system elements are used to process a request, as in a microservices-based system, it theoretically possible to use program-level approaches to estimate the energy usage, but is complex enough that we do not believe that it is done in practice.  This means that architects cannot evaluate the energy usage qualities of different architectural options.
 
-The specific contribution of this work is to design an approach to measuring resource usage for request processing in a distributed application in such a way that an energy model can be used to estimate the energy usage of specific requests made to the application.
+The specific advanced achieved by this piece of work is the design an approach to measuring resource usage for request processing in a distributed application in such a way that an energy model can be used to estimate the energy usage of specific requests made to the application.
 
 The goal of this is to provide a practical approach for software architects to estimate the energy costs of their applications and to evaluate different architectural options in terms of their likely energy usage.
 
 \section{Microservice-Based Systems}
 
 The microservice architectural style [REF] is rapidly becoming a mainstream approach for building industrial software systems and it is systems build using this style that we are specifically interested in for this work.
-A microservice-based system is made up of many small, encapsulated, network-connected services, rather than the more traditional approach of having a small number of large servers that aggregated many services (a so-called ?monolith? [REF]).
+A microservice-based system is made up of many small, encapsulated, network-connected services, rather than the more traditional approach of having a small number of large servers that aggregated many services (a so-called "monolith" [REF]).
+
 For our purposes, the important characteristics of a microservice-based system are:
 
 \begin{itemize}
-\item The business logic in the system is implemented as a group of small, focused services, each performing one task, typically implementing a ?bounded context? in Domain Driven Design terms.
+\item The business logic in the system is implemented as a group of small, focused services, each performing one task, typically implementing a "bounded context" in Domain Driven Design terms [REF].
 \item The services are as independent as possible and have well defined service interfaces and only interact through these interfaces.  Resources such as databases are owned by a specific service and are not accessed by other services (hence a microservice-based system will have many independent data stores rather than a single consolidated database used by many services).
 \item Handling an incoming request for a system is likely to involve a set of cooperating services, with one handling the initial request and then calling other services in order to fulfil the request and provide a response.  Microservice-based systems often separate request-handling and domain services but we do not assume that this is necessarily the case.
 \end{itemize}
 
-We designed microservice-based systems typically share other important characteristics, such as independent build, test and deploy for each service, and interfaces defined using machine readable formats such as Swagger [REF] and RAML [REF] but these other characteristics and not significant in the context of this work, and so we do not assume that they are present.
+Well designed microservice-based systems typically share other important characteristics [REF], such as independent build, test and deploy for each service, and interfaces defined using machine readable formats such as Swagger [REF] and RAML [REF] but these other characteristics are not significant in the context of this work, and so we do not assume that they are present.
 
 \section{Estimating Energy Usage}
+
+As we investigated the problem of how to provide software architects, and other interested parties like data centre operators, with estimates of application level energy usage we identified a number of possible approaches.  
+
+\begin{itemize}
+\item Other researchers have tried to create entirely \emph{model based approaches} (such as [REF]) which can allow relative energy usage between different architectural structures to be estimated, but sidestep the problem of calculating actual energy values and require significant amounts of effort to create the models for non-trivial applications.
+
+\item Other research projects have attempted to estimate architectural characteristics through \emph{event based simulation} but creating event based simulation models is an unfamiliar process to many practitioners and again is significant amounts of effort for non-trivial systems.  It is also the case that existing research in this area has not yet investigated how to estimate energy consumption, but rather has focused on other architectural qualities such as performance.
+
+\item At the \emph{micro-measurement level}, sophisticated approaches have been designed to estimate energy consumption for individual algorithms or programs [REF-JOLINAR] with a high degree of success.  However these approaches rely on a highly controlled execution environment for the code being measured and access to low-level hardware state metrics, such as processor frequency statistics, in order to deal with the complex power characteristics of modern computing hardware.  While these models and tools are undoubtedly useful in the right situation, they are not practical tools for measuring the energy usage of a large-scale modern distributed application.
+
+\item We explored whether we could combine the \emph{micro-measurement} approaches with \emph{application-level resource usage estimation} and produce meaningful energy estimates for the application-level workload.  However we found that approaches like Jolinar are not effective unless the low-level hardware state metrics can be provided and this wasn't practical in large distributed execution environments such as those used by microservice-based systems.
+
+\end{itemize}
+
+Having considered these options and realised that each of them had severe practical limitations, we shifted our focus slightly and reconsidered the goal of the work.  The problem we aimed to solve was to provide software architects and other interested parties with information on how to improve the energy efficiency of their applications.  The solution we identified to this problem was to shift our  goal from precisely estimating the \emph{actual} energy usage of a distributed application to estimating the \emph{fair allocation} of energy consumption to the application.  This is a useful goal because it allows service providers (such as cloud or hosting operators or data centre operators) to fairly allocate the cost of energy consumed by their infrastructure and it allows software architects to understand the energy consumption implications of their design decisions in relative terms, even if not in absolute energy consumption terms.
+
+Our approach assumes that the energy consumption of the execution platform that the application is executing on is available to the energy calculation process and uses this, along with the total resource usage consumption of the execution platform and the resource usage of the application components to allocate the platform energy consumption to the different application elements running on it.  By tracing the execution of inbound requests across application elements, this allows us to allocate energy usage to specific requests and so compare the energy efficiency of different parts of a system and different design options for a system.
 
 Estimating energy usage at the application level is a complex process and so it is important to be clear how the calculation will be performed before trying to design an implementation of it.
 
