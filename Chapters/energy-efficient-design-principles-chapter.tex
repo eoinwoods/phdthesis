@@ -13,6 +13,18 @@ Over the past decade, researchers have been studying IT infrastructure energy co
 PUE is a datacenter's total energy consumption divided by its IT energy consumption, usually measured over one year. A PUE of 1.5 indicates that for every 1 KWh of IT load, a datacenter requires an additional 0.5 KWh.
 Hardware has experienced a similar trend; computations per joule of energy have doubled every 1.57 years over the past two decades \cite{koomey2011-trends-energy-efficiency}. Yet, limited progress has been made in addressing the entire software system's energy efficiency. However, software engineering research is now focusing on a system-wide approach.
 
+\section{The Challenge for Software Architects}
+
+We suspected that software architects might find it difficult to prioritize energy efficiency for three main reasons. 
+
+First, we have little understanding of how design decisions affect energy efficiency or other system qualities such as user experience, reliability, and performance. Without this knowledge, analyzing tradeoffs to elucidate the benefits or costs of improving energy efficiency is difficult. Minor system design changes could yield substantial benefits, such as avoiding unnecessary polling or eliminating redundant housekeeping tasks that prevent equipment from entering lower power states. However, a lack of relevant design tools and frameworks makes it difficult for architects to achieve more sophisticated optimizations that consider contextual information about the runtime environment.
+
+Second, to achieve the next order of magnitude in energy efficiency, architects must think beyond traditional design boundaries. This will require that people from different specializations and departments work together. Such collaboration is challenging given current organizational software governance structures, wherein teams might have competing objectives, and human dynamics and political barriers. Moreover, existing technologies provide few mechanisms to allow communication across different technology layers (the application software, middleware, hardware, network, cooling, power infrastructure, and so on), which would enable cross-layer optimization.
+
+Finally, end users rarely require or worry about energy efficiency. On one hand are split incentives. System operators such as administrators or datacenter managers don’t pick up the energy bill—the money tends to come out of the facilities budget. Accordingly, they would see little return from any energy savings. On the other hand, given current energy prices, information and communications technology energy costs constitute less than 3 percent of a typical organization’s budget. So, when an organization pursues energy efficiency, it often does so by addressing areas with a larger budget share (such as payroll!). Exacerbating this problem is the lack of benchmarks, metrics, and reliable data that would allow realistic comparisons of different energy efficiency opportunities and their returns.
+
+\textbf{TODO} - reference the "What Software Architects Think" section from the Data Centre Energy Demand chapter.  See if I can write more about that.
+
 \section{State of the Art}
 
 To increase efficiency, we must be able to measure it. That is, we must be able to measure the useful work our software applications produce and the amount of energy this takes and then optimize the ratio between the two. However, although the datacenter world has metrics such as PUE, no comparable metrics exist for software.
