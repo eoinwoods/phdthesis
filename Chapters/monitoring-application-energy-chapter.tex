@@ -150,6 +150,48 @@ For both traces and spans times are assumed to be recorded to millisecond precis
 
 The address of the architectural element can be any unique identifier which can unambigously identify an architectural element and can be captured reliably by the tracing system in use.  In practice, this is usually a network address of the form $ipaddr:port$ where $ipaddr$ is an IP version 4 address (e.g. 156.76.45.32) and $port$ is an IP network port (e.g. 9745).  However our approach does not require addresses of this form and other addressing and identification schemes could be accomodated if required.  We discuss this important detail further in Chapter \ref{chapter:implementation}.
 
+Given these structural definitions we can now define how the energy estimation process should work.
+
+Given a trace $t$ containing a span with ID $sid$ then let
+\begin{equation}
+a = t.S[sid].a
+\end{equation}
+\begin{equation}
+st = t.S[sid].st
+\end{equation}
+\begin{equation}
+et = t.S[sid].et
+\end{equation}
+
+Given these useful aliases we can now define some key subsidiary functions
+
+Given $s$ is a span
+\begin{equation}
+cpuUsage(s) :: TODO
+\end{equation}
+
+Given $a$ which is an architectural element address and $st$ and $et$ which are the start and end times of a period respectively
+\begin{equation}
+cpuHostUsage(a, st, et) :: TODO
+\end{equation}
+
+Given $a$, $st$ and $et$ as defined above
+\begin{equation}
+energy(a, st, et) :: TODO
+\end{equation}
+
+
+\textbf{TODO} - define cpuUsage(), cpuHostUsage() and energy()
+
+Given these supporting definitions we can now define the specification for the energy estmation process to be
+
+\begin{equation}
+E_{t} = \sum_{i=1}^{\#t.S}(\frac{cpuUsage(t.S[i])}{cpuHostUsage(a, st, et)} ) \times energy(a, st, et)
+\end{equation}
+
+So ...
+
+
 
 
 
