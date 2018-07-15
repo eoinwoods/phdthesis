@@ -128,7 +128,11 @@ The figure shows two traces, representing requests, one after the other.  The tr
 
 \end{itemize}
 
-\section{Calculating an Energy Usage Estimate}
+\section{Utilising Resource Usage Records}
+
+\textbf{TODO} - need to have a section discussing why we only use CPU and not other resource metrics but why this is actually valid.
+
+\section{Calculating an Energy Allocation Estimate}
 
 The key element in the system is clearly the Energy Estimator, which implements the fundamental algorithm to fulfil the purpose of the system.  This algorithm is a numerical calculator which combines data from the trace records, resource usage records and energy usage records in order to produce a reliable estimate of the amount of the energy of the underlying host which should be allocated to a specific request which the application under consideration has processed.
 
@@ -163,33 +167,84 @@ st = t.S[sid].st
 et = t.S[sid].et
 \end{equation}
 
-Given these useful aliases we can now define some key subsidiary functions
+Let us now consider how we describe the CPU usage of a span.  The process is illustrated in Figure \ref{figure:graph}.  The figure shows an example CPU usage statistic for a particular operating system process, captured as a cumulative usage value over time.  Points in time $t_{1}$, $t_{2}$ and $t_{3}$ are sample points, when the CPU usage statistic is reported.  Points $st$ and $et$ are the start and end times of the period we are interested in.  We indicate the value of the CPU usage statistic at a point in time using subscript notation where $C_{t_{1}}$ is the value at point $t_{1}$ and $C_{st}$ is the value at point $st$.
 
-Given $s$ is a span
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{Figures/estimating-energy-graph}
+\caption{Example Execution Trace}
+\label{figure:graph}
+\end{figure}
+
+Given $s$ is a span then we can describe the CPU usage of the span $s$ using the equations below, where $C_{s,t}$ indicates the cumulative CPU usage for the span at time $t$.
+
+Let $C_{s, st}$ be the cumulative CPU usage for the span at point $st$ defined by
 \begin{equation}
-cpuUsage(s) :: TODO
+C_{s,st} = C_{s,t1} + ( \frac{C_{s,t2} - C_{s,t1}}{t2 - t1} \times (st - t1) ) 
 \end{equation}
 
-Given $a$ which is an architectural element address and $st$ and $et$ which are the start and end times of a period respectively
+Let $C_{et}$ be the cumulative CPU usage at point $et$ defined by
 \begin{equation}
-cpuHostUsage(a, st, et) :: TODO
+C_{s,et} = C_{s,t2} + ( \frac{C_{s,t3} - C_{s,t2}}{t3 - t2} \times (et - t2) ) 
 \end{equation}
 
-Given $a$, $st$ and $et$ as defined above
+Then the CPU usage of span $s$ can be defined as
 \begin{equation}
-energy(a, st, et) :: TODO
+C_{s} = C_{s,et} - C_{s,st}
+\end{equation}
+
+Given $h$ which is the host that a span executed on, and $st$ and $et$, which are the start and end times of a period respectively then we can describe the CPU usage of the host in a similar manner.
+
+Let $C_{h, st}$ be the cumulative CPU usage for the host at point $st$ defined by
+\begin{equation}
+C_{h,st} = C_{h,t1} + ( \frac{C_{h,t2} - C_{h,t1}}{t2 - t1} \times (st - t1) ) 
+\end{equation}
+
+Let $C_{et}$ be the cumulative CPU usage at point $et$ defined by
+\begin{equation}
+C_{s,et} = C_{h,t2} + ( \frac{C_{h,t3} - C_{h,t2}}{t3 - t2} \times (et - t2) ) 
+\end{equation}
+
+Then the CPU usage of host $s$ between times $st$ and $et$ can be defined as
+\begin{equation}
+C_{h,st,et} = C_{h,et} - C_{h,st}
+\end{equation}
+
+Having estimated the CPU usage of the span during its execution period and the CPU usage of the host during the same period, we can use the ratio of the two, combined with the model-based or physical measurement estimates of the host's energy consumption over the same period.  Power is a constantly fluctuating value and so \textbf{TODO - not sure how this equipment works so what data you'd expect to be able to get}.
+
+TODO - need something here on how we would use physical measurement metrics.
+
+
+If a model based approach needs to be used then it is calculated as follows:
+
+Let $T_{h,st,et}$ be the total possible CPU consumption of host $h$ between start time $st$ and end time $et$.  Let $N_{h}$ be the number of CPUs that the host contains.
+
+\begin{equation}
+T_{h,st,et} = N_{h} * (et - st)
+\end{equation}
+
+Let $U_{h,st,et}$ be the percentage CPU consumption of host $h$ between start time $st$ and end time $et$.
+\begin{equation}
+U_{h,st,et} = \frac{C_{h,st,et}}{T_{h,st,et}}
+\end{equation}
+
+The power consumption estimate in watts, $P_{h}$, can now be extracted from the relevant SPECPower results for the model type of the host machine using $U_{h,st,et}$.
+
+Let $E_{h,st}$ be the energy consumption (in joules) for the host between start time $st$ and end time $et$.
+\begin{equation}
+E_{h,st,et} = (et - st) \times 1000 \times P_{h}
 \end{equation}
 
 
-\textbf{TODO} - define cpuUsage(), cpuHostUsage() and energy()
-
-Given these supporting definitions we can now define the specification for the energy estmation process to be
+Given these supporting definitions we can now define the specification for the energy estimation process to be
 
 \begin{equation}
-E_{t} = \sum_{i=1}^{\#t.S}(\frac{cpuUsage(t.S[i])}{cpuHostUsage(a, st, et)} ) \times energy(a, st, et)
+E_{t} = \sum_{i=1}^{\#t.S} ( \frac {C_{t.S[i]}} {C_{h,t.S[i].st,t.S[i].et}} ) \times E_{h, st, et}
 \end{equation}
 
-So ...
+The energy allocation for all a trace is the sum of the energy allocations for the spans within it, which are each calculated as the ratio of the span resource usage to the host resource usage, during the span execution period, multiplied by the estimated host energy usage during the span execution period.
+
+An algorithm which implements this specification will therefore allocate the energy used by the underlying host fairly across the application execution traces that it is executed for, so allowing fair comparisons to be made between different application requests to motivate design for energy efficiency and allowing recharging of energy costs in a fair and systematic manner.
 
 
 
