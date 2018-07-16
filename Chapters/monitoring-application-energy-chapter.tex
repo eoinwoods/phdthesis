@@ -130,7 +130,17 @@ The figure shows two traces, representing requests, one after the other.  The tr
 
 \section{Utilising Resource Usage Records}
 
-\textbf{TODO} - need to have a section discussing why we only use CPU and not other resource metrics but why this is actually valid.
+Modern computing platforms like Linux and Windows provide detailed and comprehensive resource utilisation statistics that describe CPU utilisation (typically in terms of milliseconds or nanoseconds of CPU time used), disk i/o (in terms of read and write requests, blocks and bytes performed), memory utilisation (as KB of memory used over time) and network i/o (in terms of receive and transmit requests and bytes) \cite{unix_sar_command, windows_performance_monitor}.
+
+When estimating energy characteristics of a workload, while it is possible to measure power consumption of a server or estimate power consumption of a server using a model based on reliable benchmarking, it is difficult to attribute energy consumption to particular elements of the server accurately.  While it is possible to obtain representative power specifications \cite{hitachi_drive_data_sheet} for individual components of enterprise class computing hardware, interpreting such specifications to produce accurate power consumption estimates is extremely difficult as they require a detailed understanding of the physical operation of the hardware element concerned (such as the frequency of the CPU at different times or the amount of time that disks spend spinning at full speed).
+
+As a result, we concluded that combining CPU, disk, network and memory utilisation statistics in order to produce power consumption estimates for a complex computing device, such as an enterprise server, was not a practical approach for anything other than the smallest laboratory examples and certainly was not suitable for the large scale enterprise use that we aspired to apply our work to.
+
+However, it turns out that there is a solution to this difficult problem, which is to use CPU utilisation as a proxy for overall server power consumption.  Previous research \textbf{[REF - TODO which paper?]} has shown that CPU utilisation is directly proportional to the power consumption of the server as a whole.  We have also investigated this and found that in more limited testing, in our specific environment, this relationship holds and CPU utilisation is a good proxy value for the relative power consumption of a server computer.  We discuss the validation of this finding in Chapter \ref{chapter:validation}.
+
+This finding allows us to use CPU utilisation of the server host as a whole, compared to the CPU utilisation of the architectural elements used to process application requests, as a reliable proxy for the ratio of the energy consumption of the server to the processing required for the application requests.
+
+In the next section of this chapter, we explain how we calculate estimations of energy allocation for application requests.
 
 \section{Calculating an Energy Allocation Estimate}
 
@@ -172,7 +182,7 @@ Let us now consider how we describe the CPU usage of a span.  The process is ill
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/estimating-energy-graph}
-\caption{Example Execution Trace}
+\caption{Cumulative CPU Usage Graph}
 \label{figure:graph}
 \end{figure}
 
