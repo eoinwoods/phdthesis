@@ -144,7 +144,22 @@ In the next section of this chapter, we explain how we calculate estimations of 
 
 \section{Calculating an Energy Allocation Estimate}
 
-The key element in the system is clearly the Energy Estimator, which implements the fundamental algorithm to fulfil the purpose of the system.  This algorithm is a numerical calculator which combines data from the trace records, resource usage records and energy usage records in order to produce a reliable estimate of the amount of the energy of the underlying host which should be allocated to a specific request which the application under consideration has processed.
+\subsection{Our Approach for Estimating Energy Allocation}
+The key element in the system is clearly the Energy Estimator, which implements the processing required to fulfil the purpose of the system.  This element is a numerical calculator which combines data from the trace records, resource usage records and energy usage records in order to produce a reliable estimate of the amount of the energy of the underlying host which should be allocated to a specific request which the application under consideration has processed.
+
+We illustrate the approach to creating an energy allocation estimate using the graph in Figure \ref{figure:cpuusage}, which shows the cumulative CPU usage over time for two architectural elements \emph{E1} and \emph{E2} along with the corresponding cumulative CPU usage for the host they are executing on.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{Figures/estimating-energy-cpuusage}
+\caption{Cumulative CPU for Request Handling}
+\label{figure:cpuusage}
+\end{figure}
+
+TODO - discuss graph
+
+\subsection{A Specification for Energy Allocation Calculation}
+
 
 We can express the specification for this algorithm as a series of simple equations as shown below.
 
