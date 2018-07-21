@@ -7,13 +7,13 @@
 
 The energy usage of information and communications technology (ICT) systems is starting to receive much more attention that it has historically.  This is due to the sharply increasing demand for electricity to run the digital economy, with US datacenters alone consuming an estimated 91 billion kWh in 2013 and are expected to consume 140 billion kWh by 2020 \cite{delforge2014-datacentreenergy}.
 
-Researchers have been working for some years to understand the energy demand of ICT systems and significant progress has been made in a number of areas.  At the macro level, understanding how data centres use power and reducing the amount of power required in the data centre environment [REF].  At the micro-level, there have been some promising steps in understanding how individual programs consume power, to the point where it is possible to quite accurately predict and compare the power consumption of different options for program implementation [REF].
+Researchers have been working for some years to understand the energy demand of ICT systems and significant progress has been made in a number of areas.  At the macro level, we now have a fairly good understanding of how data centres use power and some understanding of how to reduce the amount of power required in the data centre environment \cite{dc4cities2014_dcmetrics}.  At the micro-level, there have been some promising steps in understanding how individual programs consume power, to the point where it is possible to quite accurately predict and compare the power consumption of different options for program implementation \cite{islam2016-energysoftwarefeatures}.
 
 The problem for the software architect is that their interest sits between these two extremes as they need to understand the energy consumption at the overall application level rather than at the individual software module level or at the data centre level where many applications are consolidated.
 
-The modern trend towards microservice-based systems [REF] makes things more complicated for the practitioner.  In theory it might be possible to use or adapt low-level energy estimation approaches to be useful with monolithic applications, this quickly becomes overwhelming with a microservice-based system, due to the number of possible pieces of the system that could be involved in processing a request or particular piece of workload.
+The modern trend towards microservice-based systems \cite{wikipedia_microservices} makes things more complicated for the practitioner.  In theory it might be possible to use or adapt low-level energy estimation approaches to be useful with monolithic applications, this quickly becomes overwhelming with a microservice-based system, due to the number of possible pieces of the system that could be involved in processing a request or particular piece of workload.
 
-In this chapter, we present the logical (i.e. technology independent) aspects of the design for a piece of technology that we have designed to address this problem by fairly allocating the energy usage of a host machine to the application elements running on it.  Using modern microservice and operating system technology including containers, tracing and resource monitoring, combined with energy statistics for a machine, we can provide the host operator and the software architect with reliable estimates of the fair energy allocation of a machine's total consumption required to process requests for an application running on it.  This allows cost estimation but, more importantly from the software architect's perspective, the evaluation and exploration of architectural alternatives to minimise energy consumption.
+In this chapter, we present the logical (i.e. technology independent) aspects of the design for a piece of technology that we have designed to address this problem by fairly allocating the energy usage of a host machine to the application elements running on it.  Using modern microservice and operating system technology including containers, tracing and resource monitoring, combined with energy statistics for a machine, we can provide the software architect, and also the host operator, with reliable estimates of the fair energy allocation of a machine's total consumption required to process requests for an application running on it.  This allows cost estimation but, more importantly from the software architect's perspective, the evaluation and exploration of architectural alternatives to minimise energy consumption.
 
 \section{Motivation}
 
@@ -29,18 +29,19 @@ The goal of this is to provide a practical approach for software architects to e
 
 \section{Microservice-Based Systems}
 
-The microservice architectural style [REF] is rapidly becoming a mainstream approach for building industrial software systems and it is systems build using this style that we are specifically interested in for this work.
-A microservice-based system is made up of many small, encapsulated, network-connected services, rather than the more traditional approach of having a small number of large servers that aggregated many services (a so-called "monolith" [REF]).
+The microservice architectural style \cite{richardson2018_microservices} is rapidly becoming a mainstream approach for building industrial software systems and it is systems build using this style that we are specifically interested in for this work.
+
+A microservice-based system is made up of many small, encapsulated, network-connected services, rather than the more traditional approach of having a small number of large servers that aggregated many services (a so-called "monolith" \cite{mazlami2017_microservices_monoliths}).
 
 For our purposes, the important characteristics of a microservice-based system are:
 
 \begin{itemize}
-\item The business logic in the system is implemented as a group of small, focused services, each performing one task, typically implementing a "bounded context" in Domain Driven Design terms [REF].
+\item The business logic in the system is implemented as a group of small, focused services, each performing one task, typically implementing a "bounded context" in Domain Driven Design terms \cite{evans2006_ddd}.
 \item The services are as independent as possible and have well defined service interfaces and only interact through these interfaces.  Resources such as databases are owned by a specific service and are not accessed by other services (hence a microservice-based system will have many independent data stores rather than a single consolidated database used by many services).
 \item Handling an incoming request for a system is likely to involve a set of cooperating services, with one handling the initial request and then calling other services in order to fulfil the request and provide a response.  Microservice-based systems often separate request-handling and domain services but we do not assume that this is necessarily the case.
 \end{itemize}
 
-Well designed microservice-based systems typically share other important characteristics [REF], such as independent build, test and deploy for each service, and interfaces defined using machine readable formats such as Swagger [REF] and RAML [REF] but these other characteristics are not significant in the context of this work, and so we do not assume that they are present.
+Well designed microservice-based systems typically share other important characteristics \cite{newman2015_microservices}, such as independent build, test and deploy for each service, and interfaces defined using machine readable formats such as OpenAPI \cite{openapi2018} and RAML \cite{raml2018} but these other characteristics are not significant in the context of this work, and so we do not assume that they are present.
 
 \section{Estimating Energy Usage}
 
@@ -51,7 +52,7 @@ As we investigated the problem of how to provide software architects, and other 
 
 \item Other research projects have attempted to estimate architectural characteristics through \emph{event based simulation} but creating event based simulation models is an unfamiliar process to many practitioners and again is significant amounts of effort for non-trivial systems.  It is also the case that existing research in this area has not yet investigated how to estimate energy consumption, but rather has focused on other architectural qualities such as performance.
 
-\item At the \emph{micro-measurement level}, sophisticated approaches have been designed to estimate energy consumption for individual algorithms or programs [REF-JOLINAR] with a high degree of success.  However these approaches rely on a highly controlled execution environment for the code being measured and access to low-level hardware state metrics, such as processor frequency statistics, in order to deal with the complex power characteristics of modern computing hardware.  While these models and tools are undoubtedly useful in the right situation, they are not practical tools for measuring the energy usage of a large-scale modern distributed application.
+\item At the \emph{micro-measurement level}, sophisticated approaches have been designed to estimate energy consumption for individual algorithms or programs \cite{noureddine2016-jolinar} with a high degree of success.  However these approaches rely on a highly controlled execution environment for the code being measured and access to low-level hardware state metrics, such as processor frequency statistics, in order to deal with the complex power characteristics of modern computing hardware.  While these models and tools are undoubtedly useful in the right situation, they are not practical tools for measuring the energy usage of a large-scale modern distributed application.
 
 \item We explored whether we could combine the \emph{micro-measurement} approaches with \emph{application-level resource usage estimation} and produce meaningful energy estimates for the application-level workload.  However we found that approaches like Jolinar are not effective unless the low-level hardware state metrics can be provided and this wasn't practical in large distributed execution environments such as those used by microservice-based systems.
 
@@ -151,12 +152,29 @@ We illustrate the approach to creating an energy allocation estimate using the g
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/estimating-energy-cpuusage}
+\includegraphics[width=1.0\textwidth]{Figures/estimating-energy-cpuusage}
 \caption{Cumulative CPU for Request Handling}
 \label{figure:cpuusage}
 \end{figure}
 
-TODO - discuss graph
+The graph shows how CPU usage accumulates for an individual architectural element when it handles requests and how the CPU usage of the individual elements combine, along with other workload on the machine, to affect the host's CPU usage.
+
+Starting from the left, the host and element \emph{E1} start up and use CPU during this process before becoming largely idle for a short period and so their CPU usage curves flatten.
+
+Next element \emph{E1} receives a request, which we name \emph{r1}.  As can be seen, processing this request causes \emph{E1} to consume CPU rapidly, hence the CPU consumption curve becomes much steeper for a short period and the host's CPU usage curve follows a similar shape, reflecting the effect of \emph{E1}'s CPU usage on the host.  After request \emph{r1} has been processed, the CPU utilisation curves flatten again, reflecting the idle state that the application elements and the host are in.
+
+The next part of the graph shows the arrival of another request, which we name \emph{r2}, processed by element \emph{E1}.  Similar to the previous request, this results in a short burst of CPU consumption by \emph{E1}.  However in this case \emph{E1} calls a second architectural element, \emph{E2} as part of the processing of the request.  At this point, this CPU consumption curve for \emph{E1} flattens as it is no longer consuming CPU, but \emph{E2}'s CPU consumption starts increasing rapidly for a short period.  Once \emph{E2} has completed processing, the host CPU curve flattens, indicating that request \emph{r2} has been processed.
+
+Finally, element \emph{E1} receives a third request, which we name \emph{r3} and its CPU usage graph again becomes steep for a period as the request is processed.  Note that the CPU usage for processing request \emph{r3} is significantly greater than that which was recorded for processing \emph{r1} (and in fact \emph{r2}).  The host's CPU usage can be seen to increase in step, reflecting the impact of processing the request on the CPU usage of the host.
+
+By comparing the shape of the host CPU usage graph to the usage graphs of the application elements it is possible to assess the amount of the host's CPU consumption which is attributable to the application elements.  In this example, the host CPU usage graph has quite a similar shape to application elements beneath it.  However careful inspection reveals that its slope is nearly always steeper than that of the application elements, reflecting the other workload that the host is undertaking in addition to that of the architectural elements.  
+
+In this case, the fairly close match of the host usage curve to the application elements suggests that relatively little other workload is active on the host.  In the most extreme case, the host utilisation curve would be flat at the top of the graph, incidating close to 100\% utilisation and a very signifiant amount of other work being executed on the host in parallel with the application workload which we are studying.
+
+It is this host CPU to application element CPU ratio which is key to our approach to allocating energy usage.  As explained above, we view CPU usage as a good proxy for the energy consumption of a host.  Therefore if an application's elements are consuming (say) 65\% of the host's CPU usage for a period, then we know that it is consuming roughly 65\% of the energy of the host during that period.
+
+We use this insight as the key to designing an algorithm to allow us to estimate energy allocation for individual applcation requests, as explained in the next section.
+
 
 \subsection{A Specification for Energy Allocation Calculation}
 
@@ -205,12 +223,12 @@ Given $s$ is a span then we can describe the CPU usage of the span $s$ using the
 
 Let $C_{s, st}$ be the cumulative CPU usage for the span at point $st$ defined by
 \begin{equation}
-C_{s,st} = C_{s,t1} + ( \frac{C_{s,t2} - C_{s,t1}}{t2 - t1} \times (st - t1) ) 
+C_{s,st} = C_{s,t1} + \left( \frac{C_{s,t2} - C_{s,t1}}{t2 - t1} \times (st - t1) \right) 
 \end{equation}
 
 Let $C_{et}$ be the cumulative CPU usage at point $et$ defined by
 \begin{equation}
-C_{s,et} = C_{s,t2} + ( \frac{C_{s,t3} - C_{s,t2}}{t3 - t2} \times (et - t2) ) 
+C_{s,et} = C_{s,t2} + \left( \frac{C_{s,t3} - C_{s,t2}}{t3 - t2} \times (et - t2) \right) 
 \end{equation}
 
 Then the CPU usage of span $s$ can be defined as
@@ -222,12 +240,12 @@ Given $h$ which is the host that a span executed on, and $st$ and $et$, which ar
 
 Let $C_{h, st}$ be the cumulative CPU usage for the host at point $st$ defined by
 \begin{equation}
-C_{h,st} = C_{h,t1} + ( \frac{C_{h,t2} - C_{h,t1}}{t2 - t1} \times (st - t1) ) 
+C_{h,st} = C_{h,t1} + \left( \frac{C_{h,t2} - C_{h,t1}}{t2 - t1} \times (st - t1) \right) 
 \end{equation}
 
 Let $C_{et}$ be the cumulative CPU usage at point $et$ defined by
 \begin{equation}
-C_{s,et} = C_{h,t2} + ( \frac{C_{h,t3} - C_{h,t2}}{t3 - t2} \times (et - t2) ) 
+C_{s,et} = C_{h,t2} + \left( \frac{C_{h,t3} - C_{h,t2}}{t3 - t2} \times (et - t2) \right) 
 \end{equation}
 
 Then the CPU usage of host $s$ between times $st$ and $et$ can be defined as
@@ -264,12 +282,27 @@ E_{h,st,et} = (et - st) \times 1000 \times P_{h}
 Given these supporting definitions we can now define the specification for the energy estimation process to be
 
 \begin{equation}
-E_{t} = \sum_{i=1}^{\#t.S} ( \frac {C_{t.S[i]}} {C_{h,t.S[i].st,t.S[i].et}} ) \times E_{h, st, et}
+E_{t} = \sum_{i=1}^{\#t.S} \left( \frac {C_{t.S[i]}} {C_{h,t.S[i].st,t.S[i].et}} \right) \times E_{h, st, et}
 \end{equation}
 
 The energy allocation for all a trace is the sum of the energy allocations for the spans within it, which are each calculated as the ratio of the span resource usage to the host resource usage, during the span execution period, multiplied by the estimated host energy usage during the span execution period.
 
 An algorithm which implements this specification will therefore allocate the energy used by the underlying host fairly across the application execution traces that it is executed for, so allowing fair comparisons to be made between different application requests to motivate design for energy efficiency and allowing recharging of energy costs in a fair and systematic manner.
+
+\section{Implementing Apollo}
+
+In this chapter we have explained the problem of providing energy estimates to a software architect and explored how this can be achieved in a realistic enterprise-computing environment through the use of a combination of resource consumption statistics, host energy consumption statistics and data centre efficiency factors.
+
+So far our discussion has been largely implementation agnostic.  We have assumed the availability of the information we need, which presupposes a reasonably modern, mainstream enterprise application development and deployment environment (such as .NET on Windows or Java on Linux), but we have not limited or constrained our design by choosing specific technologies to use for data collection and analysis.  This means we have a specification for the software we need to build, which we could now implement using a choice of technologies for each part of the solution.
+
+Realistically, when we choose technologies for each part of the solution they will solve parts of the problem for us and also constrain the solution and bring limitations and difficulties.  This is why presenting the implementation independent form of the design is important so that the underlying ideas can be explored and applied in a range of technology environments.  However we are aware that the design, and possibly its effectiveness, will be altered by the specific implementation choices we make when we build it.
+
+In the next chapter we explain how we built a proof-of-concept version of Apollo, the technology choices we made, the problems we encountered and how we solved the problems to create a realistic and viable application energy calculator.
+
+
+
+
+
 
 
 
