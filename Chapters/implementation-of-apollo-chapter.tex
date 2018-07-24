@@ -2,8 +2,21 @@
 \label{chapter:implementation}
 
 \section{Introduction}
-The functional design presented in Section V abstracts away implementation details, in order to concentrate on the essence of the problem and our solution.  In this section, we consider how to implement the functional design.
-In order to both align with industrial practice and also simplify our implementation as much as possible, we have made a number of assumptions about the system being investigated:
+The logical design of the Apollo energy estimation calculator was presented in Chapter \ref{chapter:monitoring} and showed how, in principle, we can build a useful energy calculator to fairly allocate energy usage of a collection of host machines, on the basis of the individual application requests processed in a period of time (rather than just the total resource usage of application elements over a period).   Such a calculator can provide a tool for a software architect to understand the energy consumption implications of their architectural decisions and can guide them towards higher energy efficiency for the applications.
+
+The logical design of the calculator is independent of specific technologies and does not specify the details of the implementation, simply the operations that must be performed.  Hence, while it is a type of design, as we are now to implement the calculator it actually acts as our specification and our proof of concept implementation - Apollo - can be implemented in a number of ways using a number of different technology choices and detailed design decisions.
+
+In this chapter we explain how we went about the task of implementing our proof-of-concept calculator, the problems we set out to solve, the choices we made, some of the problems we had to solve and some of the tradeoffs that were necessary.
+
+The list:
+\begin{itemize}
+	\item How to trace execution
+	\item How to find resource usage of application elements
+	\item How to find resource usage of host
+	\item How to find energy usage of host
+	\item How to link trace, application resource usage, host resource usage and host energy usage data to implement the algorithm
+\end{itemize}
+
 
 \begin{itemize}
 \item \emph{Containerisation} - we assume that all application elements which need to have energy usage estimated for them can be packaged in runtime containers - specifically Docker containers [REF].  Given the current wide industrial usage of Docker and its alignment with the microservice architectural style, we believe that this is an entirely realistic assumption.
@@ -15,7 +28,7 @@ The implementation design of the system is shown in the simple block diagram in 
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{Figures/estimating-energy-cpuusage}
+\includegraphics[width=0.5\textwidth]{Figures/implementation-design}
 \caption{Implementation of the Apollo Energy Estimator}
 \label{figure:implementation}
 \end{figure}
