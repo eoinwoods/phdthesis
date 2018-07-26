@@ -8,17 +8,19 @@ The logical design of the calculator is independent of specific technologies and
 
 In this chapter we explain how we went about the task of implementing our proof-of-concept calculator, the problems we set out to solve, the choices we made, some of the problems we had to solve and some of the tradeoffs that were necessary.
 
-\begin{quote}
+\section{Initial Decisions}
 
-The list:
+In order to move forwards efficiently, we needed to narrow the design space for our problem to allow us to focus on the key decisions specific to the problem we were investigating rather than being distracted by the generic decisions that all software projects need to make.
+
+These basic decisions were as follows:
+
 \begin{itemize}
-	\item How to trace execution
-	\item How to find resource usage of application elements
-	\item How to find resource usage of host
-	\item How to find energy usage of host
-	\item How to link trace, application resource usage, host resource usage and host energy usage data to implement the algorithm
+	\item As mentioned in the previous chapter, We will focus on the domain of \emph{microservice-based information systems}, such as those found in large enterprises, Internet-facing systems and Internet-oriented startup companies.  We will not specifically exclude the approach being used with other architectural styles, but where a design decision is required, we will assume that the approach will be used with a microservice-based system.
+	\item We will assume that the primary technology "stack" used to implement the system will be \emph{enterprise Java}, meaning software written in Java, running on the JVM, using common open source frameworks and libraries like Spring Boot, Hibernate, Dropwizard, Spring Data, Apache Commons and so on.
+	\item We will assume that the primary \emph{execution platform is Linux on Intel}, as this is something of a defacto standard for running large-scale enterprise Java systems.  Where it is possible we will try to make the approach execution platform agnostic (in particular to allow for Windows, another common server execution platform in the enterprise) but again, where a decision needs to be made, we will assume a Linux on Intel host.
 \end{itemize}
-\end{quote}
+
+All of these decisions align us with mainstream industry practice and provide practical options for applying our approach to industrial systems, while narrowing our design decisions to those related to our research problem, rather than generic concerns.
 
 \section{Tracing Application Execution}
 
@@ -30,7 +32,7 @@ This requirement means that we need some way of tracing the execution of workloa
 
 \emph{Application Performance Management} (APM) tools, such as AppDynamics, New Relic and Dynatrace \cite{appdynamics2018, newrelic2018, dynatrace2018} already perform application request tracing to allow them to measure and estimate application performance characteristics.  Initially using a tool like this as the basis of our approach was our preferred option.  In practice though, while attractive to practitioners who were already using the particular tool we would choose, it is a significant barrier to everyone else due to the cost and complexity of deploying these tools.  While we see our work as a potential extension of APM tools, perhaps providing them with a new dimension to their facilities, we decided against basing our approach on one of them.
 
-\emph{Microservice tracing systems} like Zipkin and Jaeger \cite{zipkin2018, jaeger2018} were a third alternative that we considered.  These libraries are used by application developers to provide standardised trace data about the execution of their applications and provide collection and analysis infrastructure to allow the trace data to be easily used.  When we initially investigated them, these libraries appeared to solve part of the problem of implementing application specific tracing, but still left the application developer with significant work to do.  As we investigated these open source products further we found that they are supported by or integrated into many commonly used application frameworks (for example Zipkin is already integrated into libraries for about 10 languages, including Java, Python, C\# and JavaScript, and just considering Java, it is integrated into more than 15 well known application frameworks including Spring Boot, Dropwizard, Google RPC, Apache HTTP Client and Jersey).  If using a pre-integrated framework, using these tracing systems is very straightforward from an application developer's perspective and normally simply involves starting the data server to receive the trace data and setting some configuration parameters in the framework configuration.
+\emph{Microservice tracing systems} like the open source Zipkin and Jaeger \cite{zipkin2018, jaeger2018} projects were a third alternative that we considered.  These systems are used by application developers to provide standardised trace data about the execution of their applications and provide collection and analysis infrastructure to allow the trace data to be easily used.  When we initially investigated them, they appeared to solve part of the problem of implementing application specific tracing, but still left the application developer with significant work to do.  As we investigated these open source products further we found that they are supported by or integrated into many commonly used application frameworks (for example Zipkin is already integrated into libraries for about 10 languages, including Java, Python, C\# and JavaScript, and just considering Java, it is integrated into more than 15 well known application frameworks including Spring Boot, Dropwizard, Google RPC, Apache HTTP Client and Jersey).  If using a pre-integrated framework, using these tracing systems is very straightforward from an application developer's perspective and normally simply involves starting the data server to receive the trace data and setting some configuration parameters in the framework configuration.
 
 After some experimentation we found that the Zipkin tracing system worked very well for a set of Java microservices and its database was easy to query to extract the trace information we needed.  We concluded that the reliability, easy availability, low implementation overhead, ease of use and large number of existing integrations with widely used application frameworks made Zipkin a good choice for our work.
 
@@ -42,13 +44,27 @@ The only practical source of application resource usage statistics is the applic
 
 The simplest option is to use \emph{native operating system tools} such as \texttt{sar} and \texttt{pidstat} on Linux and \texttt{procmon} and \texttt{perfmon} on Windows.  In principle these tools can collect resource usage statistics for application processes on the machine.  However in practice, our industrial experience and recent investigation for this work, suggests that they are really intended for collecting host-level statistics or for interactive investigation of a performance problem on a machine, by a skilled administrator.  They do not provide an easy way to get a reliable stream of samples of cumulative usage over time written into an accessible form.
 
-An alternative is to bypass the tools and access the \emph{operating system performance counters} directly.  Like most modern operating systems, Windows and Linux both implement a set of performance counters in their kernels, which are used for monitoring performance and throughput of workload executed by the machine.  These counters are used by the operating system tools to provide the data they need to operate and so by accessing the counters directly, we can avoid any limitations in the tools and still achieve consistent results.  Linux provides access to its performance counters via the very convenient \textt{{/proc}} file system, which exposes all of the kernel's counters for global and process-specific metrics, via a pseudo file system interface (which can be read using standard text processing tools or through the standard file system API).  Windows provides access to its performance counters via the \texttt{perfmon} tool or through an API which is accessible via PowerShell (the modern Windows scripting language) or a conventional programming language.  In principle we can build any collection tool we want using these interfaces or we can use metrics collection servers such as \texttt{telegraf} or \texttt{collectd} [REFS] to read them automatically and store them in a suitable database for us.  During initial research, this approach was our preferred option, however in practice we found it quite difficult to get a usable set of statistics for our application.  The main problem we faced was that the collector does not know which workload on the machine belongs to a particular application.  Therefore we had to collect everything at operating system process level, which potentially generates huge amounts of unnecessary data.  We also found that the business of building a reliable collector was more difficult than initially assumed and that linking the trace data to the dataset we could collect easily from operating system counters was quite difficult to do reliably.  These difficulties were not insurmountable, but led us to consider whether there were other options we could consider.
+An alternative is to bypass the tools and access the \emph{operating system performance counters} directly.  Like most modern operating systems, Windows and Linux both implement a set of performance counters in their kernels, which are used for monitoring performance and throughput of workload executed by the machine.  These counters are used by the operating system tools to provide the data they need to operate and so by accessing the counters directly, we can avoid any limitations in the tools and still achieve consistent results.  Linux provides access to its performance counters via the very convenient \texttt{{/proc}} file system, which exposes all of the kernel's counters for global and process-specific metrics, via a pseudo file system interface (which can be read using standard text processing tools or through the standard file system API).  Windows provides access to its performance counters via the \texttt{perfmon} tool or through an API which is accessible via PowerShell (the modern Windows scripting language) or a conventional programming language.  In principle we can build any collection tool we want using these interfaces or we can use metrics collection servers such as \texttt{telegraf} or \texttt{collectd} \cite{telegraf2018, collectd2018} to read them automatically and store them in a suitable database for us.  During initial research, this approach was our preferred option, however in practice we found it quite difficult to get a usable set of statistics for our application.  The main problem we faced was that the collector does not know which workload on the machine belongs to a particular application.  Therefore we had to collect everything at operating system process level, which potentially generates huge amounts of unnecessary data.  We also found that the business of building a reliable collector was more difficult than initially assumed and that linking the trace data to the dataset we could collect easily from operating system counters was quite difficult to do reliably.  These difficulties were not insurmountable, but led us to consider whether there were other options we could consider.
 
-The third option we investigated was to use \emph{Docker containers} TODO
+The third option we investigated was to use \emph{Docker} \cite{docker2018} as a packaging technology for the application elements and to allow us to collect resource usage statistics.  Docker is an operating system virtualisation technology which uses operating system mechanisms (such as "cgroups" and "kernel namespaces" on Linux) to isolate processes from each other, providing the illusion that each is running on a separate machine.  Docker also provides a packaging convention that allows software to be packaged into reusable packages called "images" which are combined at runtime to form runtime environment known as a "container".  Docker also provides a set of management APIs and tools to allow containers to be interrogated, managed and controlled.  Docker is rapidly becoming a de-facto standard in the industry to package, deploy and manage microservices both on general host computers (where Docker becomes an execution environment on top of the operating system) and more abstract, container based platforms like Kubernetes \cite{kubernetes2018} where Docker forms part of a sophisticated platform providing demanding quality properties like scalability and resilience, across a cluster of host computers.
+
+Our interest in Docker lies in its ability to provide a low-overhead, isolated environment for running application elements (in our case, microservices specifically).  If we can assume that all of the microservices within our system are packaged and then run as Docker containers then it provides us with the ability to extract accurage resource utilisation statistics for the microservice running in the container.  Another benefit of using Docker is that each container has its own network (IP) address which can be found via the runtime metadata available via Docker's management API.  This greatly simplifies the process of relating the resource usage data to the request traces from Zipkin as the network address is a shared piece of information between the two.
+
+We believe that requiring application elements (the microservices) to be packaged and run as Docker containers is realistic and reasonable, given its wide and growing adoption in industry, particulary for microservice-based systems.  Therefore this combination of factors resulted in us deciding to use Docker as the basis for collecting application resource utilisation statistics.
+
+The second part of collecting utilisation statistics is how they are extracted and stored from the execution platform.  In our case, our experimentation with Docker quickly revealed that a number of open source projects, including \emph{cAdvisor} \cite{cadvisor2018} and \emph{Telegaf} \cite{telegraf2018}, provide close integration with Docker and can extract and store the utilisation statistics data in different database systems.
+
+After some experimentation we chose to use Docker with Telegraf, storing utilisation statistics in the \emph{InfluxDB} \cite{influxdb2018} open source time-series database to provide us with reliable application element resource utilisation statistics gathering.
 
 \section{Estimating Resource Usage of the Host Platform}
 
-TODO
+Estimating resource usage of the underlying host platform is simpler than gathering the same information for the application elements, as host-level statistics gathering is a mature and widely used technology, provided by all major operating system platforms.
+
+In our case we need to achieve reliable resource utilisation sampling of the host platform - the underlying Linux operating system - and have them stored in a database that allows us to extract them through a query interface to support the calculation process.  Ideally if the statistics are in a similar form to the statistics for the application level resource utilisation (e.g. the same timestamp convention and data types used), then this is likely to make the implementation of the calculator easier.
+
+Our earlier investigation of the \emph{Telegraf} data collection server to extract and store application-level utilisation statistics revealed that it can be configured to extract and store host-level utilisation statistics too, and that this facility is provided as part of the standard distribution of the (open source) product.  When we tested the host resource utilisation statistics feature of Telegraf we found that it was straightforward to use and reliably stored accurate statistics in the same database as the application-level statistics.  The host-level statistics used the same basic conventions as the application-level statistics (e.g. they were both cumulative utilisation statistics using the same timestamp conventions).
+
+Therefore we were able to solve the host-level resource utilisation statistics gathering problem by simply extending the configuration of the Telegraf server and the extension of the data set it stored to include host-level statistics.
 
 \section{Estimating Energy Usage of the Host Platform}
 
@@ -59,6 +75,24 @@ TODO
 \subsection{The Software Structure}
 
 TODO
+
+The implementation design of the system is shown in the simple block diagram in Figure 3. The system elements filled with the fine dotted pattern are the elements of the application (Application Services, Black-Box Services and Asynchronout Processors), the system elements filled with the fine cross-hatching are data elements, while the Apollo Energy Estimator is filled with the light solid fill.  The unshaded elements are third party technologies which are reused unchanged as part of the implementation.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{Figures/implementation-design}
+\caption{Implementation of the Apollo Energy Estimator}
+\label{figure:implementation}
+\end{figure}
+
+The significant third-party technologies used in this implementation are:
+\begin{itemize}
+\item Docker - as mentioned above, all application elements need to run within Docker containers.  This allows metadata about the elements to be retrieved and resource usage statistics to be gathered.
+\item Zipkin - a trace of the invocations to and between application elements is required and as explained above, the Zipkin tracing system is used to achieve this.
+\item Telegraf - the Docker platform produces a stream of resource usage statistics for the containers that it is executing.  The Telegraf agent collects these metrics and stores them in a timeseries database for easy retrieval.
+\item InfluxDB - is used as the timeseries database for the Resource Usage Records.
+\end{itemize}
+
 
 \subsection{The Calculation Algorithm}
 
@@ -84,29 +118,6 @@ TODO
 \textit{Possibly useful text after this point to reuse ...}
 
 
-\begin{itemize}
-\item \emph{Containerisation} - we assume that all application elements which need to have energy usage estimated for them can be packaged in runtime containers - specifically Docker containers [REF].  Given the current wide industrial usage of Docker and its alignment with the microservice architectural style, we believe that this is an entirely realistic assumption.
-\item \emph{Tracing} - we assume that all Application Service elements can participate in tracing of their requests and invocations and specifically that they can generate a Zipkin [REF] trace record stream.  Zipkin is widely adopted in industry (REF) and existing instrumentations exist for C\#, Go, Java and JavaScript, amongst others [REF].  We think this will cover most industrial cases.  In addition, Zipkin has been tightly integrated into a number of very widely used microservice frameworks, like Spring Boot [REF] and DropWizard [REF], which makes its use trivial for developers who are using a framework to create their services.  Therefore we do not believe that this assumption is likely to cause problems for the foreseeable future.
-\item \emph{Architectural Description} - we assume that some of the structural aspects of the system that we need (service relationships in particular) are available via an architectural description that we assume is described using xADL [REF].  From an industrial perspective this is a less realistic assumption as few industrial projects use machine readable architectural descriptions of any sort and very few, if any, use xADL.  However we need this information for some of the calculations and so the architect does need to capture it and a notation is needed to achieve this. xADL is simple and practical and so while not part of current industrial practice, we do not believe that it will be a major problem and indeed could motivate industrial architects to create simple, useful, machine-readable architectural descriptions, which could be then used for other purposes too.  The implementation also isolates the xADL dependency in one module of the code and so could easily use alternative representations if xADL proves to be problematic.
-\end{itemize}
-
-The implementation design of the system is shown in the simple block diagram in Figure 3. The system elements filled with the fine dotted pattern are the elements of the application (Application Services, Black-Box Services and Asynchronout Processors), the system elements filled with the fine cross-hatching are data elements, while the Apollo Energy Estimator is filled with the light solid fill.  The unshaded elements are third party technologies which are reused unchanged as part of the implementation.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{Figures/implementation-design}
-\caption{Implementation of the Apollo Energy Estimator}
-\label{figure:implementation}
-\end{figure}
-
-The significant third-party technologies used in this implementation are:
-\begin{itemize}
-\item Docker - as mentioned above, all application elements need to run within Docker containers.  This allows metadata about the elements to be retrieved and resource usage statistics to be gathered.
-\item Zipkin - a trace of the invocations to and between application elements is required and as explained above, the Zipkin tracing system is used to achieve this.
-\item Telegraf - the Docker platform produces a stream of resource usage statistics for the containers that it is executing.  The Telegraf agent [REF] collects these metrics and stores them in a timeseries database for easy retrieval.
-\item InfluxDB - is used as the timeseries database for the Resource Usage Records.
-\item xADL - as explained above, we need some structural information about the application to allow integration of energy estimations for untraceable elements.  xADL is the machine readable notation used for this.
-\end{itemize}
 
 The operation of the energy estimation system is similar to the simpler functional design explained earlier.  The elements of the system and the responsibilities of each and their key interactions are as follows:
 
