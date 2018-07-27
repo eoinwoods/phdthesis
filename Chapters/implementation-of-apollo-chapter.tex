@@ -68,13 +68,48 @@ Therefore we were able to solve the host-level resource utilisation statistics g
 
 \section{Estimating Energy Usage of the Host Platform}
 
-TODO
+As explained when we discussed the motivation for this work in Chapter \ref{chapter:introduction} the field of energy estimation is relatively young and reliable approaches for energy estimation of individual devices and applications are only just emerging.  Our work does not intend to address the problem of estimating energy consumption for a single host computer, but rather requires a reliable energy consumption metric to be available.
+
+As explained in Chapter \ref{chapter:monitoring} there are two main approaches available to us that can provide energy usage of our underlying host platform, physical energy consumption metrics made available via a DCIM platform and model-based energy consumption estimation using machine utilisation levels and published benchmark results.
+
+In many industrial situations, a DCIM platform will be available and energy consumption metrics for all or a subset of host machines will be available through it.  However in our research environment we did not have access to such a platform and in many industrial situations this will be the case too.  While the state-of-the-art in organisation design is to integrate development and operations groups, they are frequently still separate and so even when a DCIM platform is available, software architects may well not be able to access it easily.
+
+Therefore we decided to use a model-based approach to estimate the energy consumption of the host, but to ensure that it was easily replaceable with alternative models or with queries to a DCIM platform if one was available.
+
+The approach used to estimate the energy usage of a host was explained in section \ref{subsection:calculation-specification} and relies upon published power consumption benchmark results associated with the \cite{lange2009-specpower} benchmarks.  An example data set for power consumption for a specific model of server host is shown in \ref{table:powervalues}
+
+\begin{table}
+\centering
+\caption{SPECPower 2008 Benchmark Results for \\Dell PowerEdge R730 (Intel Xeon E5-2699 v4 2.20 GHz)}
+\label{table:powervalues}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+Machine Load & Power Consumption (W) & W / \% \\
+\hline
+\hline
+Active Idle  &  44.6 & -    \\
+10\%         &  84.8 & 8.48 \\
+20\%         & 102.0 & 5.10 \\
+30\%         & 120.0 & 4.00 \\
+40\%         & 136.0 & 3.40 \\
+50\%         & 150.0 & 3.33 \\
+60\%         & 163.0 & 2.64 \\
+70\%         & 181.0 & 2.58 \\
+80\%         & 205.0 & 2.56 \\
+90\%         & 238.0 & 2.64 \\
+100\%        & 272.0 & 2.72 \\
+\hline
+\end{tabular}
+\end{table}
+
+We use this style of benchmark data combined with the machine type executing our application workload and the utilisation level metrics of the server executing the load to estimate total server energy consumption at a particular point in time, as explained in section \ref{subsection:calculation-specification}.
+
+We have also added a derived column to show the power consumption per percentage point of server utilisation at each level of utilisation.  This clearly illustrates the need to keep servers busy from an energy efficiency perspective as it an be clearly seen that 1\% utilisation when the machine is quiet is three times more expensive in energy consumption terms than 1\% utilisation when the machine is busy.
 
 \section{Implementing the Calculator}
 
-\subsection{The Software Structure}
-
-TODO
+\subsection{Architecture of the Calculator}
 
 The implementation design of the system is shown in the simple block diagram in Figure 3. The system elements filled with the fine dotted pattern are the elements of the application (Application Services, Black-Box Services and Asynchronout Processors), the system elements filled with the fine cross-hatching are data elements, while the Apollo Energy Estimator is filled with the light solid fill.  The unshaded elements are third party technologies which are reused unchanged as part of the implementation.
 
@@ -92,6 +127,14 @@ The significant third-party technologies used in this implementation are:
 \item Telegraf - the Docker platform produces a stream of resource usage statistics for the containers that it is executing.  The Telegraf agent collects these metrics and stores them in a timeseries database for easy retrieval.
 \item InfluxDB - is used as the timeseries database for the Resource Usage Records.
 \end{itemize}
+
+TODO
+
+\subsection{The Software Structure}
+
+TODO
+
+
 
 
 \subsection{The Calculation Algorithm}
