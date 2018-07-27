@@ -72,11 +72,11 @@ As explained when we discussed the motivation for this work in Chapter \ref{chap
 
 As explained in Chapter \ref{chapter:monitoring} there are two main approaches available to us that can provide energy usage of our underlying host platform, physical energy consumption metrics made available via a DCIM platform and model-based energy consumption estimation using machine utilisation levels and published benchmark results.
 
-In many industrial situations, a DCIM platform will be available and energy consumption metrics for all or a subset of host machines will be available through it.  However in our research environment we did not have access to such a platform and in many industrial situations this will be the case too.  While the state-of-the-art in organisation design is to integrate development and operations groups, they are frequently still separate and so even when a DCIM platform is available, software architects may well not be able to access it easily.
+In many industrial situations a DCIM platform will be available and energy consumption metrics for all or a significant subset of host machines will be available through it.  However in our research environment we did not have access to such a platform and in many industrial situations this will be the case too.  While the state-of-the-art in organisation design is to integrate development and operations groups, they are frequently still separate and so even when a DCIM platform is available, software architects may well not be able to access it easily.
 
 Therefore we decided to use a model-based approach to estimate the energy consumption of the host, but to ensure that it was easily replaceable with alternative models or with queries to a DCIM platform if one was available.
 
-The approach used to estimate the energy usage of a host was explained in section \ref{subsection:calculation-specification} and relies upon published power consumption benchmark results associated with the \cite{lange2009-specpower} benchmarks.  An example data set for power consumption for a specific model of server host is shown in \ref{table:powervalues}
+The approach used to estimate the energy usage of a host was explained in section \ref{subsection:calculation-specification} and relies upon published power consumption benchmark results associated with the SPECpower\_ssj 2008 benchmarks \cite{lange2009-specpower}.  An example data set for power consumption for a specific model of server host is shown in \ref{table:powervalues}.
 
 \begin{table}
 \centering
@@ -103,15 +103,15 @@ Active Idle  &  44.6 & -    \\
 \end{tabular}
 \end{table}
 
-We use this style of benchmark data combined with the machine type executing our application workload and the utilisation level metrics of the server executing the load to estimate total server energy consumption at a particular point in time, as explained in section \ref{subsection:calculation-specification}.
+We use this style of benchmark data combined with the machine type executing our application workload and the utilisation level metrics of the server executing the load to estimate host server energy consumption at a particular point in time, as explained in section \ref{subsection:calculation-specification}.
 
-We have also added a derived column to show the power consumption per percentage point of server utilisation at each level of utilisation.  This clearly illustrates the need to keep servers busy from an energy efficiency perspective as it an be clearly seen that 1\% utilisation when the machine is quiet is three times more expensive in energy consumption terms than 1\% utilisation when the machine is busy.
+The third column in the table is a derived value we have added to show the power consumption per percentage point of server utilisation at each level of utilisation.  This clearly illustrates the need to keep servers busy from an energy efficiency perspective as it can be seen clearly that 1\% utilisation when the machine is quiet is three times more expensive in energy consumption terms than 1\% utilisation when the machine is busy.  We investigate this observation further in Chapter \ref{chapter:validation} when we describe how we validated the implementation of Apollo.
 
 \section{Implementing the Calculator}
 
 \subsection{Architecture of the Calculator}
 
-The implementation design of the system is shown in the simple block diagram in Figure 3. The system elements filled with the fine dotted pattern are the elements of the application (Application Services, Black-Box Services and Asynchronout Processors), the system elements filled with the fine cross-hatching are data elements, while the Apollo Energy Estimator is filled with the light solid fill.  The unshaded elements are third party technologies which are reused unchanged as part of the implementation.
+The design of the Apollo calculator is shown in the simple block diagram in Figure 3. The system element filled with the fine dotted pattern represents the architectural elements of the application (i.e. an application microservice), the system elements filled with the fine cross-hatching are data elements, while the Apollo Energy Estimator is filled with the light solid fill.  The unshaded elements are the third party technologies which are reused unchanged as part of the implementation.
 
 \begin{figure}
 \centering
@@ -120,13 +120,26 @@ The implementation design of the system is shown in the simple block diagram in 
 \label{figure:implementation}
 \end{figure}
 
-The significant third-party technologies used in this implementation are:
-\begin{itemize}
-\item Docker - as mentioned above, all application elements need to run within Docker containers.  This allows metadata about the elements to be retrieved and resource usage statistics to be gathered.
-\item Zipkin - a trace of the invocations to and between application elements is required and as explained above, the Zipkin tracing system is used to achieve this.
-\item Telegraf - the Docker platform produces a stream of resource usage statistics for the containers that it is executing.  The Telegraf agent collects these metrics and stores them in a timeseries database for easy retrieval.
-\item InfluxDB - is used as the timeseries database for the Resource Usage Records.
-\end{itemize}
+The design elements of the calculator and their responsibilities are summarised in Table \ref{table:designelements}
+
+\begin{table}
+\centering
+\caption{Apollo Energy Calculator Design Elements}
+\label{table:designelements}
+\footnotesize
+\begin{tabular}{|l|l|}
+\hline
+Design Element & Responsibilties  \\
+\hline
+\hline
+Docker         & All application elements need to run within Docker containers.  This allows metadata about the elements to be retrieved and resource usage statistics to be gathered. \\
+Zipkin         & A trace of the invocations to and between application elements is required and as explained above, the Zipkin tracing system is used to achieve this. \\
+Telegraf       & The Docker platform produces a stream of resource usage statistics for the containers that it is executing.  The Telegraf agent collects these metrics and stores them in a timeseries database for easy retrieval. \\
+InfluxDB       & Provides a timeseries database for the Resource Usage Records. \\
+\hline
+\end{tabular}
+\end{table}
+
 
 TODO
 
