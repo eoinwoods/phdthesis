@@ -127,23 +127,39 @@ The design elements of the calculator and their responsibilities are summarised 
 \caption{Apollo Energy Calculator Design Elements}
 \label{table:designelements}
 \footnotesize
-\begin{tabular}{|l|l|}
+\begin{tabular}{|l|p{10cm}|}
 \hline
-Design Element & Responsibilties  \\
+\textbf{Design Element} & \textbf{Responsibilities}  \\
 \hline
 \hline
-Docker         & All application elements need to run within Docker containers.  This allows metadata about the elements to be retrieved and resource usage statistics to be gathered. \\
-Zipkin         & A trace of the invocations to and between application elements is required and as explained above, the Zipkin tracing system is used to achieve this. \\
-Telegraf       & The Docker platform produces a stream of resource usage statistics for the containers that it is executing.  The Telegraf agent collects these metrics and stores them in a timeseries database for easy retrieval. \\
-InfluxDB       & Provides a timeseries database for the Resource Usage Records. \\
+Application Service & This element represents the regular microservices that comprise the application under investigation.  The implementation of these services are under the control of the development team and they have the responsibility to generate Zipkin trace records (via the Zipkin Client library) to record their activity (although this will usually be achieved automatically through use of an application framework like Spring Boot). \\
+\hline
+Zipkin Client & A trace of the invocations to and between application elements is required and as explained above, the Zipkin tracing system is used to achieve this.  The Ziplin Client is a client programming library used by Application Services to generate trace records and forward them to the Zipkin Server for storage.  The application code may invoke this library directly or it may be invoked automatically by an application framework like Spring Boot or Drop Wizard. \\
+\hline
+Zipkin Server & The Zipkin server receives and stores the trace records from the Application Services.  One Zipkin Server is used for all of the Application Services in a monitoring context. \\
+\hline
+Trace Records & The Zipkin Server persists the trace records in a well defined schema in a database.  In our case we used MySQL as the database for the trace records. \\
+\hline
+Docker Container    & All application elements need to run within Docker containers.  This allows metadata about the elements to be retrieved and resource usage statistics to be gathered.  This container contains the Application Service (each service is packaged in a separate container to allow it to be monitored separately).\\
+\hline
+Docker Runtime     & The Docker Runtime is part of the Docker system software package and provides the control and monitoring of the Docker containers in the application and provides runtime statistics for the containers, which in our situation are streamed to the Telegraf Server for storage. \\
+\hline
+Linux/Intel Host   & The application runs within Docker on the underlying host machine(s) and we have chosen to use an Intel host running the Linux operating system, due to the maturity of both Java and Docker on this platform. \\
+\hline
+Telegraf Server & The Docker platform produces a stream of resource usage statistics for the containers that it is executing.  The Telegraf open source metrics collection agent collects these metrics and stores them in a timeseries database for easy retrieval. \\
+\hline
+Resource Usage Records & The Telegraf Server generates a stream of resource utilisation statistics by constantly querying the Docker Runtime and the Linux Host.  These statistics records are persisted to a database for later use.  The datastore used for the Resource Usage Records is InfluxDB, an open source timeseries database. \\
+\hline
+Docker Network Map & The Zipkin traces and the resource usage records identify the runtime elements of the system in different ways; the Zipkin traces are collected at the network level and so identify elements by IP address and port number, while the Docker resource usage statistics are identified by Docker container ID.  Hence metadata is needed to link the two together and this is the purpose of the Docker Network Map which is metadata available from the Docker Runtime (through the \texttt{docker network inspect} command) which allows us to find the IP address(es) in use by each container during the execution of the application. \\
+\hline
+Apollo Energy Estimator & The Apollo module collects data and implements the energy allocation algorithm described in Chapter \ref{chapter:monitoring}.  This module is the primary software that we have implemented as part of this research (along with an example application we use for validation, which we describe in Chapter \ref{chapter:validation}). \\
 \hline
 \end{tabular}
 \end{table}
 
+The significant piece of custom software developed for this investigation was the Apollo Energy Estimator module.  We describe its software design in the next section.
 
-TODO
-
-\subsection{The Software Structure}
+\subsection{The Design of the Apollo Energy Estimator}
 
 TODO
 
@@ -171,36 +187,4 @@ Third, the energy estimates for each trace and span are derived from sampled res
 
 TODO
 
-\textit{Possibly useful text after this point to reuse ...}
-
-
-
-The operation of the energy estimation system is similar to the simpler functional design explained earlier.  The elements of the system and the responsibilities of each and their key interactions are as follows:
-
-\begin{itemize}
-\item Application Service - represents the regular microservices that comprise the application under investigation.  The implementation of these services are under the control of the development team and they have the responsibility to generate Zipkin trace records (via the Zipkin Client library) to record their activity (although this will usually be achieved automatically through use of an application framework like Spring Boot).
-\item Other Service - represents the services within the system which cannot be altered by the development team (“Blackbox Services”) or services which, although part of the system, do not take a direct part in request processing but are triggered as a side effect of it (“Asynchronous Processors”).  These system elements do not generate Zipkin traces.
-\item Docker Container - the runtime container for all of the application system elements.   It provides isolation for the element within it and an interface to the Docker Runtime.
-\item Docker Runtime - is the execution platform for the application system elements, through their use of containers.  The Docker Runtime is responsible for maintaining the topology of the Docker environment (e.g. which containers are running) and tracking resource utilisation of each container (CPU, memory, disk i/o and network i/o).  It streams the container level resource utilisation metrics to the Telegraf Server.
-\item Zipkin Client - a client programming library used by Application Services to generate trace records and forward them to the Zipkin Server for storage.  The application code may invoke this library directly or it may be invoked automatically by an application framework like Spring Boot or Drop Wizard.
-\item Zipkin Server - accepts incoming streams of trace records from application elements, stores them in the Trace Records database, and provides access to the records (although the records can also be accessed directly from the database, which is what we do in this case).
-\item Trace Records - the database of trace records from Zipkin, recording application element activity.
-Telegraf Server - an open source metrics collection agent, which accepts the stream of resource usage metrics from Docker and writes them to the Resource Usage Records database.
-\item Resource Usage Records - a database of container level resource usage metrics, originally generated by the Docker Runtime.  This is ideally a timeseries database (we use InfluxDB) to allow efficient storage and retrieval of traces and spans by time range.
-\item Docker Network Map - the Docker part of the system identifies architectural elements by container ID (which are large numbers) whereas the Zipkin part of the system has no visibility of container IDs and identifies architectural elements primarily by network address.  The Docker Network Map is a datastructure allowing a mapping between the two worlds, and is generated using the Docker “network inspect” command or API call.
-\item xADL Architectural Description - as explained previously, in order to make a good estimation of energy usage, we need to be able to understand all of the architectural elements involved in a request.  Some form of machine readable architectural description is needed to provide this information and we have selected xADL as the notation for this, given its relative maturity, standard XML-based technology and tools.
-\end{itemize}
-
-Apollo Energy Estimator - is the calculator that produces the energy estimate for each request made to the system.  This architectural element implements the algorithm defined in Figure \ref{figure:implementation}. This means that it:
-
-\begin{itemize}
-\item Reads the Trace Records store to extract the Zipkin traces and spans.
-\item For each trace that it finds, uses the Network Map to identify the containers that correspond to each trace and span that produced the traces and spans.
-\item Reads the xADL Architectural Description to identify the other containers which the architect wishes to be included in the energy estimate for particular requests (based on the containers involved in processing each trace and the relationships between those containers and other containers found in the architectural description).
-\item Using the container identities and the start and end times of the corresponding trace or span records, reads the Resource Usage Records store to find the CPU, memory and IO consumption of each container during the relevant time period. 
-\item Sums the resource usage statistics for each trace and its child spans to produce total resource usage per request.
-\item Calls the energy model to estimate energy usage for the resource usage for each request.
-\end{itemize}
-
-The result of this set of element interactions will be the Energy Estimator producing a set of energy consumption estimates for each of the trace records that it finds in the Trace Records store when it is run.
 
