@@ -109,14 +109,14 @@ The third column in the table is a derived value we have added to show the power
 
 \section{Implementing the Calculator}
 
-\subsection{Architecture of the Calculator}
+\subsection{Design of the Calculator}
 
 The design of the Apollo calculator is shown in the simple block diagram in Figure 3. The system element filled with the fine dotted pattern represents the architectural elements of the application (i.e. an application microservice), the system elements filled with the fine cross-hatching are data elements, while the Apollo Energy Estimator is filled with the light solid fill.  The unshaded elements are the third party technologies which are reused unchanged as part of the implementation.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{Figures/implementation-design}
-\caption{Implementation of the Apollo Energy Estimator}
+\caption{Design of the Apollo Energy Calculator}
 \label{figure:implementation}
 \end{figure}
 
@@ -157,20 +157,91 @@ Apollo Energy Estimator & The Apollo module collects data and implements the ene
 \end{tabular}
 \end{table}
 
-The significant piece of custom software developed for this investigation was the Apollo Energy Estimator module.  We describe its software design in the next section.
+Most of the system described here is open source software (Docker, Telegraf, Zipkin, InfluxDB, MySQL and Linux) and so the only significant piece of custom software that had to be developed for this investigation was the Apollo Energy Estimator module.  The other software development effort was configuration and scripting to combine the different pieces of software into a single system.  We describe the software design of the Estimator module in the next section.
 
-\subsection{The Design of the Apollo Energy Estimator}
+\subsection{Implementation of the Apollo Energy Estimator Module}
 
-TODO
+The Apollo estimator does two primary things, it gathers data from the resource utilisation statistics, the trace records and the Docker network meta data and it uses the information to perform the energy allocation processing required to establish the energy characteristics of each of the inbound requests to the application, described in the trace records. 
 
+The implementation of the module is described by the UML class diagram in Figure \ref{figure:classes} and the class descriptions in Table \ref{table:classes}.
 
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{Figures/implementation-classes}
+\caption{Implementation of the Apollo Energy Estimator Module}
+\label{figure:classes}
+\end{figure}
 
+\begin{table}
+\centering
+\caption{Apollo Energy Estimator Module Structure}
+\label{table:classes}
+\footnotesize
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Design Element} & \textbf{Description} \\
+\hline
+\hline
+Application & This is a small "bootstrap" class with the responsibility of loading configuration settings, creating the other elements and providing an entry point for the runtime system. \\
+\hline
+Energy Calculator & Provides the main processing loop to retrieve traces from the \texttt{Trace Manager}, retrieve the corresponding data for each trace from the other elements and then perform the required calculation. \\
+\hline
+Trace Manager & An interface defining a simple API to retrieve trace records. \\
+\hline
+MySql Zipkin Trace Manager & An implementation of the \texttt{Trace Manager} interface that accesses the Zipkin Server's MySQL database to retrieve the trace records held within it. \\
+\hline
+Net Info & An interface defining a simple API to allow container IDs to be mapped to network addresses and vice versa and container names to be mapped to container IDs and vice versa. \\
+\hline
+Docker Json Net Info & An implementation of \texttt{Net Info} to provide the container name, ID and network address mappings from the JSON file produced by the Docker \texttt{docker network inspect} command. \\
+\hline
+Resource Usage Manager & An interface describing the API to retrieve resource usage information during a period of time for a Docker container, for a host machine or for a host machine where a specific container ran. \\
+\hline
+InfluxDb Resource Usage Manager & An implementation of \texttt{Resource Usage Manager} that retrieves the information from an InfluxDB that has been populated by the \texttt{Telegraf} metrics capture server. \\
+\hline
+Energy Usage Manager & An interface defining the API that provides the ability to retrieve energy usage information for a host machine by name for a period of time, or a host machine that a particular container ran on during a period of time. \\
+\hline
+Energy Usage Manager Simulator & An implementation of the \texttt{Energy Usage Manager} interface that uses a simulation based approach to provide realistic energy consumption information. \\
+\hline
+InfluxDb Decorator & A key utility class that implements the Decorator pattern and adds functions and ease-of-use features to the standard \texttt{InfluxDB} Java client class for InfluxDB.  This allows all of the schema navigation and query language specifics to be isolated and hidden in this class. \\
+\hline
+\end{tabular} 
+\end{table}
+
+The interaction between the classes is fairly straightforward.  Some of the code within the classes (such as that needed to retrieve and transform data into a suitable set of types to make the calculations straightforward) is intricate, but none of it is particularly complex algorithmically.
+
+The flow of control between the modules is quite straightforward and follows the layout of the classes on the diagram; it can be summarised as:
+
+\begin{itemize}
+	\item The Application is invoked, it loads its configuration settings from a configuration file, creates instances of the other objects, "wires" them together and invokes the Energy Calculator.
+	\item The Energy Calculator calls the Trace Manager to retrieve all of the traces in the current data set and for each one:
+	\begin{itemize}
+		\item calls the Net Info class to find the set of containers that were invoked (by mapping the network address from a span record to the container ID);
+		\item calls the Resource Usage Manager to retrieve the resource usage data for the containers;
+		\item calls the Resource Usage Manager to retrieve the resource usage data for the hosts the containers were executed on;
+		\item calls the Energy Usage Manager to retrieve the energy usage of the hosts during the time period of the trace; and
+		\item calculates an estimate of the energy allocation of the trace, based on the estimates of the energy allocation of each container that it can calculate using this information.
+	\end{itemize}
+	\item The Application then reports the energy allocation of each trace using the information returned from the Energy Calculator. 
+\end{itemize}
+
+We discuss how we implemented the algorithm in more detail in section \ref{subsection:algorithm}.
+
+The Energy Estimator module was implemented using mainstream, modern, development technology from the Java Virtual Machine (JVM) ecosystem.  The primary implementation language was Kotlin \cite{jemerov2017-kotlin}, which was chosen for its ease of adoption, its strong support for interoperability with existing Java libraries and its functional language features.  Much of the core calculation involved sets, lists and maps and functional programming features made this code significantly shorter than would have been the case using a traditional imperative style in Java. 
+
+The code was developed in a largely test driven style with unit and integration tests being developed with the main code and an automated build, implemented using Gradle, running all of the tests before creating the delivered binary package.
+
+A significant amount of open source software was used in the implementation, which dramatically reduced the amount of software that needed to be written.  The key external libraries used in the main code were \emph{Spring JDBC} to access the MySQL database, \emph{InfluxDB-Java} to access the InfluxDB database, \emph{Klaxon} to provide JSON binding and \emph{Konfig} to handle configuration settings. 
+
+The Energy Estimator module is about 1500 lines of code with about 1250 lines of associated test code.  Kotlin's brevity and functional programming features contibuted significantly to keeping the number of lines of code needed low.  There are also about 1500 lines of associated script and resource definition code for automation of environment setup and execution.
 
 \subsection{The Calculation Algorithm}
+\label{subsection:algorithm}
 
-TODO
+TODO - decode the algorithms into pseudo code, with discussions of tradeoffs.
 
 \section{Limitations of the Calculator}
+
+TODO - need to work out the design and implementation limitations and explain (and justify) them here.
 
 The design described in this paper has been validated via proof-of-concept implementations of each of its significant decisions and mechanisms, but not yet built.  Therefore the next step in the work is a full, robust implementation which can be utilised and validated to create a useful energy estimation mechanism.
 The design described here is the first development of the ideas and has a number of limitations, which can be addressed in future work.

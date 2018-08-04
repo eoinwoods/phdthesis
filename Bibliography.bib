@@ -1,25 +1,10 @@
-@misc{collectd2018,
-title = {{collectd Documentation}},
-year = {2018}
-}
-@misc{kubernetes2018,
-title = {{Kubernetes Documentation}},
-url = {https://kubernetes.io/docs},
-year = {2018}
-}
-@misc{dynatrace2018,
-title = {{Dynatrace Documentation}},
-year = {2018}
-}
-@misc{newrelic2018,
-title = {{New Relic Documentation}},
-url = {https://docs.newrelic.com/},
-year = {2018}
-}
-@misc{appdynamics2018,
-title = {{AppDynamics App iQ Platform Documentation}},
-url = {https://docs.appdynamics.com/},
-year = {2018}
+@inproceedings{grahn1998-energystyles,
+author = {Grahn, H{\aa}kan and Bosch, Jan},
+booktitle = {Proceedings of the 1st international workshop on Software and performance},
+organization = {ACM},
+pages = {197--198},
+title = {{Some initial performance characteristics of three architectural styles}},
+year = {1998}
 }
 @techreport{iso30134-pue,
 address = {Geneva, CH},
@@ -30,13 +15,31 @@ mendeley-tags = {ISO/IEC 30134-2:2016},
 title = {{Information technology -- Data centres -- Key performance indicators -- Part 2: Power usage effectiveness (PUE)}},
 year = {2016}
 }
-@inproceedings{grahn1998-energystyles,
-author = {Grahn, H{\aa}kan and Bosch, Jan},
-booktitle = {Proceedings of the 1st international workshop on Software and performance},
-organization = {ACM},
-pages = {197--198},
-title = {{Some initial performance characteristics of three architectural styles}},
-year = {1998}
+@techreport{ipmi2013,
+author = {{Intel Corporation} and {Hewlett Packard Company} and {NEC Corporation} and {Dell Inc}},
+institution = {Intel Corporation},
+pages = {644},
+title = {{Intelligent Platform Management Interface Specification, v2.0}},
+url = {https://www.intel.co.uk/content/www/uk/en/servers/ipmi/ipmi-second-gen-interface-spec-v2-rev1-1.html},
+year = {2013}
+}
+@misc{collectd2018,
+title = {{collectd Documentation}},
+year = {2018}
+}
+@book{jemerov2017-kotlin,
+author = {Jemerov, Dmitry and Isakova, Svetlana},
+publisher = {Manning Publications Company},
+title = {{Kotlin in Action}},
+year = {2017}
+}
+@misc{nlyte2018,
+author = {{Nlyte Software}},
+file = {:Users/eoin/Downloads/Nlyte{\_}Energy{\_}Optimizer{\_}Product{\_}Overview.pdf:pdf},
+institution = {Nlyte Software},
+title = {{Nlyte Energy Optimizer Product Overview}},
+url = {https://resources.nlyte.com/neo/nlyte-energy-optimizer},
+year = {2018}
 }
 @techreport{dmtf2018-redfish,
 author = {{Distributed Management Task Force}},
@@ -46,20 +49,23 @@ title = {{Redfish Scalable Platforms Management API Specification}},
 url = {https://www.dmtf.org/sites/default/files/standards/documents/DSP0266{\_}1.5.0.pdf},
 year = {2018}
 }
-@techreport{ipmi2013,
-author = {{Intel Corporation} and {Hewlett Packard Company} and {NEC Corporation} and {Dell Inc}},
-institution = {Intel Corporation},
-pages = {644},
-title = {{Intelligent Platform Management Interface Specification, v2.0}},
-url = {https://www.intel.co.uk/content/www/uk/en/servers/ipmi/ipmi-second-gen-interface-spec-v2-rev1-1.html},
-year = {2013}
+@misc{dynatrace2018,
+title = {{Dynatrace Documentation}},
+year = {2018}
 }
-@misc{nlyte2018,
-author = {{Nlyte Software}},
-file = {:Users/eoin/Downloads/Nlyte{\_}Energy{\_}Optimizer{\_}Product{\_}Overview.pdf:pdf},
-institution = {Nlyte Software},
-title = {{Nlyte Energy Optimizer Product Overview}},
-url = {https://resources.nlyte.com/neo/nlyte-energy-optimizer},
+@misc{kubernetes2018,
+title = {{Kubernetes Documentation}},
+url = {https://kubernetes.io/docs},
+year = {2018}
+}
+@misc{newrelic2018,
+title = {{New Relic Documentation}},
+url = {https://docs.newrelic.com/},
+year = {2018}
+}
+@misc{appdynamics2018,
+title = {{AppDynamics App iQ Platform Documentation}},
+url = {https://docs.appdynamics.com/},
 year = {2018}
 }
 @inproceedings{seo2008-energystyle,
@@ -229,19 +235,19 @@ pages = {1},
 title = {{A Comprehensive Reasoning Framework for Hardware Refresh in Data Centres}},
 year = {2018}
 }
+@misc{windows_performance_monitor,
+author = {Morrison, Blake},
+booktitle = {Ask the Performance Team Blog},
+title = {{Windows Performance Monitor Overview}},
+url = {https://blogs.technet.microsoft.com/askperf/2014/07/17/windows-performance-monitor-overview/},
+year = {2014}
+}
 @techreport{dc4cities2014_dcmetrics,
 author = {ENEA},
 institution = {DC4Cities Project},
 pages = {77},
 title = {{Description of Energy Metrics for Data Centres D7.1}},
 url = {www.dc4cities.eu/en/?smd {\_}process{\_}download=1{\&}download {\_}id=3430},
-year = {2014}
-}
-@misc{windows_performance_monitor,
-author = {Morrison, Blake},
-booktitle = {Ask the Performance Team Blog},
-title = {{Windows Performance Monitor Overview}},
-url = {https://blogs.technet.microsoft.com/askperf/2014/07/17/windows-performance-monitor-overview/},
 year = {2014}
 }
 @misc{wikipedia_microservices,
@@ -970,17 +976,15 @@ title = {{Software Systems Architecture}},
 url = {http://www.amazon.co.uk/Software-Systems-Architecture-Stakeholders-Perspectives/dp/032171833X},
 year = {2011}
 }
-@article{Dick1997,
-abstract = {This article describes the rigorous application of formal methods of software development to a system software development project within a conventional industrial software development environment. This project applied formal methods to a small part (one subsystem) of the development of a release of a system software product. The formal methods VDM and B were used to specify, design and implement the administration subsystem of a product that was otherwise developed along conventional lines. Support tools were used to assist with the use of both methods throughout the development lifecycle. Metrics for effort and quality were collected from the project and compared with historical metrics for similar projects to allow the impact of formal methods on cost and quality to be assessed. This article briefly outlines the product being developed and the subsystem to which formal methods were applied. The environment in which this development was performed and the particular approach used are described. The results of this industrial application of formal methods and the lessons learned by the project are discussed at some length. {\textcopyright} 1997 Elsevier Science B. V.},
-author = {Dick, J. and Woods, E.},
-issn = {09505849},
-journal = {Information and Software Technology},
-keywords = {Formal method,Process improvement,Software development},
-number = {8},
-pages = {551--560},
-title = {{Lessons learned from rigorous system software development}},
-volume = {39},
-year = {1997}
+@book{Woods2012a,
+abstract = {The architect takes a high-profile role in many IT departments today. In fact, it can be quite difficult in some organizations to find a senior member of IT technical staff whose job title does not include the word "architect." However there is little consensus in the academic community or amongst practitioners as to the responsibilities of the many different types of architect we encounter - or indeed, what they should even be called. In this chapter, the authors propose a simple, widely applicable taxonomy of architects, namely enterprise architects, application architects, and infrastructure architects. The authors define distinguishing characteristics, their responsibilities, the stakeholders with whom they engage, and the tools and techniques they use. The chapter shows how this taxonomy can be applied to most, if not all, practicing architects in the information systems domain, and explains how it helps us understand how such architects work together to help deliver the organization's business goals. {\textcopyright} 2013, IGI Global.},
+author = {Woods, E. and Rozanski, N.},
+booktitle = {Aligning Enterprise, System, and Software Architectures},
+doi = {10.4018/978-1-4666-2199-2.ch001},
+isbn = {9781466621992},
+pages = {1--22},
+title = {{Relating enterprise, application, and infrastructure architects}},
+year = {2012}
 }
 @book{Bicarregui1996,
 abstract = {{\textcopyright} Springer-Verlag Berlin Heidelberg 1996. This paper reports on the experience gained in the MaFMeth project, which undertook a formal development with tool support for several parts of the life cycle from requirements capture through to C code generation. We explore the hypotheses that formal methods enable the early detection of faults in design by examining the development process in the light of the stages at which faults were introduced and discovered.},
@@ -993,39 +997,28 @@ title = {{Quantitative analysis of an application of formal methods}},
 volume = {1051},
 year = {1996}
 }
-@book{Woods2012a,
-abstract = {The architect takes a high-profile role in many IT departments today. In fact, it can be quite difficult in some organizations to find a senior member of IT technical staff whose job title does not include the word "architect." However there is little consensus in the academic community or amongst practitioners as to the responsibilities of the many different types of architect we encounter - or indeed, what they should even be called. In this chapter, the authors propose a simple, widely applicable taxonomy of architects, namely enterprise architects, application architects, and infrastructure architects. The authors define distinguishing characteristics, their responsibilities, the stakeholders with whom they engage, and the tools and techniques they use. The chapter shows how this taxonomy can be applied to most, if not all, practicing architects in the information systems domain, and explains how it helps us understand how such architects work together to help deliver the organization's business goals. {\textcopyright} 2013, IGI Global.},
-author = {Woods, E. and Rozanski, N.},
-booktitle = {Aligning Enterprise, System, and Software Architectures},
-doi = {10.4018/978-1-4666-2199-2.ch001},
-isbn = {9781466621992},
-pages = {1--22},
-title = {{Relating enterprise, application, and infrastructure architects}},
-year = {2012}
+@article{Dick1997,
+abstract = {This article describes the rigorous application of formal methods of software development to a system software development project within a conventional industrial software development environment. This project applied formal methods to a small part (one subsystem) of the development of a release of a system software product. The formal methods VDM and B were used to specify, design and implement the administration subsystem of a product that was otherwise developed along conventional lines. Support tools were used to assist with the use of both methods throughout the development lifecycle. Metrics for effort and quality were collected from the project and compared with historical metrics for similar projects to allow the impact of formal methods on cost and quality to be assessed. This article briefly outlines the product being developed and the subsystem to which formal methods were applied. The environment in which this development was performed and the particular approach used are described. The results of this industrial application of formal methods and the lessons learned by the project are discussed at some length. {\textcopyright} 1997 Elsevier Science B. V.},
+author = {Dick, J. and Woods, E.},
+issn = {09505849},
+journal = {Information and Software Technology},
+keywords = {Formal method,Process improvement,Software development},
+number = {8},
+pages = {551--560},
+title = {{Lessons learned from rigorous system software development}},
+volume = {39},
+year = {1997}
 }
-@article{Woods2014a,
-abstract = {Many types of architects work in the software industry, but when we consider the breadth of their work and their primary expertise, we find that they can be organized into three major groups: enterprise architects, application architects, and infrastructure architects. Knowing which group an architect falls into helps in understanding their expertise and what to expect of them. {\textcopyright} 2014 IEEE.},
-author = {Woods, E.},
-doi = {10.1109/MS.2014.69},
-issn = {07407459},
-journal = {IEEE Software},
-keywords = {application,architecture,enterprise,infrastructure,pragmatic architect,software},
-number = {3},
-pages = {10--13},
-title = {{Return of the pragmatic architect}},
-volume = {31},
+@inproceedings{Baroni2014,
+abstract = {A previous study, run by some of the authors in collaboration with practitioners, has emphasized the need to improve architectural languages in order to (i) make them simple and intuitive enough to communicate effectively with project stakeholders, and (ii) enable formality and rigour to allow analysis and other automated tasks. Although a multitude of languages have been created by researchers and practitioners, they rarely address both of these needs. In order to reconcile these divergent needs, this paper presents an approach that (i) combines the rigorous foundations of model-driven engineering with the usability of semantic wikis, and (ii) enables continuous syncronization between them, this allows software architects to simultaneously use wiki pages for communication and models for model-based analysis and manipulation. In this paper we explain how we applied the approach to an industry-inspired case study using the Semantic Media Wiki wiki engine and a model-driven architecture description implemented within the Eclipse Modeling Framework. We also discuss how our approach can be generalized to other wiki-based and model-driven technologies. {\textcopyright} 2014 IEEE.},
+author = {Baroni, A. and Muccini, H. and Malavolta, I. and Woods, E.},
+booktitle = {Proceedings - Working IEEE/IFIP Conference on Software Architecture 2014, WICSA 2014},
+doi = {10.1109/WICSA.2014.21},
+isbn = {9781479934126},
+keywords = {Architecture Description,Model-Driven Engineering,Wikis},
+pages = {251--254},
+title = {{Architecture description leveraging model driven engineering and semantic wikis}},
 year = {2014}
-}
-@inproceedings{Tekinerdogan2011,
-abstract = {This paper summarizes the workshop on Architecture-Based Testing and System Validation which was organized in conjunction with the 9th Working IEEE/IFIP Conference on Software Architecture. The main goal of the workshop was to bring together researchers and practitioners both from the architecture design and software testing community to enable architecture-based software testing. {\textcopyright} 2011 IEEE.},
-author = {Tekinerdogan, B. and Clements, P. and Muccini, H. and Chaudron, M. and Polini, A. and Woods, E.},
-booktitle = {Proceedings - 9th Working IEEE/IFIP Conference on Software Architecture, WICSA 2011},
-doi = {10.1109/WICSA.2011.53},
-isbn = {9780769543512},
-keywords = {Architecture-Based Testing,Software Architecture,Software testing,System Validation},
-pages = {341},
-title = {{Architecture-based testing and system validation: Workshop summary}},
-year = {2011}
 }
 @article{Woods2015,
 abstract = {{\textcopyright} 1984-2012 IEEE. Difficulties frequently arise when agile development teams and software architects work together. By adopting practices aligned with the 'agile manifesto,' software architects can work constructively with agile teams and significantly contribute to a project's success.},
@@ -1040,17 +1033,27 @@ title = {{Aligning Architecture Work with Agile Teams}},
 volume = {32},
 year = {2015}
 }
-@article{Woods2015b,
-abstract = {{\textcopyright} 2014 Elsevier Inc. All rights reserved. An organisation that had developed a large information system wanted to embark on a programme that would involve large-scale evolution of it. As a precursor to this, it was decided to create a comprehensive architectural description to capture and understand the system's design. This undertaking faced a number of challenges, including a low general awareness of software modelling and software architecture practices. The approach taken by the software architects tasked with this project included the definition of a simple, very specific, architecture description language. This paper reports our experience of the project and a simple ADL that we created as part of it.},
+@inproceedings{Woods2012b,
+abstract = {An organisation that had developed a large Information System wanted to embark on a programme of significant evolution for the system. As a precursor to this, it was decided to create a comprehensive architectural description. This undertaking faced a number of challenges, including a low general awareness of software modelling and software architecture practices. The approach taken for this project included the definition of a simple, specific, architecture description language. This paper describes the experiences of the project and the ADL created as part of it. {\textcopyright} 2012 IEEE.},
 author = {Woods, E. and Bashroush, R.},
-doi = {10.1016/j.jss.2014.09.018},
-issn = {01641212},
-journal = {Journal of Systems and Software},
-keywords = {Architecture description language,Industrial experience report,Software architecture discovery},
-pages = {97--108},
-title = {{Modelling large-scale information systems using ADLs - An industrial experience report}},
-volume = {99},
-year = {2015}
+booktitle = {Proceedings of the 2012 Joint Working Conference on Software Architecture and 6th European Conference on Software Architecture, WICSA/ECSA 2012},
+doi = {10.1109/WICSA-ECSA.212.37},
+isbn = {9780769548272},
+keywords = {ADL,Description Language,Industrial Experience Report,Software Architecture Discovery,Software Architecture for Legacy Systems},
+pages = {239--243},
+title = {{Using an architecture description language to model a large-scale information system - An industrial experience report}},
+year = {2012}
+}
+@inproceedings{Tekinerdogan2011,
+abstract = {This paper summarizes the workshop on Architecture-Based Testing and System Validation which was organized in conjunction with the 9th Working IEEE/IFIP Conference on Software Architecture. The main goal of the workshop was to bring together researchers and practitioners both from the architecture design and software testing community to enable architecture-based software testing. {\textcopyright} 2011 IEEE.},
+author = {Tekinerdogan, B. and Clements, P. and Muccini, H. and Chaudron, M. and Polini, A. and Woods, E.},
+booktitle = {Proceedings - 9th Working IEEE/IFIP Conference on Software Architecture, WICSA 2011},
+doi = {10.1109/WICSA.2011.53},
+isbn = {9780769543512},
+keywords = {Architecture-Based Testing,Software Architecture,Software testing,System Validation},
+pages = {341},
+title = {{Architecture-based testing and system validation: Workshop summary}},
+year = {2011}
 }
 @article{Woods1995,
 abstract = {Although widely used, UML has some serious limitations as an architecture description language. {\textcopyright} 1995 IEEE},
@@ -1063,6 +1066,40 @@ pages = {947--951},
 title = {{Is UML Sufficient for Describing Architectures?}},
 volume = {44},
 year = {1995}
+}
+@article{Woods2015b,
+abstract = {{\textcopyright} 2014 Elsevier Inc. All rights reserved. An organisation that had developed a large information system wanted to embark on a programme that would involve large-scale evolution of it. As a precursor to this, it was decided to create a comprehensive architectural description to capture and understand the system's design. This undertaking faced a number of challenges, including a low general awareness of software modelling and software architecture practices. The approach taken by the software architects tasked with this project included the definition of a simple, very specific, architecture description language. This paper reports our experience of the project and a simple ADL that we created as part of it.},
+author = {Woods, E. and Bashroush, R.},
+doi = {10.1016/j.jss.2014.09.018},
+issn = {01641212},
+journal = {Journal of Systems and Software},
+keywords = {Architecture description language,Industrial experience report,Software architecture discovery},
+pages = {97--108},
+title = {{Modelling large-scale information systems using ADLs - An industrial experience report}},
+volume = {99},
+year = {2015}
+}
+@book{Woods2004,
+abstract = {There has recently been an increase in interest, among information systems architecture practitioners, in using viewpoints for architectural definition and description. This has been caused by a number of factors including the publication of IEEE standard 1471 and the increasing adoption of RUP (and its "4+1" viewpoint set). This short experience report outlines the experiences that two software architects have had in evaluating and applying a number of viewpoint sets to information systems development. The strengths and weaknesses found with each viewpoint set are described and some general observations on viewpoint set use and definition are presented. {\textcopyright} Springer-Verlag 2004.},
+author = {Woods, E.},
+booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
+issn = {03029743 16113349},
+pages = {182--193},
+title = {{Experiences using viewpoints for information systems architecture: An industrial experience report}},
+volume = {3047},
+year = {2004}
+}
+@article{Bicarregui1997,
+abstract = {The use of formality in software development enables formal manipulation at the symbolic level and hence can yield new perspectives on the design which can be submitted to inspection and interactive or automatic analysis. We describe the experience of an industrial pilot project which undertook a formal development using VDM and B and employed a number of techniques for the analysis of the formal texts by animation, test case generation and proof. We assess the effectiveness of methodology and techniques adopted by measuring the introduction and detection of faults. {\textcopyright} 1997 Elsevier Science B.V.},
+author = {Bicarregui, J. and Dick, J. and Matthews, B. and Woods, E.},
+issn = {01676423},
+journal = {Science of Computer Programming},
+keywords = {Animation,B,Formal methods,Formal specification,Proof,Test case generation,Testing,VDM},
+number = {1-2},
+pages = {53--78},
+title = {{Making the most of formal specification through animation, testing and proof}},
+volume = {29},
+year = {1997}
 }
 @article{Woods2014,
 abstract = {{\textcopyright} 1984-2012 IEEE. This column discusses architectural descriptions and the process of representing and communicating designs and how UML is useful when creating architectural descriptions.},
@@ -1077,48 +1114,17 @@ title = {{Harnessing UML for architectural description-The context view}},
 volume = {31},
 year = {2014}
 }
-@inproceedings{Woods2012b,
-abstract = {An organisation that had developed a large Information System wanted to embark on a programme of significant evolution for the system. As a precursor to this, it was decided to create a comprehensive architectural description. This undertaking faced a number of challenges, including a low general awareness of software modelling and software architecture practices. The approach taken for this project included the definition of a simple, specific, architecture description language. This paper describes the experiences of the project and the ADL created as part of it. {\textcopyright} 2012 IEEE.},
-author = {Woods, E. and Bashroush, R.},
-booktitle = {Proceedings of the 2012 Joint Working Conference on Software Architecture and 6th European Conference on Software Architecture, WICSA/ECSA 2012},
-doi = {10.1109/WICSA-ECSA.212.37},
-isbn = {9780769548272},
-keywords = {ADL,Description Language,Industrial Experience Report,Software Architecture Discovery,Software Architecture for Legacy Systems},
-pages = {239--243},
-title = {{Using an architecture description language to model a large-scale information system - An industrial experience report}},
-year = {2012}
-}
-@article{Bicarregui1997,
-abstract = {The use of formality in software development enables formal manipulation at the symbolic level and hence can yield new perspectives on the design which can be submitted to inspection and interactive or automatic analysis. We describe the experience of an industrial pilot project which undertook a formal development using VDM and B and employed a number of techniques for the analysis of the formal texts by animation, test case generation and proof. We assess the effectiveness of methodology and techniques adopted by measuring the introduction and detection of faults. {\textcopyright} 1997 Elsevier Science B.V.},
-author = {Bicarregui, J. and Dick, J. and Matthews, B. and Woods, E.},
-issn = {01676423},
-journal = {Science of Computer Programming},
-keywords = {Animation,B,Formal methods,Formal specification,Proof,Test case generation,Testing,VDM},
-number = {1-2},
-pages = {53--78},
-title = {{Making the most of formal specification through animation, testing and proof}},
-volume = {29},
-year = {1997}
-}
-@book{Woods2004,
-abstract = {There has recently been an increase in interest, among information systems architecture practitioners, in using viewpoints for architectural definition and description. This has been caused by a number of factors including the publication of IEEE standard 1471 and the increasing adoption of RUP (and its "4+1" viewpoint set). This short experience report outlines the experiences that two software architects have had in evaluating and applying a number of viewpoint sets to information systems development. The strengths and weaknesses found with each viewpoint set are described and some general observations on viewpoint set use and definition are presented. {\textcopyright} Springer-Verlag 2004.},
+@article{Woods2014a,
+abstract = {Many types of architects work in the software industry, but when we consider the breadth of their work and their primary expertise, we find that they can be organized into three major groups: enterprise architects, application architects, and infrastructure architects. Knowing which group an architect falls into helps in understanding their expertise and what to expect of them. {\textcopyright} 2014 IEEE.},
 author = {Woods, E.},
-booktitle = {Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
-issn = {03029743 16113349},
-pages = {182--193},
-title = {{Experiences using viewpoints for information systems architecture: An industrial experience report}},
-volume = {3047},
-year = {2004}
-}
-@inproceedings{Baroni2014,
-abstract = {A previous study, run by some of the authors in collaboration with practitioners, has emphasized the need to improve architectural languages in order to (i) make them simple and intuitive enough to communicate effectively with project stakeholders, and (ii) enable formality and rigour to allow analysis and other automated tasks. Although a multitude of languages have been created by researchers and practitioners, they rarely address both of these needs. In order to reconcile these divergent needs, this paper presents an approach that (i) combines the rigorous foundations of model-driven engineering with the usability of semantic wikis, and (ii) enables continuous syncronization between them, this allows software architects to simultaneously use wiki pages for communication and models for model-based analysis and manipulation. In this paper we explain how we applied the approach to an industry-inspired case study using the Semantic Media Wiki wiki engine and a model-driven architecture description implemented within the Eclipse Modeling Framework. We also discuss how our approach can be generalized to other wiki-based and model-driven technologies. {\textcopyright} 2014 IEEE.},
-author = {Baroni, A. and Muccini, H. and Malavolta, I. and Woods, E.},
-booktitle = {Proceedings - Working IEEE/IFIP Conference on Software Architecture 2014, WICSA 2014},
-doi = {10.1109/WICSA.2014.21},
-isbn = {9781479934126},
-keywords = {Architecture Description,Model-Driven Engineering,Wikis},
-pages = {251--254},
-title = {{Architecture description leveraging model driven engineering and semantic wikis}},
+doi = {10.1109/MS.2014.69},
+issn = {07407459},
+journal = {IEEE Software},
+keywords = {application,architecture,enterprise,infrastructure,pragmatic architect,software},
+number = {3},
+pages = {10--13},
+title = {{Return of the pragmatic architect}},
+volume = {31},
 year = {2014}
 }
 @article{Woods2010a,
@@ -1146,21 +1152,6 @@ publisher = {UVK - Universitaetsverlag Konstanz},
 title = {{More Patterns for the Generation , Handling and Management of Errors}},
 year = {2005}
 }
-@inproceedings{woods2005-perspectives,
-abstract = {A crucial aspect of the software architect's role is to ensure that a system based on their architecture will exhibit the quality properties (performance, security, availability and so on) that are important to their stakeholders. A proven approach to help guide an architect through the process of designing an architecture is to use architectural views, based on formal viewpoint definitions (such as those in the well known "4+1" set). However, a practical problem we have found when using existing viewpoint sets is the lack of guidance relating to system qualities (as opposed to system structures) that they provide. To address this problem, we identified a complimentary concept, called the architectural perspective [15], to provide an architect with practical guidance as to how to ensure that their system exhibits the right set of quality properties. This paper reviews the idea of the architectural perspective and relates a specific experience of applying them to the architectural definition of an enterprise integration project for a financial markets organisation, explaining the strengths and weaknesses we found in the approach.},
-address = {Pittsburgh, PA, USA},
-author = {Woods, E. and Rozanski, N.},
-booktitle = {5th Working IEEE/IFIP Conference on Software Architecture (WICSA'05)},
-doi = {10.1109/WICSA.2005.74},
-editor = {Nord, Robert and Medvidovic, Nenad and Krikhaar, Ren{\'{e}} and Stafford, Judith and Bosch, Jan},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Woods, Rozanski - 2005 - Using Architectural Perspectives.pdf:pdf},
-isbn = {0-7695-2548-2},
-pages = {25--35},
-publisher = {IEEE},
-title = {{Using Architectural Perspectives}},
-url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1620088},
-year = {2005}
-}
 @inproceedings{Woods2009,
 abstract = {A common requirement when describing the architecture of a software system is the ability to define the environment of a system, in terms of its external dependencies. In a view-based architectural description approach (such as “4+1” or “Rozanski and Woods”) this need is met by adding a Context view containing this information to the architectural description and ideally defining a corresponding Context viewpoint to guide and standardise such views. This short paper explains the benefits of adding a Context view to architectural descriptions and provides an outline definition of the corresponding viewpoint to explain their content and how they are developed.},
 address = {Cambridge},
@@ -1177,6 +1168,21 @@ title = {{The system context architectural viewpoint}},
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5290673},
 year = {2009}
 }
+@inproceedings{woods2005-perspectives,
+abstract = {A crucial aspect of the software architect's role is to ensure that a system based on their architecture will exhibit the quality properties (performance, security, availability and so on) that are important to their stakeholders. A proven approach to help guide an architect through the process of designing an architecture is to use architectural views, based on formal viewpoint definitions (such as those in the well known "4+1" set). However, a practical problem we have found when using existing viewpoint sets is the lack of guidance relating to system qualities (as opposed to system structures) that they provide. To address this problem, we identified a complimentary concept, called the architectural perspective [15], to provide an architect with practical guidance as to how to ensure that their system exhibits the right set of quality properties. This paper reviews the idea of the architectural perspective and relates a specific experience of applying them to the architectural definition of an enterprise integration project for a financial markets organisation, explaining the strengths and weaknesses we found in the approach.},
+address = {Pittsburgh, PA, USA},
+author = {Woods, E. and Rozanski, N.},
+booktitle = {5th Working IEEE/IFIP Conference on Software Architecture (WICSA'05)},
+doi = {10.1109/WICSA.2005.74},
+editor = {Nord, Robert and Medvidovic, Nenad and Krikhaar, Ren{\'{e}} and Stafford, Judith and Bosch, Jan},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Woods, Rozanski - 2005 - Using Architectural Perspectives.pdf:pdf},
+isbn = {0-7695-2548-2},
+pages = {25--35},
+publisher = {IEEE},
+title = {{Using Architectural Perspectives}},
+url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1620088},
+year = {2005}
+}
 @article{Woods2012,
 abstract = {Scenario based architectural assessment is a well-established approach for assessing architectural designs. However scenario-based methods are not always usable in an industrial context, where in our experience, they can be perceived as complicated and expensive to use. In this paper we explore why this may be the case and define a simpler technique called TARA, which has been designed for use in situations where scenario based methods are unlikely to be successful. The method is illustrated through an experience report that explains how it was applied to the assessment of two quantitative financial analysis systems, and its strengths, weaknesses and relationship to other methods are briefly discussed.},
 author = {Woods, Eoin},
@@ -1192,19 +1198,6 @@ title = {{Industrial architectural assessment using TARA}},
 url = {http://linkinghub.elsevier.com/retrieve/pii/S0164121212001264},
 volume = {85},
 year = {2012}
-}
-@inproceedings{Longshaw2004,
-abstract = {As systems become more complex it is increasingly difficult to anticipate and handle error conditions in a system. The developers of the system must ensure that errors do not cause problems for the users of the system. To do so, they should Keep Exceptions Exceptional, Hide Technical Details from Users and encapsulate the system in a Big Outer Try Block. The administrators must be informed when an error occurs and must be given sufficient information about what happened, where it happened and why it happened. If a system has Split Domain and Technical Errors and its components only Log Unexpected Errors then the level of error information can stay manageable. If distributed systems Log at Distribution Boundaries then the overall error information in the system can be reduced and the consequences of individual errors can be tied together using a Unique Error Identifier},
-address = {Irsee, Germany},
-author = {Longshaw, Andy and Woods, Eoin},
-booktitle = {9th European Conference on Pattern Languages of Programms (EuroPLoP 2004)},
-editor = {Marquardt, Klaus and Sch{\"{u}}tz, Dietmar},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Longshaw, Woods - 2004 - Patterns for Generation, Handling and Management of Errors.pdf:pdf},
-pages = {27--52},
-publisher = {UVK - Universitaetsverlag Konstanz},
-title = {{Patterns for Generation, Handling and Management of Errors}},
-url = {http://www.blueskyline.com/ErrorPatterns/ErrorPatternsPaper.pdf},
-year = {2004}
 }
 @incollection{Woods2011,
 abstract = {Historically a system's requirements and its architectural design have been viewed as having a simple relationship where the requirements drove the architecture and the architecture was designed in order to meet the requirements. In contrast, our experience is that a much more dynamic relationship can be achieved between these key activities within the system design lifecycle, that allows the architecture to constrain the requirements to an achievable set of possibilities, frame the requirements making their implications clearer, and inspire new requirements from the capabilities of the system's architecture. In this article, we describe this relationship, illustrate it with a case study drawn from our experience and present some lessons learned that we believe will be valuable for other software architects.},
@@ -1235,6 +1228,19 @@ publisher = {IEEE},
 title = {{Architecture Description Languages in Practice Session Report}},
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1620128},
 year = {2005}
+}
+@inproceedings{Longshaw2004,
+abstract = {As systems become more complex it is increasingly difficult to anticipate and handle error conditions in a system. The developers of the system must ensure that errors do not cause problems for the users of the system. To do so, they should Keep Exceptions Exceptional, Hide Technical Details from Users and encapsulate the system in a Big Outer Try Block. The administrators must be informed when an error occurs and must be given sufficient information about what happened, where it happened and why it happened. If a system has Split Domain and Technical Errors and its components only Log Unexpected Errors then the level of error information can stay manageable. If distributed systems Log at Distribution Boundaries then the overall error information in the system can be reduced and the consequences of individual errors can be tied together using a Unique Error Identifier},
+address = {Irsee, Germany},
+author = {Longshaw, Andy and Woods, Eoin},
+booktitle = {9th European Conference on Pattern Languages of Programms (EuroPLoP 2004)},
+editor = {Marquardt, Klaus and Sch{\"{u}}tz, Dietmar},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Longshaw, Woods - 2004 - Patterns for Generation, Handling and Management of Errors.pdf:pdf},
+pages = {27--52},
+publisher = {UVK - Universitaetsverlag Konstanz},
+title = {{Patterns for Generation, Handling and Management of Errors}},
+url = {http://www.blueskyline.com/ErrorPatterns/ErrorPatternsPaper.pdf},
+year = {2004}
 }
 @unpublished{woods2005-adlandarchs,
 author = {Woods, Eoin},
@@ -1293,12 +1299,6 @@ type = {BSc (Licenci{\'{e}} en Sciences des Gestion)},
 url = {www.isys.ucl.ac.be/skwyrl/emedia/Files/report.pdf},
 year = {2003}
 }
-@misc{coyette-skwrladl,
-author = {Coyette, Adrien and Do, Tung and Faulkner, St{\'{e}}phane and Kolp, Manuel},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Coyette et al. - Unknown - SKwyRL Social Architectures for Agent Software Engineering.pdf:pdf},
-keywords = {presentation-slides},
-title = {{SKwyRL : Social Architectures for Agent Software Engineering}}
-}
 @article{mouratidis2010-skwyrladl,
 abstract = {Multi-Agent Systems (MAS) architectures are gaining popularity for building open, distributed, and evolving information systems. Unfortunately, despite considerable work in the fields of software architecture and MAS during the last decade, few research efforts have aimed at defining languages for designing and formalising secure agent architectures. This paper proposes a novel Architectural Description Language (ADL) for describing Belief-Desire-Intention (BDI) secure MAS. We specify each element of our ADL using the Z specification language and we employ two example case studies: one to assist us in the description of the proposed language and help readers of the article to better understand the fundamentals of the language; and one to demonstrate its applicability.},
 author = {Mouratidis, Haralambos and Kolp, Manuel and Giorgini, Paolo and Faulkner, Stephane},
@@ -1314,6 +1314,12 @@ title = {{An architectural description language for secure Multi-Agent Systems}}
 url = {http://dl.acm.org/citation.cfm?id=1734707.1734713},
 volume = {8},
 year = {2010}
+}
+@misc{coyette-skwrladl,
+author = {Coyette, Adrien and Do, Tung and Faulkner, St{\'{e}}phane and Kolp, Manuel},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Coyette et al. - Unknown - SKwyRL Social Architectures for Agent Software Engineering.pdf:pdf},
+keywords = {presentation-slides},
+title = {{SKwyRL : Social Architectures for Agent Software Engineering}}
 }
 @phdthesis{klein2000-model,
 abstract = {This dissertation is devoted to the topic of architecture modeling for software systems. The architecture describes the structural composition of a system from components and relation- ships between these components. Thereby, it provides a basis for the system's realization on technical as well as on organizational level.},
@@ -1369,6 +1375,22 @@ url = {http://www.springerlink.com/index/10.1007/BF03192350},
 volume = {10},
 year = {2004}
 }
+@inproceedings{zhang2009-xyzadl,
+abstract = {Web services are emerged as a popular application for implementing large-scale distributed, reactive systems. Web service composition is the hotspot research in the field of Web services. Because the validity is a key requirement in the description of Web service composition, a formal language XYZ/ADL is introduced which describe the composition from the view of architecture. In this paper, we define a mapping from XYZ/ADL to a more practical approach of Web service composition BPEL4WS which is difficult to verify the validity of the composition. First, define the conversion of XYZ/E to BPEL4WS, analyze the similarity between the design elements in XYZ/ADL and activities in BPEL4WS, and then do the conversion of XYZ/ADL to BPEL4WS.},
+address = {Xiamen},
+author = {Zhang, Guang-quan and Rong, Mei and Wei, Hui},
+booktitle = {2009 WRI World Congress on Software Engineering (WCSE09)},
+doi = {10.1109/WCSE.2009.389},
+file = {:Users/eoin/Dropbox/Work/PhDWork/ADL-LitReview/ADL-Papers/ZYZADL-Zhang-WS-Composition.pdf:pdf},
+isbn = {978-0-7695-3570-8},
+keywords = {web service composition,web services},
+number = {60873047},
+pages = {185--188},
+publisher = {IEEE},
+title = {{Description and Analysis for Web Service Composition Based on XYZ/ADL}},
+url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5319391},
+year = {2009}
+}
 @inproceedings{zhang2011-mismatchdetection,
 abstract = {The behaviour mismatch analysis is absolutely necessary for guaranteeing the correct composition of web services. In order to improve the reliability of the Web service composition, we present a mismatch detection method which can capture incompatible behavior and timed conflict among multiple asynchronous services. In this paper, we use software architecture description language XYZ/ADL based on temporal logic to describe Web service composition and use XYZ/RE to express the relative timed constraints. Additionally, we also set up a timed asynchronous service model TASM which can depict asynchronous interacting behavior and timed properties. In particular, the model satisfies the specification of model check UPPAAL. We convert XYZ/ADL description to TASM, and give the definition of compatibility. Then we use UPPAAL to realize mismatch detection of asynchronous Web services. Finally an example is demonstrated to illustrate how the approach we proposed works.},
 address = {Jeju Island},
@@ -1386,22 +1408,6 @@ publisher = {IEEE},
 title = {{Mismatch Detection of Asynchronous Web Services with Timed Constraints}},
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=6127970},
 year = {2011}
-}
-@inproceedings{zhang2009-xyzadl,
-abstract = {Web services are emerged as a popular application for implementing large-scale distributed, reactive systems. Web service composition is the hotspot research in the field of Web services. Because the validity is a key requirement in the description of Web service composition, a formal language XYZ/ADL is introduced which describe the composition from the view of architecture. In this paper, we define a mapping from XYZ/ADL to a more practical approach of Web service composition BPEL4WS which is difficult to verify the validity of the composition. First, define the conversion of XYZ/E to BPEL4WS, analyze the similarity between the design elements in XYZ/ADL and activities in BPEL4WS, and then do the conversion of XYZ/ADL to BPEL4WS.},
-address = {Xiamen},
-author = {Zhang, Guang-quan and Rong, Mei and Wei, Hui},
-booktitle = {2009 WRI World Congress on Software Engineering (WCSE09)},
-doi = {10.1109/WCSE.2009.389},
-file = {:Users/eoin/Dropbox/Work/PhDWork/ADL-LitReview/ADL-Papers/ZYZADL-Zhang-WS-Composition.pdf:pdf},
-isbn = {978-0-7695-3570-8},
-keywords = {web service composition,web services},
-number = {60873047},
-pages = {185--188},
-publisher = {IEEE},
-title = {{Description and Analysis for Web Service Composition Based on XYZ/ADL}},
-url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5319391},
-year = {2009}
 }
 @techreport{Zhu,
 abstract = {The architecture description language (ADL) is the foundation of software development based on software architecture. It is desirable that an ADL can represent both high-level abstract specification and the concrete implementation, thereby provides premise for the smooth transition from specification to implementation. In this aspect, the ADL XYZ/ADL has its built-in advantage, because it is based on the temporal logic language XYZ/E, which can represent both dynamic semantics and static semantics of systems with a unified logical framework. In this paper, the concept framework and syntax of XYZ/ADL is presented and its underlying semantic is explained using XYZ/E, and how to describe software architecture using XYZ/ADL is illustrated.},
@@ -1448,16 +1454,6 @@ title = {{A highly-extensible, XML-based architecture description language}},
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=948416},
 year = {2001}
 }
-@phdthesis{allen1997-wright,
-abstract = {As software systems become more complex, the overall system structure—or software architecture—becomes a central design problem. A system's architecture provides a model of the system that suppresses implementation detail, allowing the architect to concentrate on the analyses and decisions that are most crucial to structuring the system to satisfy its requirements. Unfortunately, current representations of software architecture are informal and ad hoc. While architectural concepts are often embodied in infrastructure to support specific architectural styles and in the initial conceptualization of a system configuration, the lack of an explicit, independently-characterized architecture or architectural style significantly limits the benefits of software architectural design in current practice. In this dissertation, I show that an Architecture Description Language based on a formal, abstract model of system behavior can provide a practical means of describing and analyzing software architectures and architectural styles. This dissertation demonstrates this claim through WRIGHT, an architectural description language based on the formal description of the abstract behavior of architectural com- ponents and connectors. WRIGHT provides a practical formal basis for the description of both architectural configurations and of architectural styles. It is distinguished by the use of explicit, independent connector types as interaction patterns, the ability to describe the abstract behavior of components using a CSP-like notation, the characterization of styles using predicates over system instances, and a collection of static checks to determine the consistency and completeness of an architectural specification. We introduce techniques to support the analysis of large-scale systems, and demonstrate WRIGHT's expressiveness and practicality through three case studies.},
-author = {Allen, Robert J.},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Allen - 1997 - A Formal Approach to Software Architecture.pdf:pdf},
-number = {May},
-pages = {248},
-school = {Carnegie Mellon University},
-title = {{A Formal Approach to Software Architecture}},
-year = {1997}
-}
 @article{allen1997-formalconn,
 abstract = {As software systems become more complex, the overall system structure—or software architecture—becomes a central design problem. An important step toward an engineering discipline of software is a formal basis for describing and analyzing these designs. In the article we present a formal approach to one aspect of architectural design: the interactions among components. The key idea is to define architectural connectors as explicit semantic entities. These are specified as a collection of protocols that characterize each of the participant roles in an interaction and how these roles interact. We illustrate how this scheme can be used to define a variety of common architectural connectors. We further provide a formal semantics and show how this leads to a system in which architectural compatibility can be checked in a way analogous to type-checking in programming languages.},
 author = {Allen, Robert and Garlan, David},
@@ -1487,6 +1483,16 @@ title = {{A comprehensive approach for the development of modular software archi
 url = {http://portal.acm.org/citation.cfm?doid=1061254.1061258},
 volume = {14},
 year = {2005}
+}
+@phdthesis{allen1997-wright,
+abstract = {As software systems become more complex, the overall system structure—or software architecture—becomes a central design problem. A system's architecture provides a model of the system that suppresses implementation detail, allowing the architect to concentrate on the analyses and decisions that are most crucial to structuring the system to satisfy its requirements. Unfortunately, current representations of software architecture are informal and ad hoc. While architectural concepts are often embodied in infrastructure to support specific architectural styles and in the initial conceptualization of a system configuration, the lack of an explicit, independently-characterized architecture or architectural style significantly limits the benefits of software architectural design in current practice. In this dissertation, I show that an Architecture Description Language based on a formal, abstract model of system behavior can provide a practical means of describing and analyzing software architectures and architectural styles. This dissertation demonstrates this claim through WRIGHT, an architectural description language based on the formal description of the abstract behavior of architectural com- ponents and connectors. WRIGHT provides a practical formal basis for the description of both architectural configurations and of architectural styles. It is distinguished by the use of explicit, independent connector types as interaction patterns, the ability to describe the abstract behavior of components using a CSP-like notation, the characterization of styles using predicates over system instances, and a collection of static checks to determine the consistency and completeness of an architectural specification. We introduce techniques to support the analysis of large-scale systems, and demonstrate WRIGHT's expressiveness and practicality through three case studies.},
+author = {Allen, Robert J.},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Allen - 1997 - A Formal Approach to Software Architecture.pdf:pdf},
+number = {May},
+pages = {248},
+school = {Carnegie Mellon University},
+title = {{A Formal Approach to Software Architecture}},
+year = {1997}
 }
 @inproceedings{Gorlick1994,
 abstract = {Visual programming research has largely focused on the issues of visual programming-in-the-small. However, entirely different concerns arise when one is programming-in-the-large. We present a visual software engineering environment that allows users to construct visually programs consisting of hierarchically organized networks of components that process streams of arbitrary objects. We discuss the problems that occur when trying to construct systems consisting of thousands of interconnected components, examine how this environment deals with some of the problems specific to visual programming-in-the-large, and show why our initial solutions failed to scale successfully. Finally, we argue that a single visual mechanism called “zooming” addresses these scaling problems and, when suitably augmented, can also support automatic component discovery and intelligent error correction},
@@ -1518,22 +1524,6 @@ title = {{Using weaves for software construction and analysis}},
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=130620},
 year = {1991}
 }
-@article{shaw1995-abstractions,
-abstract = {Architectures for software use rich abstractions and idioms to describe system components, the nature of interactions among the components, and the patterns that guide the composition of components into systems. These abstractions are higher level than the elements usually supported by programming languages and tools. They capture packaging and interaction issues as well as computational functionality. Well-established (if informal) patterns guide the architectural design of systems. We sketch a model for defining architectures and present an implementation of the basic level of that model. Our purpose is to support the abstractions used in practice by software designers. The implementation provides a testbed for experiments with a variety of system construction mechanisms. It distinguishes among different types of components and different ways these components can interact. It supports abstract interactions such as data flow and scheduling on the same footing as simple procedure call. It can express and check appropriate compatibility restrictions and configuration constraints. It accepts existing code as components, incurring no runtime overhead after initialization. It allows easy incorporation of specifications and associated analysis tools developed elsewhere. The implementation provides a base for extending the notation and validating the model .},
-author = {Shaw, M. and DeLine, R. and Klein, D.V. and Ross, T.L. and Young, D.M. and Zelesnik, G.},
-doi = {10.1109/32.385970},
-file = {::},
-issn = {00985589},
-journal = {IEEE Transactions on Software Engineering},
-keywords = {architectural abstraction,architecture description language,organization,software architecture,software engineering,software system},
-month = {apr},
-number = {4},
-pages = {314--335},
-title = {{Abstractions for software architecture and tools to support them}},
-url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=385970},
-volume = {21},
-year = {1995}
-}
 @techreport{vestal1993-fouradls,
 author = {Vestal, Steve},
 file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Vestal - 1993 - A Cursory Overview and Comparison of Four Architecture Description Languages.pdf:pdf},
@@ -1556,6 +1546,35 @@ title = {{Integrating architecture description languages with a standard design 
 url = {http://ieeexplore.ieee.org/xpls/abs{\_}all.jsp?arnumber=671120},
 year = {1998}
 }
+@article{shaw1995-abstractions,
+abstract = {Architectures for software use rich abstractions and idioms to describe system components, the nature of interactions among the components, and the patterns that guide the composition of components into systems. These abstractions are higher level than the elements usually supported by programming languages and tools. They capture packaging and interaction issues as well as computational functionality. Well-established (if informal) patterns guide the architectural design of systems. We sketch a model for defining architectures and present an implementation of the basic level of that model. Our purpose is to support the abstractions used in practice by software designers. The implementation provides a testbed for experiments with a variety of system construction mechanisms. It distinguishes among different types of components and different ways these components can interact. It supports abstract interactions such as data flow and scheduling on the same footing as simple procedure call. It can express and check appropriate compatibility restrictions and configuration constraints. It accepts existing code as components, incurring no runtime overhead after initialization. It allows easy incorporation of specifications and associated analysis tools developed elsewhere. The implementation provides a base for extending the notation and validating the model .},
+author = {Shaw, M. and DeLine, R. and Klein, D.V. and Ross, T.L. and Young, D.M. and Zelesnik, G.},
+doi = {10.1109/32.385970},
+file = {::},
+issn = {00985589},
+journal = {IEEE Transactions on Software Engineering},
+keywords = {architectural abstraction,architecture description language,organization,software architecture,software engineering,software system},
+month = {apr},
+number = {4},
+pages = {314--335},
+title = {{Abstractions for software architecture and tools to support them}},
+url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=385970},
+volume = {21},
+year = {1995}
+}
+@article{medvidovic2000-adlcomparison,
+abstract = {Software architectures shift the focus of developers from lines-of-code to coarser-grained architectural elements and their overall interconnection structure. Architecture description languages (ADLs) have been proposed as modeling notations to support architecture-based development. There is, however, little consensus in the research community on what is an ADL, what aspects of an architecture should be modeled in an ADL, and which of several possible ADLs is best suited for a particular problem. Furthermore, the distinction is rarely made between ADLs on one hand and formal specification, module interconnection, simulation and programming languages on the other. This paper attempts to provide an answer to these questions. It motivates and presents a definition and a classification framework for ADLs. The utility of the definition is demonstrated by using it to differentiate ADLs from other modeling notations. The framework is used to classify and compare several existing ADLs, enabling us, in the process, to identify key properties of ADLs. The comparison highlights areas where existing ADLs provide extensive support and those in which they are deficient, suggesting a research agenda for the future},
+author = {Medvidovic, Nenad and Taylor, RN},
+doi = {10.1109/32.825767},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Medvidovic, Taylor - 2000 - A Classification and Comparison Framework for Software Architecture Description Languages.pdf:pdf},
+journal = {IEEE Transactions on Software Engineering},
+number = {1},
+pages = {70--93},
+title = {{A Classification and Comparison Framework for Software Architecture Description Languages}},
+url = {http://ieeexplore.ieee.org/xpls/abs{\_}all.jsp?arnumber=825767},
+volume = {26},
+year = {2000}
+}
 @article{medvidovic1997-adlclassification,
 abstract = {Software architectures shift developers' focus from lines-of-code to coarser-grained architectural elements and their interconnection structure. Architec- ture description languages (ADLs) have been proposed as modeling notations to support architecture-based development. There is, however, little consensus in the research community on what is an ADL, what aspects of an architecture should be modeled in an ADL, and which ADL is best suited for a particular problem. Fur- thermore, the distinction is rarely made between ADLs on one hand and formal specification, module interconnection, simulation, and programming languages on the other. This paper attempts to provide an answer to these questions. It motivates and presents a definition and a classification framework for ADLs. The utility of the definition is demonstrated by using it to differentiate ADLs from other modcling notations. The framework is used to classify and compare several existing ADLs.},
 author = {Medvidovic, Nenad and Taylor, Richard N.},
@@ -1571,19 +1590,6 @@ title = {{A framework for classifying and comparing architecture description lan
 url = {http://portal.acm.org/citation.cfm?doid=267896.267903},
 volume = {22},
 year = {1997}
-}
-@article{medvidovic2000-adlcomparison,
-abstract = {Software architectures shift the focus of developers from lines-of-code to coarser-grained architectural elements and their overall interconnection structure. Architecture description languages (ADLs) have been proposed as modeling notations to support architecture-based development. There is, however, little consensus in the research community on what is an ADL, what aspects of an architecture should be modeled in an ADL, and which of several possible ADLs is best suited for a particular problem. Furthermore, the distinction is rarely made between ADLs on one hand and formal specification, module interconnection, simulation and programming languages on the other. This paper attempts to provide an answer to these questions. It motivates and presents a definition and a classification framework for ADLs. The utility of the definition is demonstrated by using it to differentiate ADLs from other modeling notations. The framework is used to classify and compare several existing ADLs, enabling us, in the process, to identify key properties of ADLs. The comparison highlights areas where existing ADLs provide extensive support and those in which they are deficient, suggesting a research agenda for the future},
-author = {Medvidovic, Nenad and Taylor, RN},
-doi = {10.1109/32.825767},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Medvidovic, Taylor - 2000 - A Classification and Comparison Framework for Software Architecture Description Languages.pdf:pdf},
-journal = {IEEE Transactions on Software Engineering},
-number = {1},
-pages = {70--93},
-title = {{A Classification and Comparison Framework for Software Architecture Description Languages}},
-url = {http://ieeexplore.ieee.org/xpls/abs{\_}all.jsp?arnumber=825767},
-volume = {26},
-year = {2000}
 }
 @inproceedings{medvidovic1997-adldomains,
 abstract = {Software architectures shift the focus of developers from lines-of-code to coarser-grained elements and their interconnection structure. Architecture description languages (ADLs) have been proposed as domain-specific languages for the domain of software architecture. There is still little consensus in the research community on what problems are most important to address in a study of software architecture, what aspects of an architecture should be modeled in an ADL, or even what an ADL is. To shed light on these issues, we provide a framework of architectural domains, or areas of concern in the study of software architectures. We evaluate existing ADLs with respect to the framework and study the relationship between architectural and application domains. One conclusion is that, while the architectural domains perspective enables one to approach architectures and ADLs in a new, more structured manner, further understanding of architectural domains, their tie to application domains, and their specific influence on ADLs is needed.},
@@ -1621,18 +1627,6 @@ publisher = {Springer-Verlag},
 title = {{An Evaluation of ADLs on Modeling Patterns for Software Architecture}},
 year = {2007}
 }
-@inproceedings{clements1996-adlsurvey,
-abstract = {Architecture Description Languages (ADLs) are emerging as viable tools for formally representing the architectures of systems. While growing in number, they vary widely in terms of the abstractions they support and analysis capabilities they provide. Further, many languages not originally designed as ADLs serve reasonably well at representing and analyzing software architectures. This paper summarizes a taxonomic survey of ADLs that is in progress. The survey characterizes ADLs in terms of (a) the classes of systems they support; (b) the inherent properties of the languages themselves; and (c) the process and technology support they provide to represent, refine, analyze, and build systems from an architecture. Preliminary results allow us to draw conclusions about what constitutes an ADL, and how contemporary ADLs differ from each other.},
-author = {Clements, Paul C},
-booktitle = {8th International Workshop on Software Specification and Design (IWSSD 96)},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Clements - 1996 - A Survey of Architecture Description Languages.pdf:pdf},
-month = {mar},
-pages = {16--25},
-publisher = {IEEE Computer Society},
-title = {{A Survey of Architecture Description Languages}},
-url = {http://dl.acm.org/citation.cfm?id=858261},
-year = {1996}
-}
 @inproceedings{Faulkner2003,
 abstract = {Multi-Agent Systems, Architectural Description Language, BDI Agent Model, System Architecture This paper identifies the foundations for an architectural description language (ADL) to specify multi-agent system architectures for information systems. We propose a set of system architectural concepts based on the BDI agent model and existing classical ADLs. We then conceptualize SKwyRL-ADL, aimed at capturing a "core" set of structural and behavioral concepts, including relationships that are fundamental in architecture description for BDI-MAS. We partially apply our ADL on a peer-to-peer document sharing example.},
 address = {Angers, France},
@@ -1646,6 +1640,18 @@ publisher = {Kluwer},
 title = {{Towards an agent architectural description language for information systems}},
 url = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.12.6697{\&}rep=rep1{\&}type=pdf},
 year = {2003}
+}
+@inproceedings{clements1996-adlsurvey,
+abstract = {Architecture Description Languages (ADLs) are emerging as viable tools for formally representing the architectures of systems. While growing in number, they vary widely in terms of the abstractions they support and analysis capabilities they provide. Further, many languages not originally designed as ADLs serve reasonably well at representing and analyzing software architectures. This paper summarizes a taxonomic survey of ADLs that is in progress. The survey characterizes ADLs in terms of (a) the classes of systems they support; (b) the inherent properties of the languages themselves; and (c) the process and technology support they provide to represent, refine, analyze, and build systems from an architecture. Preliminary results allow us to draw conclusions about what constitutes an ADL, and how contemporary ADLs differ from each other.},
+author = {Clements, Paul C},
+booktitle = {8th International Workshop on Software Specification and Design (IWSSD 96)},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Clements - 1996 - A Survey of Architecture Description Languages.pdf:pdf},
+month = {mar},
+pages = {16--25},
+publisher = {IEEE Computer Society},
+title = {{A Survey of Architecture Description Languages}},
+url = {http://dl.acm.org/citation.cfm?id=858261},
+year = {1996}
 }
 @article{moriconi1995-archrefinement,
 abstract = {method is presented for the stepwise refinement of an abstract architecture into a relatively correct lower level architecture that is intended to implement it. A refinement step involves the application of a predefined refinement pattern that provides a routine solution to a standard architectural design problem. A pattern contains an abstract architecture schema and a more detailed schema intended to implement it. The two schemas usually contain very different architectural concepts (from different architectural styles). Once a refinement pattern is proven correct, instances of it can be used without proof in developing specific architectures. Individual refinements are compositional, permitting incremental development and local reasoning. A special correctness criterion is defined for the domain of software architecture, as well as an accompanying proof technique. A useful syntactic form of correct composition is defined. The main points are illustrated by means of familiar architectures for a compiler. A prototype implementation of the method has been used successfully in a real application.},
@@ -1811,6 +1817,32 @@ url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.25.8278 http://ww
 volume = {06},
 year = {1996}
 }
+@inproceedings{asikainen2004-koala,
+abstract = {An approach for modelling configurable software product families (CSPFs) and for automated configuring of product individuals using the models is presented. It is based on a similar approach for configuring physical products. The conceptual foundation and syntax of the Koalish modelling language used for this purpose are defined. The language extends Koala, a component model and architecture description language, with explicit variation modelling mecha- nisms. Koalish is further provided a formal semantics by defining a translation from it to Weight Constraint Rule Language (WCRL), a form of logic pro- grams. This allows using an existing inference tool for WCRL, smodels, to im- plement the reasoning needed in the configurator. The configurator is able to construct all valid product individuals, with respect to a Koalish model of a CSPF, that satisfy a given set of requirements. The implemented functionality of the configurator has been tested using small-scale toy examples, for which it performs adequately.},
+author = {Asikainen, Timo and Soininen, Timo and M{\"{a}}nnist{\"{o}}, Tomi},
+booktitle = {Software Product Family Engineering, LNCS 3014},
+doi = {10.1007/978-3-540-24667-1_28},
+editor = {Linden, Frank},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Asikainen, Soininen, M{\"{a}}nnist{\"{o}} - 2004 - A Koala-based approach for modelling and deploying configurable software product families.pdf:pdf},
+pages = {225--249},
+publisher = {Springer Berlin Heidelberg},
+title = {{A Koala-based approach for modelling and deploying configurable software product families}},
+url = {http://www.springerlink.com/index/nhekwtmm45g4gtll.pdf},
+year = {2004}
+}
+@article{poizat2006-kadl,
+abstract = {Component Based Software Engineering has now emerged as a discipline for system development. After years of battle between component platforms, the need for means to abstract away from specific implementation details is now recognized. This paves the way for model driven approaches (such as MDE) but also for the more older Architectural Description Language (ADL) paradigm. In this paper we present KADL, an ADL based on the Korrigan formal language which supports the following features: integration of fully formal behaviours and data types, expressive component compo- sition mechanisms through the use of modal logic, specification readability through graphical notations, and dedicated architectural analysis techniques.},
+author = {Poizat, Pascal and Royer, JC},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Poizat, Royer - 2006 - A Formal Architectural Description Language based on Symbolic Transition Systems and Modal Logic.pdf:pdf},
+journal = {Journal of Universal Computer Science},
+keywords = {abstract data,architectural description language,category,component based software engineering,graphical notations,mixed formal specifications,modal logic glue,symbolic transition systems,types,verification},
+number = {12},
+pages = {1741--1782},
+title = {{A Formal Architectural Description Language based on Symbolic Transition Systems and Modal Logic}},
+url = {http://www.jucs.org/jucs{\_}12{\_}12/a{\_}formal{\_}architectural{\_}description/jucs{\_}12{\_}12{\_}1741{\_}1782{\_}poizat.pdf},
+volume = {12},
+year = {2006}
+}
 @article{vanommering2000-koala,
 abstract = {Most consumer electronics today contain embedded software. In the early days, developing CE software presented relatively minor challenges, but in the past several years three significant problems have arisen: size and complexity of the software in individual products; the increasing diversity of products and their software; and the need for decreased development time. The question of handling diversity and complexity in embedded software at an increasing production speed becomes an urgent one. The authors present their belief that the answer lies not in hiring more software engineers. They are not readily available, and even if they were, experience shows that larger projects induce larger lead times and often result in greater complexity. Instead, they believe that the answer lies in the use and reuse of software components that work within an explicit software architecture. The Koala model, a component-oriented approach detailed in this article, is their way of handling the diversity of software in consumer electronics. Used for embedded software in TV sets, it allows late binding of reusable components with no additional overhead},
 author = {van Ommering, R. and van der Linden, F. and Kramer, J. and Magee, J.},
@@ -1826,19 +1858,6 @@ url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=825699},
 volume = {33},
 year = {2000}
 }
-@article{poizat2006-kadl,
-abstract = {Component Based Software Engineering has now emerged as a discipline for system development. After years of battle between component platforms, the need for means to abstract away from specific implementation details is now recognized. This paves the way for model driven approaches (such as MDE) but also for the more older Architectural Description Language (ADL) paradigm. In this paper we present KADL, an ADL based on the Korrigan formal language which supports the following features: integration of fully formal behaviours and data types, expressive component compo- sition mechanisms through the use of modal logic, specification readability through graphical notations, and dedicated architectural analysis techniques.},
-author = {Poizat, Pascal and Royer, JC},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Poizat, Royer - 2006 - A Formal Architectural Description Language based on Symbolic Transition Systems and Modal Logic.pdf:pdf},
-journal = {Journal of Universal Computer Science},
-keywords = {abstract data,architectural description language,category,component based software engineering,graphical notations,mixed formal specifications,modal logic glue,symbolic transition systems,types,verification},
-number = {12},
-pages = {1741--1782},
-title = {{A Formal Architectural Description Language based on Symbolic Transition Systems and Modal Logic}},
-url = {http://www.jucs.org/jucs{\_}12{\_}12/a{\_}formal{\_}architectural{\_}description/jucs{\_}12{\_}12{\_}1741{\_}1782{\_}poizat.pdf},
-volume = {12},
-year = {2006}
-}
 @article{Choppy2001,
 abstract = {This paper presents an environment to support the use of specification for mixed systems, i.e. systems with both dynamic (behaviour, communication, concurrency) and static (data type) aspects. We provide an open and extensible environment based on the KORRIGAN specification model. This model uses a hierarchy of view concepts to specify data types, behaviours and compositions in a uniform way. The key notion behind a view is the symbolic transition system. A good environment supporting such a model needs to interface with existing languages and tools. At the core of our environment is the CLIS library which is devoted to the representation of our view concepts and existing specification languages. Our environment is implemented using the object-oriented language PYTHON. It provides an integration process for new tools, a specification library, a parser library, LOTOS generation and object-oriented code generation for KORRIGAN specifications.},
 author = {Choppy, C and Poizat, P and Royer, JC},
@@ -1852,18 +1871,31 @@ url = {http://jucs.org/jucs{\_}7{\_}1/the{\_}korrigan{\_}environment/Choppy{\_}C
 volume = {7},
 year = {2001}
 }
-@inproceedings{asikainen2004-koala,
-abstract = {An approach for modelling configurable software product families (CSPFs) and for automated configuring of product individuals using the models is presented. It is based on a similar approach for configuring physical products. The conceptual foundation and syntax of the Koalish modelling language used for this purpose are defined. The language extends Koala, a component model and architecture description language, with explicit variation modelling mecha- nisms. Koalish is further provided a formal semantics by defining a translation from it to Weight Constraint Rule Language (WCRL), a form of logic pro- grams. This allows using an existing inference tool for WCRL, smodels, to im- plement the reasoning needed in the configurator. The configurator is able to construct all valid product individuals, with respect to a Koalish model of a CSPF, that satisfy a given set of requirements. The implemented functionality of the configurator has been tested using small-scale toy examples, for which it performs adequately.},
-author = {Asikainen, Timo and Soininen, Timo and M{\"{a}}nnist{\"{o}}, Tomi},
-booktitle = {Software Product Family Engineering, LNCS 3014},
-doi = {10.1007/978-3-540-24667-1_28},
-editor = {Linden, Frank},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Asikainen, Soininen, M{\"{a}}nnist{\"{o}} - 2004 - A Koala-based approach for modelling and deploying configurable software product families.pdf:pdf},
-pages = {225--249},
-publisher = {Springer Berlin Heidelberg},
-title = {{A Koala-based approach for modelling and deploying configurable software product families}},
-url = {http://www.springerlink.com/index/nhekwtmm45g4gtll.pdf},
-year = {2004}
+@techreport{poizat2007-kadl,
+abstract = {This report presents the cash-point case study and mainly describes its specifications with the KADL ADL. The language is a mixed of state transition diagrams, abstract datatype and modal logic. We emphasize the need for abstract and formal descriptions especially communication architectures. We also gives some proofs done using our specific tool based on symbolic transition systems. Last we discuss previous specifications for this case study.},
+author = {Poizat, Pascal and Royer, Jean-claude},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Poizat, Royer - 2007 - KADL Specification of The Cash Point Case Study.pdf:pdf},
+institution = {IBISC},
+keywords = {Abstract Data Type,Architectural Description Language,Cash Point Case Study,Component Based Software Engineering,Symbolic Transition Systems,Verification},
+number = {00},
+pages = {00.0},
+title = {{KADL Specification of The Cash Point Case Study}},
+url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.77.3130},
+year = {2007}
+}
+@inproceedings{zheng2010-dpdadl,
+abstract = {Architecture description language (ADL) provides a linguistic approach to represent software architecture. Usually, it has to develop a new ADL for a particular domain. Some domains are difficult to develop the ADLs, e.g. data processing domain (DPD). Since the products of these domains can apply to many different areas as a sub module, which complicates the architecture abstraction. This paper shows the development of our ADL for data processing domain. It has domain independence meta model concept, and it supports variability description and the code generation rules have been indicated too. Our data processing product line can be described by this ADL and generate product code, which will improve the productivity.},
+author = {Zheng, Li and Wu, Zhanwei and Zhang, Chao and Yang, Fang},
+booktitle = {2010 Seventh International Conference on Information Technology},
+doi = {10.1109/ITNG.2010.25},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Zheng et al. - 2010 - Developing an Architecture Description Language for Data Processing Product Line.pdf:pdf},
+isbn = {978-1-4244-6270-4},
+keywords = {adl,dsm,mda,software architecture,software product line},
+pages = {944--949},
+publisher = {IEEE},
+title = {{Developing an Architecture Description Language for Data Processing Product Line}},
+url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5501510},
+year = {2010}
 }
 @inproceedings{Ng1995,
 abstract = {This paper describes work on the application of visual techniques to the design and construction of parallel and distributed programs. In particular, it looks at how the software architectural view can be effectively utilised to provide a common framework for integrating the various software development activities, ranging from early, informal program design to the evolution of the running program. A prototype visual programming environment-the Software Architect's Assistant-has been built for the design and development of Regis distributed programs. It provides the user with automated, intelligent assistance throughout the software design process. Facilities provided include the display of integrated graphical and textual views, a flexible mechanism for recording design information and the automatic generation of program code and formatted reports from design diagrams. Software reuse is also supported through the use of component libraries. Support for graphical monitoring and management of running programs, currently provided by a complementary tool, will be integrated into the environment to provide a complete solution for visual distributed programming.},
@@ -1881,31 +1913,19 @@ url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=375454},
 volume = {2},
 year = {1995}
 }
-@inproceedings{zheng2010-dpdadl,
-abstract = {Architecture description language (ADL) provides a linguistic approach to represent software architecture. Usually, it has to develop a new ADL for a particular domain. Some domains are difficult to develop the ADLs, e.g. data processing domain (DPD). Since the products of these domains can apply to many different areas as a sub module, which complicates the architecture abstraction. This paper shows the development of our ADL for data processing domain. It has domain independence meta model concept, and it supports variability description and the code generation rules have been indicated too. Our data processing product line can be described by this ADL and generate product code, which will improve the productivity.},
-author = {Zheng, Li and Wu, Zhanwei and Zhang, Chao and Yang, Fang},
-booktitle = {2010 Seventh International Conference on Information Technology},
-doi = {10.1109/ITNG.2010.25},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Zheng et al. - 2010 - Developing an Architecture Description Language for Data Processing Product Line.pdf:pdf},
-isbn = {978-1-4244-6270-4},
-keywords = {adl,dsm,mda,software architecture,software product line},
-pages = {944--949},
-publisher = {IEEE},
-title = {{Developing an Architecture Description Language for Data Processing Product Line}},
-url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5501510},
-year = {2010}
-}
-@techreport{poizat2007-kadl,
-abstract = {This report presents the cash-point case study and mainly describes its specifications with the KADL ADL. The language is a mixed of state transition diagrams, abstract datatype and modal logic. We emphasize the need for abstract and formal descriptions especially communication architectures. We also gives some proofs done using our specific tool based on symbolic transition systems. Last we discuss previous specifications for this case study.},
-author = {Poizat, Pascal and Royer, Jean-claude},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Poizat, Royer - 2007 - KADL Specification of The Cash Point Case Study.pdf:pdf},
-institution = {IBISC},
-keywords = {Abstract Data Type,Architectural Description Language,Cash Point Case Study,Component Based Software Engineering,Symbolic Transition Systems,Verification},
-number = {00},
-pages = {00.0},
-title = {{KADL Specification of The Cash Point Case Study}},
-url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.77.3130},
-year = {2007}
+@inproceedings{magee1995-darwin,
+address = {Essen, Germany},
+author = {Magee, Jeff and Dulay, Naranker and Eisenbach, Susan and Kramer, Jeff},
+booktitle = {5th European Software Engineering Conference (ESEC1995)},
+doi = {10.1.1.25.7933},
+editor = {Sch{\"{a}}fer, Wilhelm and Botella, Pere},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Magee et al. - 1995 - Specifying Distributed Software Architectures(2).pdf:pdf},
+keywords = {LNCS6093},
+pages = {137--153},
+publisher = {Springer-Verlag},
+title = {{Specifying Distributed Software Architectures}},
+url = {http://dl.acm.org/citation.cfm?id=651497},
+year = {1995}
 }
 @article{magee1996-darwin,
 author = {Magee, Jeff and Kramer, Jeff},
@@ -1922,19 +1942,18 @@ url = {http://portal.acm.org/citation.cfm?doid=250707.239104},
 volume = {21},
 year = {1996}
 }
-@inproceedings{magee1995-darwin,
-address = {Essen, Germany},
-author = {Magee, Jeff and Dulay, Naranker and Eisenbach, Susan and Kramer, Jeff},
-booktitle = {5th European Software Engineering Conference (ESEC1995)},
-doi = {10.1.1.25.7933},
-editor = {Sch{\"{a}}fer, Wilhelm and Botella, Pere},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Magee et al. - 1995 - Specifying Distributed Software Architectures(2).pdf:pdf},
-keywords = {LNCS6093},
-pages = {137--153},
+@inproceedings{pinto2003-daopadl,
+abstract = {Architecture description languages deal with the description, analysis and reuse of software architectures. This paper describes DAOP-ADL, a component- and aspect-based language to specify the architecture of an application in terms of components, aspects and a set of plug-compatibility rules between them. With the aim of connecting the specification of the application architecture to the implementation, we describe our language using XML and XML Schemas. The DAOP-ADL language was designed to be interpreted by DAOP, our own dynamic component- and aspect-oriented platform. DAOP provides a composition mechanism that plugs aspects into components dynamically at runtime. The software architect will use the DAOP-ADL language at design time to describe the architecture of the application. Later this architectural information is loaded into the DAOP platform, which needs it to establish the dynamic connections between autonomous components and aspects. Therefore, the use of DAOP-ADL closes the gap between design and implementation of component- and aspect-based applications.},
+address = {Erfurt, Germany},
+author = {Pinto, Monica and Fuentes, Lidia and Troya, Jose-Maria},
+booktitle = {2nd international conference on Generative programming and component engineering (GPCE '03)},
+editor = {Pfenning, Frank and Smaragdakis, Yannis},
+file = {:Users/eoin/Dropbox/Work/PhDWork/ADL-LitReview/ADL-Papers/DAOP-ADL-PintoEtAl.pdf:pdf},
+pages = {118--137},
 publisher = {Springer-Verlag},
-title = {{Specifying Distributed Software Architectures}},
-url = {http://dl.acm.org/citation.cfm?id=651497},
-year = {1995}
+title = {{DAOP-ADL : An Architecture Description Language for Dynamic Component and Aspect-Based Development}},
+url = {http://dl.acm.org/citation.cfm?id=954186.954194},
+year = {2003}
 }
 @inproceedings{magee1994-regis,
 abstract = {Regis is a programming environment aimed at supporting the development and execution of parallel and distributed programs. It embodies a constructive approach to the development of programs based on separating program structure from communication and computation. The emphasis is on constructing programs from multiple parallel computational components which cooperate to achieve the overall goal. The environment is designed to easily accommodate multiple communication mechanisms and primitives. Both the computational and communication elements of Regis programs are programmed in the object oriented programming language C++. The elements are combined into parallel and distributed programs using the configuration language Darwin. The paper describes programming in Regis through a set of small example programs.},
@@ -1949,19 +1968,6 @@ publisher = {IEEE},
 title = {{A constructive development environment for parallel and distributed programs}},
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=289940},
 year = {1994}
-}
-@inproceedings{pinto2003-daopadl,
-abstract = {Architecture description languages deal with the description, analysis and reuse of software architectures. This paper describes DAOP-ADL, a component- and aspect-based language to specify the architecture of an application in terms of components, aspects and a set of plug-compatibility rules between them. With the aim of connecting the specification of the application architecture to the implementation, we describe our language using XML and XML Schemas. The DAOP-ADL language was designed to be interpreted by DAOP, our own dynamic component- and aspect-oriented platform. DAOP provides a composition mechanism that plugs aspects into components dynamically at runtime. The software architect will use the DAOP-ADL language at design time to describe the architecture of the application. Later this architectural information is loaded into the DAOP platform, which needs it to establish the dynamic connections between autonomous components and aspects. Therefore, the use of DAOP-ADL closes the gap between design and implementation of component- and aspect-based applications.},
-address = {Erfurt, Germany},
-author = {Pinto, Monica and Fuentes, Lidia and Troya, Jose-Maria},
-booktitle = {2nd international conference on Generative programming and component engineering (GPCE '03)},
-editor = {Pfenning, Frank and Smaragdakis, Yannis},
-file = {:Users/eoin/Dropbox/Work/PhDWork/ADL-LitReview/ADL-Papers/DAOP-ADL-PintoEtAl.pdf:pdf},
-pages = {118--137},
-publisher = {Springer-Verlag},
-title = {{DAOP-ADL : An Architecture Description Language for Dynamic Component and Aspect-Based Development}},
-url = {http://dl.acm.org/citation.cfm?id=954186.954194},
-year = {2003}
 }
 @misc{Vulgarakis,
 author = {Vulgarakis, Aneta},
@@ -2007,6 +2013,18 @@ url = {http://linkinghub.elsevier.com/retrieve/pii/S1571066104050194},
 volume = {95},
 year = {2004}
 }
+@techreport{medvidovic2000-archintegn,
+abstract = {Software architecture research has yielded a variety of powerful techniques for assisting in the design, implementation, and long-term evolution of complex, heterogeneous, distributed, multi-user applications. Since software development environments are themselves applications with these characteristics, it is natural to examine the effectiveness of an architectural approach to constructing and changing them. We report on our experience in creating a family of related environments in this manner. The environments encompass a range of services and include commercial off-the-shelf products as well as custom-built tools. The particular architectural approach adopted is fully reflexive: the environments are used in their own construction and evolution. We also report on some engineering experiences, in particular with our use of XML as the vehicle for supporting a common and extensible representation of architectural models, including the model of the environment itself. Generally applicable lessons from the experience are described.},
+author = {Medvidovic, Nenad and Oreizy, Peyman and Taylor, RN and Khare, Rohit and Guntersdorfer, Michael},
+doi = {10.1.1.224.7230},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Medvidovic et al. - 2000 - An Architecture-Centered Approach to Software Environment Integration.pdf:pdf},
+institution = {Center for Software Engineering, University of Southern California},
+keywords = {off-the-shelf reuse,software architectures,software environments,tool integration,xml},
+pages = {Technical Report USC--CSE--00--516},
+title = {{An Architecture-Centered Approach to Software Environment Integration}},
+url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.224.7230},
+year = {2000}
+}
 @inproceedings{medvidovic1996-dynadls,
 address = {New York, New York, USA},
 author = {Medvidovic, Nenad},
@@ -2036,18 +2054,6 @@ title = {{Using object-oriented typing to support architectural design in the C2
 url = {http://portal.acm.org/citation.cfm?doid=250707.239106},
 volume = {21},
 year = {1996}
-}
-@techreport{medvidovic2000-archintegn,
-abstract = {Software architecture research has yielded a variety of powerful techniques for assisting in the design, implementation, and long-term evolution of complex, heterogeneous, distributed, multi-user applications. Since software development environments are themselves applications with these characteristics, it is natural to examine the effectiveness of an architectural approach to constructing and changing them. We report on our experience in creating a family of related environments in this manner. The environments encompass a range of services and include commercial off-the-shelf products as well as custom-built tools. The particular architectural approach adopted is fully reflexive: the environments are used in their own construction and evolution. We also report on some engineering experiences, in particular with our use of XML as the vehicle for supporting a common and extensible representation of architectural models, including the model of the environment itself. Generally applicable lessons from the experience are described.},
-author = {Medvidovic, Nenad and Oreizy, Peyman and Taylor, RN and Khare, Rohit and Guntersdorfer, Michael},
-doi = {10.1.1.224.7230},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Medvidovic et al. - 2000 - An Architecture-Centered Approach to Software Environment Integration.pdf:pdf},
-institution = {Center for Software Engineering, University of Southern California},
-keywords = {off-the-shelf reuse,software architectures,software environments,tool integration,xml},
-pages = {Technical Report USC--CSE--00--516},
-title = {{An Architecture-Centered Approach to Software Environment Integration}},
-url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.224.7230},
-year = {2000}
 }
 @article{malavolta2010-modeltransformation,
 author = {Malavolta, I. and Muccini, H. and Pelliccione, P. and Tamburri, D.a.},
@@ -2090,6 +2096,18 @@ title = {{ALI: An Extensible Architecture Description Language for Industrial Ap
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4492411},
 year = {2008}
 }
+@article{garlan1994-aesop,
+abstract = {As the design of software architectures emerges as a discipline within software engineering, it will become increasingly important to support architectural description and analysis with tools and environments. In this paper we describe a system for developing architectural design environments that exploit architectural styles to guide software architects in producing specific systems. The primary contributions of this research are: (a) a generic object model for representing architectural designs; (b) the characterization of architectural styles as specializations of this object model; and (c) a toolkit for creating an open architectural design environment from a description of a specific architectural style. We use our experience in implementing these concepts to illustrate how style-oriented architectural design raises new challenges for software support environments.},
+author = {Garlan, David and Allen, Robert and Ockerbloom, John},
+file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Garlan, Allen, Ockerbloom - 1994 - Exploiting style in architectural design environments.pdf:pdf},
+journal = {ACM SIGSOFT Software Engineering Notes},
+number = {Issue 5},
+pages = {175 -- 188},
+title = {{Exploiting style in architectural design environments}},
+url = {http://dl.acm.org/citation.cfm?id=195404},
+volume = {Volume 19},
+year = {1994}
+}
 @inproceedings{bashroush2005-adlars,
 abstract = {Software Product Line (SPL) Engineering has emerged to become a mature domain for maximizing reuse within the context of a family of related software products. Within the process of SPL, the variability and commonality among the different products within the scope of a family is captured and modeled into a systems feature model. Currently, there are no Architecture Description Languages (ADLs) that support the relationship between the feature model domain and the system architecture domain, leaving a gap which significantly increases the complexity of analyzing the systems architecture and insuring that it complies with its set feature model and variability requirements. In this paper we present ADLARS, an Architecture Description Language that supports the relationship between the systems feature model and the architectural structures in an attempt to alleviate the aforementioned problem. The link between the two spaces also allows the automatic generation of product architectures from the family reference architecture.},
 author = {Bashroush, R. and Brown, T.J. and Spence, I. and Kilpatrick, P.},
@@ -2102,18 +2120,6 @@ publisher = {Ieee},
 title = {{ADLARS: An Architecture Description Language for Software Product Lines}},
 url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1521204},
 year = {2005}
-}
-@article{garlan1994-aesop,
-abstract = {As the design of software architectures emerges as a discipline within software engineering, it will become increasingly important to support architectural description and analysis with tools and environments. In this paper we describe a system for developing architectural design environments that exploit architectural styles to guide software architects in producing specific systems. The primary contributions of this research are: (a) a generic object model for representing architectural designs; (b) the characterization of architectural styles as specializations of this object model; and (c) a toolkit for creating an open architectural design environment from a description of a specific architectural style. We use our experience in implementing these concepts to illustrate how style-oriented architectural design raises new challenges for software support environments.},
-author = {Garlan, David and Allen, Robert and Ockerbloom, John},
-file = {:Users/eoin/Library/Application Support/Mendeley Desktop/Downloaded/Garlan, Allen, Ockerbloom - 1994 - Exploiting style in architectural design environments.pdf:pdf},
-journal = {ACM SIGSOFT Software Engineering Notes},
-number = {Issue 5},
-pages = {175 -- 188},
-title = {{Exploiting style in architectural design environments}},
-url = {http://dl.acm.org/citation.cfm?id=195404},
-volume = {Volume 19},
-year = {1994}
 }
 @techreport{feiler2006-aadl,
 abstract = {In November 2004, the Society of Automotive Engineers (SAE) released the aerospace standard AS5506, named the Architecture Analysis {\&} Design Language (AADL). The AADL is a modeling language that supports early and repeated analyses of a system's architecture with respect to performance-critical properties through an extendable notation, a tool framework, and precisely defined semantics. The language employs formal modeling concepts for the description and analysis of application system architectures in terms of distinct components and their interactions. It includes abstractions of software, computational hardware, and system components for (a) specifying and analyzing real-time embedded and high dependability systems, complex systems of systems, and specialized performance capability systems and (b) mapping of software onto computational hardware elements. The AADL is especially effective for model-based analysis and specification of complex real- time embedded systems. This technical note is an introduction to the concepts, language structure, and application of the AADL.},
