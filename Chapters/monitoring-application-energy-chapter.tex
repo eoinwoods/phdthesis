@@ -201,18 +201,22 @@ The address of the architectural element can be any unique identifier which can 
 
 Given these structural definitions we can now define how the energy estimation process should work.
 
-Given a trace $t$ containing a span with ID $sid$ then let
+Given a trace $t$ we first define our period of interest $p$ to be the period between $t.st$ and $t.et$ and the set of spans of interest $S$ to te $t.S$.
+
+Next we define the set $R$ of runtime application elements which were involve in processing the requests described by the set of spans in $S$, which are identified by their network addresses.  By "runtime application element" we mean any execution container for which resource usage statistics can be reliably obtained, such as a container, a process or a thread.
+
+Let us assume we have a function $ator : (A,\mathbb{Z}) \to R$ which can map a network address from set $A$ to its corresponding runtime element at a point in time represented by an integer timestamp.  Such a mapping can be assumed to be available from the runtime platform in use.
+
+We can now define the set $R$ to be the set of runtime elements corresponding to the network addresses found in the spans within the trace:
 \begin{equation}
-a = t.S_{sid}.a
-\end{equation}
-\begin{equation}
-st = t.S_{sid}.st
-\end{equation}
-\begin{equation}
-et = t.S_{sid}.et
+R = \{ ator(s.a) \mid s \in t.S \}
 \end{equation}
 
-Let us now consider how we describe the CPU usage of a span.  The process is illustrated in Figure \ref{figure:graph}.  The figure shows an example CPU usage statistic for a particular operating system process, captured as a cumulative usage value over time.  Points in time $t_{1}$, $t_{2}$ and $t_{3}$ are sample points, when the CPU usage statistic is reported.  Points $st$ and $et$ are the start and end times of the period we are interested in.  We indicate the value of the CPU usage statistic at a point in time using subscript notation where $C_{t_{1}}$ is the value at point $t_{1}$ and $C_{st}$ is the value at point $st$.
+Let us now consider how we estimate the CPU usage of a runtime element during period $p$.  
+
+We make a key but reasonable simplifying assumption that a runtime element will only process workload on behalf of a single trace during a trace's execution period.  While this would be a significant constraint with traditional monolithic architectures, it is common practice in microservice-based deployments to deploy instances of microservices for the purpose of monitoring and testing in the production environment \cite{hilton2017-darklaunch} and microservice infrastructure, such as Istio is specifically designed to allow this \cite{istio2018-mirroring}.  Hence, temporarily dedicating a small part of the deployed application estate to processing requests for energy testing is not difficult or onerous in most modern microservice based systems.
+
+For each runtime element, we have a series of resource usage samples at fixed intervals and we need to use interpolation between these points to estimate the CPU usage of runtime elements at arbitary points in time. The process is illustrated in Figure \ref{figure:graph}.  The figure shows an example CPU usage statistic for a particular operating system process, captured as a cumulative usage value over time.  Points in time $t_{1}$, $t_{2}$ and $t_{3}$ are sample points, when the CPU usage statistic is reported.  Points $st$ and $et$ are the start and end times of the period $p$ we are interested in.  We indicate the value of the CPU usage statistic at a point in time using subscript notation where $C_{t_{1}}$ is the value at point $t_{1}$ and $C_{st}$ is the value at point $st$.
 
 \begin{figure}
 \centering
@@ -221,24 +225,24 @@ Let us now consider how we describe the CPU usage of a span.  The process is ill
 \label{figure:graph}
 \end{figure}
 
-Given $s$ is a span then we can describe the CPU usage of the span $s$ using the equations below, where $C_{s,t}$ indicates the cumulative CPU usage for the span at time $t$.
+Given $r$ is a runtime element then we can describe the CPU usage of the element using the equations below, where $C_{r,t}$ indicates the cumulative CPU usage for the element $r$ at time $t$.
 
-Let $C_{s, st}$ be the cumulative CPU usage for the span at point $st$ defined by
+Let $C_{r, st}$ be the cumulative CPU usage for the element $r$ at point $st$ defined by
 \begin{equation}
-C_{s,st} = C_{s,t1} + \left( \frac{C_{s,t2} - C_{s,t1}}{t2 - t1} \times (st - t1) \right) 
+C_{r,st} = C_{r,t1} + \left( \frac{C_{r,t2} - C_{r,t1}}{t2 - t1} \times (st - t1) \right) 
 \end{equation}
 
 Let $C_{et}$ be the cumulative CPU usage at point $et$ defined by
 \begin{equation}
-C_{s,et} = C_{s,t2} + \left( \frac{C_{s,t3} - C_{s,t2}}{t3 - t2} \times (et - t2) \right) 
+C_{r,et} = C_{r,t2} + \left( \frac{C_{r,t3} - C_{r,t2}}{t3 - t2} \times (et - t2) \right) 
 \end{equation}
 
-Then the CPU usage of span $s$ can be defined as
+Then the CPU usage of runtime element $r$ can be defined as
 \begin{equation}
-C_{s} = C_{s,et} - C_{s,st}
+C_{r} = C_{r,et} - C_{r,st}
 \end{equation}
 
-Given $h$ which is the host that a span executed on, and $st$ and $et$, which are the start and end times of a period respectively then we can describe the CPU usage of the host in a similar manner.
+Given $h$ which is the host that a runtime element was executed on, and $st$ and $et$, which are the start and end times of a period respectively then we can describe the CPU usage of the host in a similar manner.
 
 Let $C_{h, st}$ be the cumulative CPU usage for the host at point $st$ defined by
 \begin{equation}
@@ -255,7 +259,7 @@ Then the CPU usage of host $s$ between times $st$ and $et$ can be defined as
 C_{h,st,et} = C_{h,et} - C_{h,st}
 \end{equation}
 
-Having estimated the CPU usage of the span during its execution period and the CPU usage of the host during the same period, we can use the ratio of the two, combined with the model-based or physical measurement estimates of the host's energy consumption over the same period.  Power indicates the rate of energy consumption at a moment in time and is a constantly and rapidly fluctuating value. We rely on averages of its value over time in order to find a representative value to use for our calculations.
+Having estimated the CPU usage of the runtime element during its execution period and the CPU usage of the host during the same period, we can use the ratio of the two, combined with the model-based or physical measurement estimates of the host's energy consumption over the same period.  Power indicates the rate of energy consumption at a moment in time and is a constantly and rapidly fluctuating value. We rely on averages of its value over time in order to find a representative value to use for our calculations.
 
 In the situation where we have physical power metrics from the data centre infrastructure, then it is normal to find a Data Centre Infrastructure Management (DCIM) software platform deployed and we can extract power consumption metrics from this platform directly, using the API that such products expose. Different DCIM platforms offer different facilities and in some cases we might need to perform our own aggregation of device power readings in order to produce power consumption metrics suitable for our needs.  In other cases, the DCIM platform will have performed this aggregation and normalisation of the data already and we will be able to retrieve it via the API.  In ether case, the approach would be to produce a cumulative power usage metric for the hosts of interest in the managed environment, to allow a power usage average to be calculated in a similar way to the treatment of the cumulative CPU usage metric.
 
@@ -279,14 +283,16 @@ Let $E_{h,st}$ be the energy consumption (in joules) for the host between start 
 E_{h,st,et} = (et - st) \times 1000 \times P_{h}
 \end{equation}
 
-
 Given these supporting definitions we can now define the specification for the energy estimation process to be
 
 \begin{equation}
-E_{t} = \sum_{i=1}^{\#t.S} \left( \frac {C_{t.S[i]}} {C_{h,t.S[i].st,t.S[i].et}} \right) \times E_{h, st, et}
+C_{t} = \sum_{r \in R} C_{r,t.st,t.et}
+\end{equation}
+\begin{equation}
+E_{t} = \left( \frac {C_{t}} {C_{h,t.st,t.et}} \right) \times E_{h, t.st, t.et}
 \end{equation}
 
-The energy allocation for a trace is the sum of the energy allocations for the spans within it, which are each calculated as the ratio of the span resource usage to the host resource usage, during the span execution period, multiplied by the estimated host energy usage during the span execution period.
+The energy allocation for a trace is the sum of the CPU usage for the runtime elements that processed its workload during its execution time, as a percentage of host resource usage during the trace execution period, multiplied by the estimated host energy usage during the trace execution period.
 
 An algorithm which implements this specification will therefore allocate the energy used by the underlying host fairly across the application execution traces that it is executed for, so allowing fair comparisons to be made between different application requests to motivate design for energy efficiency and allowing recharging of energy costs in a fair and systematic manner.
 
@@ -299,20 +305,4 @@ So far our discussion has been largely implementation agnostic.  We have assumed
 Realistically, when we choose technologies for each part of the solution they will solve parts of the problem for us and also constrain the solution and bring limitations and difficulties.  This is why presenting the implementation independent form of the design is important so that the underlying ideas can be explored and applied in a range of technology environments.  However we are aware that the design, and possibly its effectiveness, will be altered by the specific implementation choices we make when we build it.
 
 In the next chapter we explain how we built a proof-of-concept version of Apollo, the technology choices we made, the problems we encountered and how we solved the problems to create a realistic and viable application energy calculator.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
