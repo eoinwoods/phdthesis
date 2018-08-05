@@ -4,15 +4,15 @@
 \section{Introduction}
 The logical design of the Apollo energy estimation calculator was presented in Chapter \ref{chapter:monitoring} and showed how, in principle, we can build a useful energy calculator to fairly allocate energy usage of a collection of host machines, on the basis of the individual application requests processed in a period of time (rather than just the total resource usage of application elements over a period).   Such a calculator can provide a tool for a software architect to understand the energy consumption implications of their architectural decisions and can guide them towards higher energy efficiency for the applications.
 
-The logical design of the calculator is independent of specific technologies and does not specify the details of the implementation, simply the operations that must be performed.  Hence, while it is a type of design, as we are now to implement the calculator it actually acts as our specification and our proof of concept implementation - Apollo - can be implemented in a number of ways using a number of different technology choices and detailed design decisions.
+The logical design of the calculator is independent of specific technologies and does not specify the details of the implementation, simply the operations that must be performed.  Hence, as we are now to implement the calculator, the logical design acts as our specification.  Our proof of concept implementation - Apollo - can be implemented in a number of ways using a number of different technology choices and detailed design decisions.
 
 In this chapter we explain how we went about the task of implementing our proof-of-concept calculator, the problems we set out to solve, the choices we made, some of the problems we had to solve and some of the tradeoffs that were necessary.
 
-\section{Initial Decisions}
+\section{Defining the Context}
 
-In order to move forwards efficiently, we needed to narrow the design space for our problem to allow us to focus on the key decisions specific to the problem we were investigating rather than being distracted by the generic decisions that all software projects need to make.
+In order to focus our attention we needed to narrow the possible design space for our problem to allow us to focus on the key decisions specific to our research rather and avoid being distracted by the generic decisions that all software projects need to make.
 
-These basic decisions were as follows:
+These basic context-setting decisions were as follows:
 
 \begin{itemize}
 	\item As mentioned in the previous chapter, We will focus on the domain of \emph{microservice-based information systems}, such as those found in large enterprises, Internet-facing systems and Internet-oriented startup companies.  We will not specifically exclude the approach being used with other architectural styles, but where a design decision is required, we will assume that the approach will be used with a microservice-based system.
@@ -21,6 +21,8 @@ These basic decisions were as follows:
 \end{itemize}
 
 All of these decisions align us with mainstream industry practice and provide practical options for applying our approach to industrial systems, while narrowing our design decisions to those related to our research problem, rather than generic concerns.
+
+We discuss each of the more specific design problems we needed to solve and the decisions we made to solve each one in the following sections of this chapter.
 
 \section{Tracing Application Execution}
 
@@ -51,6 +53,8 @@ The third option we investigated was to use \emph{Docker} \cite{docker2018} as a
 Our interest in Docker lies in its ability to provide a low-overhead, isolated environment for running application elements (in our case, microservices specifically).  If we can assume that all of the microservices within our system are packaged and then run as Docker containers then it provides us with the ability to extract accurage resource utilisation statistics for the microservice running in the container.  Another benefit of using Docker is that each container has its own network (IP) address which can be found via the runtime metadata available via Docker's management API.  This greatly simplifies the process of relating the resource usage data to the request traces from Zipkin as the network address is a shared piece of information between the two.
 
 We believe that requiring application elements (the microservices) to be packaged and run as Docker containers is realistic and reasonable, given its wide and growing adoption in industry, particulary for microservice-based systems.  Therefore this combination of factors resulted in us deciding to use Docker as the basis for collecting application resource utilisation statistics.
+
+A useful side effect of packaging the application as a set of microservices in containers is that it makes the utilisation of the trace data simpler.  The trace data identifies the application elements by network address (typically IP address and port number).  Each container in a Docker deployment (strictly a Docker network) has its own set of one or more IP addresses.  Therefore, by having each application element in a separate container, we can rely on them listening on different IP addresses and for the container to IP address mapping being available from the Docker meta data.  Hence this approach to application packaging and deployment makes the mapping of trace data to application elements straightforward. 
 
 The second part of collecting utilisation statistics is how they are extracted and stored from the execution platform.  In our case, our experimentation with Docker quickly revealed that a number of open source projects, including \emph{cAdvisor} \cite{cadvisor2018} and \emph{Telegaf} \cite{telegraf2018}, provide close integration with Docker and can extract and store the utilisation statistics data in different database systems.
 
@@ -159,7 +163,59 @@ Apollo Energy Estimator & The Apollo module collects data and implements the ene
 
 Most of the system described here is open source software (Docker, Telegraf, Zipkin, InfluxDB, MySQL and Linux) and so the only significant piece of custom software that had to be developed for this investigation was the Apollo Energy Estimator module.  The other software development effort was configuration and scripting to combine the different pieces of software into a single system.  We describe the software design of the Estimator module in the next section.
 
-\subsection{Implementation of the Apollo Energy Estimator Module}
+\subsection{Data Design}
+
+In the earlier subsections, we explained how we would solve each of the data gathering problems in order to create the data sets that the energy estimator requires in order to perform its calculations.  We now need to define how that data is used by the calculation code.
+
+The data model for the data from the different sources is shown using the UML class diagram in Figure \ref{figure:data} and the data elements are described in Table \ref{table:dataelements}.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{Figures/implementation-data}
+\caption{Data Structure for Apollo Energy Estimator}
+\label{figure:data}
+\end{figure}
+
+\begin{table}
+\centering
+\caption{Apollo Energy Calculator Data Elements}
+\label{table:dataelements}
+\footnotesize
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Data Element} & \textbf{Description}  \\
+\hline
+\hline
+Trace & The \textit{Trace} is just a simple container for a set of \textit{Spans}.  While the Zipkin data item does contain more information, from our perspective, we are only interested in it having a unique ID.  This is sourced from the Zipkin data set.\\
+\hline
+Span & Contains the information recording a specific invocation of an application element.  One \textit{Span} is written for each application element invoked as part of a trace.  Identifies the application element by \textit{networkAddress} (an IP address in our case) and records the start and end time of the invocation in milliseconds.  Composed into exactly one \textit{Trace} and so contains its ID to record the relationship.  This is sourced from the Zipkin data set. \\
+\hline
+Net Info & Provides a mapping between network addresses, (Docker) container IDs and container names.  Any network address maps to exactly one container ID and one container name.  This is sourced from the Docker Network Map data set. \\
+\hline
+Container Resource Usage Record & Records the resource usage of a specific container at a point in time.  Contains the sample time as a millisecond timestamp, the cumulative CPU usage in nano-seconds measured at that point, the ID of the container being measured and the hostname of the computer it was executing on. This is sourced from the Docker resource utilisation statistics collected by Telegraf (and stored in InfluxDB).\\
+\hline
+Host Resource Usage Record & Records the resource usage of a host computer at a point in time.  Contains the sample time as a millisecond timestamp, the cumulative CPU usage in milliseconds measured at that point and the hostname of the machine.  This is sourced from the operating system resource utilisation statistics collected by Telegraf (and stored in InfluxDB). \\
+\hline
+\end{tabular}
+\end{table}
+
+The basic data access path required is to start with the \emph{Trace} and iterate over the \emph{Spans} that it contains.  For each span, use the \emph{startTimeMsec} and \emph{endTimeMsec} to establish how long the invocation was for and when it was.  Using the \emph{networkAddress}, the \emph{containerId} can be identified using the \emph{Net Info} data.  This allows the resource usage records for the container to be identified using the start and end time and the container ID.  Then, to establish the resource utilisation of the host during the same period, the \emph{hostName} attribute of the \emph{Container Resource Usage Record} and the start and end times can be used to identify the correct \emph{Host Resource Usage Records} to use.
+
+Therefore, as can be seen, this data stucture allows us to navigate through the data sets to find container and host resource utilisation data for each of the spans in a trace.
+
+There is one remaining problem however, which is the fact that the spans are periods of time, but the usage records are samples at a point in time.  We need to solve this problem to use the data correctly.
+
+In our specification, in Section \ref{subsection:calculation-specification} we could assume an ideal, technology independent, situation where it was possible to use simple interpolation to estimate the CPU usage between two points, however close or far away they are.  This of course relies on very frequent sampling so that any error caused by averaging between the start and end of the sample does not distort the result in a material way.
+
+As we investigated the technologies that could provide resource utilisation metrics, we discovered that sample intervals for real resource utilisation statistics, such as those provided by operating systems or Docker, are actually very long when compared to request durations.  A typical sample interval for Docker is 10 seconds and an operating system might be 1 minute, whereas a request duration may only be 10s of milliseconds.  Sample intervals can be reduced in duration (at the cost of monitoring overhead and data volume) but realistically they can only be reduced to 5 - 10 seconds, not the durations that match request durations.
+
+\textbf{TODO} - fundamental decision here ... do I rework the spec or continue this argument?   On balance reworking the spec seems better as it makes the spec (slightly) simpler and makes this chapter much easier to write.  But it does bring in limitations at the spec level.
+
+
+
+
+
+\subsection{Software Design and Implementation}
 
 The Apollo estimator does two primary things, it gathers data from the resource utilisation statistics, the trace records and the Docker network meta data and it uses the information to perform the energy allocation processing required to establish the energy characteristics of each of the inbound requests to the application, described in the trace records. 
 
@@ -236,6 +292,18 @@ The Energy Estimator module is about 1500 lines of code with about 1250 lines of
 
 \subsection{The Calculation Algorithm}
 \label{subsection:algorithm}
+
+In Section \ref{subsection:calculation-specification} we presented the specification of how to perform the energy allocation process as a series of equations.  Having designed a practical approach to collecting and estimating the input data for this process, we now had to implement an algorithm that would perform the calculation processed as specified.  In this section, we highlight the significant steps that we took in this process.
+
+Traces and Spans as ADTs - basic decisions like all time quantities being msec precision and measured as msec since the Unix Epoch (and not all time values in the source data were in this form)
+
+Data Model - key to using the data from the different sources reliably.  Figure showing UML class model representation.  However because the data is from different data stores and non-relational stores, we can't just use this like a relational model and query across it.  Instead the implementation reads subsets of the data of interest and converts them to maps that make the computation straightforward (e.g. Net Info becomes a set of maps from network address to container\_id and container\_id to network\_address and container\_name to container\_id and so on).
+
+Algorithm - from TraceCalculator.calculateCpuMsecAndEnergyJoulesEstimateForTrace into functional pseudo code.
+
+
+
+
 
 TODO - decode the algorithms into pseudo code, with discussions of tradeoffs.
 
