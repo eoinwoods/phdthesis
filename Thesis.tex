@@ -14,6 +14,9 @@
 \usepackage{caption} 
 \usepackage{subcaption} % This relies on commenting out line 111 in Thesis.cls to remove "subfigure"
 
+% Suppress warnings about Underfull or Overfull boxes
+%\hbadness=99999
+
 % This is to allow alignment (left, right, centre) of width-defined columns
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
