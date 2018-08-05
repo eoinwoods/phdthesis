@@ -209,7 +209,13 @@ In our specification, in Section \ref{subsection:calculation-specification} we c
 
 As we investigated the technologies that could provide resource utilisation metrics, we discovered that sample intervals for real resource utilisation statistics, such as those provided by operating systems or Docker, are actually very long when compared to request durations.  A typical sample interval for Docker is 10 seconds and an operating system might be 1 minute, whereas a request duration may only be 10s of milliseconds.  Sample intervals can be reduced in duration (at the cost of monitoring overhead and data volume) but realistically they can only be reduced to 5 - 10 seconds, not the durations that match request durations.
 
+\begin{center}
+\fbox{
+\parbox{0.75\textwidth} {
 \textbf{TODO} - fundamental decision here ... do I rework the spec or continue this argument?   On balance reworking the spec seems better as it makes the spec (slightly) simpler and makes this chapter much easier to write.  But it does bring in limitations at the spec level.
+}
+}
+\end{center}
 
 
 
