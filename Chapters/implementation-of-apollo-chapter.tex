@@ -199,26 +199,19 @@ Host Resource Usage Record & Records the resource usage of a host computer at a 
 \end{tabular}
 \end{table}
 
-The basic data access path required is to start with the \emph{Trace} and iterate over the \emph{Spans} that it contains.  For each span, use the \emph{startTimeMsec} and \emph{endTimeMsec} to establish how long the invocation was for and when it was.  Using the \emph{networkAddress}, the \emph{containerId} can be identified using the \emph{Net Info} data.  This allows the resource usage records for the container to be identified using the start and end time and the container ID.  Then, to establish the resource utilisation of the host during the same period, the \emph{hostName} attribute of the \emph{Container Resource Usage Record} and the start and end times can be used to identify the correct \emph{Host Resource Usage Records} to use.
+The basic data access path required is to start with the \emph{Trace} and iterate over the \emph{Spans} that it contains.  For each span, use the \emph{networkAddress} to identify the service endpoint and use the \emph{Net Info} data to map this to the \emph{containerId} that executed the span's request.  This allows the resource usage records for the container to be identified using the container ID and the start and end time of the trace.  Then, to establish the resource utilisation of the host during the same period, the \emph{hostName} attribute of the \emph{Container Resource Usage Record} and the start and end times can be used to identify the correct \emph{Host Resource Usage Records} to use.
 
 Therefore, as can be seen, this data stucture allows us to navigate through the data sets to find container and host resource utilisation data for each of the spans in a trace.
 
 There is one remaining problem however, which is the fact that the spans are periods of time, but the usage records are samples at a point in time.  We need to solve this problem to use the data correctly.
 
-In our specification, in Section \ref{subsection:calculation-specification} we could assume an ideal, technology independent, situation where it was possible to use simple interpolation to estimate the CPU usage between two points, however close or far away they are.  This of course relies on very frequent sampling so that any error caused by averaging between the start and end of the sample does not distort the result in a material way.
+In our specification, in Section \ref{subsection:calculation-specification} we specified the use of interpolation to estimate the CPU usage between the two points surrounding the start and end of the trace and then calculating the difference between the two cumulative CPU usage values for each container involved in handling the request.  
 
-As we investigated the technologies that could provide resource utilisation metrics, we discovered that sample intervals for real resource utilisation statistics, such as those provided by operating systems or Docker, are actually very long when compared to request durations.  A typical sample interval for Docker is 10 seconds and an operating system might be 1 minute, whereas a request duration may only be 10s of milliseconds.  Sample intervals can be reduced in duration (at the cost of monitoring overhead and data volume) but realistically they can only be reduced to 5 - 10 seconds, not the durations that match request durations.
+This approach works well when the trace period crosses a number of sample intervals and we confirmed this early in the process using practial testing.  However, when using the technology it is important to be aware that when the trace period is very short compared to the sample interval, and so all of the execution occurs within one sample interval, the interpolation estimation is too coarse to produce accurate results for the CPU usage.  This is simply a limitation of using sample intervals for resource usage estimation and is a familiar problem in performance monitoring and analysis work.
 
-\begin{center}
-\fbox{
-\parbox{0.75\textwidth} {
-\textbf{TODO} - fundamental decision here ... do I rework the spec or continue this argument?   On balance reworking the spec seems better as it makes the spec (slightly) simpler and makes this chapter much easier to write.  But it does bring in limitations at the spec level.
-}
-}
-\end{center}
+As we investigated the technologies that could provide resource utilisation metrics, we discovered that sample intervals for real resource utilisation statistics, such as those provided by operating systems or Docker, are actually very long when compared to request durations.  A typical sample interval for Docker is 10 seconds and an operating system might be 1 minute, whereas the duration of a simple request may only be tens to hundreds of milliseconds.  Sample intervals can be reduced in duration (at the cost of monitoring overhead and data volume) but realistically they can only be reduced to 5 - 10 seconds, not the durations that match request durations.
 
-
-
+The solution to this is simply to run the workload multiple times, so that the measurement is made over a number of sample intervals, at which point the error from the interpolation is insignificant in the overall estimate.  With standard Docker and Linux monitoring through Telegraf we found that 5 more sample intervals was sufficient (so 50 seconds with a sample interval of 10 seconds).  While real application traces would not be this long, it is a common constraint for performance monitoring work.  Given that we are running dedicated microservice instances for energy estimation and assuming synthetic testing workload run in the production environment (as explained in Section \ref{subsection:calculation-specification}) then this constraint is unlikely to be a problem in practice.
 
 
 \subsection{Software Design and Implementation}
@@ -301,28 +294,35 @@ The Energy Estimator module is about 1500 lines of code with about 1250 lines of
 
 In Section \ref{subsection:calculation-specification} we presented the specification of how to perform the energy allocation process as a series of equations.  Having designed a practical approach to collecting and estimating the input data for this process, we now had to implement an algorithm that would perform the calculation processed as specified.  In this section, we highlight the significant steps that we took in this process.
 
-Traces and Spans as ADTs - basic decisions like all time quantities being msec precision and measured as msec since the Unix Epoch (and not all time values in the source data were in this form)
+The first step was to implement \emph{Trace} and \emph{Span} abstract data types, along with a set of types to store resource usage measurements.  These class were all implemented using Kotlin's data class construct.  The key decisions were to use a string representation for network addresses (to allow different sorts of network address without code change) and for all times and durations to be stored as millisecond precision timestamps since the Unix "epoch".
 
-Data Model - key to using the data from the different sources reliably.  Figure showing UML class model representation.  However because the data is from different data stores and non-relational stores, we can't just use this like a relational model and query across it.  Instead the implementation reads subsets of the data of interest and converts them to maps that make the computation straightforward (e.g. Net Info becomes a set of maps from network address to container\_id and container\_id to network\_address and container\_name to container\_id and so on).
+The next stage in implementation was to implement the \emph{Trace Manager}, and \emph{Resource Usage Manager} interfaces and their implementing classes.  These classes provide access to the MySQL database containing the Zipkin trace records and the InfluxDB database containing the Docker and host resource usage statistics records respectively.  Both of these classes are relatively sophisticated in the sense that they encapsulate the complexity of navigating the database models and mapping the data returned by the databases in order to provide a simple interface to calling code, using the abstract datatypes implemented in the previous step.  The MySQL implementation of the Trace Manager relies heavily on Spring Data and the MySQL Java Connector library classes to simplify query execution and result set handling.  The InfluxDB implentation of the Resource Usage Manager uses the standard InfluxDB Java client to access the database.
 
-Algorithm - from TraceCalculator.calculateCpuMsecAndEnergyJoulesEstimateForTrace into functional pseudo code.
+Once we had reliable, tested, access to the databases, the \emph{Net Info} interface and its Docker specific implementation was implemented.  It reads a JSON file generated by the \texttt{docker network inspect} command and extracts a network address to container ID to host name mapping from it.  It use the Klaxon open source library to provide idomatic access to JSON data from Kotlin, which made the implementation fairly straightforward.
 
+It was now possible to embark on the initial implementation of the \emph{Energy Calculator} which was implemented as two classes, the main Energy Calculator class that retrieves the traces from the Trace Manager and iterates over them, and a helper \emph{Trace Calculator} class that performs the energy allocation calculation for one trace.
 
+The Trace Calculator makes extensive use of Kotlin's functional programming features and related data types (maps, sets and lists).  The data is extracted from an SQL database, a JSON file and a No-SQL timeseries database.  Therefore it can't simply be accessed via a single database query, which might have been an option if it had all been in a single relational database.  Instead, this class reads subsets of the data of interest from the data stores and converts them to maps and lists structured to make the required computation straightforward (for example the Net Info data is transformed from a JSON struture to a set of maps from networkAddress to containerId, containerId to networkAddress and containerId to containerName).  This then allows extensive use of functional programming constructs like \texttt{map}, \texttt{reduce} and \texttt{fold}, which resulted in compact code that reflected the essentials of the algorithm well.
 
+At this point, the software could run reliably against a data set and calculate CPU usage and the percentage of total host CPU that the trace represented during its execution.
 
+The next stage was to implement the \emph{Energy Usage Manager} interface and its concrete implementation the \emph{Energy Usage Manager Simulator} class, which provides estimates of energy consumption for a specified machine during a specified period.  This implementation uses a model based approach, utilising SPEC Power benchmark energy values for the machine type of the host.  The class queries InfluxDB to find the host CPU utilisation during the specified time period for the specified host and then uses a lookup table to find an estimate of the power consumption for the host type of the machine at the average level of utilisation during the period.
 
-TODO - decode the algorithms into pseudo code, with discussions of tradeoffs.
+This completed the implementation of the calculation module and its automated tests, allowing us to move on to the validation stage and use it to perform energy allocation calculations for real test cases for a sample application, which we describe in Chapter \ref{chapter:validation}.
 
 \section{Limitations of the Calculator}
 
 TODO - need to work out the design and implementation limitations and explain (and justify) them here.
+
+I haven't put in the PUE factor due to time constraints.  Could possibly squeeze in during September, but for now need to acknowledge it as a limitation, future work ...
+
+Batch offline operation - would need more work to be stream based.
 
 The design described in this paper has been validated via proof-of-concept implementations of each of its significant decisions and mechanisms, but not yet built.  Therefore the next step in the work is a full, robust implementation which can be utilised and validated to create a useful energy estimation mechanism.
 The design described here is the first development of the ideas and has a number of limitations, which can be addressed in future work.
 
 Our approach estimates energy usage for individual requests, by estimating the energy usage of each container as the request is processed.  This allows some degree of isolation as other workload which does not use these containers can be running in the application without it distorting the results.  For Application Service elements this is useful, as they are usually replicated for scalability reasons and so workload can run in the replicas that are not processing the request of interest.  However, care must be taken not to have workload running through shared services (such as databases) which would distort the energy estimation.  This is a limitation of the current version of the design. In practice, we believe that architects are likely to expect this constraint, as it is similar to the situation for other non-functional tests like performance and scalability.
 
-The use of the architectural description data is somewhat unsatisfying as the rest of the inputs to the process are automatically generated.  The creation of the architectural description is a burden for the architect and could be performed incorrectly.  A more sophisticated tracing system, which can trace the activity of “black box” components could go some way to addressing this and could potentially be achieved by lower-level tracing in the operating system and network layer.
 
 The system does not provide the architect with any visualisation or analytics view of the data in order to help draw insights from it.  While not the focus of this work, there are a number of well-known tools (such as Graphana) that could be used to create a visual interface for understanding the results of the analysis.
 
