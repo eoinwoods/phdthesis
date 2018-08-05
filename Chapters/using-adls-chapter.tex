@@ -327,7 +327,7 @@ The interactions between system elements necessary to implement this scenario ar
 \caption{Interactions for the Portfolio Rebalance Scenario}
 \label{table:amsinteractions}
 \footnotesize
-\begin{tabular}{l l l l p{2cm} p{5cm}}
+\begin{tabular}{p{0.5cm} p{2cm} p{2cm} l p{2cm} p{4.9cm}}
 Step & From & To & Type & Connector & Description \\
 \hline
 
@@ -353,7 +353,7 @@ Step & From & To & Type & Connector & Description \\
 
 11 & UI Server & AMSdb & DB & pmgmt and ordermgmt schemas & The UI Server updates the database with the status of the orders and the effect on the portfolio \\
 
-12 & GUI & UI Server & RPC & portfolioservice & The GUI makes RPC calls to the UI Server and gets the updated status of the orders and the changes to the portfolio in its response \\
+12 & GUI & UI Server & RPC & portfolio service & The GUI makes RPC calls to the UI Server and gets the updated status of the orders and the changes to the portfolio in its response \\
 
 \end{tabular}
 \end{table}
