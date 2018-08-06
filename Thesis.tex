@@ -13,7 +13,8 @@
 \hypersetup{urlcolor=black, colorlinks=false}  
 \usepackage{caption} 
 \usepackage{subcaption} % This relies on commenting out line 111 in Thesis.cls to remove "subfigure"
-\usepackage{amssymb}
+\usepackage{amssymb} % Numeric set symbols
+\usepackage{datetime}
 
 % Suppress warnings about Underfull or Overfull boxes
 %\hbadness=99999
@@ -36,7 +37,7 @@
             {Eoin Woods}
             }
 \addresses  {\groupname\\\deptname\\\univname}  % Do not change this here, instead these must be set in the "Thesis.cls" file, please look through it instead
-\date       {\today}
+\date       {\today-\currenttime}
 \subject    {}
 \keywords   {}
 

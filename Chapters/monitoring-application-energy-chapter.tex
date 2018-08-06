@@ -62,7 +62,7 @@ Having considered these options and realised that each of them had severe practi
 
 Our approach assumes that the energy consumption of the execution platform that the application is executing on is available to the energy calculation process and uses this, along with the total resource usage consumption of the execution platform and the resource usage of the application components, to allocate the platform energy consumption to the different application elements running on it.  By tracing the execution of inbound requests across application elements, this allows us to allocate energy usage to specific requests and so compare the energy efficiency of different parts of a system, different workloads and different system design options.
 
-Estimating energy usage at the application level is a complex process and so it is important to be clear how the calculation will be performed before trying to design an implementation of it.
+Allocating energy usage at the application level is a complex process and so it is important to be clear how the calculation will be performed before trying to design an implementation of it.
 
 There are five quite distinct parts to the problem:
 
@@ -74,17 +74,24 @@ There are five quite distinct parts to the problem:
 
 \item \emph{Resource usage of the request}.  Given the system elements involved in processing a request and the periods when they were active, on behalf of the request, we need to estimate the runtime resources consumed by the system elements during these periods.  The resource consumption we need to estimate is primarily the amount of CPU consumed (for reasons we will explain later) although the amount of active memory in use, the number of network i/o bytes sent and received, and the number of disk i/o bytes read and written are also typically available from modern operating system and container platforms.
 
-\item \emph{Estimation of resource and energy usage of the underlying host machine}.  Our aim is to fairly allocate the energy used by a machine during a time window across the requests that were active during that period.  Hence we need to estimate the overall resource usage of the machine and the energy that it consumed as a result.  We also need a estimate of the PUE of the execution environment \cite{iso30134-pue}, to allow us to "load" the host's energy consumption to reflect the additional cost of the infrastructure (such as power transmission and cooling) that supports its operation.
+\item \emph{Estimation of resource and energy usage of the underlying host machine}.  Our aim is to fairly allocate the energy used by a machine during a time window across the requests that were active during that period.  Hence we need to estimate the overall resource usage of the machine and the energy that it consumed as a result.  
 
-\item \emph{Energy estimate of the request}.  Once we have the resource consumption metrics for a particular request, we then need to translate these into an estimate of the energy consumption that they imply.  We do this by establishing the percentage of overall machine resource utilisation that can be attributed to the request and then allocating the same percentage of energy usage of the underlying host to the request and then adjusting this by the PUE value for the execution environment (data centre) at the time of day that the request occured.
+% TODO - removed description of the PUE for the moment. Add back in
+% if I get time to introduce this aspect.
+%We also need a estimate of the PUE of the execution environment \cite{iso30134-pue}, to allow us to "load" the host's energy consumption to reflect the additional cost of the infrastructure (such as power transmission and cooling) that supports its operation.
+
+\item \emph{Energy allocation of the request}.  Once we have the resource consumption metrics for a particular request, we then need to translate these into an estimate of the share of energy consumption that they imply.  We do this by establishing the percentage of overall machine resource utilisation that can be attributed to the request and then allocating the same percentage of energy usage of the underlying host to the request.
+
+% TODO - more on PUE removed for now
+% and then adjusting this by the PUE value for the execution environment (data centre) at the time of day that the request occured
 
 \end{itemize}
 
 Each of these aspects of the problem is reasonably complex to solve, but luckily they can largely be solved independently, and once resolved, combined to achieve a reliable and fair energy allocation for each inbound request for a microservice-based system.  In the following sections of this chapter we discuss the "logical" design for a solution to each of these aspects of a problem.  This provides us with a largely technology independent design of the solution, which we then use as a specification for the technology specific design that we implemented, as described in chapter \ref{chapter:implementation}.
 
-\section{Logical Design of an Energy Estimation System}
+\section{Logical Design of an Energy Allocation System}
 
-The functional design of a system to estimate energy usage for application requests (which we have dubbed "Apollo" - the Greek God of Prophesy, amongst other things) is shown in the informal block diagram in \ref{figure:logicaldesign}.
+The functional design of a system to estimate energy allocation for application requests (which we have dubbed "Apollo" - the Greek God of Prophesy, amongst other things) is shown in the informal block diagram in \ref{figure:logicaldesign}.
 
 \begin{figure}
 \centering
@@ -98,7 +105,7 @@ The elements in the diagram with solid fill are the underlying runtime platform 
 The elements of the system are briefly described below:
 
 \begin{itemize}
-\item \emph{Application Elements} are the architectural elements of the application which is being studied for energy consumption.  These are the main functional processing elements of the system, running in their own address space, providing a network interface to their services, invoked as part of request processing, with the implementation being under the control of the system owner who wants to estimate energy usage.  An example would be a request handling microservice to create an order.
+\item \emph{Application Elements} are the architectural elements of the application which is being studied for their energy consumption characteristics.  These are the main functional processing elements of the system, running in their own address space, providing a network interface to their services, invoked as part of request processing, with the implementation being under the control of the system owner who wants to estimate energy usage.  An example would be a request handling microservice to create an order.
 \item \emph{Service Platform} is the system software which hosts the application components and can provide detailed measurements of their resource usage.  An example might be a PaaS platform like Cloud Foundry \cite{cloudfoundry2018}, a virtual machine, a modern operating system like Linux or a container platform like Docker \cite{docker2018} or Rkt \cite{rkt2018}.
 \item \emph{Host Platform} is the hardware and operating system platform that provides the general computing platform that hosts the service platform and provides runtime statistics on the host's execution and energy consumption.  This is typically an Intel based server machine running a Linux or Windows operating system, or a virtualised version of them.
 \item \emph{Tracing Mechanism}, which is key to our approach.  We require the ability to reliably and efficiently trace the architectural elements that were involved in handling a particular request for the system.  This tracing mechanism provides that ability, reporting the sequence of invocations of architectural elements and the time and duration of each.  Technology to allow this originated at Google \cite{sigelman2010-dapper} and has been implemented in open source projects such as Zipkin \cite{zipkin2018} and Jaeger \cite{jaeger2018}.
