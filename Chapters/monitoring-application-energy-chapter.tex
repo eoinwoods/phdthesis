@@ -87,11 +87,11 @@ There are five quite distinct parts to the problem:
 
 \end{itemize}
 
-Each of these aspects of the problem is reasonably complex to solve, but luckily they can largely be solved independently, and once resolved, combined to achieve a reliable and fair energy allocation for each inbound request for a microservice-based system.  In the following sections of this chapter we discuss the "logical" design for a solution to each of these aspects of a problem.  This provides us with a largely technology independent design of the solution, which we then use as a specification for the technology specific design that we implemented, as described in chapter \ref{chapter:implementation}.
+Each of these aspects of the problem is reasonably complex to solve, but luckily they can largely be solved independently, and once resolved, combined to achieve a reliable and fair energy allocation for each inbound request for a microservice-based system.  In the following sections of this chapter we discuss the "logical" design for a solution to each of these aspects of a problem.  This provides us with a largely technology independent design of the solution, which we then use as a specification for the technology specific design that we implemented, as described in \cref{chapter:implementation}.
 
 \section{Logical Design of an Energy Allocation System}
 
-The functional design of a system to estimate energy allocation for application requests (which we have dubbed "Apollo" - the Greek God of Prophesy, amongst other things) is shown in the informal block diagram in \ref{figure:logicaldesign}.
+The functional design of a system to estimate energy allocation for application requests (which we have dubbed "Apollo" - the Greek God of Prophesy, amongst other things) is shown in the informal block diagram in \fref{figure:logicaldesign}.
 
 \begin{figure}
 \centering
@@ -119,7 +119,7 @@ There are three key data structures in the design, which are critical to achievi
 
 \begin{itemize}
 
-\item \emph{Trace Records} are created by the tracing mechanism and are used to record the invocation of system elements in processing a request.  There are two types of trace records, commonly referred to as Traces and Spans \cite{opentracing2018-traces}.  Common features of the two are the identity of the runtime element writing the record, the start time of the record and the end time of the record.  A "trace" record is written by the first element to handle an inbound request and its start time is when the request is received and its end time is when the response was dispatched.  A "span" record is written to record the invocation of another system element (i.e. service) by the original element handling the request and it has a "parent" attribute which indicates the trace it is part of.  Should an element \emph{e1} handle an inbound request and as part of processing it cause another element \emph{e2} to be invoked, then a trace record is written to record the execution of \emph{e1} and a span record is written, recording the execution of \emph{e2}, with the trace record as its parent.  Hence traces and spans are organized into a tree that mirrors the invocation structure of the request handling.  An example trace is shown in \ref{figure:span}.
+\item \emph{Trace Records} are created by the tracing mechanism and are used to record the invocation of system elements in processing a request.  There are two types of trace records, commonly referred to as Traces and Spans \cite{opentracing2018-traces}.  Common features of the two are the identity of the runtime element writing the record, the start time of the record and the end time of the record.  A "trace" record is written by the first element to handle an inbound request and its start time is when the request is received and its end time is when the response was dispatched.  A "span" record is written to record the invocation of another system element (i.e. service) by the original element handling the request and it has a "parent" attribute which indicates the trace it is part of.  Should an element \emph{e1} handle an inbound request and as part of processing it cause another element \emph{e2} to be invoked, then a trace record is written to record the execution of \emph{e1} and a span record is written, recording the execution of \emph{e2}, with the trace record as its parent.  Hence traces and spans are organized into a tree that mirrors the invocation structure of the request handling.  An example trace is shown in \fref{figure:span}.
 
 \begin{figure}
 \centering
@@ -144,7 +144,7 @@ When estimating energy characteristics of a workload, it is possible to measure 
 
 As a result, we concluded that combining CPU, disk, network and memory utilisation statistics in order to produce power consumption estimates for a complex computing device, such as an enterprise server, was not a practical approach for anything other than the smallest laboratory examples and so was not suitable for the large scale enterprise use that we aspired to apply our work to.
 
-However, it turns out that there is a solution to this problem, which is to use CPU utilisation as a proxy for overall server power consumption.  Previous research \cite{bashroush2018_hardwarerefresh} has shown that CPU utilisation is directly proportional to the power consumption of the server as a whole.  We have also investigated this and found that in more limited testing, in our specific environment, this relationship holds and CPU utilisation is a good proxy value for the relative power consumption of a server computer.  We discuss further validation of this finding in Chapter \ref{chapter:validation}.
+However, it turns out that there is a solution to this problem, which is to use CPU utilisation as a proxy for overall server power consumption.  Previous research \cite{bashroush2018_hardwarerefresh} has shown that CPU utilisation is directly proportional to the power consumption of the server as a whole.  We have also investigated this and found that in more limited testing, in our specific environment, this relationship holds and CPU utilisation is a good proxy value for the relative power consumption of a server computer.  We discuss further validation of this finding in \cref{chapter:validation}.
 
 This finding allows us to use CPU utilisation of the server host as a whole, compared to the CPU utilisation of the architectural elements used to process application requests, as a reliable proxy for the ratio of the energy consumption of the server to the energy consumption required to process application requests.
 
@@ -156,7 +156,7 @@ In the next section of this chapter, we explain how we calculate estimations of 
 
 The key novel element in the system is clearly the Energy Estimator, which implements the processing required to fulfil the purpose of the system.  This element is a numerical calculator which combines data from the trace records, resource usage records and energy usage records in order to produce a reliable estimate of the amount of the energy of the underlying host which should be allocated to a specific request which the application under consideration has processed.
 
-We illustrate the approach to creating an energy allocation estimate using the graph in Figure \ref{figure:cpuusage}, which shows the cumulative CPU usage over time for two architectural elements \emph{E1} and \emph{E2} along with the corresponding cumulative CPU usage for the host they are executing on.
+We illustrate the approach to creating an energy allocation estimate using the graph in \fref{figure:cpuusage}, which shows the cumulative CPU usage over time for two architectural elements \emph{E1} and \emph{E2} along with the corresponding cumulative CPU usage for the host they are executing on.
 
 \begin{figure}
 \centering
