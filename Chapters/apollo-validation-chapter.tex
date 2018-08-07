@@ -1,4 +1,38 @@
 \chapter{Validation of Application Energy Monitoring}
 \label{chapter:validation}
 
-Explaining and reporting testing.  Validation involves running scenarios and using Apollo to get answers.  Then create another way of estimating the resource usage of the "transactions" independently and comparing the two.  For example, run multiple services on one machine, burn 10 sec of CPU in one, 20 sec in the other, then in an enclosing window, Apollo should be reporting a ratio of 2:1 for their usage.
+\section{Introduction}
+
+As described in \cref{chapter:implementation} we have implemented a proof-of-concept version of the Apollo Energy Allocator system, to prove the usefulness of our approach for allocating energy of underlying host systems to individual application requests running on them.  The software was tested during development to ensure correctness with respect to expected results through unit and integration tests, but now needs to be validated by using it in realistic test cases.  This process is described in this chapter.
+
+In order to validate Apollo with realistic test cases, we need to define the kind of validation we are interested in achieving.  There are two main varieties of validation that we wish to achieve.
+
+Firstly we wish to validate the \emph{consistency} of Apollo's results across a range of scenarios, to ensure that energy is allocated consistently with respect to the workload in the execution scenarios and host utilisation levels that prevail during them.
+
+Next, we need to validate the \emph{allocation} of Apollo's results when a specific application scenario is run on a host machine with different amounts of competing workload.  As the competing workload rises, the energy allocation to the application scenario should fall, in proportion to its use of the machine.
+
+We also wish to validate the \emph{calculation correctness} of Apollo's results, by running the calculator in one or more controlled scenarios where we can also gather additional runtime statistics that allow a separate independent calculation of a fair energy consumption and manually perform these calculations and use them to check the correctness of Apollo's results in the same scenarios.
+
+Finally, an additional area of validation we wish to perform is to confirm that \emph{CPU is a valid proxy for overall resource usage} when performing energy allocation calculations.  For this validation we focus on how CPU usage varies for disk IO intensive workloads.
+
+\section{Testing Approach}
+
+\subsection{The Test Application}
+TODO - explain the microservice app
+
+\subsection{The Test Software}
+TODO - explain how tests were run and results captured
+
+\section{Validating Consistency}
+
+To validate consistency of energy allocation, our strategy is to run a known control workload under fixed host utilisation conditions (no other workload being the simplest case) and to run a range of other workloads that we know contain an equivalent amount of computational work but are structured differently.  The energy allocation should be the same for each case.
+
+
+\section{Validating Allocation}
+
+\section{Validating Calculation}
+
+\section{Validating CPU as a Resource Usage Proxy}
+
+\section{Summary}
+
