@@ -27,6 +27,47 @@ TODO - explain how tests were run and results captured
 
 To validate consistency of energy allocation, our strategy is to run a known control workload under fixed host utilisation conditions (no other workload being the simplest case) and to run a range of other workloads that we know contain an equivalent amount of computational work but are structured differently.  The energy allocation should be the same for each case.
 
+In our first test, we structured a workload into three cases, each of which involved the same amount of CPU workload but in three different scenarios.  The first scenario invoked a short service call (involving 50msec of CPU work) 1000 times, the second scenario invoked a longer service call (500msec of CPU work) 100 times and the third ran a long service call (5000msec of CPU work) 10 times.  Each scenario was called 6 times to ensure a consistent result.
+
+Our first question was whether the energy allocations per request were consistent across the three cases.  Our analysis of this question is shown in the scatter graph in \fref{figure:validation-energycpu}, which plots the energy usage against CPU workload for each of the scenarios executed, using logarithmic scales.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{Figures/validation-energycpu}
+\caption{Energy Allocation per Request for Small, Medium and Large Services}
+\label{figure:validation-energycpu}
+\end{figure}
+
+The graph shows the three sets of scenarios (short, medium and long) clearly clustering very closely, showing that the energy allocation per trace is extremely consistent across the three sets, suggesting that the allocation calculation is working consistently as designed.  More precisely, the correlation coeficient between the two sets of values is 0.999, indicating a very high degree of correlation between CPU consumed and energy allocation performed.
+
+We also wanted to understand how consistent the energy allocation per trace was across the three service request sets and to do this we calculated the CPU to energy ratio as $CPU msec / Energy J$ for each of the results we had from this test set.  The results of this calculation are presented in \tref{table:energypermsec}.
+
+\begin{table}
+\centering
+\caption{Energy Allocation per Millisecond}
+\label{table:energypermsec}
+\footnotesize
+\begin{tabular}{|l|r|r|}
+\hline
+\textbf{Request Length} & \textbf{Average J/msec}  & \textbf{Stddev J/msec} \\
+\hline
+50 msec & 0.0848 & 0.0026 \\
+\hline
+500 msec & 0.1094 & 0.0005 \\
+\hline
+5000 msec & 0.1121 & 0.0017 \\
+\hline
+\end{tabular}
+\end{table} 
+
+As can be seen, the energy allocation per CPU millisecond is slightly different between the three cases, with a consistent trend to increase slightly as the number of milliseconds of CPU time per request increases by an order of magnitude each time.  As can also be seen the standard deviation values are very small, indicating that the averages are representative of the data.
+
+When we analysed these values a little we noticed that the difference between the average for the 50 msec case and the 500 msec case was 0.0246, while the difference between the 500 msec case and the 5000 msec case was 0.0027.  So the difference in mean values differs by the same order of magnitude as the length of the workload in each case.  The length of the workload is inversely proportional to the number of service requests made, therefore we think the lower energy per millisecond for the short requests indicates the lower intensity of workload that the scenario places the server under.  As much of the time in this scenario will be waiting for network operations to receive or transmit data from and to the client, the intensity of the CPU operation will be lower and so the allocation algorithm results in a (slightly) lower amount of energy per CPU millisecond of work.
+
+
+
+
+
 
 \section{Validating Allocation}
 
