@@ -81,14 +81,27 @@ When we analysed the power allocation by trace we saw an interesting development
 
 When no additional load is executing on the host, there is no other workload apart from our traces to allocate power consumption to.  In which case if the scenario takes longer, you would expect a higher energy allocation even with constant resource usage, as the host machine is consuming energy, even when not actively running our workload and if there is no other workload to allocate this "background" energy consumption to, then it will be allocated to our workload.  The graph shows that this is exactly what happens; when no other workload is executing on the machine, our longer scenarios (the "single-cpu-x50-pause" scenarios) are allocated more power than the shorter scenarios (the "single-cpu-x50" ones) even though they all consume very similar amounts of CPU time.
 
-In contrast, when there is additional workload on the machine, the energy allocated to each trace is much more even, within a maximum of 4\% variation from the mean (min 157, max 164, mean 160, std deviation of 2.66 which is 1.6\% of the mean).  This is within our target consistency and again suggests that this is a consistent energy allocation mechanism.
-
-
-
-
-
+In contrast, when there is additional workload on the machine, the energy allocated to each trace is much more even, within a maximum of 4\% variation from the mean (min 157, max 164, mean 160, std deviation of 2.66 which is 1.6\% of the mean).  This is also an expected result as during the execution of our test workload, there is other workload running on the machine which shares the allocation of the host's energy consumption.  As our workload runs longer, but is not using CPU during part of the period, it is allocated correspondingly less of the host's energy as there is other active workload on the machine which is allocated more of it.  This is the alocation we would expect and it is within our target consistency and again suggests that this is a consistent energy allocation mechanism.
 
 \section{Validating Allocation}
+
+Another aspect of energy allocation is how a fixed workload is allocated energy when the underlying host has varying amounts of other workload running on it concurrently.  We tested this aspect of allocation by running a single workload type under 5 different host utilisation conditions, namely when there was no other workload on the host, and when the host was 25\%, 50\%, 75\% and 100\% utilised before our workload started.  The results of this test are shown in the line graph in \fref{figure:validation-machineload}.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{Figures/validation-machineload}
+\caption{Energy Allocation Under Different Host Load Conditions}
+\label{figure:validation-machineload}
+\end{figure}
+
+As with some of our other testing, the results initially look somewhat counter intuitive, but on further analysis are validation of consistent energy allocation by workload.
+
+The first three steps in the graph are fairly obvious.  The first scenario runs by itself and receives a fairly high energy allocation per trace (of 276J) because the traces are being allocated their own energy allocation and the underlying overhead of the host machine.  Then when the machine is 25\% busy with other workload the traces are allocated correspondingly less energy because the host overhead is being shared with the other workload on the machine.  This happens again as the other workload increases to 50\% but the drop in energy allocation is smaller because the increase in host energy is smaller, as it becomes more utilised, and our share of the CPU dropped less in absolute terms (from 96\% to 49\% for the first step and then from 49\% to 33\% for the step to 50\% utilisation).
+
+Beyond 50\% utilisation our energy allocation per trace actually doesn't fall much further and goes up slightly at 75\% machine utilisation.  At the 75\% point this is because our CPU utilisation percentage falls by 8\% from 33\% to 25\% but the host energy usage increases by slightly more in this step than the previous step (36\% increase rather than 32\% increase). [\textbf{TODO} - this needs better explained, maybe more numbers?]
+
+%  (Trace J: 276, 183 [93], 164 [19], 169, 167)
+
 
 \section{Validating Calculation}
 
