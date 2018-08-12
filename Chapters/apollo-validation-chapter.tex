@@ -75,7 +75,13 @@ Our second test involved investigating how energy allocation was affected by a c
 
 This graph plots the CPU usage per trace (the top line) and the energy usage per trace (the bottom line) for sample executions of the scenarios.  As indicated by the dashed boxes annotating the graph, the first 6 executions were performed with no additional workload on the machine, the second 6 executions were performed with the machine having 50\% of its CPU capacity consumed by other synthetic workload.
 
-TODO 
+As can be seen from the graph, the estimate of CPU usage by trace is consistent, within a maximum of 2\% variation from the mean (min 2467, max 2556, mean 2502, std deviation of 23.09, which is less than 1\% of the mean).  This is well within our target consistency.
+
+When we analysed the power allocation by trace we saw an interesting development which was the higher power allocation for the longer scenarios when no additional load was on the machine, an in constrast, a more constant power allocation when 50\% additional load was running on the machine.  While unintuitive initially, this is exactly as expected and is an important energy usage insight for the software architect investigating the power characteristics of their software in production.  
+
+When no additional load is executing on the host, there is no other workload apart from our traces to allocate power consumption to.  In which case if the scenario takes longer, you would expect a higher energy allocation even with constant resource usage, as the host machine is consuming energy, even when not actively running our workload and if there is no other workload to allocate this "background" energy consumption to, then it will be allocated to our workload.  The graph shows that this is exactly what happens; when no other workload is executing on the machine, our longer scenarios (the "single-cpu-x50-pause" scenarios) are allocated more power than the shorter scenarios (the "single-cpu-x50" ones) even though they all consume very similar amounts of CPU time.
+
+In contrast, when there is additional workload on the machine, the energy allocated to each trace is much more even, within a maximum of 4\% variation from the mean (min 157, max 164, mean 160, std deviation of 2.66 which is 1.6\% of the mean).  This is within our target consistency and again suggests that this is a consistent energy allocation mechanism.
 
 
 
