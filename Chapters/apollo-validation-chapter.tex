@@ -21,7 +21,7 @@ Finally, an additional area of validation we wish to perform is to confirm that 
 TODO - explain the microservice app
 
 \subsection{The Test Software}
-TODO - explain how tests were run and results captured
+TODO - explain how tests were run and results captured including machine type, scripting, data capture and synthetic workload.
 
 \section{Validating Consistency}
 
@@ -62,7 +62,20 @@ We also wanted to understand how consistent the energy allocation per trace was 
 
 As can be seen, the energy allocation per CPU millisecond is slightly different between the three cases, with a consistent trend to increase slightly as the number of milliseconds of CPU time per request increases by an order of magnitude each time.  As can also be seen the standard deviation values are very small, indicating that the averages are representative of the data.
 
-When we analysed these values a little we noticed that the difference between the average for the 50 msec case and the 500 msec case was 0.0246, while the difference between the 500 msec case and the 5000 msec case was 0.0027.  So the difference in mean values differs by the same order of magnitude as the length of the workload in each case.  The length of the workload is inversely proportional to the number of service requests made, therefore we think the lower energy per millisecond for the short requests indicates the lower intensity of workload that the scenario places the server under.  As much of the time in this scenario will be waiting for network operations to receive or transmit data from and to the client, the intensity of the CPU operation will be lower and so the allocation algorithm results in a (slightly) lower amount of energy per CPU millisecond of work.
+When we analysed these values a little we noticed that the difference between the average for the 50 msec case and the 500 msec case was 0.0246, while the difference between the 500 msec case and the 5000 msec case was 0.0027.  So the difference in mean values differs by the same order of magnitude as the length of the workload in each case.  The length of the workload is inversely proportional to the number of service requests made, therefore we think the lower energy per millisecond for the short requests indicates the lower intensity of workload that the scenario places the server under.  As much of the time in this scenario will be waiting for network operations to receive or transmit data from and to the client, the intensity of the CPU operation will be lower and so the allocation algorithm results in a (slightly) lower amount of energy per CPU millisecond of work. [\textbf{TODO} - really?  Need to think this out in detail.]
+
+Our second test involved investigating how energy allocation was affected by a constant amount of CPU workload but in scenarios of different lengths.  To test this we ran repeatedly ran two scenarios, both of which contained the same amount of CPU workload (a trace that took 2,500 msec, run 50 times), with one scenario having pauses inserted into it, to cause the scenario to take longer to execute but consume no more CPU resource during the extended execution time.  In addition, for reasons which we explain below, we ran the first set of scenario tests with no additional load on the machine and the second set with synthetic workload consuming 50\% of the machine's CPU.  The results of this experiment are shown in the line graph in \fref{figure:validation-scenariolength}
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{Figures/validation-scenariolength}
+\caption{Energy Allocation Across Different Scenario Lengths}
+\label{figure:validation-scenariolength}
+\end{figure}
+
+This graph plots the CPU usage per trace (the top line) and the energy usage per trace (the bottom line) for sample executions of the scenarios.  As indicated by the dashed boxes annotating the graph, the first 6 executions were performed with no additional workload on the machine, the second 6 executions were performed with the machine having 50\% of its CPU capacity consumed by other synthetic workload.
+
+TODO 
 
 
 
