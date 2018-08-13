@@ -23,6 +23,10 @@ TODO - explain the microservice app
 \subsection{The Test Software}
 TODO - explain how tests were run and results captured including machine type, scripting, data capture and synthetic workload.
 
+\section{Validating Calculation}
+
+TODO
+
 \section{Validating Consistency}
 
 To validate consistency of energy allocation, our strategy is to run a known control workload under fixed host utilisation conditions (no other workload being the simplest case) and to run a range of other workloads that we know contain an equivalent amount of computational work but are structured differently.  The energy allocation should be the same for each case.
@@ -108,9 +112,7 @@ The fourth point on the graph, at 75\% of other utilisation, actually goes up sl
 
 Finally at the fifth point on the graph, with 100\% other utilisation, our workload is competing with existing workload to be scheduled for execution.  This results in our execution duration extending slightly (by 5\%), and our CPU utilisation percentage to drop slightly (to 23\%) with the result being a slight reduction in energy utilisation (to 167J).  This is the result of a relatively small increase in the host's energy utilisation (as it was already running close to 100\% utilisation at the previous sample) and there is now further workload to allocate the energy of the host across, so reducing our workload's allocation slightly.
 
-This testing was interesting to us because it showed the usefulness of investigating energy allocation using practical testing and a quantitative data-based allocation mechanism like Apollo.  It would be quite possible to make a simplistic assumption that fair energy allocation would keep falling linearly as load increased, but our tool can be used to provide a more sophisticated analysis that reveals how a complex interaction of a number of factors (including load, scenario length and host energy characteristics) can result in a correct allocation that is more complex.  This is a useful insight for the application architect as they investigate the energy characteristics of their application.
-
-\section{Validating Calculation}
+This phase of testing was an interesting process because it illustrated the usefulness of investigating energy allocation using practical testing and a quantitative data-based allocation mechanism like Apollo.  It would be quite possible to make a simplistic assumption that fair energy allocation would keep falling linearly as load increased, but our tool can be used to provide a more sophisticated analysis that reveals how a complex interaction of a number of factors (including load, scenario length and host energy characteristics) can result in a correct allocation that is more complex.  This is a useful insight for the application architect as they investigate the energy characteristics of their application.
 
 \section{Validating CPU as a Resource Usage Proxy}
 
