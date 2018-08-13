@@ -96,12 +96,19 @@ Another aspect of energy allocation is how a fixed workload is allocated energy 
 
 As with some of our other testing, the results initially look somewhat counter intuitive, but on further analysis are validation of consistent energy allocation by workload.
 
-The first three steps in the graph are fairly obvious.  The first scenario runs by itself and receives a fairly high energy allocation per trace (of 276J) because the traces are being allocated their own energy allocation and the underlying overhead of the host machine.  Then when the machine is 25\% busy with other workload the traces are allocated correspondingly less energy because the host overhead is being shared with the other workload on the machine.  This happens again as the other workload increases to 50\% but the drop in energy allocation is smaller because the increase in host energy is smaller, as it becomes more utilised, and our share of the CPU dropped less in absolute terms (from 96\% to 49\% for the first step and then from 49\% to 33\% for the step to 50\% utilisation).
+%  (Trace J at 25/50/75/100 prior load: 276, 183 [93], 164 [19], 169, 167)
 
-Beyond 50\% utilisation our energy allocation per trace actually doesn't fall much further and goes up slightly at 75\% machine utilisation.  At the 75\% point this is because our CPU utilisation percentage falls by 8\% from 33\% to 25\% but the host energy usage increases by slightly more in this step than the previous step (36\% increase rather than 32\% increase). [\textbf{TODO} - this needs better explained, maybe more numbers?]
+The first point in the graph shows our workload running on an otherwise idle host and it is allocated quite a large amount of energy per trace (of 276J) because the host is relatively inefficient at lower levels of utilisation and there is no other workload on the host to allocate its energy to.
 
-%  (Trace J: 276, 183 [93], 164 [19], 169, 167)
+The second point in the graph shows a sharp reduction in energy per trace (to 183J), which is caused by the host's utilisation now being about 50\% which is considerably more efficient than 25\% and the fact that the host's energy is being split between two roughly equivalent workloads.
 
+The third point on the graph shows a further reduction in energy per trace (to 164J), which is a considerably smaller reduction than the previous step.  This is due to our share of the machine workload falling less significantly than in the previous step (from 49\% to 33\% whereas the previous step was from 96\% to 49\%).
+
+The fourth point on the graph, at 75\% of other utilisation, actually goes up slightly (to 169J).  This is due to two factors.  Firstly, once again, our utilisation percentage drop decreases, this time from 33\% to 25\% (only 8\%) but secondly, the underlying machine becomes less efficient as utilisation moves beyond 75\% and so there is more energy to allocate between the different workload items.  This is an important insight for the application architect so that they consider the potentially non-linear energy consumption curve of the underlying host.
+
+Finally at the fifth point on the graph, with 100\% other utilisation, our workload is competing with existing workload to be scheduled for execution.  This results in our execution duration extending slightly (by 5\%), and our CPU utilisation percentage to drop slightly (to 23\%) with the result being a slight reduction in energy utilisation (to 167J) as the host's energy utilisation has only increased slightly since the previous level of load and there is now further workload to allocate the energy of the host across.
+
+This testing was interesting to us because it showed the usefulness of investigating energy allocation using practical testing and a quantitative data-based allocation mechanism like Apollo.  It would be quite possible to make a simplistic assumption that fair energy allocation would keep falling linearly as load increased, but our tool can be used to provide a more sophisticated analysis that reveals how a complex interaction of a number of factors (including load, scenario length and host energy characteristics) can result in a correct allocation that is more complex.  This is a useful insight for the application architect as they investigate the energy characteristics of their application.
 
 \section{Validating Calculation}
 
