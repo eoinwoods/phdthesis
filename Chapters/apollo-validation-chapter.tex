@@ -7,11 +7,11 @@ As described in \cref{chapter:implementation} we have implemented a proof-of-con
 
 In order to validate Apollo with realistic test cases, we need to define the kind of validation we are interested in achieving.  There are two main varieties of validation that we wish to achieve.
 
-Firstly we wish to validate the \emph{consistency} of Apollo's results across a range of scenarios, to ensure that energy is allocated consistently with respect to the workload in the execution scenarios and host utilisation levels that prevail during them.
+Firstly, we wish to validate the \emph{calculation correctness} of Apollo's results, by running the calculator in one or more controlled scenarios where we can also gather additional runtime statistics that allow a separate independent calculation of a fair energy consumption and manually perform these calculations and use them to check the correctness of Apollo's results in the same scenarios.
 
-Next, we need to validate the \emph{allocation} of Apollo's results when a specific application scenario is run on a host machine with different amounts of competing workload.  As the competing workload rises, the energy allocation to the application scenario should fall, in proportion to its use of the machine.
+We also need to validate the \emph{consistency} of Apollo's results across a range of scenarios, to ensure that energy is allocated consistently with respect to the workload in the execution scenarios and host utilisation levels that prevail during them.
 
-We also wish to validate the \emph{calculation correctness} of Apollo's results, by running the calculator in one or more controlled scenarios where we can also gather additional runtime statistics that allow a separate independent calculation of a fair energy consumption and manually perform these calculations and use them to check the correctness of Apollo's results in the same scenarios.
+Another important area of validation is the \emph{allocation} of Apollo's results when a specific application scenario is run on a host machine with different amounts of competing workload.  As the competing workload rises, the energy allocation to the application scenario should fall, in proportion to its use of the machine.
 
 Finally, an additional area of validation we wish to perform is to confirm that \emph{CPU is a valid proxy for overall resource usage} when performing energy allocation calculations.  For this validation we focus on how CPU usage varies for disk IO intensive workloads.
 
@@ -75,7 +75,77 @@ ORDER BY start_ts
 
 This allowed us to identify the spans making up the processing of the request and the IP addresses of the two application elements that handled the invocations as being \texttt{172.18.0.7} and \texttt{172.18.0.8}, which were the IP addresses of the Docker containers containing the microservices involved in handling the request.
 
+The next step was a simple lookup of the IP addresses in the Docker network configuration which resulted in the container IDs of the two Docker containers that our application elements ran within.  The short form IDs returned were \texttt{c42b3d3bf4b2} for the Gateway container and \texttt{b75d29577eb9} for the CPU intensive container.
 
+Having the container IDs allowed us to reliably identify the Linux process IDs of the Java virtual machines running our application elements.  By using the \texttt{ps} output we saved during the test execution, we could use the container IDs to find the Docker \texttt{docker-containerd-shim}  processes running the JVMs for our services, which were process 3278 for the CPU intensive service and 3436 for the Gateway service.
+
+Having the process IDs allowed us to inspect the \texttt{pidstat} output that we had collected during the test execution.   This utility captured CPU percentage usage statistics for our processes every second during the test period.
+
+For process 3278 (the CPU intensive service) we found that its average CPU consumption was 25.42\% with a very low standard deviation of 0.26 across the test set.
+
+For process 3436 (the Gateway) we found that its average CPU consumption was 0.3\% of the machine (although this did have a maximum of 0.75\% for short periods, leading to a standard deviation of 0.11 for the test set).
+
+We therefore decided to use 25.75\% as the container CPU usage during the test period.
+
+The next step in the process was to estimate the energy usage of the underlying host machine.  We collected \texttt{sar} and \texttt{mpstat} resource utilisation metrics for the machine during the test period to provide host CPU utilisation metrics.  The \texttt{sar} statistics were of less use as this utility collects statistics every minute and so we had a limited number of samples, however it appeared to indicate a total machine CPU usage of about 25\% during the test period.
+
+The \texttt{mpstat} statistics were more useful as they contained a metric measurement for CPU usage percentage per CPU every second during the test period.  When we analysed this data set we found that the machine's utilisation was a very constant 27\% right through the test period, apart from one second (10 seconds into the test) when it jumped to 75\% usage and then back down to 27\% (for reasons we weren't able to identify).
+
+The CPU usage percentage allowed us to estimate the energy consumption of the machine using a representative set of SPEC Power benchmark results for a similar server model.  The benchmark results were 102W at 20\% and 120W at 30\%.  Therefore interpolation resulted in the value $((120 - 102) \times (7/10)) + 102 = 12.6 + 102 = 114.6$.  That is, the machine's power consumption during the test period was about 114 J/second.
+
+Given that the test period was 126.30 seconds, this resulted in a power consumption value for the host machine of $126.30 \times 114 = 14473.98$J, which we rounded to 14474J.
+
+Given the host CPU usage, the CPU usage of our containers and the host power consumption we could now calculate the power allocation to our application trace.
+
+Given a test length of 126.3 seconds and a 4 CPU host machine this means a total possible CPU resource available of:
+
+\begin{equation}
+126.3 \times 4 = 505.2 ~\text{CPU seconds}
+\end{equation}
+
+Our test data indicates that the host was busy for 27\% of the time during the test execution, therefore our total host CPU time consumed during the test period was:
+
+\begin{equation}
+505.2 \times 0.27 = 136.40 ~\text{CPU seconds}
+\end{equation}
+
+Our application processes (containers) consumed 25.75\% of the host's CPU time during the test period therefore their CPU usage is calculated as:
+
+\begin{equation}
+136.40 \times 0.2575 = 130.09 ~\text{CPU seconds}
+\end{equation}
+
+Given our CPU usage and the host energy consumption we can then calculate the energy allocation to our application request as being:
+
+\begin{equation}
+130.09 / 136.40 \times 14474 = 13804\text{J}
+\end{equation}
+
+We then ran the Apollo proof of concept implementation on the test scenario data set to compare our results, which are shown in \tref{table:calculationresults}
+
+\begin{table}
+\centering
+\caption{Manual Calculation Compared to Apollo Calculation}
+\label{table:calculationresults}
+\footnotesize
+\begin{tabular}{|c|c|c|c|}
+\hline
+Value & Manual Calculation & Apollo Calculation & Difference \\
+\hline
+\hline
+Trace CPU msec       & 130090 & 124257 & 4.5\% \\
+Host CPU msec        & 136404 & 132891 & 2.5\% \\
+Host Energy J        & 14474  & 14213  & 1.8\% \\
+Application Energy J & 13804  & 13290  & 3.9\% \\
+\hline
+\end{tabular}
+\end{table}
+
+As can be seen from the results in the table, using a manual calculation technique that attempts to mirror the algorithm used in Apollo, while using different data sources for the critical resource utilisation metrics, has resulted in a very close match between the results, with the manual calculation of the energy allocation for the application request trace being within 4\% of the automated Apollo value.
+
+The difference in the results will be familiar to anyone who has been involved in performance testing, where repeatability of results is often very difficult to obtain (as evidenced by the subtle but constant inconsistencies in the numerical results from tools such as \texttt{sar}, \texttt{mpstat} and \texttt{pidstat}).  In our situation, as well as the normal difficulty of repeatability, we believe that most of the difference in these results is likely to be the result of Apollo using the finer grained Docker metrics, while the manual process relied on the coarser grained metrics from the standard system administration tools. 
+
+This result is well within our target tolerance for energy allocation results and so validates the Apollo proof of concept energy allocation implementation's accuracy.
 
 \section{Validating Consistency}
 
