@@ -25,7 +25,57 @@ TODO - explain how tests were run and results captured including machine type, s
 
 \section{Validating Calculation}
 
-TODO
+Our first point of validation is to ensure that the allocation calculation performed by Apollo can be reproduced by hand, following the algorithm presented in the previous chapter, with an acceptable level of consistency between the two approaches.
+
+We chose one of the simpler standard scenarios that we had used during the testing process, the \texttt{simple-cpu-x50} scenario, which calls the CPU intensive service 50 times.  We decided to use a scenario based on just two services, the Gateway service and the CPU intensive service, both running on a single machine.  This was to keep the manual calculation process tractable and avoid inconsistencies and mistakes complicating the process.  The Apollo calculation algorithm is simply a process of aggregating results from individual application elements and so we were confident that if the result of calculation for a small number of application services was correct then this would result in a correct calculation process for more complex cases that were simply aggregations of the lower level calculations.
+
+To perform the calculation process, we decided to use a different set of metrics data sources from the set used by Apollo, to validate the approach to data collection as well as the implementation of the algorithm.  The set of data that the calculations was based on was:
+
+
+\begin{itemize}
+	\item the \emph{Zipkin traces} from the scenario being studied, as there was no credible alternative to this data;
+	\item the \emph{Docker network configuration} for the Docker subsystem that the application elements were running within, to allow the IP address to container mapping to be retrieved, and again this was the only source of this information;
+	\item a set of \texttt{pidstat(1)} metrics for the application, showing the CPU utilisation every second for the application processes;
+	\item a set of \texttt{mpstat(1)} metrics for the host machine which allowed us to assess how much CPU was being used by the host during the duration of the test trace;
+	\item the \emph{SPECPower benchmark results} for a respresentative server model, similar to the host in use; and
+	\item the output of the \texttt{ps(1)} command from the host machine with all of the application elements running, to allow the process IDs for the application elements to be retrieved.
+\end{itemize}
+
+The important point about the data sources we used for this calculation is that the key data sources for resource utilisation metrics were sourced from different mechanisms than those used by Apollo, to allow a broader degree of validation than a simple recalculation using identical data would have allowed.  While Apollo gets its resource utilisation metrics from the Docker subsystem's statistics mechanism (gathered via the Telegraf metrics server), for our calculations we used the metrics from mpstat(1) and pidstat(1) as explained above.
+
+The first step was to inspect the Zipkin trace data to allow the start and end points of the request to be identified.  The Zipkin trace data had been saved from the execution of the test scenario and was loaded into a MySQL database to allow it to be queried easily.
+
+The root traces were extracted from the Zipkin database, by selecting all of those rows in \texttt{zipkin\_spans} where the \texttt{trace\_id} column was the same as the \texttt{span\_id} column:
+
+\lstset{language=SQL}
+\begin{lstlisting}
+select * from zipkin_spans where id=trace_id
+\end{lstlisting}
+
+
+From the row returned, we extracted a trace ID of \texttt{5896569591426873811}, a start time of \texttt{1534185668229000} (nano seconds since the "Epoch", equating to 20180813T184108.229Z), a duration of \texttt{126292740} (nano seconds - 126.292 seconds)	which imply an end time of \texttt{1534185794521740} (being equivalent to 20180813T184314.522Z).
+
+Using the trace ID we could then run a more complex query to extract the trace's spans and their attributes from the Zipkin database:
+
+\lstset{language=SQL}
+\begin{lstlisting}
+SELECT hex(s.trace_id) as trace_id, hex(s.id) as span_id,
+       hex(s.parent_id) as parent_id,
+       start_ts as start_time_usec, 
+       start_ts+duration as end_time_usec,
+       inet_ntoa(endpoint_ipv4 \& conv("ffffffff", 16, 10)) as ipv4_address,
+       endpoint_port
+FROM zipkin_spans s, zipkin_annotations a
+WHERE s.trace_id = 5896569591426873811
+AND s.trace_id = a.trace_id
+AND s.id = a.span_id
+AND a_key = 'sr'
+ORDER BY start_ts
+\end{lstlisting}
+
+This allowed us to identify the spans making up the processing of the request and the IP addresses of the two application elements that handled the invocations as being \texttt{172.18.0.7} and \texttt{172.18.0.8}, which were the IP addresses of the Docker containers containing the microservices involved in handling the request.
+
+
 
 \section{Validating Consistency}
 
@@ -43,30 +93,6 @@ Our first question was whether the energy allocations per request were consisten
 \end{figure}
 
 The graph shows the three sets of scenarios (short, medium and long) clearly clustering very closely, showing that the energy allocation per trace is extremely consistent across the three sets, suggesting that the allocation calculation is working consistently as designed.  More precisely, the correlation coeficient between the two sets of values is 0.999, indicating a very high degree of correlation between CPU consumed and energy allocation performed.
-
-We also wanted to understand how consistent the energy allocation per trace was across the three service request sets and to do this we calculated the CPU to energy ratio as $CPU msec / Energy J$ for each of the results we had from this test set.  The results of this calculation are presented in \tref{table:energypermsec}.
-
-\begin{table}
-\centering
-\caption{Energy Allocation per Millisecond}
-\label{table:energypermsec}
-\footnotesize
-\begin{tabular}{|l|r|r|}
-\hline
-\textbf{Request Length} & \textbf{Average J/msec}  & \textbf{Stddev J/msec} \\
-\hline
-50 msec & 0.0848 & 0.0026 \\
-\hline
-500 msec & 0.1094 & 0.0005 \\
-\hline
-5000 msec & 0.1121 & 0.0017 \\
-\hline
-\end{tabular}
-\end{table} 
-
-As can be seen, the energy allocation per CPU millisecond is slightly different between the three cases, with a consistent trend to increase slightly as the number of milliseconds of CPU time per request increases by an order of magnitude each time.  As can also be seen the standard deviation values are very small, indicating that the averages are representative of the data.
-
-When we analysed these values a little we noticed that the difference between the average for the 50 msec case and the 500 msec case was 0.0246, while the difference between the 500 msec case and the 5000 msec case was 0.0027.  So the difference in mean values differs by the same order of magnitude as the length of the workload in each case.  The length of the workload is inversely proportional to the number of service requests made, therefore we think the lower energy per millisecond for the short requests indicates the lower intensity of workload that the scenario places the server under.  As much of the time in this scenario will be waiting for network operations to receive or transmit data from and to the client, the intensity of the CPU operation will be lower and so the allocation algorithm results in a (slightly) lower amount of energy per CPU millisecond of work. [\textbf{TODO} - really?  Need to think this out in detail.]
 
 Our second test involved investigating how energy allocation was affected by a constant amount of CPU workload but in scenarios of different lengths.  To test this we ran repeatedly ran two scenarios, both of which contained the same amount of CPU workload (a trace that took 2,500 msec, run 50 times), with one scenario having pauses inserted into it, to cause the scenario to take longer to execute but consume no more CPU resource during the extended execution time.  In addition, for reasons which we explain below, we ran the first set of scenario tests with no additional load on the machine and the second set with synthetic workload consuming 50\% of the machine's CPU.  The results of this experiment are shown in the line graph in \fref{figure:validation-scenariolength}
 

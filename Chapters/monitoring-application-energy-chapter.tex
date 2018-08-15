@@ -196,7 +196,7 @@ Trace :: (tid, st, et, S)
 \end{equation}
 where $tid$ is a unique identifier for the trace record, $st$ is the start time of the trace, $et$ is the end time of the trace and $S$ is the set of spans that the trace contains.  
 
-A span is a single invocation of an internal system element and so every trace contains at least one span (i.e. $\forall t : Trace \cdot t.S \neq \emptyset$) but most traces will contain a number of spans, related to each other, as illustrated in Figure \ref{figure:span}.  A span can be considered to be a tuple of the form
+A span is a single invocation of an internal system element and so every trace contains at least one span (i.e. $\forall t : Trace \cdot t.S \neq \emptyset$) but most traces will contain a number of spans, related to each other, as illustrated in \fref{figure:span}.  A span can be considered to be a tuple of the form
 \begin{equation}
 Span :: (tid, sid, st, et, a, pid)
 \end{equation}
