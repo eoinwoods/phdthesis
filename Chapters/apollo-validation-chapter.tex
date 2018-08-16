@@ -159,7 +159,7 @@ Our first question was whether the energy allocations per request were consisten
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{Figures/validation-energycpu}
+\includegraphics[width=0.75\textwidth]{Figures/validation-energycpu}
 \caption{Energy Allocation per Request for Small, Medium and Large Services}
 \label{figure:validation-energycpu}
 \end{figure}
@@ -170,7 +170,7 @@ Our second test involved investigating how energy allocation was affected by a c
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{Figures/validation-scenariolength}
+\includegraphics[width=0.75\textwidth]{Figures/validation-scenariolength}
 \caption{Energy Allocation Across Different Scenario Lengths}
 \label{figure:validation-scenariolength}
 \end{figure}
@@ -191,7 +191,7 @@ Another aspect of energy allocation is how a fixed workload is allocated energy 
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{Figures/validation-machineload}
+\includegraphics[width=0.75\textwidth]{Figures/validation-machineload}
 \caption{Energy Allocation Under Different Host Load Conditions}
 \label{figure:validation-machineload}
 \end{figure}
@@ -214,19 +214,40 @@ This phase of testing was an interesting process because it illustrated the usef
 
 \section{Validating CPU as a Resource Usage Proxy}
 
-When we explained how the energy allocation process for an application's elements was to work, in \cref{chapter:monitoring}, part of the design of the allocation approach was to make the simplifying assumption that CPU utilisation is a good proxy for IO activity (\sref{sec:utilisingresourceusage}).  This allowed the the approach could ignore IO statistics and rely on CPU usage to allocate energy fairly.  While this assumption is based on previous research work, we were interested to test this assumption for ourselves by comparing IO activity with CPU utilisation.
+When we explained how the energy allocation process for an application's elements was to work, in \cref{chapter:monitoring}, part of the design of the allocation approach was to make the simplifying assumption that CPU utilisation is a good proxy for IO activity (\sref{sec:utilisingresourceusage}).  This allowed the the approach could ignore IO statistics and rely on CPU usage to allocate energy fairly.  While this assumption is based on previous research work \cite{bashroush2018_hardwarerefresh} , we were interested to test this assumption for ourselves by comparing IO activity with CPU utilisation.
 
-To test the assumption that CPU utilisation acts as a good proxy for IO activity, we wanted to find whether the two values correlated well during an application workload.  To test this we ran IO intensive workloads of varying known sizes and measured the CPU utilisation of each one.  The results of this exercise are shown in the line graph in \fref{figure:validation-traceenergydatasize}.
+To test the assumption that CPU utilisation acts as a good proxy for IO activity, we wanted to find whether the two values correlated well during an application workload.  To test this we ran IO intensive workloads of varying known sizes and measured the CPU utilisation of each one.  The results of this exercise are shown in the line graph in \fref{figure:validation-traceenergydatasize}.  The x-axis of this graph shows the test scenarios, the left-hand y-axis is the amount of CPU measured for each scenario, the right-hand y-axis is the amount of energy allocated to each scenario.
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{Figures/validation-traceenergydatasize}
-\caption{CPU Utilisation and Energy Allocation by Data Size}
+\includegraphics[width=0.75\textwidth]{Figures/validation-traceenergydatasize}
+\caption{CPU Utilisation and Energy Allocation Scenarios}
 \label{figure:validation-traceenergydatasize}
 \end{figure}
 
+The graph shows the results of running a number of data-intensive application scenarios, one group that called a service to write 100MB of data to file 4 times, one that called a service to write 500MB of data to file 4 times, and one that called a service to write 1GB of data to file 4 times.  Hence the total data written by the first group of scenarios was 400MB, the second group 2GB and the third 4GB.
 
-sec:
+It is worth nothing immediately that we have one outlier value, the first 100MB data test case, that used dramatically more CPU than the later test cases (which is why we have more of those than the larger tests as we ran several more to check that this was truely a single outlier).  This was the first IO test run on the machine and so we believe that it simply suffered more CPU usage due to initialisation of kernel data paths and probably encountered more IO Wait CPU time too, as it was the first process to write a significant amount of data to the device concerned.  We eliminated this single test scenario from our consideration of CPU and IO correlation.
+
+When we plot the CPU usage and the Apollo energy allocation for the other test scenarios on the graph, we can clearly see that CPU usage is directly related to the amount of data written and the correlation coefficient between the values for data written and CPU utilised is 0.9986, indicating that CPU is a good proxy for the amount of data written by a process.
+
+For completeness we also plotted the data-size of each scenario compared to the energy allocated by Apollo to each, which is shown in \fref{figure:validation-energybydatasize}.  
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{Figures/validation-energybydatasize}
+\caption{Energy Allocation by Data Size}
+\label{figure:validation-energybydatasize}
+\end{figure}
+
+This graph looks similar to \fref{figure:validation-traceenergydatasize} but is illustrating a slightly different point in that the x-axis (test scenarios) and right-hand y-axis (energy per trace) as the same, the left-hand y-axis shows the amount of data written by each scenario, rather than the CPU usage.  Hence this graph validates that the energy allocation for these data-intensive services correlates well with the amount of data each is writing.  
+
+The graph shows a high degree of correlation between these variables, albeit with some variation between some related test cases, and when we calculated the correlation coefficient, it was found to be 0.996, again showing a very high degree of correlation between energy allocation and the amount of data written by the application elements within the scenario.
+
+The combination of these two test results shows that we were correct in our assumption that CPU is a good proxy for other resource utilisation by a process, particularly file IO.
+
+\textit{TODO - re-run the standard volume tests and add them here?}
 
 \section{Summary}
+
 
