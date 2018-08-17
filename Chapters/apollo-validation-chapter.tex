@@ -244,9 +244,7 @@ To test the assumption that CPU utilisation acts as a good proxy for IO activity
 
 The graph shows the results of running a number of data-intensive application scenarios, one group that called a service to write 100MB of data to file 4 times, one that called a service to write 500MB of data to file 4 times, and one that called a service to write 1GB of data to file 4 times.  Hence the total data written by the first group of scenarios was 400MB, the second group 2GB and the third 4GB.
 
-It is worth nothing immediately that we have one outlier value, the first 100MB data test case, that used dramatically more CPU than the later test cases (which is why we have more of those than the larger tests as we ran several more to check that this was truely a single outlier).  This was the first IO test run on the machine and so we believe that it simply suffered more CPU usage due to initialisation of kernel data paths and probably encountered more IO Wait CPU time too, as it was the first process to write a significant amount of data to the device concerned.  We eliminated this single test scenario from our consideration of CPU and IO correlation.
-
-When we plot the CPU usage and the Apollo energy allocation for the other test scenarios on the graph, we can clearly see that CPU usage is directly related to the amount of data written and the correlation coefficient between the values for data written and CPU utilised is 0.9986, indicating that CPU is a good proxy for the amount of data written by a process.
+When we plot the CPU usage and the Apollo energy allocation for the other test scenarios on the graph, we can clearly see that CPU usage is directly related to the amount of data written and the correlation coefficient between the values for data written and CPU utilised is 0.9965, indicating that CPU is a good proxy for the amount of data written by a process.
 
 For completeness we also plotted the data-size of each scenario compared to the energy allocated by Apollo to each, which is shown in \fref{figure:validation-energybydatasize}.  
 
@@ -259,7 +257,7 @@ For completeness we also plotted the data-size of each scenario compared to the 
 
 This graph looks similar to \fref{figure:validation-traceenergydatasize} but is illustrating a slightly different point in that while the x-axis (test scenarios) and right-hand y-axis (energy per trace) are the same, the left-hand y-axis shows the amount of data written by each scenario, rather than the CPU usage.  This can be seen in the flat horizontal sections of the graph for each type of scenario.  
 
-The strong grouping of points around scenarios shows that this graph validates that the energy allocation for these data-intensive services correlates well with the amount of data each is writing, albeit with some variation in some test cases. When we calculated the correlation coefficient between energy allocation and data written, it was found to be 0.996, again showing a very high degree of correlation between energy allocation and the amount of data written by the application elements within the scenario.
+The strong grouping of points around scenarios shows that this graph validates that the energy allocation for these data-intensive services correlates well with the amount of data each is writing, albeit with some variation in some test cases. When we calculated the correlation coefficient between energy allocation and data written, it was found to be 0.9967, again showing a very high degree of correlation between energy allocation and the amount of data written by the application elements within the scenario.
 
 The combination of these two test results shows that we were correct in our assumption that CPU is a good proxy for other resource utilisation by a process, particularly file IO.
 
