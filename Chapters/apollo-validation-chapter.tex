@@ -1,6 +1,15 @@
 \chapter{Validation of Application Energy Monitoring}
 \label{chapter:validation}
 
+%%
+%% TODO
+%%
+%% Possible additional testing:
+%%   - Run multiple service type tests (e.g. mixed data and CPU)
+%%   - Run multiple service instance tests (e.g. two CPU Hogs)
+%%   - Run multiple machine tests
+%%
+
 \section{Introduction}
 
 As described in \cref{chapter:implementation} we have implemented a proof-of-concept version of the Apollo Energy Allocation system, to prove the usefulness of our approach for allocating the energy consumed by underlying host systems to individual application requests executing on them.  The software was tested during development to ensure correctness with respect to expected results through unit and integration tests, but now needs to be validated by using it in realistic test cases.  This process is described in this chapter.
@@ -37,7 +46,30 @@ We therefore decided to create a simple application, specifically designed to al
  Once developed, and unit and integration tested, the services were packaged into Docker containers to allow easy versioning, deployment and monitoring via the Docker runtime system, which was required by our proof of concept version of Apollo.
 
 \subsection{The Test Software}
-TODO - explain how tests were run and results captured including machine type, scripting, data capture and synthetic workload.
+
+In order to reliably run a large number of validation tests for Apollo, the process needed to be automated so that the execution of the tests and collection of the results was standardised, efficient and reliable.  This involved a number of different types of automation and tools.
+
+We started with a Linux server machine as the test environment.  The specification of the machine and the specific version of Linux are not very important, but we selected a 4 CPU machine with Intel Xeon 2.3GHz CPUs, 16GB of memory and 50GB of SSD storage running Ubuntu 16.4.04, one of the Ubuntu stable, long term support releases.  This is a reasonably large machine, but we selected this specification as it is representative of the sort of mid-range server class machine that forms the backbone of the server fleet of many large organisations today.  Microservice systems often utilise many smaller machines, but we quickly realised that while the Apollo system runs equally well on many smaller machines (due to the features of te open source tools it uses) consistency, repeatability and control were going to be reduced when using a number of hosts.  Therefore it was decided to do most of the testing using a single host machine that had sufficient capacity to run all of our services without resource contention.
+
+The \emph{machine configuration} was automated using the open source Ansible system configuration tool, with a number of custom configuration files (or "playbooks" as they are known in the Ansible ecosystem) and some custom shell scrips defining the basic system configuration needed for the test environment, including updating the operating system and installing security patches, creating users and installing public keys, installing basic tools like Python and Git, installing Docker, and setting up some basic security mechanisms.
+
+Once the machine configuration was complete, \emph{application configuration} and \emph{service configuration} were both automated using the Docker Compose tool, which is part of the Docker toolset.  Docker Compose allows a group of cooperating services to be defined in terms of the Docker container images they utilise, the specific configuration that each service applies to the base image and the dependencies between the services (such as one service needing to call another).  We defined a single Docker Compose configuration that included the application services and the data collection services we needed to provide the data for Apollo (Zipkin, MySQL, Telegraf and InfluxDB as discussed in \sref{section:resusageofappworkload}).  A service configuration is defined as a YAML text file.  This approach allowed a simple operating system script to be used to call Docker Compose with this configuration to reliably start or stop all of the services via a single command.
+
+The process of \emph{running tests and collecting outputs} was automated using a range of operating system utilities and custom shell scripts.  The process can run one or more test scenarios, which were defined in the configuration of the Gateway Service as explained in the previous section.  The process of running a test scenario involved:
+\begin{itemize}
+	\item Clearing the MySQL and InfluxDB metrics databases so that the results of the test could easily be exported to files.
+	\item Starting the \texttt{mpstat} and \texttt{pidstat} operating system utilities as "background" processes, logging their outputs to files, so that operating system and service process resource utilisation could be analysed after the test had executed.
+	\item Invoking the Gateway Service to run the requested scenario (and in turn it would call the other services as the scenario definition defined).
+	\item Stopping the operating system utilities cleanly to terminate resource utilisation statistics collection at a defined point.
+	\item Exporting the execution traces, host and application resource utilisation metrics and Docker network metadata from the MySQL and InfluxDB databases and Docker, into files that could be used to re-populate databases at a later point in time for Apollo to use.
+	\item Exporting the host level resource utilisation statistics from the \texttt{sar} utility into a text file to allow host level resource utilisation to be analysed after the test had executed.
+	\item Gathering all of the outputs of the test into a \texttt{tar} archive file for easy storage and transfer.
+\end{itemize}
+
+When a particular test scenario needed competing workload on the host machine, the \texttt{openssl} package's \texttt{speed} command was used to generate load on one or more of the host's CPUs.  This was a scripted process, invoked manually before test cases that required predictable competing workload on the server host.
+
+Once test cases were available, the output archive data files were transferred to local machines and a scripted process to \emph{run Apollo on test scenario output} was executed. This cleared local MySQL and InfluxDB database of their data, loaded the trace and resource utilisation data from the scenario into these databases, unpacked the other data files from the scenario archive, and ran Apollo on these data sets.  The output of the Apollo calculator was then inspected to analyse the characteristics of the scenario and the energy allocation that it had been allotted.
+
 
 \section{Validating Calculation}
 \label{sec:validatingcalculation}
@@ -259,9 +291,18 @@ This graph looks similar to \fref{figure:validation-traceenergydatasize} but is 
 
 The strong grouping of points around scenarios shows that this graph validates that the energy allocation for these data-intensive services correlates well with the amount of data each is writing, albeit with some variation in some test cases. When we calculated the correlation coefficient between energy allocation and data written, it was found to be 0.9967, again showing a very high degree of correlation between energy allocation and the amount of data written by the application elements within the scenario.
 
-The combination of these two test results shows that we were correct in our assumption that CPU is a good proxy for other resource utilisation by a process, particularly file IO.
+Finally, to provide some additional validation of the relationship of IO workload to CPU usage independent of Apollo, we performed some detailed manual tests, calling the microservice directly and measuring CPU usage before and after service invocations for different amounts of IO.  The CPU usage was read directly from the \texttt{/proc/PID/stat} operating system statistics.
 
-\textit{TODO - re-run the standard volume tests and add them here?}
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{Figures/validation-cpubydatasize}
+\caption{Energy Allocation by Data Size}
+\label{figure:validation-cpubydatasize}
+\end{figure}
+
+The result of these manual tests is shown in the scatter plot and trend line shown in \fref{figure:validation-cpubydatasize}.  The y-axis shows the amount of CPU used by the service per request, the x-axis the amount of data written by each request and each point on the graph is a single service invocation.  As the graph shows there is a strong correlation between the amount of data written and the CPU consumed for the service call and when we calculated the correlation coefficient, it was found to be 0.9998, confirming this finding.  By using the difference in data size and CPU utilisation between samples, we were also able to calculate that 1 MB of file IO write activity appears to require approximately 2ms of CPU time on our test machine.
+
+The combination of these test results shows that we were correct in our assumption that CPU is a good proxy for other resource utilisation by a process.
 
 \section{Summary}
 
@@ -286,5 +327,5 @@ The next step was to validate \textit{Allocation}, as described in \sref{section
 
 Finally, we investigated whether \textit{CPU usage is a good proxy for resource usage} for an application trace.  We were aware of previous research results suggesting that this was the case, but we decided to investigate it empirically in our specific situation too.  We focused on file IO during this part of the investigation, given its very large contribution to energy consumption [REF], and we ran a number of tests to investigate its relationship to CPU usage.  These tests confirmed that CPU usage is a very good proxy for file IO usage too, with a correlation coefficient greater than 0.9 for the two values.
 
-In summary then, we have investigated four different aspects of the correctness and utility of the Apollo Energy Allocation System's proof-of-concept implementation of our energy allocation approach for application-level energy monitoring.  All four of the testing exercises has confirmed a different aspect of the correctness of the implementation.  Therefore, we conclude that the proof-of-concept implementation is sufficently consistent and correct to validate the application energy allocation approach that we propose.
+In summary we have investigated four different aspects of the correctness and utility of the Apollo Energy Allocation System's proof-of-concept implementation of our energy allocation approach for application-level energy monitoring.  All four of the testing exercises confirmed a different aspect of the correctness of the implementation.  Therefore, we conclude that the proof-of-concept implementation is sufficently consistent and correct to validate the application energy allocation approach that we propose.
 
