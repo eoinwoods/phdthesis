@@ -24,7 +24,9 @@ Second, to achieve the next order of magnitude in energy efficiency, architects 
 
 Finally, end users rarely require or worry about energy efficiency. This is partly because of split incentives. System operators such as administrators or datacenter managers don't pay for the energy bill directly - the budget for energy tends to be included in a separate facilities budget owned by a different manager. This means that they would see little or no direct personal benefit from any energy savings that they achieve. However another important factor is that, given current energy prices, information and communications technology energy costs constitute less than 3 percent of a typical organization's budget. So, an organisation may not view pursuing savings in this area a priority, if there are larger costs to target. Exacerbating this problem is the lack of benchmarks, metrics, and reliable data that would allow realistic comparisons of different energy efficiency opportunities and their returns.
 
-\textbf{TODO} - reference the "What Software Architects Think" section from the Data Centre Energy Demand chapter.  See if I can write more about that.
+A previous survey attempted to understand architects' perspectives on energy efficiency [REF] and surveyed 12 representative, experienced architects from various organization types. They were asked whether they had encountered energy efficiency as an architectural concern in the previous five years and whether they believed that they had the right tools to address energy related challenges. The survey also asked whether the participants believed that energy would be an important architectural concern over the next five years.
+
+The survey, while small, did include participants from a number of relevant sectors including 7 from technology consultancies, 1 from an Internet company, 2 from banking and finance and 2 from other instrustries.  Of these respondents, most of them (83\%) hadn't had to deal explicitly with energy concerns during the previous 5 years although interestingly 66\% of them thought that energy was an important concern that they would need do deal with over the next 5 years.  Given the state of the art, predictably, only 25\% of the respondents thought that they had the right tools to deal with energy as an architectural concern.  These findings are consistent with our industrial experience, where energy is rarely discussed as an architectural concern, when it is discussed it is usually seen as a hardware and data centre concern, and when application architects are concerned with it, they lack the methods and tools to allow them to understand and compare the energy implications of their architectural decisions.
 
 \section{State of the Art}
 
@@ -56,13 +58,36 @@ We now examine these principles in more detail.
 
 Energy efficiency must be measured in a way that system stakeholders can understand. Ensuring that the metrics are meaningful is necessary to convince senior management to sponsor optimization projects. Ultimately, suitable metrics can help achieve holistic system tuning and drive revenue and cost optimization.
 
-\subsection{Identifying Sources of Waste}
+- Tendency to view energy as "technical concern" so you never get attention from decision makers
+
+- Energy needs to be seen as a cost for the business transactions
+
+- Stakeholders care in different ways (acquirers, assessors, systems administrators, end users but only for , developers \& architects but only if transparent and has some cost to them - e.g. energy "budget") and the organisational view needs to be integrated to get a full picture (e.g. administrators don't pay for energy)
+
+- Energy has a number of organisational impacts including ethical, reputational, environmental, cost, agility (do more with less); move to cloud focuses this more on ethical, environmental and cost.
+
+- If energy efficiency is considered through organisational impact rather than as a technical concern or just a general overhead, we'll never improve.  We need to make organisational impact clear and this involves transparency of usage, impact and cost in the broad sense.  This needs to be translated for different stakeholder groups. 
+
+\subsection{Energy as a System Level Concern}
+
+- Current energy approaches tend to be at micro level (code procedure) or macro level (data centre) [mentioned earlier somewhere].  Neither of these is useful to improving application energy efficiency.  Micro level is too detailed for an architect to use at any scale or to have a big impact on a system as many components combine for a scenario and it's not clear which of the micro-level improvements have the biggest impact at system level.  Macro level also doesn't help as the only metrics available are maximums, minimums and averages on sections of the infrastructure estate (at best) and the application architect can't see how their decisions make a difference.
+
+- Correct level to have an impact on systems is to consider the application as the system and then to analyse usage patterns (scenarios) rather than individual components.  Scenarios are how systems are used so understanding their energy characteristics reveals the applications real runtime energy characteristics.
+
+- Once scenarios are understood, then impact can be understodd allowing effort to be focused on where it will be most effective.
 
 Focus effort where it will be the most effective. For example, redundancy is a commonly overlooked source of energy consumption. To support resilience, redundancy is usually applied at all levels, including facilities, hardware, and software. Without system-level evaluation of resilience requirements, redundancy might be applied too generously. So, matching redundancy to actual requirements is a huge opportunity to achieve energy savings that would be difficult with local optimizations.
+
 
 \subsection{Employing Cross-Disciplinary Teams}
 
 Energy optimization requires design work across traditional design boundaries. For example, optimizing the design of resilience requires collaboration among infrastructure engineering, application development, and business teams. Without such collective efforts, improvements will be restricted to local optimizations, which often miss the bigger opportunities for savings.
+
+- Related problem to the micro/macro problem is the "not my problem" situation where it's always someone else's problem - in production it's an "inefficent application", from the application perspective it's "ineffcient infrastructure with arbitary overheads".
+
+- Information needed to address energy concerns is often scattered over organisational silos, with hardware energy consumption in one place, operating system counters in another, application tracing and monitoring somewhere else again, and data centre efficiency and overheads being yet another group.
+
+- Skills needed to understand an address energy concerns also tend to be scattered over different teams as does the authority needed to make meaningful change and effectively evaluate the impact of a change, as this will be at multiple levels of abstraction and ranges of authority.
 
 \section{Case Study: Online Auction Site}
 
