@@ -1,0 +1,164 @@
+\chapter{Architectural Description Languages} \label{appendix:adl-list}
+In this appendix, we list the characteristics of all of the architectural description languages that met our inclusion criteria for the literature review described in \sref{sec:adl-lit-review}.
+\begin{landscape}
+\setstretch{1.0}
+\footnotesize
+\begin{center}
+\begin{longtable}{|c|p{6cm}|p{3cm}|c|p{3cm}|p{2cm}|c|} 
+\caption{General Characteristics of the ADLs} \\
+\hline
+\textbf{ADL} & \textbf{Description} & \textbf{Institutions} & \textbf{Year} & \textbf{Domain} & \textbf{Application} & \textbf{Reference} \endhead
+\hline
+AADL & An architectural description language with industrial roots, having come from work in the avionics industry based on key concepts from MetaH and ACME.  It is a rich ADL targeted at embedded systems, supporting a range of architectural views and having good tool support available.  It has been standardised by the Society of Automotive Engineers (SAE). & Over 20 industrial and academic organisations & 2006 &  Embedded Systems & Industrial Projects & \cite{feiler2006-aadl} \\
+\hline
+ABC/ADL & Developed with the aim of improving the link to implementation from the architectural description and as part of this, providing good support for composition.  It focuses on the functional structure of a system and prototype tools have been developed for it. & Peking University, Beijing, China & 2002 & General & Experiments & \cite{mei2002-abcadl} \\
+\hline
+AC2-ADL & It is an aspect-oriented ADL that allows aspects on both components and connectors to be integrated into the architectural description. & Wuhan University Wuhan, China; University of California Irvine, USA & 2008 & General (AO) & Examples & \cite{jing2008-ac2adl} \\
+\hline
+ACDL & An ADL that represents the centralized-mode architectural connection in which all components are linked by a single connector. The connectors described in ACDL are structurally flexible in the sense that protocols implemented in them have no restriction on the numbers of attached same-type components. & University of Technology, Sydney; Tsinghua University, Beijing, China & 2010 & General & Examples & \cite{su2010-acdl} \\
+
+\hline
+ACME & Developed primarily as a mechanism for the interchange of architectural information and as such is extremely flexible, intended as a base for more specific ADLs rather than being used directly. & Carnegie-Mellon University, USA & 1997 &	General & Case Studies & \cite{garlan1997-acme} \\
+
+\hline
+ADLARS & Developed with the aim of creating an ADL with first class support for embedded systems product lines.  It supports multiple views of the system and variation points in the architecture. & Queens University Belfast, UK & 2005 & Embedded Systems, Software Product Lines & Experiments & \cite{bashroush2005-adlars} \\
+
+\hline
+ADML & The primary focus of ADML is dynamic behaviour rather than structure and it is based on a dynamic description logic called DDL(SHON(D)). & Four research groups in Beijing, China & 2012 & Concurrent and Distributed Systems & Examples & \cite{wang2012-adml} \\
+\hline
+
+Aesop & Aesop was developed to allow the description of architectural styles, rather than just architectures.  Aesop is a tool and the language that it implements, which allows style-specific architectural tools to be created. & Carnegie-Mellon University, USA & 1994 & General (Styles) & Experiments & \cite{garlan1994-aesop} \\
+\hline
+
+ALI & Developed with the aim of producing an industrially relevant language, which would be usable for product lines as well as individual systems.  It supports first class components, connectors and configuration but also includes explicit features for variation and reuse. & Queens University Belfast, UK & 2008 & General & Examples & \cite{bashroush2008-ali} \\
+\hline
+
+AO-ADL & An aspect-oriented ADL is a descendent of DAOP-ADL.  It allows aspects to be used as first class architectural constructs, in this case to assist in isolating parts of the system that address cross-cutting concerns (such as security).	 & University of Malaga, Spain & 2011 & General & Research Projects & \cite{pinto2003-daopadl} \\
+\hline
+Archface & A component and connector based language.  It aims to bridge the gap between architectural description and code and does this by compiling the ADL into partially complete AspectJ code for the developer to complete. & Kyushu Institute of Technology and University of Tokyo, Japan & 2010 & General & Examples & \cite{ubayashi2010-archface} \\
+
+\hline
+Aspectual-ACME & An extension to the ACME language discussed above.  It adds aspect support to the language by extending ACME's connector element type. & Universities of Lancaster (UK), Bahia, Rio Grande do Norte and PCU of Rio de Janeiro (Brazil) & 2006 & Aspect-Oriented & Experiments & \cite{garcia2006-aspectualacme} \\
+
+\hline
+Backbone & An ADL developed with the concept of "resemblance" that provides a  modelling construct that allows an inheritance-like concept to be applied to components at all levels, providing uniform reuse and evolution support. & Imperial College, UK & 2006 & General & Examples & \cite{mcveigh2006-backbone} \\
+
+\hline
+Breeze/ADL & Breeze provides a means of describing a component and connector structure by means of an XML encoding of a graph formalism. & Shanghai Jiao Tong University, Shanghai, China & 2013 & General & Experiments & \cite{li2013-breeze}] \\
+
+\hline
+byADL & byADL's name is a contraction of "Build Your ADL" because it was created based on the premise that it isn't possible to create an all-purpose ADL and so it is better to create an extensible base upon which domain specific ADLs can be created. It has formal underpinnings and semantics and uses model driven development (MDD) technology to automatically generate software to manage and transform ADL descriptions. & Universita dell'Aquila, Italy & 2010 & General & Case Studies & \cite{ruscio2010-byadl} \\
+
+\hline
+C2SADEL & It was created to simplify the definition of architectures following the Chiron-2 ("C2") style. The language is a more sophisticated and complete ADL for the style including software tool support for it. & University of California at Irvine, USA & 1999 & Concurrent distributed systems & Experiments & \cite{medvidovic1999-c2sadel} \\
+
+\hline
+C3 & An architecture-centric approach that gives a new structure for connectors in which attachments are encapsulated within the definition of connectors. It defines and manipulates configurations as first classes entities. Also, a description of architectures from two different views, a model architecture view (logical architecture) created by the architect and an application architecture view (physical architecture instances of the logical architecture) generated automatically which serves as support to maintain the consistency and the evolution of the application architectures.	 & University of Nantes, France and University Center of Souk Ahras, Algeria& 2009 & General & Examples & \cite{amirat2009-c3} \\
+
+\hline
+CBabel & An ADL developed to support the description applications that are implemented using the concurrent CR-RIO framework. It was developed at Brazilian universities and is a formal ADL, focusing on correctness, with semantics defined in rewriting logic. & Universidades Federal Fluminense and Estado do Rio de Janeiro, Brazil &	2005 & Concurrent distributed systems & Experiments & \cite{rademaker2005-cbabel} \\
+
+\hline
+CLARA & An ADL dedicated to real-time system design, which is part of REACT project. It describes the functional architecture of reactive systems and also some support for the description of the behaviour of the components and for the expression of real-time requirements (timing constraints) and properties (time budgets). & University of Nantes, France & 2004 & Real-time systems & Research Projects & \cite{faucou2005-clara} \\
+
+\hline
+DAOP-ADL & The predecessor to AO-ADL and was created to allow applications written on the DAOP platform to be easily described and the ADL is directly interpreted by the platform, so retaining the architecture of the system at runtime.  Like AO-ADL, aspects are first class architectural entities at design and runtime. & University of Malaga, Spain& 2003 & Distributed CBS & Case Studies & \cite{pinto2003-daopadl} \\
+
+\hline
+Darwin & Darwin was created to allow the creation and analysis of design specifications for distributed systems and its features include hierarchical decomposition and static and dynamic structures.  It has formal semantics, specified in the $\pi$-Calculus.  It has influenced many ADLs since, although it has not seen significant industrial usage. & Imperial College, UK & 1996 & Distributed systems & Research Projects & \cite{magee1996-darwin} \\
+
+\hline
+DiaSpec-ADL & DiaSpec-ADL addresses the needs of the pervasive systems domain.  It supports a fairly specific architectural style based on sensors, controllers and actuators, provides simulation of the architectural model and generates framework applications for developers to complete to create the application. & INRIA & 2009 & Control Systems & Research Projects & \cite{cassou2009-diaspec} \\
+
+\hline
+DPD-ADL & Aimed at the description of systems in the areas of data collection, analysis and reporting (although in fact it is still a generic component and connector language). & Tsinghua University, China & 2010 & General & Examples & [\cite{zheng2010-dpdadl} \\
+
+\hline
+DSOPL & ADL with the concept of SOA allows describing three types of information: architecture's structural elements, variability elements and system's configuration. Furthermore, it introduces context elements on which service reconfiguration is based. & University of Montpellier, France & 2015 & SOA & Examples & \cite{adjoyan2015-dsopl} \\
+
+\hline
+EAST-ADL & EAST-ADL was originally developed for the avionics industry but has broadened its scope across embedded systems and has been developed by a range of academic and industrial research centres and standardised by the SAE in the USA.  It is a component and connector based language, specialised for the needs of the embedded systems industry with strong support for product line concepts like variability.  It has been used in a number of significant industrially based research projects. & Continental Automotive, ETAS, Mentor Graphics, Volvo, University of Hull, TU Berlin, Mecel, CEA, KTH, Carmeq & 2010 & Embedded Automotive & Research Projects & \cite{cuenot2010-east} \\
+\hline
+
+FuseJ & Created to support a component model, which unified components and aspects. The language describes architectural structures following this model, which are then executed in a novel container runtime also created as part of the project. &Vrije Universiteit Brussel, Brussels, Belgium & 2005 & General & Examples & \cite{suvee2005-fusej} \\
+
+\hline
+Grasp & Created with the intent of adding traceable design rationale to architectural descriptions.  The language is a component and connector based language and was supported by quite sophisticated tooling based on Microsoft's "Oslo" project. & University of St Andrews, UK & 2011 & General & Examples & \cite{desilva2011-rationale} \\
+
+\hline
+I3 & I3 was an early attempt at adding functional semantics to a component and connector language, by using coloured petri net (CPN) semantics in the language. & University of Illinois at Chicago, USA & 1999 & General & Examples & \cite{chang1999-i3} \\
+
+\hline
+KADL & A formal architecture description language based on the Korrigan formal specification language. It was created to allow the definition of component-based systems with clear semantics, to abstract away from the details of individual component platforms like JEE and .NET. 7 & Universite d'Evry and INRIA, France & 2006 & General (for CBS) & Case Studies & \cite{poizat2006-kadl} \\
+
+\hline
+Koala & Koala is an extension of Darwin, in order to support the development of embedded systems for consumer electronics.  The primary motivation for the approach was to allow widespread reuse of components across many product configurations and so it contains product line features as well as the component based structures to describe an individual system & Phillips, Netherlands & 2000 & Embedded consumer electronic systems & Industrial Projects (100+ developers) & \cite{vanommering2000-koala} \\
+
+\hline
+LEDA & LEDA was created to try to address perceived shortcomings of earlier ADLs, such as refinement, validation and analysis, particularly for dynamic systems.  It attempts to address these shortcomings by using process algebras for the semantics of the description. & Universidad de Malaga, Spain & 1999 & General & Examples & \cite{canal1999-leda} \\
+
+\hline
+MetaH & MetaH was developed to support the development of systems in the guidance, navigation and control (GN\&C) domain.  It was paired with Control-H, a domain specific language for GN\&C, and provides the generic embedded software constructs to allow the system structure to be defined.  It has been used quite widely on industrial projects and proof-of-concepts, particular in the US military domain. & Honeywell, USA & 1996 & Embedded Systems & Industrial Projects & \cite{binns1996-metah} \\
+
+\hline
+MoDeL & MoDeL aims to provide a detailed "blueprint" for a distributed system, linking directly to the code structure and so it is closer to a module interconnection language than most of the other ADLs described here. & RWTH Aachen, Germany & 2010 & General & Case Studies & \cite{klein2000-model} \\
+
+\hline
+MontiArcHV & Developed with the aim of integrating variability management into a hierarchical component model, in an attempt to reduce the complexity of managing software product lines. & RWTH Aachen, Germany & 2011 & Interactive distributed and Cyber-Physical systems & Examples & \cite{haber2011-montiarchhv} \\
+
+\hline
+PrimitiveC-ADL & PrimitiveC provides a means to describe systems defined using the PCOM "context aware" component model, which was prior work of the same researchers.  It is a component and connector based language, using XML as its notation, with a number of novel features needed for PCOM, including contextual conditions that can affect the runtime architectural configuration. & Trinity College of Dublin, Ireland & 2010 & General (context oriented systems) & Examples & \cite{magableh2010-primitivec} \\
+
+\hline
+PRISMA AOADL & An aspect oriented ADL, to allow the description applications being built on their PRISMA research platform and it allows aspects to be used as first class architectural constructs.  PRISMA is based on a formal underlying language (OASIS), extending it with concepts like systems, components, connectors, aspects and architectural configuration. & Polytechnic University of Valencia, Spain & 2006 & General & Research Projects & \cite{perez2003-prisma} \\
+
+\hline
+Rapide & An ADL specifically for event based systems, which allows the architecture of an event based system to be rapidly defined and prototyped.  Rapide defines systems as components with well-defined interfaces that exchange events and as such does not provide first class connectors.  It has been influential in the event driven systems domain. & Stamford University, TRW Research, USA & 1995 & Event driven systems & Case Studies & \cite{luckham1995-rapide} \\
+
+\hline
+SADL & The focus is on the functional view of a system and its provably correct refinement to implementation, by allowing the formal definition of architectural structures and the relationships between them.  In particular SADL aims to provide support for the definition of architectural hierarchies. & SRI Computer Science Laboratory, USA & 1995 & General & Case Studies & \cite{moriconi1997-sadl} \\
+
+\hline
+Service-ADL & Service-ADL provides modelling elements for interaction patterns defining services, as well as for mapping sets of services to target component configurations. The language describes a comprehensive software development process that considers services as first class modelling elements. By decoupling the modelling of services from their implementation on target component configurations this process enables exploration of multiple architectures implementing the same set of services. The view of services as cross-cutting architectural aspects is substantiated by providing a mapping from services to aspects in AspectJ. & University of California, San Diego, USA & 2004 & SOA & Experiments & \cite{kruger2004-serviceadl} \\
+
+\hline
+SKwyRL-ADL & The motivation for this language's development was the development of secure multi-agent systems for distributed information systems and the lack of an ADL that met their unique needs.  The language is based on a computation model called "believe-desire-intention" that views the world as a set of independently executing autonomous agents which are each trying to achieve their goals.  Agents execute by reacting to events which are generated as a result of a change of state, goals or messages from the environment (such as other agents). & University of Louvain, Belgium & 2003 & Multi-agent systems & Experiments & \cite{Faulkner2003} \\
+
+\hline
+SOADL-EH & SOADL is an ADL for service-based systems and specifies the interfaces, behaviour, semantics and quality properties for services and allows modelling and analysis of a service-based architecture.  As the 'EH' in its name suggests, it explicitly provides error handling constructs in the ADL. & Wuhan University, China; China University of Geoscience, China & 2012 & SOA & Experiments & \cite{wang2012-soadl} \\
+
+\hline
+TADL & TADL was developed to extend a component and connector style language to include security concepts as first class constructs.  As such as well as the usual architectural primitives, it includes concepts like safety contracts and security mechanisms. & Concordia University, Canada & 2008 & General & Experiments & \cite{mohammad2008-tadl} \\
+
+\hline
+UniCon & This language implements an early component and connector model of software architecture and is one of the early attempts at introducing connectors as first class language elements.  The aim of the language was to create a useful, pragmatic and extensible test-bed that would allow the architectural abstractions used by practitioners (such as pipes, filters, objects, clients and servers) to be captured and reasoned about in a systematic manner. & Carnegie Mellon University, USA & 1995 & General & Experiments & \cite{shaw1996-unicon} \\
+
+\hline
+vADL & vADL is an ADL for product lines.  It is a component and connector based language that uses the $pi$-Calculus to define its semantics and provides explicit variability support within architectural elements. & School of Computer Science, Northwestern Polytechnic University, China & 2005 & Product Line Architecture (PLA) & Examples & \cite{zhang2005-vadl} \\
+
+\hline
+Weaves & A visual ADL developed to investigate how visual programming could be applied to large scale problems for an architectural style that constructs a software system from a directed graph of separate computational elements communicating by transferring typed objects over lightweight message queues. Weaves is particularly suited to domains that involve stream processing, such as satellite telemetry and satellite ground station prototyping. & The Aerospace Corporation and The University of Hawaii, USA & 1991 & Distributed stream processing & Case Studies & \cite{Gorlick1991} \\
+
+\hline
+Wright & A formally defined ADL to allow automated analysis of the architectural description.  Wright is a component and connector language that was developed to have well defined semantics and a set of reasoning techniques to allow architectural analysis.  It allows both architectures for individual systems and architectural styles to be described. & Carnegie Mellon University, USA & 1998 & General & Case Studies & \cite{allen1997-wright} \\
+
+\hline
+xADL & An XML based component and connector language defined as a set of XML schemas. Designed to use standard XML infrastructure and be easily extensible using standard XML-Schema extension mechanisms.  xADL was developed over an extended period, from about 2001 onwards.  The current version of xADL is 3.0 and the language tool set it still being actively enhanced at the time of writing. & University California Irvine and The SEI, USA & 2005 & General & Research Projects & \cite{dashofy2005-xadl} \\
+
+\hline
+XYZ/ADL & A formal ADL which was developed as part of a wider programme of research in the area of service oriented architecture (SOA). XYZ/ADL is a component and connector based language with formal semantics to allow it to be used as the basis of analysis techniques. Most of the literature on the language is in Chinese. & Chinese Academy of Sciences, China & 2011 & General & Examples & \cite{zhang2009-xyzadl} \\
+
+\hline
+ZETA & An ADL that focuses on component interactions, with the intent of it being used to define the composition of complex components in order to create systems from them.  The key concepts ZETA provides are components (and interfaces) and the concepts and semantics of messaging to link components. & University of Savoie at Annecy, France & 2002 & Distributed Software-intensive system & Case Studies & \cite{alloui2001-zeta} \\
+
+\hline
+$\pi$-ADL & A formal architecture description language for describing distributed and mobile systems. The language principles are that it should be a formal language, that it will focus on the runtime aspects of a system, that it should be executable and that it should be user-friendly (meaning that a number of syntaxes should be available for different uses).  As its name suggests, its semantics of the language are based on an extension of $\pi$-calculus & University of Savoie at Annecy, France  & 2004 & Distributed systems, particularly with a mobile aspect & Case Studies & \cite{Oquendo2004} \\
+
+\hline
+$\pi$-SPACE & A component and connector based language based on the π-calculus that has a focus on architectural evolution. As well as allowing the definition of components and connectors, it allows the architectural description to describe how they can be added, removed or changed during operation. & University of Savoie at Annecy, France & 2000 & General & Case Studies & \cite{chaudet2000-pispace} \\
+\hline
+
+
+\end{longtable}
+\end{center}
+\end{landscape}

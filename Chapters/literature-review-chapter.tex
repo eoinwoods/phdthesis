@@ -1,9 +1,72 @@
-\chapter{Literature Review}
+\chapter{Literature Review} \label{chapter:lit-review}
 
-\section{Architectural Description Languages}
-\label{sec:adl-lit-review}
+\section{Architectural Description Languages} \label{sec:adl-lit-review}
 
-TODO
+Software architecture has been an active research field since the mid 1990s and one of its recurring research topics has been how to create, communicate and maintain effective architectural descriptions.  A range of techniques have been proposed over the years, but a recurrent theme is the idea of a specialised architectural description language (or “ADL”).
+
+The first ADLs appeared in the early 1990s and 10 significant languages from the first 10 years of research were the subject of a seminal literature review by Medvidovic and Taylor in January 2000 \cite{medvidovic2000-adlcomparison}.  Perhaps inspired by this work, there has been an explosion in the number of ADLs created since that time, but based on our industrial experience and reading of the research literature, there has been little indication of a corresponding increase in their use in industry.  
+
+We are interested in how to assist architects to consider the energy properties of their systems as a first class architectural concern and this led us to ask whether we could use an ADL as the basis of any solution that we designed.  Our goal was to understand the possible applicability of existing architectural description languages to our problem and assess the degree to which the languages that have been created would be useful in industrial practice.  We specifically wanted to investigate the characteristics of the ADLs that have been designed, the degree to which they are validated by industrial experimentation and the amount of use they have found on research or industrial projects beyond their initial creation.
+
+A recent comprehensive study on the needs of architecture practitioners \cite{malavolta2013-industryadlneeds} identified the primary requirements of practitioners for an ADL to be the ability to support both formal and informal representation, language genericity, language extensibility, tool support (particularly for collaboration), language support (particularly a community of users) and a focus on design and communication before analysis (and code generation is generally not of interest).
+
+This chapter describes the process that we undertook and results a survey to review the literature in the light of over twenty-five years of research in the area, with the aim of characterising the ADLs that have been developed and their possible applicability to industrial software engineering.
+
+\subsection{Research Questions for the ADL Literature Review}
+
+The questions which we needed to answer in order to understand the characterisics of the ADLs that have been designed, and their possible applicability to our problem were as follows:
+
+\begin{description}
+\item[ADL.RQ1] \emph{Which architectural viewpoints does each ADL support?}  It has been long understood that an architecture contains many structures, not just one.  This challenge is addressed by structuring an architectural description into views defined by viewpoints [Standard 2011]. Surveying the set of viewpoints supported by an ADL allows us to understand which architectural structures it can represent.
+
+\item[ADL.RQ2] \emph{What application domains is each ADL targeted at?}  Some ADLs focus on specific application domains (e.g. hard real-time systems) to ensure that they meet the specific needs of those domains.  We want to understand the domain focus of each ADL so that we can understand its applicability.
+
+\item [ADL.RQ3] \emph{Does the ADL support first class connectors?}  Moving beyond simple “boxes and lines” architectural representation allows us to consider connectors as first class architectural elements which, as argued by Mary Shaw [Shaw 1994], brings a number of advantages.  Connectors are often not modelled by practitioners when using informal notations, so supporting first class connectors would encourage more sophisticated practice and could be a motivation for the use of an ADL. We wanted to understand which ADLs allowed this.
+
+\item[ADL.RQ4] \emph{Does the ADL support first class architectural configuration?}  Many ADLs provide features that allow the architectural configuration (how elements are arranged) to be separated from the definition of the architectural elements themselves, which can enable architectural level reuse.  The promise of architecture level reuse could be a motivation for industrial use of ADLs and so we were interested to understand which ADLs provided this facility.
+
+\item[ADL.RQ5] \emph{Does the ADL provide structuring mechanisms for large architectural descriptions?}  Many academic tools and methods are only tested using small examples whereas industrial systems are often orders of magnitude larger.  Our focus on the industrial application of ADLs meant that we wanted to understand which ADLs included features for structuring large architectural descriptions.
+
+\item[ADL.RQ6] \emph{Does the ADL support the analysis of an architecture?}  Another possible motivation for using an ADL is the ability to perform automated analysis of a machine-readable architectural description, so we were interested to understand which ADLs allow this and what sort of analysis could be performed.
+
+\item[ADL.RQ7] \emph{Can system qualities or quality requirements be captured in the ADL?}  A critical aspect of industrial software architecture work is ensuring that systems exhibit their key quality properties, so we wanted to establish what support each ADL provided to support this process.
+
+\item[ADL.RQ8] \emph{Were prototype or production quality tools developed with the ADL?}  It is unlikely that an ADL will be seriously applied in industry unless it has robust and user-friendly tools available to support it, so we wanted to verify the level of tool support provided with each ADL.
+
+\item[ADL.RQ9] \emph{Has the ADL been applied to non-trivial problems outside the group of people who created it? (e.g. significant research projects from outside the originating group, industrial case studies or industry standards.)}  A software architecture practitioner is likely to want some evidence of the effectiveness of an ADL before adopting it on a significant project.  Therefore, we wanted to know whether researchers had acknowledged this barrier to adoption and had addressed it through realistic case studies or use on real projects outside the originating research group.
+
+\end{description}
+
+It is worth noting that we do not ask if the language supports first class components because this is a prerequisite to the language being included in the study.  (Our view is that languages that do not support first class components are not architectural description languages.) 
+
+\subsection{Research Methodology}
+
+We identified the research literature to include in the study using an electronic literature search, augmented by manual scanning of reference lists in the papers found and our own background knowledge of the field, that led us to identify additional relevant candidate literature (that for example may not have been tagged with the keywords we expected).
+
+We began by searching a range of electronic sources for papers that included the keywords "ADL" or "architecture description language" in their title or keywords.  The ten sources we used were the ACM Digital Library (advanced search), CiteseerX, Google Scholar, IEEEXplore, IEEE Computer Society Digital Library, Microsoft Academic Search, Science Direct, Scopus, Springer Link and Web of Science.
+
+Predictably these queries returned many references, however it was clear from our existing knowledge of the field that these keyword-based searches were not returning all ADL related literature. 
+
+To find further relevant literature we then performed an exhaustive search of Google Scholar, using the relevant keywords, which returned over 10,000 references which were manually scanned for relevant primary studies that we might have missed.  This list contained many false positives, but these were discarded via manual inspection. 
+
+Having searched traditional literature review sources, we also performed manual searches of specific publication venues where ADL researchers were known to publish their findings, specifically the specialist conferences WICSA, QoSA, ECSA and ICSE.
+
+Finally, we performed forward and backward reference checking on the primary studies that we had found. Search engines were used to find citations of the primary studies identified that could be of relevance to the review (forward reference checking). The reference lists of the primary studies were then checked for any potential relevant studies missed (backward reference checking). At this point we were left with 135 potential primary studies for the survey.
+
+Throughout these search activities, we limited the dates of the studies that we included, to limiting our scope to literature published between January 1991 and May 2016. The start date was selected to be early enough to include all those ADLs in the original work \cite{medvidovic2000-adlcomparison} that inspired us to undertake this later comprehensive survey and as noted in \cite{malavolta2013-industryadlneeds} the concept of an ADL was not well defined before this point.  Our literature search was concluded in May 2016, which is the reason for the end date (although in fact we did not discover any additional relevant literature published between January and May 2016).
+
+To focus our efforts on the most relevant ADLs, our initial set of primary studies was filtered further to a more manageable set using the following exclusion criteria:
+
+\begin{description}
+\item[EC1] The ADL is a minor enhancement or minor extension to an existing ADL, or the ADL is a different version of an included ADL.
+\item[EC2] The ADL focuses on a single area of architectural analysis (e.g. Concurrency) rather than being a general-purpose description language.
+\item[EC3] There is not enough detail in the references discovered to address the study research questions.
+\item[EC4] The ADL not suitable for modelling a software intensive system at an architectural level of concern (for example a hardware design language or source code module description language).
+\item[EC5] The primary study is not available in English or is a short paper (less than 3000 words), abstract, keynote, opinion, tutorial summary, panel discussion, technical report, presentation slides, compilation of work or a book chapter. Book chapters were only included if they were conference or workshop proceedings (e.g., as part of the LNCS or LNBIP series) and are available through the data sources included in our review. 
+\end{description}
+
+The result of this further selection exercise was a list of 51 ADLs to include in the survey and 84 ADLs that did not meet our inclusion criteria.  A full list of the ADLs that met our inclusion criteria can be found in \aref{appendix:adl-list}.
+
 
 \section{Prioritisation of Architectural Effort}
 
