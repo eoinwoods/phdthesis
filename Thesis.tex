@@ -15,6 +15,8 @@
 \usepackage{subcaption} % This relies on commenting out line 111 in Thesis.cls to remove "subfigure"
 \usepackage{datetime}
 \usepackage{lscape}
+\usepackage{array} % for the \newcolumntype facility used for our custom column type
+
 
 % Suppress warnings about Underfull or Overfull boxes
 %\hbadness=99999
@@ -37,6 +39,8 @@
   breakatwhitespace=true,
   tabsize=3
 }
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
 
 %% ----------------------------------------------------------------
 \begin{document}

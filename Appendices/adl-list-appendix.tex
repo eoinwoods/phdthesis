@@ -1,12 +1,16 @@
 \chapter{Architectural Description Languages} \label{appendix:adl-list}
 In this appendix, we list the characteristics of all of the architectural description languages that met our inclusion criteria for the literature review described in \sref{sec:adl-lit-review}.
+
+Due to the amount of information needed to characterise the ADLs, it is presented in three tables, \tref{table:adl-basics} that contains the basic characteristics of the languages, \tref{table:adl-concepts} that describes the architectural concepts that appear in each language, and \tref{table:adl-mechanisms}, which lists the architectural description mechanisms provided by both.
+
 \begin{landscape}
 \setstretch{1.0}
 \footnotesize
-\begin{center}
 \begin{longtable}{|c|p{6cm}|p{3cm}|c|p{3cm}|p{2cm}|c|} 
 \caption{General Characteristics of the ADLs} \\
+\label{table:adl-basics} \\
 \hline
+
 \textbf{ADL} & \textbf{Description} & \textbf{Institutions} & \textbf{Year} & \textbf{Domain} & \textbf{Application} & \textbf{Reference} \endhead
 \hline
 AADL & An architectural description language with industrial roots, having come from work in the avionics industry based on key concepts from MetaH and ACME.  It is a rich ADL targeted at embedded systems, supporting a range of architectural views and having good tool support available.  It has been standardised by the Society of Automotive Engineers (SAE). & Over 20 industrial and academic organisations & 2006 &  Embedded Systems & Industrial Projects & \cite{feiler2006-aadl} \\
@@ -18,7 +22,7 @@ AC2-ADL & It is an aspect-oriented ADL that allows aspects on both components an
 ACDL & An ADL that represents the centralized-mode architectural connection in which all components are linked by a single connector. The connectors described in ACDL are structurally flexible in the sense that protocols implemented in them have no restriction on the numbers of attached same-type components. & University of Technology, Sydney; Tsinghua University, Beijing, China & 2010 & General & Examples & \cite{su2010-acdl} \\
 
 \hline
-ACME & Developed primarily as a mechanism for the interchange of architectural information and as such is extremely flexible, intended as a base for more specific ADLs rather than being used directly. & Carnegie-Mellon University, USA & 1997 &	General & Case Studies & \cite{garlan1997-acme} \\
+ACME & Developed primarily as a mechanism for the interchange of architectural information and as such is extremely flexible, intended as a base for more specific ADLs rather than being used directly. & Carnegie-Mellon University, USA & 1997 & General & Case Studies & \cite{garlan1997-acme} \\
 
 \hline
 ADLARS & Developed with the aim of creating an ADL with first class support for embedded systems product lines.  It supports multiple views of the system and variation points in the architecture. & Queens University Belfast, UK & 2005 & Embedded Systems, Software Product Lines & Experiments & \cite{bashroush2005-adlars} \\
@@ -33,7 +37,7 @@ Aesop & Aesop was developed to allow the description of architectural styles, ra
 ALI & Developed with the aim of producing an industrially relevant language, which would be usable for product lines as well as individual systems.  It supports first class components, connectors and configuration but also includes explicit features for variation and reuse. & Queens University Belfast, UK & 2008 & General & Examples & \cite{bashroush2008-ali} \\
 \hline
 
-AO-ADL & An aspect-oriented ADL is a descendent of DAOP-ADL.  It allows aspects to be used as first class architectural constructs, in this case to assist in isolating parts of the system that address cross-cutting concerns (such as security).	 & University of Malaga, Spain & 2011 & General & Research Projects & \cite{pinto2003-daopadl} \\
+AO-ADL & An aspect-oriented ADL is a descendent of DAOP-ADL.  It allows aspects to be used as first class architectural constructs, in this case to assist in isolating parts of the system that address cross-cutting concerns (such as security).  & University of Malaga, Spain & 2011 & General & Research Projects & \cite{pinto2003-daopadl} \\
 \hline
 Archface & A component and connector based language.  It aims to bridge the gap between architectural description and code and does this by compiling the ADL into partially complete AspectJ code for the developer to complete. & Kyushu Institute of Technology and University of Tokyo, Japan & 2010 & General & Examples & \cite{ubayashi2010-archface} \\
 
@@ -53,10 +57,10 @@ byADL & byADL's name is a contraction of "Build Your ADL" because it was created
 C2SADEL & It was created to simplify the definition of architectures following the Chiron-2 ("C2") style. The language is a more sophisticated and complete ADL for the style including software tool support for it. & University of California at Irvine, USA & 1999 & Concurrent distributed systems & Experiments & \cite{medvidovic1999-c2sadel} \\
 
 \hline
-C3 & An architecture-centric approach that gives a new structure for connectors in which attachments are encapsulated within the definition of connectors. It defines and manipulates configurations as first classes entities. Also, a description of architectures from two different views, a model architecture view (logical architecture) created by the architect and an application architecture view (physical architecture instances of the logical architecture) generated automatically which serves as support to maintain the consistency and the evolution of the application architectures.	 & University of Nantes, France and University Center of Souk Ahras, Algeria& 2009 & General & Examples & \cite{amirat2009-c3} \\
+C3 & An architecture-centric approach that gives a new structure for connectors in which attachments are encapsulated within the definition of connectors. It defines and manipulates configurations as first classes entities. Also, a description of architectures from two different views, a model architecture view (logical architecture) created by the architect and an application architecture view (physical architecture instances of the logical architecture) generated automatically which serves as support to maintain the consistency and the evolution of the application architectures.  & University of Nantes, France and University Center of Souk Ahras, Algeria& 2009 & General & Examples & \cite{amirat2009-c3} \\
 
 \hline
-CBabel & An ADL developed to support the description applications that are implemented using the concurrent CR-RIO framework. It was developed at Brazilian universities and is a formal ADL, focusing on correctness, with semantics defined in rewriting logic. & Universidades Federal Fluminense and Estado do Rio de Janeiro, Brazil &	2005 & Concurrent distributed systems & Experiments & \cite{rademaker2005-cbabel} \\
+CBabel & An ADL developed to support the description applications that are implemented using the concurrent CR-RIO framework. It was developed at Brazilian universities and is a formal ADL, focusing on correctness, with semantics defined in rewriting logic. & Universidades Federal Fluminense and Estado do Rio de Janeiro, Brazil & 2005 & Concurrent distributed systems & Experiments & \cite{rademaker2005-cbabel} \\
 
 \hline
 CLARA & An ADL dedicated to real-time system design, which is part of REACT project. It describes the functional architecture of reactive systems and also some support for the description of the behaviour of the components and for the expression of real-time requirements (timing constraints) and properties (time budgets). & University of Nantes, France & 2004 & Real-time systems & Research Projects & \cite{faucou2005-clara} \\
@@ -155,10 +159,348 @@ ZETA & An ADL that focuses on component interactions, with the intent of it bein
 $\pi$-ADL & A formal architecture description language for describing distributed and mobile systems. The language principles are that it should be a formal language, that it will focus on the runtime aspects of a system, that it should be executable and that it should be user-friendly (meaning that a number of syntaxes should be available for different uses).  As its name suggests, its semantics of the language are based on an extension of $\pi$-calculus & University of Savoie at Annecy, France  & 2004 & Distributed systems, particularly with a mobile aspect & Case Studies & \cite{Oquendo2004} \\
 
 \hline
-$\pi$-SPACE & A component and connector based language based on the π-calculus that has a focus on architectural evolution. As well as allowing the definition of components and connectors, it allows the architectural description to describe how they can be added, removed or changed during operation. & University of Savoie at Annecy, France & 2000 & General & Case Studies & \cite{chaudet2000-pispace} \\
+$\pi$-SPACE & A component and connector based language based on the $\pi$-calculus that has a focus on architectural evolution. As well as allowing the definition of components and connectors, it allows the architectural description to describe how they can be added, removed or changed during operation. & University of Savoie at Annecy, France & 2000 & General & Case Studies & \cite{chaudet2000-pispace} \\
+\hline
+
+\end{longtable}
+\end{landscape}
+
+\begin{landscape}
+\setstretch{1.0}
+\footnotesize
+\begin{longtable}{|c|P{2cm}|p{8cm}|p{4cm}|P{2cm}|P{2cm}|} 
+\label{table:adl-concepts} \\
+\caption{ADL Support for Architectural Concepts} \\
+\hline
+
+\textbf{ADL} & \textbf{Viewpoints} & \textbf{Architectural Concepts} & \textbf{ Behavioural Semantics} & \textbf{1st Class Conns} & \textbf{1st Class Config} 
+\endhead
+\hline
+
+AADL & Functional, Deployment & Component (process, thread, thread group, data, subprogram, processor, memory, device, bus); Port (data port, event data port, synchronous call, direct data access); Interconnection type (message passing, event passing, synchronised data access, RPC); Property System; Information Flow; Operational Mode; Package Annex; Library (extension or specialisation) & Yes (but user defined form) & No & Yes \\
+\hline
+
+ABC/ADL & Functional, Deployment & Component; Connector; Aspect; Architecture; Configuration & Yes (but user defined form) & Yes & Yes \\
+\hline
+
+AC2-ADL & Functional & Component; Aspect Component; Connector; Aspect Connector; Architecture; Configuration & No & Yes & Yes \\
+
+\hline
+
+ACDL & Functional & Architecture type; Component type; Connector; Architecture (configuration) & Yes ($\pi$-Calculus) & Yes & Yes \\ 
+\hline
+
+ACME & Functional & Component; Representation-Map (to capture alternative implementation options for components); Connector; System; Template and Style & No & Yes & Yes \\ 
+\hline
+
+ADLARS & Functional, Deployment & Component; Task; System; Interaction Theme; Feature & Yes (but user defined form) & No & Yes \\ 
+\hline
+
+ADML & Functional & System; Component; Connector & Yes (built in) & Yes & No \\ 
+\hline
+
+Aesop & Functional & Component; Connector; Configuration; Architectural Style  & No & Yes & Yes \\ 
+\hline
+
+ALI & Functional & Interface; Component; Connector; System; Pattern Template; Variant Selection (based on feature catalogue)  & No & Yes & Yes \\ 
+\hline
+
+AO-ADL & Functional & Component; Connector; Aspect; Architectural Configuration  & No (although other notations can be used) & Yes & Yes \\ 
+\hline
+
+Archface & Functional, Development & Component; Connector; Aspect (pointcut \& advice) & Yes (code corresponding to the ADL structure) & Yes & No \\ 
+\hline
+
+Aspectual-ACME & Functional & Extends ACME concepts with:; Aspectual Connector & No & Yes & Yes \\ 
+\hline
+
+Backbone & Functional & Component (ports, parts [leaf component], connectors) & No & No & No \\ 
+\hline
+
+Breeze/ADL & Functional & Component; Connector; Interface; Configuration; Style constraints and state transformation & No & Yes & Yes \\ 
+\hline
+
+byADL & Functional & Components and Interfaces; Connectors and Interfaces; Architectural Configurations  & No & Yes & Yes \\ 
+\hline
+
+C2SADEL & Functional & Components and Interfaces; Connectors (but only C2 message connections); Architectural configuration; Message Filters (allowing dynamic architectures) & Yes (built in) & Yes & Yes \\ 
+\hline
+
+C3 & Functional & Component; Connector (properties, constraints, services, hierarchical level, glue and attachment); Configuration & No & Yes & Yes \\ 
+\hline
+
+CBabel & Functional & Components (“modules”); Connectors; Contracts; Architectural Configuration  & Yes (built in) & Yes & Yes \\ 
+\hline
+
+CLARA & Functional & Component; Links; Configuration & Yes (Petri-net specifications) & Yes & Yes \\ 
+\hline
+
+DAOP-ADL & Functional & Components; Properties; Aspects; Architectural Composition Rules  & No & No (implicit in the platform) & Yes \\ 
+\hline
+
+Darwin & Functional & Components; Services; Architectural Configuration (via composite components)  & No & No & Yes \\ 
+\hline
+
+DiaSpec-ADL & Functional & Components (Devices, Controllers \& Contexts); Interaction Specifications & No & No & Yes \\ 
+\hline
+
+DPD-ADL & Functional & Components; Connectors & No & Yes & Yes \\ 
+\hline
+
+DSOPL & Functional & Structural description (services [interfaces]); Variability description (variation point, reference element);; Context description (context type); Configuration description (initialization, dynamic & No & No & Yes \\ 
+\hline
+
+EAST-ADL & Functional, Dep, Development & Too many to list, very wide spectrum and detailed language, covering System, Feature, Function, Hardware and Environment modelling. & Yes (via links to descriptions like Simulink or MATLAB) & Yes & Yes \\ 
+\hline
+
+FuseJ & Functional, Deployment & Component (regular component or aspect); Interface (and Gate); Connector & No & Yes & No \\ 
+\hline
+
+Grasp & Functional & Requirement; Quality Property; Components ; Connectors; Layers; Systems; Architectures; Templates; Rationale & No & Yes & Yes \\ 
+\hline
+
+I3 & Functional & Component; Interface Net; Interconnection Net; Interoperation Net & Yes (Petri-Nets) & No & No \\ 
+\hline
+
+KADL & Functional & Components and Ports; Architectural Configuration (“glue rules”) & Yes (Korrigan) & No & Yes \\ 
+\hline
+
+Koala & Functional, Development & Components and Interfaces; Architectural Configuration & No (link to code) & No & Yes \\ 
+\hline
+
+LEDA & Functional & Components; Roles; Composition; Attachment; Adaptors (“glue” allowing construction of composites from components which are not strictly compatible). & Yes ($\pi$-Calculus) & No & No \\ 
+\hline
+
+MetaH & Functional, Concurrency, Deployment & Components (“processes”); Hardware Components; Configuration (“connections” and “modes”); Application & No (separate ControlH language) & No & Yes \\ 
+\hline
+
+MoDeL & Functional, Concurrency & Module; Subsystem; Process; Mutex & Yes (Z specifications) & No & No \\ 
+\hline
+
+MontiArcHV & Functional, Deployment & Component; Port; Connector; Variation Point; Variant; Variant Config & No & No & Yes \\ 
+\hline
+
+PrimitiveC-ADL & Functional & Components; Connectors; Design Pattern; Decision Policy; Architecture Configuration & Yes (no details provided) & Yes & Yes \\ 
+\hline
+
+PRISMA AOADL & Functional & Component; Connector; Aspect; Architectural Pattern; Architectural Configuration & Yes ($\pi$-Calculus) & Yes & Yes \\ 
+\hline
+
+Rapide & Functional, Concurrency & Components (as interfaces) and Functions, Actions and Services; Architectures (with connection rules and constraints); Events and Posets & Yes (built in) & No & Yes \\ 
+\hline
+
+SADL & Functional & Components and Interfaces (containing ports); Connectors; (Architectural) configurations; Mappings (between architectures); Architectural Styles; Refinement Patterns & No & Yes & Yes \\ 
+\hline
+
+Service-ADL & Functional, Development & Roles (states); Services (interaction); Component (plays, in service); Configuration & Yes & No & Yes \\ 
+\hline
+
+SKwyRL-ADL & Functional & Agents (as components); Ports (sensors or effectors) ; Knowledge Base; Goals and Plans; Services; Architectural Configuration; Architecture & No & No & Yes \\ 
+\hline
+
+SOADL-EH & Functional, Deployment & Components; Connectors; Service; Policy; Configuration & Yes ($\pi$-calculus, code) & Yes & Yes \\ 
+\hline
+
+TADL & Functional, Deployment & Interface Type; Connector Role Type; Connector Type; Architecture Type; Component Type & No & Yes & Yes \\ 
+\hline
+
+UniCon & Functional & Components with Interfaces; Connectors with Protocols; Properties; Architectural Configuration (via composite components) & No (link to code) & Yes & Yes \\ 
+\hline
+
+vADL & Functional & Component; Connector; Interface; Behaviour; Architecture & Yes ($\pi$-calculus) & No & No \\ 
+\hline
+
+Weaves & Functional & Components (“tool fragments”) and Ports; Connectors (message queues); Annotations & No (but link to code) & Yes & No \\ 
+\hline
+
+Wright & Functional & Components and Interfaces; Connectors and Roles; Architectural Configurations (“attachments”); Styles & Yes (CSP extension) & Yes & Yes \\ 
+\hline
+
+xADL & Functional, Deployment & Components and Interfaces; Connectors and Interfaces; Architectural Configuration (“links”); Runtime Structure (component instances, link instances) & No & Yes & Yes \\ 
+\hline
+
+XYZ/ADL & Functional & Components and Interfaces; Connectors and Roles; Architectural configurations (via composite components) & Yes (XYZ/E temporal logic language) & Yes & Yes \\ 
+\hline
+
+ZETA & Functional & Interaction Interface (Activity Interface, Artefact Interface, Message Types, Port Interface, Protocol Interface); Interaction; Message; Port; Attachment; Container Types & Yes (built in) & Yes & No \\ 
+\hline
+
+$\pi$-ADL & Functional & Components and Ports; Agents (mobile components); Connectors and Ports; Architecture (configuration) & Yes ($\pi$-calculus) & Yes & Yes \\ 
+\hline
+
+$\pi$-SPACE & Functional & Port Type; Behaviour Type; Component Type; Connector Type; Composition/ Decomposition/ Recomposition & Yes ($\pi$-calculus) & Yes & Yes \\ 
 \hline
 
 
 \end{longtable}
-\end{center}
 \end{landscape}
+
+
+\begin{landscape}
+\setstretch{1.0}
+\footnotesize
+\begin{longtable}{|c|P{2cm}|P{3cm}|P{3cm}|p{2cm}|c|} 
+\label{table:adl-mechanisms} \\
+\caption{ADL Language Mechanisms and Support} \\
+\hline
+
+\textbf{ADL} & \textbf{Structuring} & \textbf{Capturing Qualities} & \textbf{Syntax} & \textbf{Analysis} & \textbf{Tools}
+\endhead
+
+\hline
+
+AAADL & Packages; Composition & Properties & Textual; Graphical & Yes (Performance; Real-Time Scheduling; Reliability); others via extensions & Commercial \\
+\hline
+
+ABC/ADL & Composition & Properties & Textual; Graphical & Via 3rd party tools & Prototype \\
+\hline
+
+AC2-ADL & Composition & None & Textual & None & None \\
+\hline
+ACDL & Composition & None & Textual & Yes (Consistency) & None \\ 
+\hline
+
+ACME & Composition & Properties & Textual; Graphical & Via ADL extensions or 3rd party tools & Research \\ 
+\hline
+
+ADLARS & Composition & Specific Attributes (for Timing) & Textual (JavaCC); Graphical & Yes (Concurrency; Consistency) & Prototype \\ 
+\hline
+
+ADML & Composition & Properties & Textual & None & None \\ 
+\hline
+
+Aesop & Composition & Style Properties & Textual; Graphical & Via 3rd party tools & Research \\ 
+\hline
+
+ALI & Composition & None & Textual; Graphical & None & None \\ 
+\hline
+
+AO-ADL & Composition & None & Textual; Graphical & None & Research \\ 
+\hline
+
+Archface & None & None & Textual & Via 3rd party tools & Prototype \\ 
+\hline
+
+Aspectual-ACME & Composition & Properties & Textual; Graphical & Via 3rd party tools & None \\ 
+\hline
+
+Backbone & Composition & None & Textual; Graphical & None & Prototype \\ 
+\hline
+
+Breeze/ADL & Packages; Composition & None & Textual (XML-based) & None & None \\ 
+\hline
+
+byADL & Packages; Composition & Properties & Various & Via ADL extensions & Research \\ 
+\hline
+
+C2SADEL & None & None & Textual; Graphical & Via ADL extensions & Research \\ 
+\hline
+
+C3 & Composition & Properties & Textual; Graphical (UML) & None & None \\ 
+\hline
+
+CBabel & None & Language QoS Contracts; Properties & Textual & Yes (Concurrency; Consistency) & None \\ 
+\hline
+
+CLARA & Composition & Specific Attributes (for Timing) & Textual; Graphical & Yes (Concurrency; Consistency) & None \\ 
+\hline
+
+DAOP-ADL & None & None & Textual (XML); Graphical & None & Research \\ 
+\hline
+
+Darwin & Composition & Properties & Textual; Graphical & Via 3rd party tools & Research \\ 
+\hline
+
+DiaSpec-ADL & None & None & Textual & Yes (Consistency) & Research \\ 
+\hline
+
+DPD-ADL & Composition & None & Textual; Graphical (UML) & None & None \\ 
+\hline
+
+DSOPL & Packages; Composition & None & Textual (XML); Graphical (UML) & None & None \\ 
+\hline
+
+EAST-ADL & Packages; Composition (inherited from UML) & Language Elements (for Timing, Safety, Dependability); Properties & Graphical notation, based on and extending UML (i.e. graphical notation and semi-structured natural language) & Via 3rd party tools & Commercial \\ 
+\hline
+
+FuseJ & Packages; Composition & None & Textual & None & Prototype \\ 
+\hline
+
+Grasp & Composition & Specific Attributes; Properties & Textual & None & Prototype \\ 
+\hline
+
+I3 & None & None & Loosely defined graphical notation; Petri net representations & Yes (Concurrency) & None \\ 
+\hline
+
+KADL & Composition & None & Textual; Graphical & Yes (Consistency) & Prototype \\ 
+\hline
+
+Koala & Packages; Composition & None & Textual; Graphical & None & Commercial \\ 
+\hline
+
+LEDA & Composition & None & Textual & Yes (Consistency) & None \\ 
+\hline
+
+MetaH & Composition & Specific Attributes (for Timing, Safety, Dependability) & Textual; Graphical & Yes (Real-Time Scheduling) & Commercial \\ 
+\hline
+
+MoDeL & Subsystems; Composition & None & Textual; Graphical & None & Research \\ 
+\hline
+
+MontiArcHV & Packages; Composition & None & Textual; Graphical. & None & None \\ 
+\hline
+
+PrimitiveC-ADL & Composition & None & Textual (XML based) & None & None \\ 
+\hline
+
+PRISMA AOADL & Composition & None & Textual; UML Profile & None & Research \\ 
+\hline
+
+Rapide & Composition & None & Textual; Simplified graphical & Yes (Correctness; Timing) & Research \\ 
+\hline
+
+SADL & Composition & None & Textual & None & Research \\ 
+\hline
+
+Service-ADL & Packages; Composition & None & Textual; Graphical & None & None \\ 
+\hline
+
+SKwyRL-ADL & Composition & Language Elements (for Security - security constraints, mechanisms, etc.) & Textual & None & None \\ 
+\hline
+
+SOADL-EH & Packages; Composition & Properties & Textual (XML), Graphical & Yes (Concurrency; Consistency) & None \\ 
+\hline
+
+TADL & Packages; Composition & Language Elements (for Safety and Security, safety constraints, security structures); Properties & Textual & Yes (Safety; Timing; Security) & None \\ 
+\hline
+
+UniCon & Composition & Properties & Textual; Graphical & Via 3rd party tools & Prototype \\ 
+\hline
+
+vADL & Composition & Properties & Textual & None & None \\ 
+\hline
+
+Weaves & Composition & Properties & Graphical & Yes (Performance) & Research \\ 
+\hline
+
+Wright & Composition & None & Textual & Yes (Correctness) & Prototype \\ 
+\hline
+
+xADL & Composition & Properties (via extension) & XML (and tool specific graphical) & None & Research \\ 
+\hline
+
+XYZ/ADL & Composition & None & Textual (with mathematics) & Yes (Consistency) & None \\ 
+\hline
+
+ZETA & Composition & None & Textual; Graphical & None & None \\ 
+\hline
+
+$\pi$-ADL & Composition & Properties & Textual; Graphical (UML extension) & Yes (Correctness; Consistency) & Research \\ 
+\hline
+
+$\pi$-SPACE & Composition & None & Textual; Graphical (UML) & None & None \\ 
+\hline
+
+\end{longtable}
+\end{landscape}
+
