@@ -35,7 +35,7 @@ It is worth noting that we do not ask if the language supports first class compo
 
 We identified the research literature to include in the study using an electronic literature search, augmented by manual scanning of reference lists in the papers found and our own background knowledge of the field, that led us to identify additional relevant candidate literature (that for example may not have been tagged with the keywords we expected).
 
-We began by searching a range of electronic sources for papers that included the keywords "ADL" or "architecture description language" in their title or keywords.  The ten sources we used were the ACM Digital Library (advanced search), Google Scholar, IEEEXplore and Microsoft Academic Search.
+We began by searching a range of electronic sources for papers that included the keywords "ADL" or "architecture description language" in their title or keywords.  The four primary sources we used were the ACM Digital Library (advanced search), Google Scholar, IEEEXplore and Microsoft Academic Search.
 
 Predictably these queries returned many references, however it was clear from our existing knowledge of the field that these keyword-based searches were not returning all ADL related literature. 
 
@@ -245,20 +245,143 @@ Answer the research question
 
 \section{Architectural Guidance for Energy Efficiency}
 
-Introduction and list research question
+As awareness of power usage and the need for improved energy efficiency grows across the ICT sector, attention is turning from an initial focus on data centre efficiency \cite{delforge2014-datacentreenergy} to how the software applications running within them can contribute to a reduction in net energy consumption.  Yet a previous survey of software architecture practitioners \cite{bashroush2016-datacentreenergy} has revealed both a growing awareness of the need to treat energy efficiency as a first class concern and also a lack of tangible advice and guidance on how to achieve this.
+
+Our goal is to raise awareness of energy as an architectural concern with software architecture practitioners and so we wanted to investigate whether there was existing research which had resulted in practical advice that software architects could use to address energy as a property of their systems.
+
+This survey of the research literature partly addresses research question \emph{RQ3 -  What design guidelines can we provide to guide architects to improve energy efficiency of their systems?}.
 
 \subsection{Research Methodology}
 
-What did I do?
+We identified the research literature to include in the study by searching commonly used literature catalogues as well as manually inspecting the reference lists of relevant papers and following other relevant references found.
+
+After some experimentation we defined our search query for online catalogues to be \emph{"software architecture" AND "(energy OR power) (consumption OR efficiency)" AND (principles or tactics)}.  The syntax of the query had to be refined for different catalogues as they provide different search facilities, but this was a simple matter of performing multiple simpler queries against them.
+
+We searched key online literature catalogues for papers that matched our query in in their title, abstract or keywords.  The four catalogues we used were the ACM Digital Library (advanced search), Google Scholar, IEEEXplore and Microsoft Academic Search.
+
+Predictably, the different catalogues returned very different results, with ACM Digital Library returning 95 results, IEEEXplore 63, Google Scholar nearly 3,000 and Microsoft Academic Search adding only 3 additional items.
+
+We then consolidated these results, by concatenating and removing duplicates from the ACM and IEEE results and manually scanning the results from Google Scholar, adding any entries that had not been returned by the previous searches (which resulted in 16 additional unique entries, as well as confirmation of most of the entries returned by the ACM and IEEE searches).  Finally, Microsoft Academic Search returned relatively few entries and most were obviously not relevant to our search, but 3 additional items were added manually from this source.
+
+From this list, we identified the most obviously relevant items (those with titles indicating energy related tactics or principles or architectural techniques) and found a small number of additional items that could be relevant, which were added to the list.
+
+At this point we had a list of 182 candidate studies for consideration.
+
+To narrow the list to the most relevant for our needs, we identified the following criteria for inclusion in our survey.
+
+\begin{description}
+	\item[IC1] The study has been peer reviewed and is at least 3000 words long.
+	\item[IC2] The study addresses some aspect of energy efficiency as a quality property of a system.
+	\item[IC3] The reference provides some tangible advice (such as a tactic, a design principle or a technique) which could be used to help address the energy qualities of a software system.
+	\item[IC4] The advice provided by the study is relevant to addressing energy as an architectural concern (rather than, for example, code path optimisation).
+	\item[IC5] The study is relevant to large scale enterprise applications such as those found in large end-user organisations, the products of software companies supplying them, or those applications found in Internet-oriented companies, such as SaaS software providers.
+	\item[IC6] For practical reasons the study must be written in English.
+\end{description}
+
+When we applied inclusion criterion IC1, this removed two items from the list and applying IC2 (to focus on energy as a quality property) removed a large number of the studies, leaving 43 for consideration.  Of these 13, met the requirements of IC3 (to provide tangible advice) and 11 of them met the requirements of IC4 (i.e. they were architecturally relevant).  Finally, applying criterion IC5 resulted in the elimination of another two studies, leaving 9 to be analysed further.
+
+Having identified the 9 references of interest, we analysed their content in order to allow further classification.  This proved to be a very straightforward process due to the small number of studies that met our inclusion criteria and very clear similarities between the references.  Our classification is summarised in \tref{table:archguidancestudies}.
+
+\begin{table}
+\caption{Classification of Architectural Guidance Studies}
+\label{table:archguidancestudies}
+\begin{center}
+\begin{tabular}{| l | c | l |}
+\hline
+
+\textbf{Classification} & \textbf{Count} & \textbf{References} \\
+\hline
+
+Cloud Energy Efficiency Tactics & 4 & \cite{procaccianti2013-cloudenergyefficiency, procaccianti2014-greentactics, procaccianti2014-greentactics-wicsa, procaccianti2015-cloudenergy-litreview} \\
+\hline
+
+Cyber-Foraging Tactics & 2 & \cite{lewis2015-foragingtactics, lewis2016-foragingdm} \\
+\hline
+
+Energy Perspective & 2 & \cite{jagroep2015-energyperspective, jagroep2017-energyperspective} \\
+\hline
+
+Design Practices & 1 & \cite{procaccianti2016-twobestpractices} \\
+\hline
+
+\end{tabular}
+\end{center}
+\end{table}
+
+Four of the references \cite{procaccianti2013-cloudenergyefficiency, procaccianti2014-greentactics-wicsa, procaccianti2015-cloudenergy-litreview} are all related to work performed at Vrije Universiteit in Amsterdam to investigate architectural tactics to address energy efficiency in cloud computing environments (so called "green architectural tactics").
+
+Two of the references \cite{lewis2015-foragingtactics, lewis2016-foragingdm} are related to work on "cyber-foraging" (the process of allowing mobile devices to extend their computing power and storage by offloading computation or data to more powerful servers located in the cloud) performed at the Software Engineering Institute (SEI) at Carnegie Mellon University and  Vrije Universiteit in Amsterdam.
+
+Two of the references \cite{jagroep2015-energyperspective, jagroep2017-energyperspective} are the result of research into treating energy efficiency as an architectural concern, performed at Utrecht University in the Netherlands, with the industrial software company Centric Netherlands BV.  This work led to the creation of an architectural perspective \cite{woods2005-perspectives} that provides guidance to a software architect in how to improve the energy characteristics of the system.
+
+The last reference \cite{procaccianti2016-twobestpractices} is an empirical evaluation of the energy consumption impact of two specific architectural practices, again based on research from Vrije Universiteit in Amsterdam.
 
 \subsection{Analysis of the Results}
 
-Data analysis or list of paper summaries and common aspects
+The studies in the \emph{Cloud Energy Efficiency Tactics} set start with a literature review \cite{procaccianti2013-cloudenergyefficiency} that identifies three strategies for cloud energy efficiency, namely \emph{Energy Monitoring}, \emph{Self-Adaptation} and \emph{Cloud Federation}.  The study then identifies the components and techniques that have been proposed in the research literature to address cloud energy efficiency, within these three areas.  These components and techniques are not, in most cases, directly usable by an application architect, but are useful background knowledge for them.
+
+The later papers in this group develop the work further to provide direct architectural guidance for practitioners in the shape of a set of architectural tactics that we summarise in \tref{table:cloudtactics}, using the tactic descriptions from the original reference.
+
+\begin{small}
+\begin{longtable}{| l | l | p{8cm} |}
+\caption{Architectural Tactics for Cloud Energy Efficiency}
+\label{table:cloudtactics}\\
+\hline
+
+\textbf{Strategy} & \textbf{Tactic} & \textbf{Description} \\
+\hline
+
+\multirow{3}{*}{Energy Monitoring} & Metering & The Metering tactic consists of collecting power metering information from the hardware through dedicated software components called energy collectors. Collectors are usually in a many-to-many relationship with physical power meters. These collectors share information via an energy communication bus (ECB) that provides a common interface for energy information. In addition, the energy consumption information is stored in a dedicated energy database that can have different levels of granularity. Finally, a GUI component called an "energy dashboard" provides graphical representations of energy information along with useful reporting for both cloud service providers and customers. \\ \cline{2-3}
+& Static Classification & This tactic consists of classifying the different resources in terms of energy efficiency through the use of energy indicators. This classification is static, based on technical specifications and characteristics of the devices themselves rather than real-time information. \\ \cline{2-3}
+& Modelling &  Modeling tactic enables a dynamic estimation of power consumption values through predictive energy models. These Models are embedded in energy indicators, similar to those in the Static Classification tactic. However, these energy indicators do not statically classify physical resources, but rather provide a dynamic estimation of the power consumption of the software components. Typically, energy models are built through regression analysis based on software runtime metrics (e.g. CPU, disk, memory). \\
+\hline
+\multirow{3}{*}{Self-Adaptation} & Scaling Down & This tactic reduces deployed IT resources when not required for current system load.  This tactic utilises the idea of a "scale unit" which is a pre-defined quantity of "IT resources" \cite{rogers2008-greenitpatterns} explicitly modeled as a software component. Modeling Scale Units is useful for planning the scaling operations because it defines a finite number of configurations for the VMs. Thus, it is possible to associate each configuration with a particular level of demand or system load. The Adaptation Engine is the component that performs the Scaling operation; this role is typically played by the Hypervisor. Another key component is the SLA Violation Checker to perform the checks required during scaling operations to ensure that service-level objectives are maintained at all times. \\ \cline{2-3}
+& Consolidation & This tactic concentrates VM instances on the minimum number of servers needed, to allow unused servers to be powered down. The main component of the Consolidation tactic is the VM Allocator, the software component responsible for live VM migration, which is often part of the Hypervisor. The SLA Violation Checker is also needed as well to check that service-level objectives are maintained after VM migrations. \\ \cline{2-3}
+& Workload Scheduling & This tactic is meant to prioritize and assign workload to the different virtual resources available in order to match demand. In this tactic, a Workload Scheduler is used to dispatch workloads to VMs. The Scheduler normally uses one or more queues to arrange the workloads. Queues can be differentiated in terms of priority levels, QoS requirements or deadlines. The SLA Violation Checker ensures that all service-level objectives are met. \\
+\hline
+\multirow{2}{*}{Cloud Federation} & Energy Brokering & This tactic makes energy information about services an additional parameter for service discovery and selection. It is realized by means of two components, an Energy Broker and a Green Service Directory (GSD). The Energy Broker enables access to energy-efficient services. It receives requests for cloud services that perform a specific task and returns a pointer to the most energy-efficient service available in the multi-cloud that can perform the requested task. In this, Energy Brokers make use of a GSD, which is a repository where all the cloud providers in the multi-cloud store the energy information of the services they provide. \\ \cline{2-3}
+& Service Adaptation & The Service-Adaptation tactic describes how cloud platforms should switch to these more energy- efficient services.  It is realised by two components, the Energy Orchestator and the SLA Violation Checker.  The Energy Orchestrator communicates with the Energy Broker to discover energy-efficient services that fulfill a certain task and performs the registration of those services with the system. This operation is authorized by the SLA Violation Checker, which ensures that the new services meet the service-level objectives required by the system. \\
+\hline
+
+\end{longtable}
+\end{small}
+
+These tactics are clearly useful in the correct context and can guide architectural decisions that allow energy to be considered as a first class architectural concern.  However these tactics are primarily of use to an infrastructure architect or an application architect in an environment where they have a lot of control over he infrastructure environment and can make significant changes to it.  Our area of interest is application architects working in a more common situation where they have limited control over the fundamental workings of their infrastructure platform.
+
+The papers in the \emph{Cyber-Foraging Tactics} group provide a practical set of tactics for solving architectural problems "...to enable mobile devices to extend their computing power and storage by offloading computation or data to more powerful servers located in the cloud or in single-hop proximity" \cite{lewis2015-foragingtactics} and develop these ideas to provide a decision model to allow the tactics to be used effectively.  This research has developed a sophisticated and extensive catalogue of tactics, comprising 10 functional tactics (with two further variants of them) and 12 non-functional tactics (with 6 further variants of them).  These tactics offer extensive architectural advice and can clearly have a dramatic impact on the energy usage of mobile applications in systems that implement them.  However these tactics are not generally applicable beyond the specific problem domain of cyber-foraging and so do not help us address our question of how to guide application software architects in considering the energy efficiency of their applications.
+
+The studies in the \emph{Energy Perspective} group both define an architectural perspective (that is "a collection of activities, tactics, and guidelines that are used to ensure that a system exhibits a particular set of related quality properties that require consideration across a number of the systems architectural views" \cite{woods2005-perspectives}).  The perspective aims to standardise and organise the work of the architect in meeting energy efficiency goals for their system.  This includes identifying, testing and selecting architectural tactics to achieve particular goals which the architecture does not initially meet, and the perspective aims to provide a framework to guide and formalise this process.
+
+The full definition of the perspective can be found in \cite{jagroep2017-energyperspective}, but to briefly summarise its key activities, it recommends the following steps in addressing energy as an architectural concern:
+
+\begin{enumerate}
+	\item \textbf{Capture energy requirements} - Energy requirements can be formulated like other requirements, however it might prove difficult to translate the requirements into quantitative goals. Cross-checking the goals with stakeholders is essential to ensure the software will fulfill the requirements.
+	\item \textbf{Create energy profile} - An energy profile of the software provides the stakeholder with an objective starting point and benchmark to identify "hot spots" and determine whether the desired results have been achieved. Creating the profile requires energy consumption and performance measurements and can be visualized by creating an overlay for the architectural description.
+	\item \textbf{Assess against requirements} - Using the energy profile an assessment should be performed on whether the software meets the requirements and if not, the assessment should show what quantitative goals are not met and the (software) aspects that are directly related to these goals.
+	\item \textbf{Determine adjustments} - If required, adjustments should be determined to meet the requirements. Tactics, patterns and other known solutions should be considered that affect specific "hot spots" signaled by the quality measure.
+	\item \textbf{Apply adjustments} - Adjustments related to infrastructure can often be applied immediately by an administrator with little effort. Changing the software may be significant effort and disrupt other software delivery. The resources required to apply an adjustments should be included in the business case for the adjustment.
+	\item \textbf{Evaluate adjustments} - Determine that requirements are met without unwanted side-effects. Requires measurement in the newly environment and comparison against the energy profile. Relevant stakeholders need to judge whether the results are satisfactory.
+\end{enumerate}
+
+As with most perspectives, the process is an iterative one, performing these steps repeatedly as the architect's knowledge of the situation increases and the architecture is changed in response to the process.
+
+The authors of the perspective suggest considering the cloud energy efficiency tactics that we reviewed earlier in this survey along with the tactics of \emph{Increasing Modularity}, \emph{Optimising Network Load}, \emph{Increase Hardware Utilisation}, \emph{Concurrency Architecture Variations}.
+
+The architectural perspective appears to be a valuable artefact for an architecture practitioner and would provide them with significant assistance in understanding how to treat energy efficiency as an architectural concern.  The weakest part of the perspective at present is the set of tactics, which are quite general and would be more valuable if they were based on industrial case studies.  We return to this point in \cref{chapter:energydesignprinciples}.
+
+Finally, the paper classified as \emph{Design Practices} is an empirical evaluation of the energy impact of two well known design practices, namely to \emph{Use Efficient Queries} and to \emph{Put Applications to Sleep}.  
+
+The study reports a research exercise that ran two experiments.  The first experiment ran inefficient MySQL queries (SQL relational database queries) and compared the energy usage of the scenario to the same functional scenario using an efficient database query.  The second tested two versions of the Apache web server, firstly the standard version, which calls the operating system \emph{sleep} function when it is idle, and one with all calls to the operating system \emph{sleep} function removed.  The same workload was applied to both versions of the server and the resource utilisation and energy consumption of each measured.  The study ran the experiments in a specific controlled environment to allow interference free measurements of resource utilisation and physical power consumption.
+
+The results of the study were unsurprising with the use of an efficient query significantly reducing the machine resources required to process the scenario resulting in a 25\% energy saving.  Similarly, putting the application to sleep had a measureable and repeatable, but smaller, impact on energy consumption (14\%).
+
+This study provides a useful result to validate two simple design practices which have been proven to reduce energy consumption as a result of the study.  However, the design practices are at a fairly detailed level and are unlikely to result in significant architectural decisions.  So while of interest to a software architecture practitioner, this study does not provide a significant amount of guidance on how to start improving the energy characteristics of their applications.
 
 \subsection{Conclusions}
 
-Answer the research question
+Our research question, RQ3, asked "What design guidelines can we provide to guide architects to improve energy efficiency of their systems?"  Our answer, from a  review of the relevant research literature, is that the practice of treating energy efficiency as an architectural concern is still immature and more assistance is needed for the industrial practitioner.  The most promising, generally applicable and currently valuable advice available can be found in the Energy Architectural Perspective defined at Utrecht University and Centric Netherlands BV.  This perspective provides a clear and useful approach to guide the architect in addressing energy as an architectural concern.  The weakest part of the perspective is the set of architectural tactics that it has to refer to.  We partly address this concern in \cref{chapter:energydesignprinciples}.
 
+Other advice for the practitioner is available in the other studies, and is of value in the correct context, particularly for those implementing cyber-foraging systems or designing cloud based infrastructure to be energy efficient, or those application architects able to design their infrastructure platforms.
 
 \section{Application Energy Consumption Analysis} \label{sec:litreviewenergy}
 
