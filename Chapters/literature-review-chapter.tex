@@ -224,23 +224,59 @@ Given the effort required to develop ADLs, we assume that most of them are inten
 It is our opinion that a technology can only be considered have had an impact when it is used by people other than its creators, and when considering the products of research groups, this means significant usage outside the originating research group and ideally in an industrial context.  Nearly all the ADLs we have surveyed fail this test, with less than 20\% of them having been used outside their originating group (based on the publications we could find).  It is possible that some of these ADLs have been used industrially but the case studies not published, however we feel that this is unlikely given the positive impact that publishing such case studies would have.  We believe that this finding in itself is cause for reflection within the ADL research community (as was the previous similar finding from a workshop some years ago \cite{woodshilliard2005-adlsinpractice}).
 \end{description}
 
-
-
 \section{Prioritisation of Architectural Effort}
 
-Introduction and list research question
+An observation we have made from software architecture practice is that the prioritisation of an architect's activity is a complex process, with many factors being taken into account. The software architect had broad responsibilities on a project and they can be involved in almost any technical aspect of a project at some point in its lifecycle. This can make it difficult for an architect to prioritise their effort in such a way that they have the time available to prioritise quality properties like energy efficiency that are often not explicity prioritised by many of the system's stakeholders (we've observed that similar problems often occur with security, performance and scalability properties).
+
+This situation led to our second research question \emph{RQ2 - How can architects prioritise their attention on energy efficiency?}
+
+We therefore were interested in what existing approaches existed in the research literature which could help practicing architects achieve this balance.  We were aware of generic time management techniques (like \cite{allen2015-gettingthingsdone}) but we did not observe role-specific heuristics or techniques in common use in industry and so were interested in whether there were approaches in the research literature which could be taught to new architects to allow us to further our goal of making it easier for software architects to address energy efficiency as an architectural concern.
 
 \subsection{Research Methodology}
 
-What did I do?
+We identified the research literature to include in the study by searching commonly used literature catalogues as well as manually inspecting the reference lists of relevant papers and following other relevant references found.
+
+After some experimentation we defined our search query for online catalogues to be \emph{("software architect" or "software architecture") AND ("prioritize" OR "prioritisation" OR "focus") AND ("attention" or "effort")}.  The syntax of the query had to be refined for different catalogues as they provide different search facilities, but this was a simple matter of performing multiple simpler queries against them.
+
+We searched key online literature catalogues for papers that matched our query in in their title, abstract or keywords.  The four catalogues we used were the ACM Digital Library (advanced search), Google Scholar, IEEEXplore and Microsoft Academic Search.
+
+The different catalogues returned different result sets for the query, with ACM Digital Library returning 11 results, IEEEXplore 12, Google Scholar nearly 80 and Microsoft Academic Search 12.
+
+We then consolidated these results, by concatenating and removing duplicates from the ACM and IEEE results and manually scanning the results from Google Scholar to identify studies which suggested some aspect of prioritisation in their title (which resulted in 6 additional unique entries).  Finally, Microsoft Academic Search returned relatively few entries and most were obviously not relevant to our search, but 4 additional items were added manually from this source.
+
+When we inspected the results, it became obvious that there was a significant body of literature on the subject of prioritising system quality requirements.  This is not exactly what we ask in our research question, which is more general, but we judged that such approaches might provide answers to the question, so we investigated them further.  A manual process of reference following and additional searches revealed that many of the studies in this area have little or no consideration of industrial usage or validation.  However we did find some that appeared to have potential industrial relevance and this resulted in another 20 studies which had not been returned by our search query but we believe are representative of this research area.
+
+At this point we had a list of 46 candidate studies for consideration.
+
+To narrow the list to the most relevant for our needs, we identified the following criteria for inclusion in our survey.
+
+\begin{description}
+	\item[IC1] The study has been peer reviewed and is at least 2500 words long.
+	\item[IC2] The study addresses some aspect of how architects prioritise their effort and attention (rather than just decision making for example).
+	\item[IC3] The advice, technique(s) or approach(s) in the study can be applied by an industrial software architect.  (For example, they have some industrial validation and do not rely on a research tool or technique).
+	\item[IC4] For practical reasons the study must be written in English.
+\end{description}
+
+When we applied inclusion criterion IC1, this removed 5 items from the list and applying IC2 (to focus on architectural effort prioritisation) left 13 for consideration.  When we applied IC3, to ensure industrial applicability, this left 6 studies, due to the others not having any industrial validation.  All of the studies we considered were written in English so IC4 was unnecessary.
 
 \subsection{Analysis of the Results}
 
-Data analysis or list of paper summaries and common aspects
+In his paper \emph{} \cite{kruchten2008-architectsdo}, Kruchten recommends a prioritisation of effort into 50\% architecting (design, validation, prototyping, documenting), 25\% getting input (from users, for requirements, on technology) and 25\% providing information (communicating the architecture, assisting stakeholders). The recommendation comes from experience in managing a 10 person architecture team in the early 1990s.  To support his theory, he shows how other time allocations can cause architectural (behavioural) anti-patterns.  This is anecdotal rather than empirically-based advice, but is based on large scale industrial experience.  It does not help the architect to know where to focus but is clear advice on the types of activities to focus their attention and the amount of time to spend on each.
+
+In their paper \emph{Decision-making techniques for software architecture design: A comparative survey} \cite{falessi2011-archdecisionsurvey}, Falessi et al report a survey of the decision making techniques in academic literature.  This is only partly related to prioritisation but it was one factor in their study.  They found that the priority of a quality attribute chould be defined by direct weighting by stakeholders, an elicited weight which involves "decomposing a multiple-criteria decision-making problem into a quality attribute hierarchy" (and they note the significant effort involved in this) or using a utility curve (which again is significant effort).  However their results are inconclusive, reporting that "no decision-making technique is more (or less) susceptible than any other technique to the entire set of difficulties taken into account in this study, that is, no decision-making technique dominates (is always better than) any other one".  Therefore there is little concrete advice for the software architecture practitioner to take from this study.
+
+Another survey paper is \emph{Mature architecting-a survey about the reasoning process of professional architects} \cite{vanheesch2011-maturearch} by van Heesch and Avgeriou, which reports the results of a survey of 53 industrial software architects to find out how they reason during decision making.  Prioritisation was part of the study scope by the only prioritisation insights in the results were   
+that "the quality attribute requirements are clearly found more important than the functional requirements" and "requirements should be prioritized; the most important ones and the ones that are hardest to fulfil should be regarded first, as they bare potential risks" (sic).  These insights sound like good advice, but don't provide a significant degree of guidance to an architect focus attention in a particular way.
+
+The industrial study \emph{Prioritization of quality requirements: State of practice in eleven companies} \cite{svensson2011-qrprioritisation} by Svensson et al reports on a study of architects in 11 industrial companies to find out how they prioritise their system quality requirements.  Representative techiques that they suggest are Numerical Assignment (Grouping), Pair-Wise Comparison, Cost-value approach, Cumulative voting (\$100-Dollar Test) and Ranking.  They had three main findings, that (1) ad-hoc and grouping (numerical assignment) of requirements are the dominant methods for prioritizing quality requirements; (2) although numerical assignment is used frequently in quality requirement prioritization, quality requirements are by default often considered to have the lowest priority; and (3) the reasons for not prioritizing quality requirements was not related to the prioritization process itself, but rather how quality requirements were treated in the overall requirements engineering process.  They also found that It is most common to have no specific or explicit criterion defined when prioritizing quality requirements.  So for the architecture practitioner, one useful finding is that ad-hoc and grouping are used to prioritise quality requirements - these are techniques that industrial architects could easily apply.  And some comfort can be taken from the second finding about the difficultly of prioritising quality requirements - it is a common problem in many environments.
+
+Another study focusing on quality requirements is \emph{Can we know upfront how to prioritize quality requirements?} \cite{fernandez2015-qrprioritisation} by Condori-Fernandez and Lago.  The context of this study is service design for smart transport systems and involved studying a group of postgraduate students solving a service design problem set by an industrial partner company.  The study aimed to identify which quality requirements are most important from the software architect's viewpoint and which are most stable over the service design process.  The study does investigate the prioritisation decisions made, it doesn't ask how they are made, so does not significantly contribute towards answering our question.  The main prioritisation conclusion was that "the design space specification phase of our service design method can play a crucial role in QR prioritization", which is not a generally usable result for most architects.
+
+Finally in the recent study \emph{An industry experience report on managing product quality requirements in a large organization} \cite{mohagheghi2017-managingqr}, Mohagheghi and Aparicio report their experience in managing quality requirements in a Norwegian goverment department's large agile development programmes.  There isn't much discussion of prioritisation of the quality requirements in the study with the only significant insight being that stakeholder workshops were necessary to prioritise quality requirements.  However there isn't any information on how the architects focused their effort during the process.
 
 \subsection{Conclusions}
 
-Answer the research question
+From a large body of research literature in the area of architectural prioritisation and particularly prioritisation of quality requirements, we found that very little of it is directly applicable to an industrial practitioner as much of it is speculative, theoretical or unvalidated.  Of the literature we found that was of potential value, we have an experience-based view of the amount of time the architect should spend on different activities (Kruchten) and an industrial survey result that most prioritisation is ad-hoc or based on simple (numerical) grouping of requirements (Svensson et al).  This falls some way short of the amount of guidance that we had hoped to be able to provide to an architecture practitioner.  We will return to this topic in \cref{chapter:prioritisation} to consider what further guidance could be provided on this topic.
 
 
 \section{Architectural Guidance for Energy Efficiency}
@@ -270,7 +306,7 @@ At this point we had a list of 182 candidate studies for consideration.
 To narrow the list to the most relevant for our needs, we identified the following criteria for inclusion in our survey.
 
 \begin{description}
-	\item[IC1] The study has been peer reviewed and is at least 3000 words long.
+	\item[IC1] The study has been peer reviewed and is at least 2500 words long.
 	\item[IC2] The study addresses some aspect of energy efficiency as a quality property of a system.
 	\item[IC3] The reference provides some tangible advice (such as a tactic, a design principle or a technique) which could be used to help address the energy qualities of a software system.
 	\item[IC4] The advice provided by the study is relevant to addressing energy as an architectural concern (rather than, for example, code path optimisation).
