@@ -161,35 +161,39 @@ Considering the combination of these factors, our conclusion was that adopting o
 \label{table:archelemtypes}
 \footnotesize
 
-\begin{tabular}{l p{10cm}}
-
+\begin{tabular}{| l p{10cm} |}
+\hline
 User Interfaces \\
-\cline{1-1}
+\hline
 & \\
 GUI   & A traditional GUI client written in Java Swing, C\# WebForms or C++ Motif. \\
 WebUI & A user interface implemented as a set of web pages (typically as a set of CGI scripts or a Java webapp) \\
 Command Line & A user interface implemented as a command line program, such as a script or a Unix command line utility \\
 & \\
-Servers \\
-\cline{1-1}
+\hline
+Servers & \\
+\hline
 & \\
 Message Driven Server & A server whose operation is driven by the receipt of messages from the system message bus \\
 Server                &  A server whose operation is driven by a mechanism other than messages (such as RPCs, database polling or temporal schedules) \\
 Batch Program         & A program that is run from a scheduler and performs its operation in a single execution, without waiting for other system elements to perform any operations or for human intervention. \\
 Data Loader           & A program whose primary purpose is to extract data from a source and move it to a destination, typically transforming it in some way during the transmission. \\
 & \\
+\hline
 Data Stores  \\
-\cline{1-1}
+\hline
 & \\
 System database   &  The shared system database or a set of tables from it \\
 File              & A file on the file system \\
 & \\
+\hline
 External Entities  \\
-\cline{1-1}
+\hline
 & \\
 Subsystem            & Another subsystem that communicates with this one in some way \\
 External System      & An information system outside our system that a subsystem communicates with in some way \\
-External Data Source & A Data Source outside our system that a subsystem receives data from (such as a source of security prices)
+External Data Source & A Data Source outside our system that a subsystem receives data from (such as a source of security prices) \\
+\hline
 \end{tabular}
 \end{table}
 
@@ -200,13 +204,14 @@ The fairly restricted set of inter-element connectors in use throughout the syst
 \caption{Types of Architectural Connectors}
 \label{table:archconntypes}
 \footnotesize
-\begin{tabular}{l p{10cm}}
-
+\begin{tabular}{| l p{10cm} |}
+\hline
 RPC                & A synchronous inter-process procedure call (usually XML over HTTP) \\
 Direct Invocation  & An in-process direct procedure invocation (calling a library) \\
 Database Data Flow & Writing data to a database table or tables to allow it to be used by another element \\
 File Data Flow     & Writing data to a filesystem file to allow it to be used by another element \\
 System Messaging   &  Dispatch and receipt of messages over the system message bus via a named messaging destination \\
+\hline
 \end{tabular}
 \end{table}
 
@@ -216,7 +221,7 @@ System Messaging   &  Dispatch and receipt of messages over the system message b
 
   A couple of examples of the patterns identified are shown in Figure \ref{figure:adlnotation1}. 
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=10cm]{Figures/adls-figure1}
 \caption{Examples of the ADL Notation Illustrating Preferred Configurations}
@@ -292,7 +297,8 @@ The elements of this architectural structure are described in Table \ref{table:a
 \caption{Elements of the Asset Management System}
 \label{table:amselements}
 \footnotesize
-\begin{tabular}{l l p{7cm}}
+\begin{tabular}{| l l p{7cm} |}
+\hline
 Element Name & Type & Description \\
 \hline
 
@@ -306,7 +312,8 @@ Job Processor      & Messaging Server & The responsibilities of the Job Processo
 
 Market Data Loader & Loader           & The responsibility of the Market Data Loader (MDL) is to retrieve various forms of market data from an internal Market Data Source system and load the data into the database, handling versioning and business date identification as part of the loading process.  The datasets required include securities prices, bond yields, interest rates, FX rates, volatilities, correlations and so on.  The loader requires a data retrieval interface to the MDL system, allowing data sets to be retrieved on demand. \\
 
-Order Gateway      & Messaging Server & The responsibility of the Order Gateway is to accept incoming orders to buy and sell securities (including order parameters such as execution strategies and price limits), to forward these requests to a trading system for execution and then receive the execution reports ("fills") indicating order execution and broadcast these to other interested parts of the system.  The gateway provides a message based order request interface and a broadcast status interface and it requires a message based interface to allow order submission to a trading system.
+Order Gateway      & Messaging Server & The responsibility of the Order Gateway is to accept incoming orders to buy and sell securities (including order parameters such as execution strategies and price limits), to forward these requests to a trading system for execution and then receive the execution reports ("fills") indicating order execution and broadcast these to other interested parts of the system.  The gateway provides a message based order request interface and a broadcast status interface and it requires a message based interface to allow order submission to a trading system.\\
+\hline
 \end{tabular}
 \end{table}
 
@@ -327,7 +334,8 @@ The interactions between system elements necessary to implement this scenario ar
 \caption{Interactions for the Portfolio Rebalance Scenario}
 \label{table:amsinteractions}
 \footnotesize
-\begin{tabular}{p{0.5cm} p{2cm} p{2cm} l p{2cm} p{4.9cm}}
+\begin{tabular}{| p{0.5cm} p{2cm} p{2cm} l p{2cm} p{4.9cm} |}
+\hline
 Step & From & To & Type & Connector & Description \\
 \hline
 
@@ -354,7 +362,7 @@ Step & From & To & Type & Connector & Description \\
 11 & UI Server & AMSdb & DB & pmgmt and ordermgmt schemas & The UI Server updates the database with the status of the orders and the effect on the portfolio \\
 
 12 & GUI & UI Server & RPC & portfolio service & The GUI makes RPC calls to the UI Server and gets the updated status of the orders and the changes to the portfolio in its response \\
-
+\hline
 \end{tabular}
 \end{table}
 

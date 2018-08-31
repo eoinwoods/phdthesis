@@ -98,7 +98,7 @@ The root traces were extracted from the Zipkin database, by selecting all of tho
 
 \lstset{language=SQL}
 \begin{lstlisting}
-select * from zipkin_spans where id=trace_id
+	SELECt * FROM zipkin_spans WHERE id=trace_id
 \end{lstlisting}
 
 
@@ -108,18 +108,18 @@ Using the trace ID we could then run a more complex query to extract the trace's
 
 \lstset{language=SQL}
 \begin{lstlisting}
-SELECT hex(s.trace_id) as trace_id, hex(s.id) as span_id,
-       hex(s.parent_id) as parent_id,
-       start_ts as start_time_usec, 
-       start_ts+duration as end_time_usec,
-       inet_ntoa(endpoint_ipv4 \& conv("ffffffff", 16, 10)) as ipv4_address,
-       endpoint_port
-FROM zipkin_spans s, zipkin_annotations a
-WHERE s.trace_id = 5896569591426873811
-AND s.trace_id = a.trace_id
-AND s.id = a.span_id
-AND a_key = 'sr'
-ORDER BY start_ts
+	SELECT hex(s.trace_id) as trace_id, hex(s.id) as span_id,
+	       hex(s.parent_id) as parent_id,
+	       start_ts as start_time_usec, 
+	       start_ts+duration as end_time_usec,
+	       inet_ntoa(endpoint_ipv4 \& conv("ffffffff", 16, 10)) as ipv4_address,
+	       endpoint_port
+	FROM zipkin_spans s, zipkin_annotations a
+	WHERE s.trace_id = 5896569591426873811
+	AND s.trace_id = a.trace_id
+	AND s.id = a.span_id
+	AND a_key = 'sr'
+	ORDER BY start_ts
 \end{lstlisting}
 
 This allowed us to identify the spans making up the processing of the request and the IP addresses of the two application elements that handled the invocations as being \texttt{172.18.0.7} and \texttt{172.18.0.8}, which were the IP addresses of the Docker containers containing the microservices involved in handling the request.
@@ -207,7 +207,7 @@ Our first question was whether the energy allocations per request were consisten
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/validation-energycpu}
+\includegraphics[width=0.75\textwidth,trim={3 3 3 3},clip]{Figures/validation-energycpu}
 \caption{Energy Allocation per Request for Small, Medium and Large Services}
 \label{figure:validation-energycpu}
 \end{figure}
@@ -218,7 +218,7 @@ Our second test involved investigating how energy allocation was affected by a c
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/validation-scenariolength}
+\includegraphics[width=0.75\textwidth,trim={2 2 2 2},clip]{Figures/validation-scenariolength}
 \caption{Energy Allocation Across Different Scenario Lengths}
 \label{figure:validation-scenariolength}
 \end{figure}
@@ -240,7 +240,7 @@ Another aspect of energy allocation is how a fixed workload is allocated energy 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/validation-machineload}
+\includegraphics[width=0.75\textwidth,trim={2 2 2 2},clip]{Figures/validation-machineload}
 \caption{Energy Allocation Under Different Host Load Conditions}
 \label{figure:validation-machineload}
 \end{figure}
@@ -269,7 +269,7 @@ To test the assumption that CPU utilisation acts as a good proxy for IO activity
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/validation-traceenergydatasize}
+\includegraphics[width=0.75\textwidth,trim={2 2 2 2},clip]{Figures/validation-traceenergydatasize}
 \caption{CPU Utilisation and Energy Allocation Scenarios}
 \label{figure:validation-traceenergydatasize}
 \end{figure}
@@ -282,7 +282,7 @@ For completeness we also plotted the data-size of each scenario compared to the 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/validation-energybydatasize}
+\includegraphics[width=0.75\textwidth,trim={2 2 2 2},clip]{Figures/validation-energybydatasize}
 \caption{Energy Allocation by Data Size}
 \label{figure:validation-energybydatasize}
 \end{figure}
@@ -295,7 +295,7 @@ Finally, to provide some additional validation of the relationship of IO workloa
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/validation-cpubydatasize}
+\includegraphics[width=0.75\textwidth,trim={3 2 2 2},clip]{Figures/validation-cpubydatasize}
 \caption{Energy Allocation by Data Size}
 \label{figure:validation-cpubydatasize}
 \end{figure}
@@ -325,7 +325,7 @@ We then investigated \textit{Consistency} by performing a series of CPU intensiv
 
 The next step was to validate \textit{Allocation}, as described in \sref{section:validatingallocation}, by running controlled test workloads on host machines that had carefully controlled competing workload running on them already. These tests proved that when competing workload was present on a host machine, energy was allocated correctly between our test workoad and the competing workload and was well within the 5\% level of consistency that we were aiming for.
 
-Finally, we investigated whether \textit{CPU usage is a good proxy for resource usage} for an application trace.  We were aware of previous research results suggesting that this was the case, but we decided to investigate it empirically in our specific situation too.  We focused on file IO during this part of the investigation, given its very large contribution to energy consumption [REF], and we ran a number of tests to investigate its relationship to CPU usage.  These tests confirmed that CPU usage is a very good proxy for file IO usage too, with a correlation coefficient greater than 0.9 for the two values.
+Finally, we investigated whether \textit{CPU usage is a good proxy for resource usage} for an application trace.  We were aware of previous research results suggesting that this was the case, but we decided to investigate it empirically in our specific situation too.  We focused on file IO during this part of the investigation, given its very large contribution to energy consumption [TODO - REF], and we ran a number of tests to investigate its relationship to CPU usage.  These tests confirmed that CPU usage is a very good proxy for file IO usage too, with a correlation coefficient greater than 0.9 for the two values.
 
 In summary we have investigated four different aspects of the correctness and utility of the Apollo Energy Allocation System's proof-of-concept implementation of our energy allocation approach for application-level energy monitoring.  All four of the testing exercises confirmed a different aspect of the correctness of the implementation.  Therefore, we conclude that the proof-of-concept implementation is sufficently consistent and correct to validate the application energy allocation approach that we propose.
 

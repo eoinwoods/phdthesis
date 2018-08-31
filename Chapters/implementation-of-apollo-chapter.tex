@@ -85,7 +85,8 @@ The approach used to estimate the energy usage of a host was explained in sectio
 
 \begin{table}
 \centering
-\caption{SPECPower 2008 Benchmark Results for \\Dell PowerEdge R730 (Intel Xeon E5-2699 v4 2.20 GHz)}
+%  (Intel Xeon E5-2699 v4 2.20 GHz)
+\caption{SPECPower 2008 Benchmark Results for \\Dell R730 Poweredge}
 \label{table:powervalues}
 \footnotesize
 \begin{tabular}{|c|c|c|}
@@ -245,7 +246,7 @@ Energy Calculator & Provides the main processing loop to retrieve traces from th
 \hline
 Trace Manager & An interface defining a simple API to retrieve trace records. \\
 \hline
-MySql Zipkin Trace Manager & An implementation of the \texttt{Trace Manager} interface that accesses the Zipkin Server's MySQL database to retrieve the trace records held within it. \\
+MySql Zipkin Trace \newline Manager & An implementation of the \texttt{Trace Manager} interface that accesses the Zipkin Server's MySQL database to retrieve the trace records held within it. \\
 \hline
 Net Info & An interface defining a simple API to allow container IDs to be mapped to network addresses and vice versa and container names to be mapped to container IDs and vice versa. \\
 \hline
@@ -253,11 +254,11 @@ Docker Json Net Info & An implementation of \texttt{Net Info} to provide the con
 \hline
 Resource Usage Manager & An interface describing the API to retrieve resource usage information during a period of time for a Docker container, for a host machine or for a host machine where a specific container ran. \\
 \hline
-InfluxDb Resource Usage Manager & An implementation of \texttt{Resource Usage Manager} that retrieves the information from an InfluxDB that has been populated by the \texttt{Telegraf} metrics capture server. \\
+InfluxDb Resource Usage \newline Manager & An implementation of \texttt{Resource Usage Manager} that retrieves the information from an InfluxDB that has been populated by the \texttt{Telegraf} metrics capture server. \\
 \hline
 Energy Usage Manager & An interface defining the API that provides the ability to retrieve energy usage information for a host machine by name for a period of time, or a host machine that a particular container ran on during a period of time. \\
 \hline
-Energy Usage Manager Simulator & An implementation of the \texttt{Energy Usage Manager} interface that uses a simulation based approach to provide realistic energy consumption information. \\
+Energy Usage Manager \newline Simulator & An implementation of the \texttt{Energy Usage Manager} interface that uses a simulation based approach to provide realistic energy consumption information. \\
 \hline
 InfluxDb Decorator & A key utility class that implements the Decorator pattern and adds functions and ease-of-use features to the standard \texttt{InfluxDB} Java client class for InfluxDB.  This allows all of the schema navigation and query language specifics to be isolated and hidden in this class. \\
 \hline

@@ -230,26 +230,28 @@
   \global\let\and\relax
   \cleardoublepage
 }
+% (eoin) comments below in "abstract" env definition
+% avoid boilerplate and prevent vertical centering
 \newenvironment{abstract}
 {
   \btypeout{Abstract Page}
   \thispagestyle{empty}
-  \null\vfil
+  %\null\vfil
   \begin{center}
     \setlength{\parskip}{0pt}
-    {\normalsize \UNIVNAME \par}
-    \bigskip
+    %{\normalsize \UNIVNAME \par}
+    %\bigskip
     {\huge{\textit{Abstract}} \par}
     \bigskip
-    {\normalsize \facname \par}
-    {\normalsize \deptname \par}
-    \bigskip
-    {\normalsize Doctor of Philosophy\par}
-    \bigskip
-    {\normalsize\bf \@title \par}
-    \medskip
-    {\normalsize by \authornames \par}
-    \bigskip
+    %{\normalsize \facname \par}
+    %{\normalsize \deptname \par}
+    %\bigskip
+    %{\normalsize Doctor of Philosophy\par}
+    %\bigskip
+    %{\normalsize\bf \@title \par}
+    %\medskip
+    %{\normalsize by \authornames \par}
+    %\bigskip
   \end{center}
 }
 {

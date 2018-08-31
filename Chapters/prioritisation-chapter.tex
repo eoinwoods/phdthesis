@@ -54,18 +54,20 @@ Some characteristics of the participants in the study are summarised in the grap
 %% See this page for the magic:
 %% https://tex.stackexchange.com/questions/64858/how-to-create-subfloat-figures-two-in-first-row-and-one-below
 %%
+%%       \includegraphics[scale=0.9, trim=5 5 5 5,clip]{Figures/prioritisation-roles}
+
 \begin{figure}
-   \begin{subfigure}{.4\linewidth}
+   \begin{subfigure}{.5\linewidth}
       \centering
-      \includegraphics[scale=0.75, trim=5 5 5 5,clip]{Figures/prioritisation-roles}
+      \includegraphics[scale=1.0]{Figures/prioritisation-roles}
    \end{subfigure}
-   \begin{subfigure}{.4\linewidth}
+   \begin{subfigure}{.5\linewidth}
       \centering
-      \includegraphics[scale=0.75, trim=5 5 5 5,clip]{Figures/prioritisation-yearsexp}
+      \includegraphics[scale=1.0]{Figures/prioritisation-yearsexp}
    \end{subfigure}
    \begin{subfigure}{\linewidth}
       \centering
-      \includegraphics[scale=0.75, trim=5 5 5 5,clip]{Figures/prioritisation-countries}
+      \includegraphics[scale=1.0]{Figures/prioritisation-countries}
    \end{subfigure}
 
    \caption{Study Participants (8 in total)}
@@ -161,7 +163,7 @@ We asked three closed-ended questions to find out whether the respondent thought
 The open-ended questions that we asked were:
 
 \begin{description}
-	\item [Q4] "Are there other general areas of risk that should be added to "Prioritise time according to risks" that would be applicable to most (information) systems and environments? If so please list and briefly explain them."
+	\item [Q4] "Are there other general areas of risk that should be added to 'Prioritise time according to risks' that would be applicable to most (information) systems and environments? If so please list and briefly explain them."
 	\item [Q5] "Are there any significant factors missing from the model which you use to focus your architectural work?"
 	\item [Q6] "Do you have any other comments on the  model or the survey"
 \end{description}
@@ -210,7 +212,7 @@ Having trialled the questionnaire ourselves and with two other individuals, we e
 \subsection{The Respondents}
 
 To use the questionnaire to validate the model, we needed to find a suitable set of architects who could read it and complete the survey for us.  We found our respondents via two main activities.  
-Firstly, we wrote a LinkedIn post \footnote{https://www.linkedin.com/pulse/focusing-software-architects-attention-eoin-woods} which provided an outline of the model, explained that we wanted to validate it and who we wanted to participate, and provided a link to the survey.  This was posted from my account and so tended to appear in the LinkedIn news feed of practitioners, as my LinkedIn network contains many more practitioners than researchers.  The post was further publicised via Twitter and Facebook to reach a larger audience.  This step was moderately successful, with the post being viewed about 700 times and about 25 people completing the survey successfully.
+Firstly, we created a LinkedIn post \footnote{https://www.linkedin.com/pulse/focusing-software-architects-attention-eoin-woods} which provided an outline of the model, explained that we wanted to validate it and who we wanted to participate, and provided a link to the survey.  This was posted from my account and so tended to appear in the LinkedIn news feed of practitioners, as my LinkedIn network contains many more practitioners than researchers.  The post was further publicised via Twitter and Facebook to reach a larger audience.  This step was moderately successful, with the post being viewed about 700 times and about 25 people completing the survey successfully.
 
 To gain more responses to the survey, the second activity was a targeted email sent to individuals that we knew personally and who we knew were practicing software related architects (including software, solution and enterprise architects).  This second activity resulted in about 60 more responses to the survey.
 
@@ -220,7 +222,7 @@ The job roles of the respondents are summarized in Figure \ref{figure:resproles}
 
 \begin{figure}
 \centering
-\includegraphics[width=10cm]{Figures/prioritisation-detailed-roles}
+\includegraphics[width=10cm,trim={2 2 2 2},clip]{Figures/prioritisation-detailed-roles}
 \caption{Respondent Roles}
 \label{figure:resproles}
 \end{figure}
@@ -230,7 +232,7 @@ The work environments of the respondents were overwhelmingly industrial (we view
  
 \begin{figure}
 \centering
-\includegraphics[width=8cm]{Figures/prioritisation-workenv}
+\includegraphics[width=8cm,trim={2 2 2 2},clip]{Figures/prioritisation-workenv}
 \caption{Respondent Work Environments}
 \label{figure:workenvs}
 \end{figure}
@@ -239,7 +241,7 @@ We had some geographical distribution of respondents, as shown in Figure \ref{fi
 
 \begin{figure}
 \centering
-\includegraphics[width=8cm]{Figures/prioritisation-workenv}
+\includegraphics[width=8cm,trim={2 2 2 2},clip]{Figures/prioritisation-workenv}
 \caption{Respondent Geographies}
 \label{figure:geographies}
 \end{figure}
@@ -248,7 +250,7 @@ To delve a little deeper, we checked the geographical location of the respondent
  
 \begin{figure}
 \centering
-\includegraphics[width=10cm]{Figures/prioritisation-iplocation}
+\includegraphics[width=10cm,trim={2 2 2 2},clip]{Figures/prioritisation-iplocation}
 \caption{Respondent IP Address Locations}
 \label{figure:iplocations}
 \end{figure}
@@ -261,7 +263,7 @@ The final classification we asked our respondents for was the number of years of
  
 \begin{figure}
 \centering
-\includegraphics[width=12cm]{Figures/prioritisation-yearsexp-detailed}
+\includegraphics[width=12cm,trim={2 2 2 2},clip]{Figures/prioritisation-yearsexp-detailed}
 \caption{Years of Experience of Respondents}
 \label{figure:yearsexp}
 \end{figure}
@@ -277,7 +279,7 @@ The first question we asked was to find out if the model was similar to how expe
  
 \begin{figure}
 \centering
-\includegraphics[width=12cm]{Figures/prioritisation-similarity}
+\includegraphics[width=12cm,trim={2 2 2 2},clip]{Figures/prioritisation-similarity}
 \caption{How Similar the Model is to Existing Practice}
 \label{figure:similarity}
 \end{figure}
@@ -307,9 +309,9 @@ We are primarily interested in the top three groups, which is architects with at
 
 The second question moved on to try to establish, whether the respondents thought that model would be useful in practice.  A summary of the answers to this question across all responses is shown in Figure \ref{figure:helpfulness}.
  
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=12cm]{Figures/prioritisation-helpfulness}
+\includegraphics[width=12cm,trim={2 2 2 2},clip]{Figures/prioritisation-helpfulness}
 \caption{Helpfulness of the Model}
 \label{figure:helpfulness}
 \end{figure}
@@ -335,9 +337,9 @@ Again, focusing on the architects with at least 10 years of experience, 67\% of 
 
 Finally, we wanted to check that the areas of risk we had identified as important within the "prioritise time according to risks" heuristic were valuable to a practicing architect.  The results of the corresponding question in the survey across all respondents are shown in Figure \ref{figure:validationofareas}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=12cm]{Figures/prioritisation-riskareas}
+\includegraphics[width=12cm,trim={2 2 2 2},clip]{Figures/prioritisation-riskareas}
 \caption{Validation of Risk Prioritisation Areas}
 \label{figure:validationofareas}
 \end{figure}
@@ -387,9 +389,9 @@ Enterprise Architect &  & 1 (4\%)   & 4 (17\%)  & 9 (39\%)  & 9 (39\%) \\
 \end{tabular}
 \end{table}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=12cm]{Figures/prioritisation-usefulness-by-role}
+\includegraphics[width=12cm,trim={2 2 2 2},clip]{Figures/prioritisation-usefulness-by-role}
 \caption{Usefulness of the Model by Role Type}
 \label{figure:usefulnessbyrole}
 \end{figure}
@@ -420,7 +422,7 @@ Middle-East \& Africa & &         & 1 (100\%) &           & \\
  
 \begin{figure}
 \centering
-\includegraphics[width=12cm]{Figures/prioritisation-usefulness-by-geo}
+\includegraphics[width=12cm,trim={2 2 2 2},clip]{Figures/prioritisation-usefulness-by-geo}
 \caption{Usefulness of the Model by Geography}
 \label{figure:usefulnessbygeo}
 \end{figure}
