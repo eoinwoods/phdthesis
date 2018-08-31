@@ -1,56 +1,136 @@
 \chapter{Introduction}
 \label{chapter:introduction}
 
-\section{Motivation}
+\section{Context and Motivation}
 
-IT activity has entered a new era. In 2008, the number of things connected to the internet exceeded the number of people \cite{evans2008-iotinfo}, while Cisco predicted that in 2011, 20 typical households would generate more traffic than the entire internet in 2008 \cite{evans2008-iotinfo}. We are witnessing an explosive growth in data driven by more affordable storage systems and the proliferation of mobile, IoT, social media, and smart cities to name a few. Add to this the software applications being created around this data, from business analytics to apps that can monitor your cow's pregnancy through a sensor connected to its tail and send you an SMS when she is most likely to calf. The vast majority of the applications being developed are cloud-based, meaning constantly increasing demand on data centres, where many of the large Tech companies are continuously expanding their capacity. 
+The IT industry and the penetration of IT services into the life of most people has entered a new era. The number of devices connected to the internet has been growing steadily.  Cisco estimated that the number of internet-connected devices exceeded the number of people in the world by 2008, and by 2011, 20 typical households were generating more traffic than the entire traffic carried by the internet in 2008 \cite{evans2008-iotinfo}. Due to this growth, we are witnessing a parallel growth in data, driven by more affordable storage systems and the proliferation of mobile, IoT, social media, and smart cities to name a few.  This combination of data and connectivity has resulted in so-called "digital transformation" in many industries, leading to a huge ecosystem of software applications, from business analytics on customer behaviour to mobile apps that can allow a farmer to monitor the climatic and ground conditions in their fields in real time through local sensor systems. These new applications rely on being internet-connected, which results in constantly increasing demand for private and "cloud" data centre capacity.  This is why large Tech companies and major enterprises are continuously expanding their computing capabilities. 
 
-Currently, data centres consume a substantial amount of energy and are thought to produce more Greenhouse Gas emissions than the entire aviation sector. In 2013, data centres in the U.S. alone consumed an estimated 91 billion KWh of electricity, and this is expected to rise to 140 billion KWh by 2020 \cite{delforge2014-datacentreenergy}. It is not surprising therefore that a recent survey of data centre managers showed that power density and energy efficiency are among their top current and future concerns (Intel Corporation, 2012) \textit{DO WE HAVE THIS?}. This is particularly important for Colocation and Managed Service data centre providers who are based within or close to large cities where grid power availability is limited. 
+Currently, data centres consume a substantial amount of energy and are thought to produce more greenhouse gas emissions than the entire aviation sector. In 2013, data centres in the U.S. alone consumed an estimated 91 billion KWh of electricity, and this is expected to rise to 140 billion KWh by 2020 \cite{delforge2014-datacentreenergy}. It is not surprising therefore that a recent survey of data centre managers showed that energy efficiency is seen as their single biggest challenge \cite{cainc2016-ausdcenergy}. This is particularly important for colocation and managed service data centre providers who are based within or close to large cities where grid power availability is limited.
 
-So, can data centres cope with this demand and continue to support the exponential growth of the big data and cloud revolution? We cannot be sure, but we can see that the challenges are widely recognised: a number of related areas are the subjects of active research, ranging from new cooling technologies to more energy efficient servers and building designs, to runtime workload consolidation and management techniques. However, the software architecture community has been slower to recognise their potential contribution and to mobilise to meet this challenge. Addressing energy efficiency at the architecture level is still far from being mainstream. Can we continue designing systems without any consideration of their energy and power efficiency and let others worry about running them in an energy efficient way? Should energy efficiency be a bolt-on system property, or a quality attribute that is addressed at the design stage?
+So, can the data centre community evolve to cope with this ever increasing demand and support the world's relentless digital tranormation? We cannot be sure, but it is clear that the challenges that it poses are widely understood.  A large number of industrial, governmental and academic research programmes \cite{loken2010-scinet, greengrid2011-dcefficiency, dc4cities2014_dcmetrics,ida2015-gdcip} have been investigating and continue to explore topics that can help, from new cooling technologies to more energy efficient servers and building designs in the physical domain, and from runtime workload consolidation to energy consumption monitoring in the software domain. However, the software architecture community has been slower to recognise their potential contribution and to mobilise to meet this challenge. Addressing energy efficiency at the architecture level is still far from being mainstream. Can we continue designing systems without any consideration of their energy and power efficiency and let others worry about running them in an energy efficient way? Should energy efficiency be a bolt-on system property, or a quality attribute that is addressed at the design stage?
 
-Software architects may not be prioritising energy efficiency for a number of reasons. Firstly, we currently have very little understanding of the impact of design decisions on energy efficiency or an understanding of how it affects other system qualities such as user experience, reliability and performance.  Without this knowledge, it is difficult to perform trade-off analysis to understand the benefit or cost of improving energy efficiency. Minor changes to the system design could yield substantial benefits, such as avoiding unnecessary polling or eliminating redundant housekeeping tasks that prevent equipment from entering lower-power states. However, a lack of relevant design tools and frameworks mean that it is still difficult to achieve more sophisticated optimisations that include consideration of contextual information about the runtime environment. 
+Software architects may not be prioritising energy efficiency for a number of reasons.
 
-Second, in order to achieve the next order of magnitude in energy efficiency, we need to think outside traditional design boundaries. This will require people from different specialisations and departments to work together. This can often be difficult to achieve, given current organisational software governance structures, with different teams sometimes having competing objectives, not to mention human dynamics and political barriers. Current technologies also provide few mechanisms to allow communication across different technology layers (that is, the application software, middleware, hardware, network, cooling, power infrastructure, etc.) which would enable cross-layer optimization.
+Firstly, we currently have very little understanding of the impact of design decisions on energy efficiency or an understanding of how it affects other system qualities such as user experience, reliability and performance.  Without this knowledge, it is difficult to perform trade-off analysis to understand the benefit or cost of improving energy efficiency. Minor changes to the system design could yield substantial benefits, such as avoiding unnecessary component redundancy or eliminating low-priority housekeeping tasks that prevent equipment from entering lower-power states. However, a lack of relevant design tools and frameworks mean that it is still difficult to understand the energy characteristics of software at an architectural level, let alone understand or test the energy implications of design decisions. 
 
-Finally, so far, energy efficiency rarely features as an end-user requirement or concern. On one hand, there is the problem of split incentives where operators of systems (e.g. administrators or data centre managers) do not pick up the energy bill (which tend to come out from the facilities budget). Accordingly, they would see very little return from any savings made from energy efficiency. On the other hand, ICT energy costs, given current energy prices, do not constitute more than 1\% to 3\% of a typical organisation’s budget. So, when efficiency is pursued, it is easier to achieve it by addressing areas with larger budget share (e.g. payroll!). This problem is exacerbated by the lack of benchmarks, metrics and reliable data to allow realistic comparisons of different energy efficiency opportunities and their realistic returns.
+Second, in order to achieve the next order of magnitude in energy efficiency, we need to think outside traditional design boundaries. This will require people from different specialisations and departments to prioritise energy efficiency as a design goal and to work together. This can often be difficult to achieve, given current organisational software governance structures, with different teams sometimes having competing objectives, not to mention human dynamics and political barriers.
 
-\section{Research Questions}
+Finally, with the exception of mobile applications, where battery life is a visible reminder of the need for energy efficiency, energy rarely features as a high priority requirement or concern for system acquirers or end-users. On one hand, there is the problem of split incentives where operators of systems (e.g. administrators or data centre managers) do not pick up the energy bill (which tend to come out from the facilities budget). Accordingly, they would see very little return from any savings made from energy efficiency. On the other hand, while energy costs can be anywhere from 25\% to 60\% of total data centre operating cost \cite{techuk2013-dcpower}, this is often a relatively small percentage of an organisation's overall spending. So, when cost savings are required, it may be easier to achieve achieve them by reducing cost in other areas.
 
-This work aims to answer four specific research questions, namely:
+We believe that this situation can be addressed by creating tools and guidance which is aimed specifically at software architects, to allow them to understand the energy efficiency implications of their architectural design decisions.  The work reported in this thesis is a first step on the road to provide this.
+
+\section{Objectives and Research Questions}
+
+The objective of this research is to improve the assistance available to software architects to help them understand the impact of their work on the energy efficiency of the systems that they design.  This process started in the area of architectural description languages (ADLs) as the unambigous description of the architecture that they provide offered the potential to provide the architect with visibility of the energy implications of their design decisions.
+
+To reach our objective, this work aims to answer four specific research questions, namely:
 
 \begin{description}
-\item [RQ1] What ADLs exist and can they be used to reason about the energy properties of a system?
-\item [RQ2] How can architects prioritise their attention on energy efficiency?
-\item [RQ3] What design guidelines can we provide to guide architects to improve energy efficiency of their systems?
-\item [RQ4] How can we make architects aware of the runtime energy characteristics of their applications?
+\item [RQ1] What architecture description languages exist and can they be used to reason about the energy properties of a system?
+\item [RQ2] How can architects prioritise energy efficiency as an architectural concern?
+\item [RQ3] What design guidelines can we provide to assist architects to improve the energy efficiency of their systems?
+\item [RQ4] How can we make architects aware of the runtime energy characteristics of their systems?
 \end{description}
 
-In order to answer these questions, the work has involved the investigation of the use of ADLs for large scale architectural description, the identification of practical advice for how architects can focus attention on critical topics (such as energy efficiency) and the creation of a practical approach for estimating the energy usage of an application processing inbound requests.
+Answering these questions has involved the investigation of the use of ADLs for large scale architectural description, the identification of practical advice for how architects can focus attention on critical topics (such as energy efficiency), the identification of design principles to guide energy efficient architectures, and the creation of a practical approach for estimating the energy usage of request processing in distributed applications.
 
 \section{Research Methodology}
 
+The research reported in this thesis comprises four broad areas of investigation, aligned with the four research questions defined above.  Each area of investigation has utilised different combinations of research techniques.
+
+\subsection{Architectural Description Languages Investigation}
+
+The ADL investigation work began with a systematic literature review \cite{kitchenham2007-slr} to perform an objective and repeatable investigation into the prior research in this field and to identify, evaluate and synthesise findings from the selected studies in order to answer pre-defined research questions.  
+
+The second stage of this research was to undertake an Improvement Problem To Help a Client style exercise (in Technical Action Research terminology \cite{wieringa2012-tar}) which took the form of a significant case study which attempted to apply an ADL from the research results to the description of a large industrial system.  This work resulted in the attempt to apply an academic ADL being abandoned but instead a lightweight ADL-like notation was developed and successfully applied to the problem, resulting in a large and effective architectural description.
+
+This research allowed us to answer research question RQ1.
+
+\subsection{Study of Prioritising Architectural Effort}
+
+Our study of architectural effort prioritisation begain with a narrative literature review to survey the state of research in this area \cite{baumeister1997-narrativereviews}, which is described in \sref{section:litreview-prioritisation}.  The literature review did not identify a satisfactory approach to the problem of prioritising architectural effort, so we undertook the process of creating one.  This a was a four stage process involving surveys, model building and validation.  Full details are provided in \cref{chapter:prioritisation}, but in summary, the four stages of research were:
+\begin{description}
+	\item [Stage 1] gathering primary data using semi-structured interviews with practitioners, using a written introduction to the question we wanted to answer and then some specific questions to illustrate our area of interest. 
+	\item [Stage 2] analysis of the primary data and creation of a preliminary model through a simple application of Grounded Theory \cite{charmaz2006-groundedtheory}.
+	\item [Stage 3] validation of the preliminary model via a structured online questionnaire \cite{gillham2000-questionnaire}, completed by practitioners in relevant architecture roles (primarily software, solution and enterprise architects).
+	\item [Stage 4] analysis of the validation data and refinement of the preliminary model into a final, validated model.
+\end{description}
+
+To ensure practitioner involvement in the research, we used social media networks through LinkedIn and Twitter to publicise and engage with architecture practitioners and to report preliminary results.
+
+The result of this research was a validated model to guide the prioritisation of architectural effort, which allowed us to answer research question RQ2.
+
+\subsection{Development of Energy Efficiency Design Principles}
+
+The aim of this part of the research was to identify design principles that could assist architects in treating energy efficiency as an architectural concern as part of their normal architecting work.
+
+The work began with a narrative literature review to survey the state of research in this area, described in section \sref{section:litreview-energyguidance}, which identified some useful ideas in the research literature, notably an architectural perspective for energy efficiency \cite{jagroep2017-energyperspective}, which contains some useful guidance for the architecture practitioner.  However we found that there are relatively few architectural principles (or tactics) relevant to the software architect working on application software.
+
+We wanted to identify some useful principles to guide architects when considering energy efficiency and so identified an industrial case study which had successfully improved energy efficiency to learn from.  We found a case study from eBay who had successfully reduced the energy consumption of key application services as part of their Digital Service Efficiency (DSE) initiative \cite{ebay2013-digitalefficiency}.  We analysed this scenario and synthesised key principles from it and described them.  These principles can now be integrated into practitioner oriented literature such as the architectural perspective. 
+
+This allowed us to answer research question RQ3.
+
+\subsection{Design and Implementation of Application Energy Monitoring}
+
+This section of the research aimed to design and create a proof-of-concept implementation of a technical solution to the problem of providing architects with visibility of the energy consumption of their systems.  This was an Improvement Problem to Develop a Useful Artefact in TAR terminology, which involved problem investigation, the design of the solution (a piece of software) and the validation of it using realistic testing.  The further steps of real-world implementation and validation \cite{wieringa2012-tar} were outside the scope of the work reported here.
+
+The work began with a narrative literature review to survey the state of research in this area, reported in \sref{sec:litreviewenergy}.  This exercise discovered that some application energy measurement systems have been designed and reported in the literature, but most are not available for general use.  The other problem with the measurement systems found was that they do not allow the architect to see the energy consumption of application execution scenarios, just of application components over a period of time.  From the architect's perspective this limits the value of the information the tools produce and means that the tools are difficult to use in production environments with a synthetic workload.
+
+In response to these limitations, an approach to capturing representative energy usage for application execution scenarios was designed in a largely technology independent manner, as reported in \cref{chapter:monitoring}.  Our solution to the problem approaches it in a slightly different way to the existing systems and allocates estimated server energy usage to the applications running on that server, rather than trying to calculate an absolute energy consumption for each.  This sidesteps a number of problems with the existing approaches, as we will illustrate later.  We also performed the measurements and calculation from the perspective of the architect, using execution scenarios (tracing requests through the distributed application components), rather than measuring the energy usage of operating system processes. This design was then implemented using a specific set of technologies, including Linux, Docker and Java, as described in \cref{chapter:implementation}.  Once implemented, a set of practical tests was designed and executed to validate the implementation's internal consistency and external correctness with respect to its runtime environment, as described in \cref{chapter:validation}.
+
+This allowed us to answer research question RQ4.
+
 \section{Contribution}
+
+The primary contribution of this research has been the design, proof-of-concept implementation, and validation of a practical approach to providing a software architecture centric view of energy usage of a software application.  This scenario based energy usage calculation has not been attempted before in prior research.
+
+The specific research contributions in this thesis are as follows:
+\begin{enumerate}
+	\item \textbf{A comprehensive systematic survey of architecture description languages}.  This literature review surveyed all ADLs created from 1991 to 2015, reviewing 135 potential languages, with 51 of them being confirmed as architectural description languages, according to our criteria.  A detailed characteristation of the languages and the field were produced from this analysis.
+	\item \textbf{A case study of practical ADL use at scale in industry}.  Having surveyed the ADLs, we considered how to apply them to a real problem for a real stakeholder for a large industrial system.  This experience led to the academic ADLs being abandoned and a simple lightweight notation being used instead.  A set of lessons learned and constructive suggestions for future ADL research were derived from the experience.
+	\item \textbf{A model for architectural effort prioritisation}.  We interviewed expert practitioners and created a model for effort prioritisation based on the approaches common them.  This model was then validated and refined using the results of a survey of 84 software architecture practitioners from across the world.
+	\item \textbf{Principles for energy efficient architectural design}.  Having found no energy specific architecture principles and relatively few generally applicable energy efficiency tactics in the literature, we identified a small set of principles from a successful industrial case study that reduced energy consumption for application services.
+	\item \textbf{A system for allocating energy to application scenarios}.  Our literature review revealed that a number of application energy estimation systems had been proposed and prototyped.  However all of these systems measured energy consumption of operating system processes, which makes the information of limited immediate value to the application architect.  Our contribution has been to design and create a proof-of-concept implementation of a system which estimates the energy consumption of execution scenarios through the application (using application tracing), so providing the architect with significantly more insight into the effect of their architectural decisions.
+\end{enumerate}
+
+Much of the work reported here has been previously published in conference proceedings and journals. The list of publications arising from this work are listed below:
+
+\begin{description}
+	\item Woods, Eoin, and Bashroush, Rabih. "Using an Architecture Description Language to Model a Large-Scale Information System - An Industrial Experience Report." In \emph{Software Architecture (WICSA) and European Conference on Software Architecture (ECSA), 2012 Joint Working IEEE/IFIP Conference on}. IEEE, 2012.
+	\item Woods, Eoin, and Bashroush, Rabih. "Modelling Large-Scale Information Systems Using ADLs - An Industrial Experience Report." \emph{Journal of Systems and Software} 99 (2015).
+	\item Bashroush, Rabih, Woods, Eoin, and Noureddine, Adel. "Data Center Energy Demand: What Got Us Here Won't Get Us There." \emph{IEEE Software} 33, no. 2 (2016).
+	\item Bashroush, Rabih, and Woods, Eoin. "Architectural Principles for Energy-Aware Internet-Scale Applications." \emph{IEEE Software} 34, no. 3 (2017).
+	\item Woods, Eoin, and Bashroush, Rabih. "A Model for Prioritization of Software Architecture Effort." \emph{European Conference on Software Architecture}. Springer, Cham, 2017.
+	\item Woods, Eoin, and Bashroush, Rabih. "How Software Architects Focus Their Attention." \emph{Journal of Systems and Software}.  Submitted.
+\end{description}
+
 
 \section{Structure of Thesis}
 
-This thesis is structured into 9 chapters, each presenting a specific aspect of the research work.
+This thesis is structured into 9 chapters, each presenting a specific aspect of the research work.  The structure of the thesis is illustrated by the diagram in \fref{figure:intro-chapters}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{Figures/intro-chapters}
+\caption{Structure of the Thesis}
+\label{figure:intro-chapters}
+\end{figure}
 
 \emph{Chapter 1} is this introductory chapter, setting the motivation and context for the work, defining the research questions, explaining the research approach and explaining the structure of the thesis.
 
 \emph{Chapter 2} contains a literature review, structured into four parts, exploring the research literature in the areas of architectural description languages (ADLs), how architects should prioritise their focus for maximum effectiveness, design guidelines for energy efficiency and operational energy consumption for IT systems.
 
-\emph{Chapter 3} discusses how ADLs can be used to describe large scale software systems and presents a significant industrial case study that explored how effective this was in practice.
+\emph{Chapter 3} explores research question RQ1 and discusses how ADLs can be used to describe large scale software systems and presents a significant industrial case study that explored how effective this was in practice.
 
-\emph{Chapter 4} explores the area of prioritisation of work, specficially from an architect's perspective, asking the question how architects prioritise their time for maximum effectiveness and presenting the results of an industrial survey into the approaches used by experienced practitioners and a validated model to guide architects, based on the insights from the survey.
+\emph{Chapter 4} investigates research question RQ2 and explores the area of prioritisation of work, specificially from an architect's perspective, asking the question how architects prioritise their time for maximum effectiveness and presenting the results of an industrial survey into the approaches used by experienced practitioners and a validated model to guide architects, based on the insights from the survey.
 
-\emph{Chapter 5} presents heuristic design principles for designing energy efficient software applications.
+\emph{Chapter 5} explores energy related design principles to answer research question RQ3 and presents a small set of heuristic design principles for designing energy efficient software applications, derived from the experience of a published case study in reducing energy consumption through architectural change.
 
-\emph{Chapter 6} explores the topic of how application energy usage can be monitored and estimated during the operation of a system and presents a theoretical model for solving this problem.
+\emph{Chapter 6} addresses the fundamentals of research question RQ4 by asking how application energy usage can be monitored and estimated during the operation of a system and presents a theoretical model for solving this problem.
 
-\emph {Chapter 7} presents a practical implementation of the energy estimation model, specialised to estimating energy usage of a group of microservices processing incoming requests.
+\emph {Chapter 7} addresses the practical aspects of research question RQ4 and presents a proof-of-concept implementation of the energy estimation model, specialised to estimating energy usage of a group of microservices processing incoming requests.
 
-\emph{Chapter 8} presents the work performed to validate the model implementation technology, which involved running a number of non-trival scenarios and using the tool to estimate their energy usage, while also deriving the same estimation through a separate, independent technique, using these secondary estimations to validate the outputs of the model and the tool.
+\emph{Chapter 8} validates the energy estimation approach as part of answering research question RQ4 and presents the work performed to validate the energy estimation technology. This involved running a number of non-trival scenarios and using the tool to estimate their energy usage, while also deriving the same estimation through a separate, independent technique, using these secondary estimations to validate the outputs of the model and the tool.
 
 \emph {Chapter 9} summarises the research work, draws conclusions from it to answer the research questions and discusses possible future research work in each area.
 
