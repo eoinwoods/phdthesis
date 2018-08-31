@@ -426,16 +426,94 @@ Other advice for the practitioner is available in the other studies, and is of v
 
 \section{Application Energy Consumption Analysis} \label{sec:litreviewenergy}
 
-Introduction and list research question
+As we noted earlier, the energy usage of information and communications technology (ICT) systems is starting to receive significant attention due to the sharply increasing demand for electricity to run the large number of data centres that exist today.
+
+Significant research has been undertaken to understand the nature of the energy demand of ICT systems and significant progress has been made in a number of areas.  At the data centre level, there is now a fairly good understanding of how data centres use power and some understanding of how to reduce the amount of power required in the data centre environment \cite{dc4cities2014_dcmetrics, dayarathna2016-dcenergy}.  At the micro-level, there have been some promising steps in understanding how individual programs consume power, to the point where it is possible to quite accurately predict and compare the power consumption of different options for program implementation under laboratory conditions \cite{bourdon2013-powerapi, noureddine2012-hotspots, islam2016-energysoftwarefeatures, acar2016-beyondcpu}.
+
+The problem for the software architect is that their interest sits between these two extremes as they need to understand the energy consumption at the overall application level rather than at the individual software module level or at the data centre level where many applications are consolidated.  In particular, they really need to understand the energy characteristics of different usage scenarios of their applications so that they can compare them and use this information when making architectural tradeoffs.
+
+This situation was the reason for our fourth research question, which was \emph{
+RQ4 - How can we make architects aware of the runtime energy characteristics of their applications?}
+
+In order to start answering this research question, we decided to perform a survey of the relevant research literature in order to understand what research had already been performed in the area of application level runtime energy usage monitoring.
 
 \subsection{Research Methodology}
 
-What did I do?
+We identified the research literature to include in the study by searching commonly used literature catalogues as well as manually inspecting the reference lists of relevant papers and following other relevant references found.
+
+After some experimentation we defined our search query for online catalogues to be \emph{(software) AND (predicting OR measuring) AND (energy consumption) AND NOT (android or mobile) AND NOT sensor}.  The syntax of the query had to be refined for each catalogue as they provide different search facilities, but this was a simple matter of restating the query as multiple simpler queries in most cases.
+
+We searched key online literature catalogues for papers that matched our query in their title, abstract or keywords.  The four catalogues we used were the ACM Digital Library (advanced search), Google Scholar, IEEEXplore and Microsoft Academic Search.
+
+The different catalogues returned different sets of results, with ACM Digital Library returning 1216 results, which had to be manually inspected to extract the ones relevant to computing (to exclude, for example, references about energy management for buildings) which resulted in 24 studies of interest.  IEEEXplore returned 31, Google Scholar returned 90 results and Microsoft Academic Search returned 84 results on a wide range of subjects, which, when manually inspected added 3 more relevant items.
+
+We then consolidated these results by concatenating the result sets and removing duplicates from the list.
+
+We identified the most obviously relevant studies in our candidate list (those with titles indicating work directly in the area of application energy monitoring) and scanned their reference lists for other relevant studies, which added a further 14 entries.
+
+At this point we had a list of 79 candidate studies for consideration.
+
+To narrow the list to the most relevant for our needs, we identified the following criteria for inclusion in and exclusion from our survey.  IC1 - IC3 are the inclusion criteria and EC1 and EC2 are the exclusion criteria.  To be included in the survey a study had to meet all of the inclusion criteria and not meet any of the exclusion criteria.
+
+\begin{description}
+	\item[IC1] The study has been peer reviewed and is at least 2500 words long.
+	\item[IC2] The study describes an approach, technique or technology for runtime monitoring of the energy usage of application software.
+	\item[IC3] The study is relevant to large scale enterprise applications such as those found in large end-user organisations, the products of software companies supplying them, or those applications found in Internet-oriented companies, such as SaaS software providers.
+	\item[EC1] The study will be excluded if only relevant to mobile device technology or hardware (such as processor chips or sensors).
+	\item[EC2] For practical reasons the study will be excluded if not written in English.
+\end{description}
+
+When we applied inclusion criterion IC1, which eliminated on study and IC2 (that the study must be about runtime monitoring of application software) then reduced the list to 31 items.  Applying IC3 (to ensure that the approach could be applied to an enterprise system) reduced the list to 19 items and applying EC1 to eliminate approaches that were only relevant for mobile or hardware devices left 13 to be analysed further.  All of our candidate studies were written in English so EC2 did not apply.
+
+Having identified the 13 references of interest, we analysed their content in order to allow further classification.  
 
 \subsection{Analysis of the Results}
 
-Data analysis or list of paper summaries and common aspects
+The 13 references comprised 1 survey paper, 2 case studies and 10 papers describing energy monitoring tools of some sort.
+
+The survey paper \emph{A Review of Energy Measurement Approaches} by Noureddine et al \cite{noureddine2013-energyreview} was a useful additional survey of the area and usefully summarised the approaches found in this area a few years ago (which based on our survey do not appear to have changed materially).  They found that there are \emph{model based}  approaches and \emph{measurement based} tools.  They found three primary model based approaches: cost based models, models implemented in middleware systems and models based on measured server workload.  They also found three primary measurement based tools: PowerScope that maps physical energy measurements to processes and program structures; pTop from the Linux operating system, which  
+creates energy estimates for processes using resource utilisation profiles gathered by a kernel module; and PowerAPI and Jalen, the author's own tools that estimate power consumption for processes using operating system statistics and power readings and allocate power consumption to the elements of the software executed via the tools.  This paper helped to provide some context for understanding this area, but is an incomplete survey and does not aim to provide information for the architect to use directly.
+
+The two case studies were \emph{Software Energy Profiling: Comparing Releases of a Software Product} by Jagroep et al \cite{jagroep2016-comparingreleases} and the much smaller \emph{Unit Testing of Energy Consumption of Software Libraries} by Noureddine et al \cite{noureddine2014-energyutest}.  Both of these case studies show how energy concerns can be integrated into the project lifecycle.
+
+Jagroep et al reports on a significant research project performed in conjunction with an industrial company, to measure and compare the energy consumption of a commercial document generation system product, over a series of releases.  They used both hardware and software energy measurement tools to measure energy consumption of the product during specific usage scenarios each time the product was being prepared for release.  While they believe they made reliable measurements and their approach was sound, it was difficult to explain many of the process level measurements, which came from the software measurement tools.  This is a cautionary point for all involved in software based energy measurement.
+
+Noureddine at al report on a much smaller case study to illustrate how their tools can be used to perform energy measurement of real application code at the unit test level.  They packaged the Jalen tool as a unit testing variant, extending jUnit, called JalenUnit to allow energy unit testing.  They then use it to test the RSA algorithm, Google Guava and the Violin String libraries to measure energy usage and show variation as implementation changes.  While not strictly architectural, this case study is a good illustration of how energy can be integrated into the project lifecycle as a system quality concern.
+
+The remaining 10 studies all describe one or more energy measurement tools, which could be used for some aspect of runtime application energy measurement.
+
+One paper, \emph{A first approach on legacy system energy consumption measurement} by Cordero et al \cite{cordero2015-legacyenergy}, described a tool called GreeSom (or Green Software Energy Measurement), which which is an approach and a tool create to allow energy consumption analysis of (legacy) Java systems.  The tool requires energy data from a physical meter and instruments the application to create an execution trace that it combines with the energy data to provide insight into the energy usage of the application.  Unlike the other tools, GreeSom does not have an energy model as such but would be better described as providing analytics and visualisation on the combination of the server energy and application trace data sets. 
+
+Five of the papers describe tools that utilise cost-based models for energy measurement.  The cost based models are calibrated with the energy cost of basic operations within the machine (such as CPU time or disk writes) and combine these measurements with the measured activity of the software under consideration, in order to produce an energy estimate.  Three of the references are from the same authors and describe different aspects of the same tools, therefore there are three cost-based tools described, which are:
+\begin{description}
+	\item[AEMT] (or Application Energy Measurement Tool) which was an early tool developed at Microsoft to provide basic energy estimates for an application based on operating system resource counters and application process activity.  The tool uses a cost based model based on CPU usage and disk activity but does not appear to be available for general use.  \cite{kansal2008-energyprofiling}
+	\item[E-Surgeon] which provides Java-based open source tools that can be used to monitor process and method level energy consumption at runtime.  The tools use a cost based model based on CPU usage and network activity. The tools are available as open source software. \cite{noureddine2012-hotspots, noureddine2014-energyutest, noureddine2015-hotspots, noureddine2016-jolinar}
+	\item[TEEC] (or Tool to Estimate Energy Consumption) which extends the cost based models beyond CPU (or network, or disk activity) ,to include consideration of memory usage. The tool reads manufacturer memory specifications (which are provided to it as configuration data) and CPU and memory usage statistics via the Sigar library in order to estimate memory related energy consumption. One interesting detail about the tests reported in the study is how negligible memory energy is compared to CPU.  The tool does not appear to be available for general use. \cite{acar2016-beyondcpu}
+\end{description}
+
+The remaining four papers desribe tools that utilise regression models to perform their energy measurement.  The regression models all vary slightly but are fundamentally similar and involve running benchmarks on a test machine, and collecting physical energy meter data for the machine and resource utilisation metrics for the software components under study.  This data is then used to train a regression model to allow it to predict energy usage for the software components, given different patterns of resource utilisation.  Most of the studies reported good measurement accuracy from these "software meters" after they were trained, but none of the studies discussed how generally useful the trained models were and what parameters could be altered before they needed to be retrained, which is typically a major limitation for regression based models.  The requirement for physical meter data during the training process could limit their applicability in enterprise environments, when compared to the cost-based models.
+
+The four tools did not all have a name but were:
+\begin{description}
+	\item[cWatts+] is a piece of power monitoring middleware to estimate real time power use of application components.  It uses low-level CPU performance counters and temperature metrics, rather than resource utilisation measurements from the operating system, along with physical server power measurements.  The use of temperature metrics is unique to this tool (although their significance is unclear from the information in the study).  These are collected during benchmarking exercises and used to train a regression based power model to predict energy consumption.  The tool is described as "middleware" as it does not directly affect the application, as it monitors the application externally by reading operating system metrics for a set of threads defined at startup. The tool does not appear to be available for general use. \cite{phung2017-agnosticpower}
+	\item[Murwantara et al's model] aims to estimate energy consumption for a set of components comprising a "web service" (meaning an HTTP server, an application server and a database).  This model also assumes training a linear regression model using server energy data from a physical meter and process resource utilisation measurements from the operating system.  From the information in the paper it is difficult to know how the process really works. The tool does not appear to be available for general use. \cite{murwantara2014-webserviceenergy}
+	\item [Singh et al's model] which provides energy measurements at operating system level by collecting OS level resource usage, server energy estimates and process level resource usage and combining them via an energy model to estimate the process energy usage.  Server energy estimates are assumed to come from an energy meter, suggesting that a lab environment is assumed. The energy model uses upport-vector-machine based regression to try to derive the relationship between software component resource utilisation and energy consumption.  The tool does not appear to be available for general use. \cite{singh2013-processenergyest}
+	\item[VPMSPCP] (or Virtual Power Meter Supported Power Consumption Prediction) is a tool that attempts to measure energy usage of application software components, using the approach of capturing server utilisation, component utilisation and server power readings.  The tool creates a “virtual power meter” for the server and each server component (“web service”) which are calibrated power models using a trained regression model.  The work is sophisticated but their testing suggests that its predictive power is currently fairly low and they plan to develop it further. The tool does not appear to be available for general use. \cite{liu2015-webservicepower}
+\end{description}
+
+So in summary, the survey paper partially summarised the field and provided a degree of perspective over the other papers, while the two case studies provided useful validation that is is possible to treat energy consumption as an architectural concern in the project lifecycle, if approached correctly.
+
+Then the rest of the papers described tools that in principle could be used to monitor application energy consumption at runtime.  Most of the tools used an energy model, the two varieties being a cost-based model, calibrated based on the runtime environment's energy characteristics, or a regression-based model that is trained using energy data and resource utilisation measurements from a benchmarking exercise.
+
+Unfortunately most of the tools described are not available as open source projects and only the E-Surgeon set (PowerAPI, Jalen, JalenUnit and Jolinar) are available for general use.
+
 
 \subsection{Conclusions}
 
-Answer the research question
+Our research question (RQ4) asked "How can we make architects aware of the runtime energy characteristics of their applications?" and through this literature review we have managed to provide a partial answer to that question.
+
+Over the last 10 years or so, there has been a significant amount of academic research in the area of application energy measurement and estimation and one of the case study papers \cite{jagroep2016-comparingreleases} appears to suggest that within the last few years, a degree of maturity has been gained that allows leading edge practitioners to start experimenting in this area.
+
+However, one significant gap that we see in the research today is the focus of the energy consumption techniques and tools on measuring energy consumption at the operating system process or even the server machine level.  To use these techniques and tools effectively requires the architect to design and run specific benchmark scenarios that will make this data meaningful for them.  Experience suggests that it will often be difficult to find time in the delivery cycle to perform such testing regularly - just as it is often difficult to schedule performance testing today.
+
+How much better it would be if the techniques and tools we create for architects would provide them with \emph{scenario level energy measurements}, based on the incoming requests to the system.  If designed correctly, scenario-level tools could be used in the production environment to measure synthetic workload (as is done routinely today for reliabilty and performance monitoring reasons) and provide the architect with a continual view of the energy characteristics of their system.  We will return to this subject in \cref{chapter:monitoring} and discuss how this might be achieved.
