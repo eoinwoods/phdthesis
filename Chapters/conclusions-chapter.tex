@@ -1,15 +1,129 @@
-\chapter{Conclusions and Future Work}
+\chapter{Conclusions and Future Directions}
 
-\section{Answering the Research Questions}
+\section{Summary and Conclusions}
 
-TODO
+The research presented in this thesis has been a journey from abstract design languages to practical runtime tools with the goal of providing software architecture practitioners with better support for considering energy as an architectural concern than exists today.  On the way it has involved tools, design guidance and the working practices of effective architects.
 
-\section{Future Work}
+This journey has resulted in a number of research contributions to the fields of software architecture research and energy efficiency research.
+
+Firstly, we have performed a comprehensive systematic survey of 25 years of research in the field of architectural description languages, resulting in a thorough characterisation of the field.  This then led to a published case study \cite{woods2012-adlcasestudy, woods2015-adlcasestudy} that reported the experience of creating a large-scale industrial architectual description and the shortcomings of existing architectural description languages in such environments.
+
+The question of how architects can prioritise energy efficiency work led to an interview based investigation of how expert architects prioritise their effort and the development of a model that distills the common advice into an accessible form that can be used to guide less experienced practitioners \cite{woods2017-archeffort}.  This was then validated and refined through a large scale survey of software architecture practitioners from across the world.
+
+We considered what tangible advice was available to software architects who want to improve the energy characteristics of their systems and found little in the research literature that most architects could directly apply.  This led us to identify a small number of architectural design principles \cite{bashroush2017-archprinciples} based on a successful industrial case study of a large organisation that improved the energy characteristics of some of their application services, through architectural changes.
+
+Finally, we identified the need for a practical tool that architects could use to measure the energy characteristics of their applications when running different scenarios and designed an approach to achieve this.  We implemented a working proof-of-concept version of the tool and validated it with practical test cases.
+
+This research was undertaken in the context of the four research questions that we introduced in \cref{chapter:introduction} and having now completed the work we can provide answers to them.
+
+\textbf{RQ1} \emph{What architecture description languages exist and can they be used to reason about the energy properties of a system?}
+
+To answer this research question, we performed a thorough review of the research literature over the last 25 years and considered whether the ADLs we found could be used in an industrial context.  We performed a significant case study project and created a large architectural description of an industrial system, which was then used for a variety of purposes.  However the conclusion we reached during this work was that existing architectural description languages are not suitable for mainstream adoption due to their narrow focus on functional structure, the lack of industrial validation, the high adoption cost of most of the languages, and the lack of mature tool support available.  This led us to define a lightweight graphical notation, supported by graphical and textual templates for documentation creation, which was ultimately successful in the case study project.
+
+Many of the ADLs we surveyed are extensible, although relatively few of them (4, 7\% of those surveyed) provide direct support for capturing system qualities in the language, however we judged that half of the ADLs we analysed could capture system qualities via some mechanism provided by the language.  Therefore, in principle it should be possible to use these languages as the basis of a system to allow reasoning about a system's energy qualities.  However the practical adoption problems we encountered mean that we do not believe that they can be used to support reasoning about energy properties in practice.
+
+We make a number of constructive suggestions for how to make architecture description languages a more practical proposition for practitioners in
+ \sref{section:adlvalidation}.
+
+\textbf{RQ2} \emph{How can architects prioritise energy efficiency as an architectural concern?}
+
+When considering how our work might be used by practitioners we realised that the first challenge was how to persuade architects to priortise the energy characteristics of their systems.  Architects have a very wide range of concerns to address and often complain that it is difficult to know where to focus their attention.  Anecdotally, this seems to be particularly acute for less experienced practitioners.
+
+We noted that many experienced practitioners manage to focus their effort very effectively and seem to be able to deal with a wide range of concerns during the lifetime of a project.  When we asked people informally, we did not find anyone using a formal approach for this, it just seemed to be something they knew how to do.
+
+An initial literature review did not find any generally applicable approaches that provided sufficient guidance to make a focus on energy properties likely, so we investigated how experienced software architecture practitioners focus their attention.  We found that some strong themes emerged, which we used to create a model to guide less experienced practitioners.  This model was validated via an online survey questionnaire, completed by over 80 practitioners from all over the world.  The results of the survey validated the model strongly and also provided input to allow it to be refined into a more effective model.
+
+We found that there are four aspects to the approach that experienced practitioners use to focus their attention, namely:
+\begin{enumerate}
+	\item Stakeholder needs and priorities
+	\item Priorising time according to risks
+	\item Delegating as much work as possible
+	\item Ensuring team effectiveness
+\end{enumerate}
+
+This work provided an answer our research question.  From these four areas, the aspect of prioritisation that will cause architects to focus on the energy qualities of their systems is to ensure that the energy efficiency of the system is high in the list of stakeholder needs and priorities.
+
+\textbf{RQ3} \emph{What design guidelines can we provide to assist architects to improve the energy efficiency of their systems?}
+
+When we considered what software architecture practitioners needed to allow them to confidently address the energy properties of their systems, we quickly identified the importance of accessible and reliable technical guidance.  The two forms of guidance that architecture practitioners are already familiar with are architecture principles and architectural tactics, so we investigated the principles and tactics available to them.
+
+The initial literature review revealed that while this field is relatively immature, there was material in the research literature that could be of use to architecture practitioners, notably an architectural perspective for energy efficiency.  However we found a lack of generally applicable tactics and principles.  There were several sets of architectural tactics in the literature \cite{lewis2015-foragingtactics,procaccianti2013-cloudenergyefficiency} but one is aimed more at those building cloud platforms than applications and the other is specifically aimed at architects building applications utilising cyberforaging to offload work from mobile devices.
+
+In response we decided to try to identify some architectural principles that could be generally applied by software architecture practitioners who were trying to improve the energy efficiency of their applications.  We did this by identifying a published industrial case study of a large organisation who improved the energy efficiency of a number of their application services through software architecture changes, and extracting and generalising the principles that had guided their work.
+
+This resulted in a set of three initial principles which had proved of value in the organisation that performed the case study.  The principles we identified were:
+\begin{enumerate}
+	\item Energy efficiency metrics must relate business transactions to energy consumption in a way that is meaningful to key system stakeholders.
+	\item Identifying sources of energy waste at the system level produces the biggest savings.
+	\item Addressing the energy optimisation problem requires a cross-disciplinary team.
+\end{enumerate}
+
+This work allowed us to answer the research question with this initial set of energy related architecture principles which we believe can be extended further in the future through the study of other successful industrial energy efficiency improvement projects.
+
+\textbf{RQ4} \emph{How can we make architects aware of the runtime energy characteristics of their systems?}
+
+Having considered how to enable software architects to focus attention on the energy properties of their system and identified some initial principles that could guide the development of more energy efficient systems, it became clear that architects also need to be able to measure the energy properties of their systems.
+
+A literature review revealed that there have been a number of attempts to create software systems that can measure the energy characteristics of software applications.  However as we reported in \sref{sec:litreviewenergy} there were a number of limitations with most of the work that had been reported in these publications.  
+
+Firstly a number of the projects used linear regression models to establish the relationship between resource consumption and energy consumption, but had not validated how robust or reusable these models would be without constant re-training.  Training these models in an industrial setting is complicated to achieve and models that required retraining for different workloads or after every change to the environment would not be a practical propostion.  
+
+The other concern with the existing research is the focus on measuring the energy consumption of operating system processes (or individual pieces of code) rather than execution scenarios.  This means that the architect needs to set up very specific benchmark scenarios under controlled conditions in order to gain any insight from the results, which again is difficult to do in a real project.  Instead, we wanted a scenario based approach that measured the energy consumption of a single execution scenario, as this would allow the approach to be used with synthetic workload in existing test or production environments.  
+
+Finally, we also found that most of the research projects have not made their prototype systems available for inspection or use, meaning that many of the details of the work are unclear and there is no scope for reuse by other researchers.\footnote{The E-Surgeon researchers \cite{noureddine2015-hotspots} are the notable exception as they have helpfully open sourced all of their tools, which we did inspect for deeper insight into their work.}
+
+In order to progress this area of research, we designed a model for estimating the energy characteristics of individual architectural scenarios (inbound requests) to a microservice based system.  We dubbed our approach "Apollo" and implemented a proof-of-concept version of it and then validated this with practical testing.  The result is a reliable and practical tool for calculating the resource utilisation of a specific inbound request to a microservice system and using this to allocate the energy consumption of a server machine to the workload running on it. This encourages the architect to minimise the resource utilisation of their software and also to consider the most efficient deployment options for it.
+
+This work provides us with an answer to our research question, which is that we can provide architects with tools that calculate a context specific energy consumption estimate for their software application executing different scenarios.  This will allow architecture practitioners to use the tool with synthetic workload in suitable configured production and test environments, alongside other workload.  This will allow them to monitor the application energy consumption over time and understand the energy implications of their architectural design decisions, so allowing energy to be treated as a first class architectural concern.
+
+\section{Future Directions}
+
+Much of the work reported in this thesis has promising future directions to further increase the scope, applicability or sophistication of the research results reported here.
 
 \subsection{Architectural Prioritisation}
 
 The refined model is now ready for dissemination to the practitioner community to see if it proves as useful in practice as our survey of the preliminary model suggests.  To reach the practitioner community, we will publish the model in a less formal style via posts on mainstream Internet sites (such as medium.com, LinkedIn and Twitter).  We will also try to publish a summary of it in practitioner-oriented publications and publicise it through conference sessions at practitioner conferences, if it proves to be of interest to programme selection committees.
 
-After practitioner oriented publication, we are also interested in extending the Stage 3 questionnaire to architects in other geographical locations to compare and explore whether they react in the same way to the model as their colleagues in Europe and the Americas.
+After practitioner oriented publication, we are also interested in extending the Stage 3 questionnaire to architects in other geographical locations to compare and explore whether they react in the same way to the model as their colleagues in Europe and the Americas
 
 Beyond this, it would be interesting to survey practitioners who have used the model in the future, after they have been using it for some time.  This would allow us to understand whether its usefulness was borne out in practice and to find out what the practitioners are actually using it for (for example, whether it is used more as a training aid or as a personal aide memoir) and which industries and architectural job types are using it.
+
+\subsection{Architectural Design Guidance for Energy Efficiency}
+
+By analysing a successful industrial energy reduction project we have identified a small set of useful architectural design principles to guide architects in their consideration of energy as an architectural concern.  
+
+There is great potential in this area to identify other industrial work that is attempting to reduce the energy consumption of real software systems and from the successes and failures of those project identify the principles and tactics that allow architects to actively manage the energy consumption of their applications as an architectural concern.  
+
+We also believe that further industrial and academic cooperation (of the sort we observed in a case study from the Netherlands \cite{jagroep2016-comparingreleases}) could lead to the identification and validation of more principles and tactics for energy aware architecture, as could focused academic work to propose likely principles and tactics and to validate them in both laboratory and industrial settings.
+
+Once we have a larger proven set of principles and tactics then they would form a valuable addition to the energy architectural perspective created by Utrecht University and Centric Netherlands BV \cite{jagroep2017-energyperspective}, which would make them available to architecture practitioners in an accessible form.
+
+\subsection{Runtime Application Energy Monitoring}
+
+The Apollo model and proof-of-concept implementation presented in this thesis is a research prototype that is still relatively immature, as its validation has been limited to controlled testing.  There is significant scope to continue research in this area with the aim of creating a practical tool which can be applied in a general industrial setting.
+
+There are a number of interesting avenues to explore in the area of data aquisition, including experimentation with hardware event counters and event based direct data collection from operating system resource counters (rather than the sampling based approach used in today's implementation).  Extending the cost based energy model beyond CPU usage to include network, disk and memory resource usage measurements would also be an interesting area to explore to see whether the increased accuracy is valuable enough to justify the additional complexity.
+
+In a related area, the current implementation requires dedicated microservices for the monitored workload, to simplify the collection of statistics.  This is a reasonable simplification because modern microservice infrastructure makes it straightforward to add additional container instances dedicated to specific workload.  However an interesting future research direction would be to utilise thread-level resource consumption statistics rather than process level ones and investigate whether this would allow us to relax this constraint.
+
+The current model and implementation do not take the energy overhead of the data centre environment into account in the energy consumption estimates.  This would be relatively straightforward aspect to add to the model provided that a reliable source of PUE data for the environment(s) that the software is running in were available.  PUE varies over time, but many DCIM products provide estimates of the PUE of an environment and so could be used as a source for this data.  This would allow an allowance for the data centre's infrastructure to be added to the energy estimates, so highlighting the implications of deployment options to the architect.
+
+The current system is batch based and as we described in \cref{chapter:validation} we tested it by running tests and collecting data sets from them, which were then processed by Apollo.  However there is nothing in the model or in fact the current implementation that would prevent Apollo being used to analyse data in "mini batches" as soon as it is available.  A potentially fruitful avenue of research would be to create an event-driven data collection system that generated a data set for Apollo whenever a scenario (i.e. an inbound request) completes, which can be observed from the Zipkin database.  The data set could then immediately be processed by Apollo (which takes a couple of seconds), providing a near realtime view of the application's energy characteristics.
+
+Another possible avenue for research is the outputs of the tool.  The current software reports the energy and resource utilisation measurement values as text messages written to logs or the console.  While perfectly functional, this means that the user has to take process this data themselves to perform and analysis on it (using text processing tools and spreadsheets, as we did during the validation process reported in \cref{chapter:validation}).  An interesting research topic would be to apply modern analytical and visualisation techniques and tools to the output of Apollo in order to provide the architect with insight into the results and perhaps automated guidance on how to improve the energy characteristics of the application.
+
+Finally, the software needs to be made available as open source software via Github to allow other research groups and interested practitioners to access it.  It has been developed "in the open" on Github but does not have the supporting materials to allow others to understand and use it at present.
+
+\section{Concluding Remarks}
+
+This research was motivated by the urgent need to reduce the ever increasing amount of energy required to support the world's burgenoning digital transformation.  This is needed for both environmental and cost reasons, to allow a sustainable transition to the next phase of the information age, particularly as developing countries become digital economies.
+
+The journey has taken us from architectural description languages to the prioritisation of architecture work, through design guidance for energy efficient applications, to the creation of a novel model and tool to provide architects with insight into the runtime energy characteristics of their systems.
+
+During the journey we have understood the state of the art in architectural description languages and tried to apply them, investigated how expert architects balance concerns to focus their attention to be most effective, identified architectural design principles for energy efficient systems and designed, built and validated a novel and practical tool for architects to use to measure the energy efficiency of their applications.  The overall conclusion from the work is that it is now entirely possible to start treating energy efficiency as a first class architectural concern in software architecture, although a significant amount of work is needed to mature the field to the point where it can become part of mainstream practice.
+
+As we progressed through the work we have answered our research questions, some positively and some negatively, but beyond those relatively narrow topics we have been exposed to the huge amount of intellectural effort being expended across a fascinating range of topics related to the architectural design, analysis and energy efficiency of complex systems.  Sadly much of this thinking, while creative and innovative, fails to have significant impact due to a lack of validation, industrial alignment and accessible communication to practitioners.
+
+Surely now, with the environmental imperative of controlling the energy usage of our digital economy, we can summon the motivation to realign our research and industrial communities in a united effort to address this problem?  The world needs us to.
+
+
