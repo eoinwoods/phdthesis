@@ -48,14 +48,14 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2.0ex plus0.5ex minus0.2ex}
 \usepackage{vmargin}
-\setmarginsrb           { 1.5in}  % left margin
-                        { 0.6in}  % top margin
-                        { 1.0in}  % right margin
-                        { 0.8in}  % bottom margin
-                        {  20pt}  % head height
-                        {0.25in}  % head sep
-                        {   9pt}  % foot height
-                        { 0.3in}  % foot sep
+\setmarginsrb           { 40mm}  % left margin
+                        { 20mm}  % top margin
+                        { 20mm}  % right margin
+                        { 20mm}  % bottom margin
+                        { 20pt}  % head height
+                        {  6mm}  % head sep
+                        {  9pt}  % foot height
+                        { 10mm}  % foot sep
 \raggedbottom
 \setlength{\topskip}{1\topskip \@plus 5\p@}
 \doublehyphendemerits=10000       % No consecutive line hyphens.
@@ -64,7 +64,8 @@
 \clubpenalty=9999                 % Almost no orphans at top of page.
 \interfootnotelinepenalty=9999    % Almost never break footnotes.
 \usepackage{fancyhdr}
-\lhead[\rm\thepage]{\fancyplain{}{\sl{\rightmark}}}
+%\lhead[\rm\thepage]{\fancyplain{}{\sl{\rightmark}}}
+\lhead[\fancyplain{}{\sl{\leftmark}}]{\rm\thepage}
 \rhead[\fancyplain{}{\sl{\leftmark}}]{\rm\thepage}
 \chead{}\lfoot{}\rfoot{}\cfoot{}
 \pagestyle{fancy}
@@ -184,33 +185,26 @@
   \hypersetup{pdfkeywords=\keywordnames}
   \thispagestyle{empty}
   \begin{titlepage}
+    \setstretch{1.0}
     \let\footnotesize\small
     \let\footnoterule\relax
     \let \footnote \thanks
     \setcounter{footnote}{0}
-    \null\vfil
-    \vskip 60\p@
+    %\null\vfil
+    %\vskip 60\p@
     \begin{center}
       \setlength{\parskip}{0pt}
-      {\large\textbf{\UNIVNAME}\par}
-      \vfill
-      {\huge \bf \@title \par}
-      \vfill
-      {\LARGE by \par}
-      \smallskip
-      {\LARGE \authornames \par}
-      \vfill
-      {\large A thesis submitted in partial fulfillment for the \par}
-      {\large degree of Doctor of Philosophy \par}
-      \bigskip
-      \bigskip
-      {\large in the \par}
-      {\large \facname \par}
-      {\large \deptname \par}
-      \bigskip
-      \bigskip
-      \bigskip
-      {\Large \@date \par}
+      %{\large\textbf{\UNIVNAME}\par}
+      %\vfill
+      {\huge \bf \MakeUppercase \@title \par}
+      %\vfill
+      %{\LARGE by \par}
+      \vspace{2cm}
+      {\huge \bf \MakeUppercase \authornames \par}
+      \vspace{4cm}
+      {\large \bf A thesis submitted in partial fulfilment of the requirements of the University of East London for the degree of Doctor of Philosophy \par}
+      \vspace{6cm}
+      {\Large \bf \@date \par}
       \bigskip
     \end{center}
     \par
@@ -230,28 +224,13 @@
   \global\let\and\relax
   \cleardoublepage
 }
-% (eoin) comments below in "abstract" env definition
-% avoid boilerplate and prevent vertical centering
+% (eoin) dramatically simplified the "abstact" env
 \newenvironment{abstract}
 {
   \btypeout{Abstract Page}
-  \thispagestyle{empty}
-  %\null\vfil
   \begin{center}
     \setlength{\parskip}{0pt}
-    %{\normalsize \UNIVNAME \par}
-    %\bigskip
     {\huge{\textit{Abstract}} \par}
-    \bigskip
-    %{\normalsize \facname \par}
-    %{\normalsize \deptname \par}
-    %\bigskip
-    %{\normalsize Doctor of Philosophy\par}
-    %\bigskip
-    %{\normalsize\bf \@title \par}
-    %\medskip
-    %{\normalsize by \authornames \par}
-    %\bigskip
   \end{center}
 }
 {
@@ -361,6 +340,7 @@
 }
 \newcommand\dedicatory[1]{
 \btypeout{Dedicatory}
+\addtotoc{Dedication}
 \thispagestyle{plain}
 \null\vfil
 \vskip 60\p@

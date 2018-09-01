@@ -6,6 +6,8 @@
 \documentclass[a4paper, 11pt, oneside]{Thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
 \graphicspath{Figures/}  % Location of the graphics files (set up for graphics to be in PDF format)
 \usepackage[T1]{fontenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
 % Include any extra LaTeX packages required
 \usepackage[square, numbers, comma, sort]{natbib}  % Use the "Natbib" style for the references in the Bibliography
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
@@ -20,7 +22,7 @@
 
 
 % Suppress warnings about Underfull or Overfull boxes
-%\hbadness=99999
+\hbadness=99999
 
 % This allows code formatting blocks through the 'listings' package
 \usepackage{listings}
@@ -62,16 +64,32 @@
 \maketitle
 %% ----------------------------------------------------------------
 
-\setstretch{1.3}  % It is better to have smaller font and larger line spacing than the other way round
+\pagestyle{plain}  % Set the page headers to the "fancy" style
 
-% Define the page headers using the FancyHdr package and set up for one-sided printing
-\fancyhead{}  % Clears all page headers and footers
-\rhead{\thepage}  % Sets the right side header to show the page number
-\lhead{}  % Clears the left side page header
+% The Abstract Page
+\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+\abstract{
+\setstretch{1.1}  % Set to small inter-line spacing to get abstract on one page
 
-\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+Digital-transformation initiatives have led to major efficiencies and cost savings, but at the cost of consuming nearly 10 percent of the world's electricity.  Researchers have been studying IT energy consumption to increase datacentre, network, and hardware efficiency and as a result, datacentre energy efficiency has improved considerably. Individual hardware devices have experienced a similar trend and computations per joule of energy have doubled every 1.5 years over the past two decades. 
 
+However a neglected aspect of energy efficiency is the energy consumption of the software applications that provide the internet-connected services underpinning digital transformation.  So far we have largely failed to provide software architects with knowledge, guidance and tools to allow them to understand the energy properties of their systems.
+
+The research reported in this thesis starts to address this situation by developing practical knowledge, techniques and tools to allow software architects to play their part in controlling the energy consumption of our modern digital world.
+
+The work starts with a comprehensive survey of architectural description languages, a technology that could provide the basis of tools for addressing the energy consumption of complex systems.  During a major project to create a large industrial architectural description, existing research ADLs did not prove to be successful and instead a lightweight custom notation was created for the project.
+
+Our attention then turns to helping architects to prioritise energy efficiency and we perform a study to investigate how experienced architects focus their attention for maximum effectiveness.  This leads to the development of a model to guide architecture practitioners which we validate and refine through a large survey of practicing software architects.
+
+We then examined the energy-related guidance available to architects and found little generally applicable information in the literature.  This led us to identify three energy-related architectural principles from analysis of a successful industrial case study.
+
+Finally, we turned to the practical problem of assisting architects to understand the runtime energy properties of their systems and designed a novel approach to estimate the energy consumption of workload scenarios via application execution tracing and a cost-based energy model.  We created a proof of concept implementation of the approach and validated its consistency and correctness through practical testing.
+
+The result of this work is a collection of contributions to the fields of software architecture and energy efficiency that can help architecture practitioners to treat energy efficiency as a first class architectural concern in their work.
+
+\clearpage  % Abstract ended, start a new page
 %% ----------------------------------------------------------------
+
 % Declaration Page required for the Thesis, your institution may give you a different text to place here
 %\Declaration{
 %
@@ -104,49 +122,6 @@
 %\clearpage  % Declaration ended, now start a new page
 
 %% ----------------------------------------------------------------
-
-% The Abstract Page
-\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
-\abstract{
-\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-
-Digital-transformation initiatives have led to major efficiencies and cost savings, but at the cost of consuming nearly 10 percent of the world's electricity.  Researchers have been studying IT energy consumption to increase datacentre, network, and hardware efficiency and as a result, datacentre energy efficiency has improved considerably. Individual hardware devices have experienced a similar trend and computations per joule of energy have doubled every 1.5 years over the past two decades. 
-
-However a neglected aspect of energy efficiency is the energy consumption of the software applications that provide the internet-connected services underpinning digital transformation.  So far we have largely failed to provide software architects with knowledge, guidance and tools to allow them to understand the energy properties of their systems.
-
-The research reported in this thesis starts to address this situation by developing practical knowledge, techniques and tools to allow software architects to play their part in controlling the energy consumption of our modern digital world.
-
-The work starts with a comprehensive survey of architectural description languages, which are a technology that could provide the basis of tools for addressing the energy consumption of complex systems.  During a major project to create a large industrial architectural description, existing research ADLs did not prove to be successful and instead a lightweight custom notation was created for the project.
-
-Our attention then turns to helping architects to prioritise energy efficiency and we perform a study to investigate how experienced architects focus their attention for maximum effectiveness.  This leads to the development of a model to guide architecture practitioners which we validate and refine through a large survey of practicing software architects.
-
-We then examined the energy-related guidance available to architects and found little generally applicable information in the literature.  This led us to identify three energy-related architectural principles from analysis of a successful industrial case study.
-
-Finally, we turned to the practical problem of assisting architects to understand the runtime energy properties of their systems and designed a novel approach to estimate the energy consumption of workload scenarios via application execution tracing and a cost-based energy model.  We created a proof of concept implementation of the approach and validated its consistency and correctness through practical testing.
-
-The result of this work is a collection of contributions to the fields of software architecture and energy efficiency that can help architecture practitioners to treat energy efficiency as a first class architectural concern in their work.
-
-
-
-\clearpage  % Abstract ended, start a new page
-%% ----------------------------------------------------------------
-
-\setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
-
-% The Acknowledgements page, for thanking everyone
-\acknowledgements{
-\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-
-I need to thank a number of people here \ldots
-
-}
-\clearpage  % End of the Acknowledgements
-%% ----------------------------------------------------------------
-
-\pagestyle{fancy}  %The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
-
-
-%% ----------------------------------------------------------------
 \lhead{\emph{Contents}}  % Set the left side page header to "Contents"
 \tableofcontents  % Write out the Table of Contents
 
@@ -159,11 +134,18 @@ I need to thank a number of people here \ldots
 \listoftables  % Write out the List of Tables
 
 %% ----------------------------------------------------------------
+% The Acknowledgements page, for thanking everyone
+\acknowledgements{
+%\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+I need to thank a number of people here \ldots
+
+}
+\clearpage  % End of the Acknowledgements
+
+%% ----------------------------------------------------------------
 % End of the pre-able, contents and lists of things
 % Begin the Dedication page
-
-\setstretch{1.3}  % Return the line spacing back to 1.3
-
 \pagestyle{empty}  % Page style needs to be empty for this page
 \dedicatory{For/Dedicated to/To my\ldots}
 
@@ -171,6 +153,7 @@ I need to thank a number of people here \ldots
 
 
 %% ----------------------------------------------------------------
+\setstretch{1.5}  % Return the line spacing back to 1.5
 \mainmatter	  % Begin normal, numeric (1,2,3...) page numbering
 \pagestyle{plain}  % Return the page headers back to the "fancy" style
 
@@ -198,7 +181,7 @@ I need to thank a number of people here \ldots
 %% ----------------------------------------------------------------
 % Now begin the Appendices, including them as separate files
 
-\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+%\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
 
 \appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
 
@@ -208,7 +191,7 @@ I need to thank a number of people here \ldots
 
 %\input{Appendices/AppendixC} % Appendix Title
 
-\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
+%\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
 \backmatter
 
 %% ----------------------------------------------------------------
