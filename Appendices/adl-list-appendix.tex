@@ -3,17 +3,25 @@ In this appendix, we list the characteristics of all of the architectural descri
 
 Due to the amount of information needed to characterise the ADLs, it is presented in three tables, \tref{table:adl-basics} that contains the basic characteristics of the languages, \tref{table:adl-concepts} that describes the architectural concepts that appear in each language, and \tref{table:adl-mechanisms}, which lists the architectural description mechanisms provided by both.
 
+%
+% This table formatting is really black magic.  The careful structure of
+% commands and data in the heading section comes from Stack Overflow, the
+% longtable manual and experimentation
+%
+% The formula below (caption + label then hline then headers, then caption, then 
+%    \endfirsthead, then the same structure with the caption modified not to
+%    include each page in the contents - the "[]" - finshed with \endhead) appears
+% to work!
+%
 \begin{landscape}
-\setstretch{1.0}
+\singlespacing
 \footnotesize
 \begin{longtable}{|c|p{6cm}|p{3cm}|c|p{3cm}|p{2cm}|c|} 
-\caption{General Characteristics of the ADLs} \\
-\label{table:adl-basics} \\
-\endfirsthead
-\caption[]{General Characteristics of the ADLs} \\
-\endhead
+\caption{General Characteristics of the ADLs} \label{table:adl-basics} \\
 \hline
-
+\textbf{ADL} & \textbf{Description} & \textbf{Institutions} & \textbf{Year} & \textbf{Domain} & \textbf{Application} & \textbf{Reference} \endfirsthead
+\caption[]{General Characteristics of the ADLs} \\
+\hline
 \textbf{ADL} & \textbf{Description} & \textbf{Institutions} & \textbf{Year} & \textbf{Domain} & \textbf{Application} & \textbf{Reference} \endhead
 \hline
 AADL & An architectural description language with industrial roots, having come from work in the avionics industry based on key concepts from MetaH and ACME.  It is a rich ADL targeted at embedded systems, supporting a range of architectural views and having good tool support available.  It has been standardised by the Society of Automotive Engineers (SAE). & Over 20 industrial and academic organisations & 2006 &  Embedded Systems & Industrial Projects & \cite{feiler2006-aadl} \\
@@ -171,16 +179,13 @@ $\pi$-SPACE & A component and connector based language based on the $\pi$-calcul
 \begin{landscape}
 \setstretch{1.0}
 \footnotesize
-\begin{longtable}{|c|P{2cm}|p{8cm}|p{4cm}|P{2cm}|P{2cm}|} 
-\label{table:adl-concepts} \\
-\caption{ADL Support for Architectural Concepts} \\
-\endfirsthead
-\caption[]{ADL Support for Architectural Concepts} \\
-\endhead
+\begin{longtable}{|P{3cm}|P{2cm}|p{8cm}|p{4cm}|P{2cm}|P{2cm}|} 
+\caption{ADL Support for Architectural Concepts} \label{table:adl-concepts} \\
 \hline
-
-\textbf{ADL} & \textbf{Viewpoints} & \textbf{Architectural Concepts} & \textbf{ Behavioural Semantics} & \textbf{1st Class Conns} & \textbf{1st Class Config} 
-\endhead
+\textbf{ADL} & \textbf{Viewpoints} & \textbf{Architectural Concepts} & \textbf{ Behavioural Semantics} & \textbf{1st Class Conns} & \textbf{1st Class Config} \endfirsthead
+\caption[]{ADL Support for Architectural Concepts} \\
+\hline
+\textbf{ADL} & \textbf{Viewpoints} & \textbf{Architectural Concepts} & \textbf{ Behavioural Semantics} & \textbf{1st Class Conns} & \textbf{1st Class Config} \endhead
 \hline
 
 AADL & Functional, Deployment & Component (process, thread, thread group, data, subprogram, processor, memory, device, bus); Port (data port, event data port, synchronous call, direct data access); Interconnection type (message passing, event passing, synchronised data access, RPC); Property System; Information Flow; Operational Mode; Package Annex; Library (extension or specialisation) & Yes (but user defined form) & No & Yes \\
@@ -346,16 +351,12 @@ $\pi$-SPACE & Functional & Port Type; Behaviour Type; Component Type; Connector 
 \setstretch{1.0}
 \footnotesize
 \begin{longtable}{|c|P{2cm}|P{3cm}|P{3cm}|p{2cm}|c|} 
-\label{table:adl-mechanisms} \\
-\caption{ADL Language Mechanisms and Support} \\
-\endfirsthead
-\caption[]{ADL Language Mechanisms and Support} \\
-\endhead
+\caption{ADL Language Mechanisms and Support} \label{table:adl-mechanisms} \\
 \hline
-
-\textbf{ADL} & \textbf{Structuring} & \textbf{Capturing Qualities} & \textbf{Syntax} & \textbf{Analysis} & \textbf{Tools}
-\endhead
-
+\textbf{ADL} & \textbf{Structuring} & \textbf{Capturing Qualities} & \textbf{Syntax} & \textbf{Analysis} & \textbf{Tools} \endfirsthead
+\caption[]{ADL Language Mechanisms and Support} \\
+\hline
+\textbf{ADL} & \textbf{Structuring} & \textbf{Capturing Qualities} & \textbf{Syntax} & \textbf{Analysis} & \textbf{Tools} \endhead
 \hline
 
 AAADL & Packages; Composition & Properties & Textual; Graphical & Yes (Performance; Real-Time Scheduling; Reliability); others via extensions & Commercial \\
