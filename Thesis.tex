@@ -3,12 +3,12 @@
 %% ---------------------------------------------------------------- 
 
 % Set up the document
-\documentclass[a4paper, 11pt, oneside]{Thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
+\documentclass[a4paper, 11pt, hidelinks]{Thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
 \graphicspath{Figures/}  % Location of the graphics files (set up for graphics to be in PDF format)
 \usepackage[T1]{fontenc}
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
-% Include any extra LaTeX packages required
+% Include the extra LaTeX packages required
 \usepackage[square, numbers, comma, sort]{natbib}  % Use the "Natbib" style for the references in the Bibliography
 \usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
 \usepackage{vector}  % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
@@ -20,8 +20,7 @@
 \usepackage{array} % for the \newcolumntype facility used for our custom column type
 \usepackage{multirow} % to allow spanning rows and columns in tables
 \usepackage[a-1b]{pdfx} % For PDF/A generation
-\usepackage{hyperref} % For PDF/A generation
-
+\usepackage{pdfpages} % To allow inclusion of PDF files
 
 % Suppress warnings about Underfull or Overfull boxes
 \hbadness=99999
@@ -55,7 +54,7 @@
 % Set up the Title Page
 \title  {Addressing Energy Efficiency in System Design: A Journey from Architecture to Operation}
 \authors  {\texorpdfstring
-            {\href{u1157744@uel.ac.uk}{Eoin Woods}}
+            {Eoin Woods}
             {Eoin Woods}
             }
 \addresses  {\groupname\\\deptname\\\univname}  % Do not change this here, instead these must be set in the "Thesis.cls" file, please look through it instead
@@ -188,6 +187,7 @@ I need to thank a number of people here \ldots
 \appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
 
 \input{Appendices/adl-list-appendix}
+\input{Appendices/ethics-approval-appendix}
 
 %\input{Appendices/AppendixB} % Appendix Title
 
