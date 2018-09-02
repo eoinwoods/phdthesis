@@ -222,7 +222,8 @@
   \global\let\author\relax
   \global\let\date\relax
   \global\let\and\relax
-  \cleardoublepage
+  %\cleardoublepage - set to single page skip to avoid blank page
+  \clearpage
 }
 % (eoin) dramatically simplified the "abstact" env
 \newenvironment{abstract}
@@ -235,7 +236,8 @@
 }
 {
   \vfil\vfil\vfil\null
-  \cleardoublepage
+  % \cleardoublepage - avoid blank page
+  \clearpage
 }
 \addtocounter{secnumdepth}{1}
 \setcounter{tocdepth}{6}
@@ -257,7 +259,8 @@
            \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}
     \@starttoc{toc}
     \if@restonecol\twocolumn\fi
-   \cleardoublepage
+%   \cleardoublepage - avoid blank page
+   \clearpage 
 }\end{spacing}
 }
 \renewcommand\listoffigures{
@@ -275,7 +278,8 @@
               {\MakeUppercase\listfigurename}}
     \@starttoc{lof}
     \if@restonecol\twocolumn\fi
-    \cleardoublepage
+%    \cleardoublepage - avoid blank page
+    \clearpage
 }\end{spacing}
 }
 \renewcommand\listoftables{
@@ -293,7 +297,8 @@
           \MakeUppercase\listtablename}{\MakeUppercase\listtablename}}
     \@starttoc{lot}
     \if@restonecol\twocolumn\fi
-    \cleardoublepage
+    %\cleardoublepage - avoid blank page
+    \clearpage
 }\end{spacing}
 }
 \newcommand\listsymbolname{Abbreviations}
@@ -346,7 +351,8 @@
 \vskip 60\p@
 \begin{center}{\Large \sl #1}\end{center}
 \vfil\null
-\cleardoublepage
+%\cleardoublepage - avoid blank page
+\clearpage
 }
 \renewcommand\backmatter{
   \if@openright

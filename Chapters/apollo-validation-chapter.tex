@@ -126,13 +126,13 @@ This allowed us to identify the spans making up the processing of the request an
 
 The next step was a simple lookup of the IP addresses in the Docker network configuration which resulted in the container IDs of the two Docker containers that our application elements ran within.  The short form IDs returned were \texttt{c42b3d3bf4b2} for the Gateway container and \texttt{b75d29577eb9} for the CPU intensive container.
 
-Having the container IDs allowed us to reliably identify the Linux process IDs of the Java virtual machines running our application elements.  By using the \texttt{ps} output we saved during the test execution, we could use the container IDs to find the Docker \texttt{docker-containerd-shim}  processes running the JVMs for our services, which were process 3278 for the CPU intensive service and 3436 for the Gateway service.
+Having the container IDs allowed us to reliably identify the Linux process IDs of the Java virtual machines running our application elements.  By using the \texttt{ps} output we saved during the test execution, we could use the container IDs to find the Docker container daemon  processes running the JVMs for our services, wthe CPU intensive service and the Gateway service.
 
 Having the process IDs allowed us to inspect the \texttt{pidstat} output that we had collected during the test execution.   This utility captured CPU percentage usage statistics for our processes every second during the test period.
 
-For process 3278 (the CPU intensive service) we found that its average CPU consumption was 25.42\% with a very low standard deviation of 0.26 across the test set.
+For the CPU intensive service we found that its average CPU consumption was 25.42\% with a very low standard deviation of 0.26 across the test set.
 
-For process 3436 (the Gateway) we found that its average CPU consumption was 0.3\% of the machine (although this did have a maximum of 0.75\% for short periods, leading to a standard deviation of 0.11 for the test set).
+For the Gateway process we found that its average CPU consumption was 0.3\% of the machine (although this did have a maximum of 0.75\% for short periods, leading to a standard deviation of 0.11 for the test set).
 
 We therefore decided to use 25.75\% as the container CPU usage during the test period.
 
