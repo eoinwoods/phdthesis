@@ -25,7 +25,6 @@ The objective of this research is to improve the assistance available to softwar
 
 To reach our objective, this work aims to answer four specific research questions, namely:
 \nopagebreak
-
 \begin{description}
 \item [RQ1] What architecture description languages exist and can they be used to reason about the energy properties of a system?
 \item [RQ2] How can architects prioritise energy efficiency as an architectural concern?
@@ -45,7 +44,7 @@ The ADL investigation work began with a systematic literature review \cite{kitch
 
 The second stage of this research was to undertake an Improvement Problem To Help a Client style exercise (in Technical Action Research terminology \cite{wieringa2012-tar}) which took the form of a significant case study which attempted to apply an ADL from the research results to the description of a large industrial system.  This work resulted in the attempt to apply an academic ADL being abandoned but instead a lightweight ADL-like notation was developed and successfully applied to the problem, resulting in a large and effective architectural description.
 
-This research allowed us to answer research question RQ1.
+This research enabled us to answer research question RQ1.
 
 \subsection{Study of Prioritising Architectural Effort}
 
@@ -70,7 +69,7 @@ The work began with a narrative literature review to survey the state of researc
 
 We wanted to identify some useful principles to guide architects when considering energy efficiency and so identified an industrial case study which had successfully improved energy efficiency to learn from.  We found a case study from eBay who had successfully reduced the energy consumption of key application services as part of their Digital Service Efficiency (DSE) initiative \cite{ebay2013-digitalefficiency}.  We analysed this scenario and synthesised key principles from it and described them.  These principles can now be integrated into practitioner oriented literature such as the architectural perspective. 
 
-This allowed us to answer research question RQ3.
+This enabled us to answer research question RQ3.
 
 \subsection{Design and Implementation of Application Energy Monitoring}
 
@@ -80,12 +79,12 @@ The work began with a narrative literature review to survey the state of researc
 
 In response to these limitations, an approach to capturing representative energy usage for application execution scenarios was designed in a largely technology independent manner, as reported in \cref{chapter:monitoring}.  Our solution to the problem approaches it in a slightly different way to the existing systems and allocates estimated server energy usage to the applications running on that server, rather than trying to calculate an absolute energy consumption for each.  This sidesteps a number of problems with the existing approaches, as we will illustrate later.  We also performed the measurements and calculation from the perspective of the architect, using execution scenarios (tracing requests through the distributed application components), rather than measuring the energy usage of operating system processes. This design was then implemented using a specific set of technologies, including Linux, Docker and Java, as described in \cref{chapter:implementation}.  Once implemented, a set of practical tests was designed and executed to validate the implementation's internal consistency and external correctness with respect to its runtime environment, as described in \cref{chapter:validation}.
 
-This allowed us to answer research question RQ4.
+This enabled us to answer research question RQ4.
 
 \section{Contribution}
 
 The primary contribution of this research has been the design, proof-of-concept implementation, and validation of a practical approach to providing a software architecture centric view of energy usage of a software application.  This scenario based energy usage calculation has not been attempted before in prior research.
-
+\pagebreak
 The specific research contributions in this thesis are as follows: \nopagebreak
 \begin{enumerate}
 	\item \textbf{A comprehensive systematic survey of architecture description languages}.  This literature review surveyed all ADLs created from 1991 to 2015, reviewing 135 potential languages, with 51 of them being confirmed as architectural description languages, according to our criteria.  A detailed characteristation of the languages and the field were produced from this analysis.
@@ -95,7 +94,7 @@ The specific research contributions in this thesis are as follows: \nopagebreak
 	\item \textbf{A system for allocating energy to application scenarios}.  Our literature review revealed that a number of application energy estimation systems had been proposed and prototyped.  However all of these systems measured energy consumption of operating system processes, which makes the information of limited immediate value to the application architect.  Our contribution has been to design and create a proof-of-concept implementation of a system which estimates the energy consumption of execution scenarios through the application (using application tracing), so providing the architect with significantly more insight into the effect of their architectural decisions.
 \end{enumerate}
 
-Much of the work reported here has been previously published in conference proceedings and journals. The list of publications arising from this work are listed below: \nopagebreak
+Much of the work reported here has been previously published in conference proceedings and journals. The publications arising from this work are listed below: \nopagebreak
 \begin{description}
 	\item Woods, Eoin, and Bashroush, Rabih. "Using an Architecture Description Language to Model a Large-Scale Information System - An Industrial Experience Report." In \emph{Software Architecture (WICSA) and European Conference on Software Architecture (ECSA), 2012 Joint Working IEEE/IFIP Conference on}. IEEE, 2012.
 	\item Woods, Eoin, and Bashroush, Rabih. "Modelling Large-Scale Information Systems Using ADLs - An Industrial Experience Report." \emph{Journal of Systems and Software} 99 (2015).
