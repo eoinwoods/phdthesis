@@ -37,15 +37,15 @@ We identified the research literature to include in the study using an electroni
 
 We began by searching a range of electronic sources for papers that included the keywords "ADL" or "architecture description language" in their title or keywords.  The four primary sources we used were the ACM Digital Library (advanced search), Google Scholar, IEEEXplore and Microsoft Academic Search.
 
-Predictably these queries returned many references, however it was clear from our existing knowledge of the field that these keyword-based searches were not returning all ADL related literature. 
+Predictably these queries returned many references, however it was clear from our existing knowledge of the field that these keyword-based searches were not returning all of the relevant ADL related literature that had been published.
 
-To find further relevant literature we then performed an exhaustive search of Google Scholar, using the relevant keywords, which returned over 10,000 references which were manually scanned for relevant primary studies that we might have missed.  This list contained many false positives, but these were discarded via manual inspection. 
+To find further relevant literature we then performed an exhaustive search of Google Scholar, using the relevant keywords, which returned thousands of references which were manually scanned for relevant primary studies that we might have missed.  This list contained many false positives, but these were discarded via manual inspection. 
 
 Having searched traditional literature review sources, we also performed manual searches of specific publication venues where ADL researchers were known to publish their findings, specifically the specialist conferences WICSA, QoSA, ECSA and ICSE.
 
-Finally, we performed forward and backward reference checking on the primary studies that we had found. Search engines were used to find citations of the primary studies identified that could be of relevance to the review (forward reference checking). The reference lists of the primary studies were then checked for any potential relevant studies missed (backward reference checking). At this point we were left with 135 potential primary studies for the survey.
+Finally, we performed forward and backward reference checking on the primary studies that we had found. Search engines were used to find citations of the primary studies identified that could be of relevance to the review (forward reference checking). The reference lists of the primary studies were then checked for any potential relevant studies missed (backward reference checking). At this point we had 135 potential primary studies for the survey.
 
-Throughout these search activities, we limited the dates of the studies that we included, to limiting our scope to literature published between January 1991 and May 2016. The start date was selected to be early enough to include all those ADLs in the original work \cite{medvidovic2000-adlcomparison} that inspired us to undertake this later comprehensive survey and as noted in \cite{malavolta2013-industryadlneeds} the concept of an ADL was not well defined before this point.  Our literature search was concluded in May 2016, which is the reason for the end date (although in fact we did not discover any additional relevant literature published between January and May 2016).
+Throughout these search activities, we limited the dates of the studies that we included, to limiting our scope to literature published between January 1991 and May 2016. The start date was selected to be early enough to include all those ADLs in the original work \cite{medvidovic2000-adlcomparison} that inspired us to undertake this later comprehensive survey and as noted in \cite{malavolta2013-industryadlneeds} the concept of an ADL was not well defined before this point.  Our literature search was concluded in May 2016, which is the reason for the end date.
 
 To focus our efforts on the most relevant ADLs, our initial set of primary studies was filtered further to a more manageable set using the following exclusion criteria:
 
@@ -61,16 +61,16 @@ The result of this further selection exercise was a list of 51 ADLs to include i
 
 \subsection{Analysis of the Results}
 
-The first aspect of the ADLs we were interested in was the \emph{basic information} about each and specifically institution(s) who developed them, the dates when the language was first published, the application domain that they address and the breadth of the application that they have been applied to.
+The first aspect of the ADLs we were interested in was the \emph{basic information} about each and specifically the institutions who developed them, the dates when the language was first published, the application domain that they address and the breadth of the application that they have been applied to.
 
 When considering the breadth of application of the languages, we identified five possible degrees of application of an ADL that were of interest to us, namely:
-\begin{itemize}
-	\item "Examples", meaning that the language has only been used to create characteristic examples of its use;
-	\item "Experiments", where it has been used to model realistic problems, but only for the purpose of investigating the language;
-	\item "Case Studies", meaning that it has been applied to realistic problems from outside the originating research group but by the language creators;
-	\item "Research Projects", where the language has been used on other research projects by researchers other than its creators; and
-	\item "Industrial Projects", meaning that the language has been used by industrial software engineering teams on real projects (rather than industrial researchers, who would be classified as research project use).
-\end{itemize}
+\begin{description}
+	\item [Examples] meaning that the language has only been used to create characteristic examples of its use;
+	\item [Experiments] where it has been used to model realistic problems, but only for the purpose of investigating the language;
+	\item [Case Studies] meaning that it has been applied to realistic problems from outside the originating research group but by the language creators;
+	\item [Research Projects] where the language has been used on other research projects by researchers other than its creators; and
+	\item[Industrial Projects] meaning that the language has been used by industrial software engineering teams on real projects (rather than industrial researchers, who would be classified as research project use).
+\end{description}
 
 We were obviously particularly interested in how many ADLs had been applied beyond its creating research group on other research projects, or ideally on industrial projects.
 
@@ -157,7 +157,7 @@ When we performed this analysis, we found that it was quite difficult because th
 	\item[None] - where the language does not appear to be amenable to automated analysis.
 \end{description}
 
-This analysis is presented in \fref{figure:litreview-adl-analysis}.  As can be seen, less than half of the languages appear to provide realistic possibilities for automated analysis (and of course of those that do, many do not have working tools available for them).  We conclude therefore that automated analysis is only of interest in a subset of research groups working on ADLs.  A concern that we have with this situation is that an important motivator for adopting ADLs does not appear to be addressed in many of the ADLs that have been created.
+This analysis is presented in \fref{figure:litreview-adl-analysis}.  As can be seen, less than half of the languages appear to provide realistic possibilities for automated analysis (and of course of those that do, many do not have working tools available for them).  We conclude therefore that automated analysis is only of interest in a subset of research groups working on ADLs.  Our concern with this situation is that an important motivator for adopting ADLs does not appear to be addressed in most ADLs.
 
 \begin{figure}
 \centering
@@ -185,7 +185,7 @@ A key goal of software architecture is to ensure that a system achieves the set 
 Many industrial systems are large, much larger than any case study or prototype experiment in the research domain.  A typical industrial system today can contain 500,000 to 1mm lines of code and dozens to hundreds of architectural elements.  Such systems cannot be described using languages that do not have effective structuring mechanisms to allow a system description to be broken down into smaller discrete parts.  This led us to investigate the mechanisms that each of the ADLs in the study provided for structuring the architectural description.  This analysis is shown in \fref{figure:litreview-adl-structuring}.
 
 While a few of the ADLs (about 12\%) don't provide a structuring mechanism, most do, with nearly all of them offering \emph{composition} and a few offering \emph{packages} or \emph{subsystems} (in most cases in addition to composition - hence the total of values in the chart is larger than the number of ADLs in the study).
-This is an interesting result, suggesting that most ADLs can be structured for large architectural descriptions, but that most of them utilise composition as the mechanism to achieve this, rather than providing a separate structuring mechanism like packages or subsystems.  This may imply restrictions in the flexibility of the structuring facilities available in those languages where only composition is available.
+This is an interesting result, suggesting that most ADLs can be structured for large architectural descriptions, but that most of them utilise composition as the mechanism to achieve this, rather than providing a separate structuring mechanism like packages or subsystems.  This is likely to mean that restrictions in the flexibility of the structuring facilities available in those languages where only composition is available.
 
 \begin{figure}
 \centering
@@ -194,11 +194,13 @@ This is an interesting result, suggesting that most ADLs can be structured for l
 \label{figure:litreview-adl-toolsupport}
 \end{figure}
 
-ADLs are often developed in conjunction with supporting tools to help architects to use them, which makes them more attractive for use on significant projects. \fref{figure:litreview-adl-toolsupport} presents our analysis of this feature of the ADLs in the study.
+ADLs are often developed in conjunction with supporting tools to help architects to use them.  Depending on the nature and effectiveness of the tools, this can make the ADLs more attractive for use on significant projects. \fref{figure:litreview-adl-toolsupport} presents our analysis of this feature of the ADLs in the study.
 
-As can be seen, a very small percentage of the ADLs have commercially proven tools available to them, while about a third of them have tooling being used on research projects.  Nearly two thirds of the ADLs in our study provided no effective tool support.
+The chart in the diagram shows that a very small percentage of the ADLs have commercially proven tools available to them, while about a third of them have tooling being used on research projects.  Nearly two thirds of the ADLs in our study provided no effective tool support.
 
 \subsection{Conclusions}
+
+Having systematically surveyed the research literature in the field of architectural description languages and analysed the results, we were now able to answer our ADL literature review research questions.  Our answers are presented below.
 
 \begin{description}
 \item[ADL.RQ1] \emph{Which architectural viewpoints does each ADL support?}
@@ -206,7 +208,7 @@ All the ADLs in the study can represent functional views of the system and most 
 
 \item[ADL.RQ2] \emph{Does the ADL provide structuring mechanisms for large ADs?}
 Most ADLs in this study (45) provide the ability to structure a large architectural description by allowing composition of architectural elements (of course composition can also be used for other purposes, such as information hiding).   A smaller number provide specific mechanisms for structuring such as packages (11) and subsystems (1).  A few ADLs, surprisingly, do not appear to provide a structuring mechanism (6).  Some of the languages provide more than one mechanism that can be used to structure an AD (e.g. packages and composition) and this is why the numbers above sum to more than the number of ADLs in the study.\\
-It is encouraging that most of the ADLs we surveyed provide at least basic facilities for structuring a large architectural description. This suggests that serious consideration has been given to the use of the ADL for realistic problems.  Those languages that don't allow structuring are presumably in an early stage of development or are not intended for industrial use.
+It is encouraging that most of the ADLs we surveyed provide at least basic facilities for structuring a large architectural description. However large-scale project experience suggests that composition is not a particularly flexible structuring mechanism.  This suggests that some consideration has been given to the use of the ADL for realistic problems, but it reflects a general lack of industrial validation.  The languages that don't allow structuring are presumably in an early stage of development or are not intended for industrial use.
 
 \item[ADL.RQ3] \emph{Does the ADL support the analysis of an architecture?}
 We found that about half of the ADLs (24 or 45\%) do not appear to allow a realistic option for automated analysis of architectural descriptions, which was something of a surprise to us.  Some of the languages do provide this though, with about 32\% of them providing direct support in the language, while 15\% allow this by providing mechanisms for 3rd party tools to embed information in the architectural description and 8\% allow for analysis by providing an extension mechanism that could allow analysis information to be added to an architectural description. \\
@@ -217,11 +219,11 @@ Quality properties are central to the role and activities of the software archit
 
 \item[ADL.RQ5] \emph{Were prototype or production quality tools developed with the ADL?}
 Given the importance of tool support in achieving adoption of new software technologies, we were surprised to find that 45\% of the ADLs in this survey do not appear to offer tool support that is ready for widespread transfer to industry and use.  29\% of the ADLs provide a tool that has been used for a research problem, and only 8\% of the ADLs have an associated tool that has been tested in an industrial context.\\
-An important factor in applying ADLs on industrial projects is good tool support, preferably through extending tools that industry uses already.  In fact, we would go so far as to suggest that industrial adoption of any ADL without practical tool support is unlikely.
+An important factor in applying ADLs on industrial projects is good tool support, ideally through extending or tailoring tools that industry uses already.  In fact, we would go so far as to suggest that industrial adoption of any ADL without practical tool support is unlikely.
 
 \item[ADL.RQ6] \emph{Has the ADL been applied to non-trivial problems outside the group of people who created it?}
 Given the effort required to develop ADLs, we assume that most of them are intended for eventual technology transfer to industry.  Assuming so, the current degree of transfer out of the research groups is disappointing.  We found that 58\% of the ADLs have only been used by their creators, to create simple examples or experiments.  Another 26\% of the languages have only been used for case studies, again by their creators.  12\% appear to have been used for research projects, outside the creating group, while a mere 6\% of the languages have been applied in an industrial context. \\
-It is our opinion that a technology can only be considered have had an impact when it is used by people other than its creators, and when considering the products of research groups, this means significant usage outside the originating research group and ideally in an industrial context.  Nearly all the ADLs we have surveyed fail this test, with less than 20\% of them having been used outside their originating group (based on the publications we could find).  It is possible that some of these ADLs have been used industrially but the case studies not published, however we feel that this is unlikely given the positive impact that publishing such case studies would have.  We believe that this finding in itself is cause for reflection within the ADL research community (as was the previous similar finding from a workshop some years ago \cite{woodshilliard2005-adlsinpractice}).
+In our opinion a technology can only be considered have had an impact when it is used by people other than its creators, and when considering the products of research groups, this means significant usage outside the originating research group and ideally in an industrial context.  Nearly all the ADLs we have surveyed fail this test, with less than 20\% of them having been used outside their originating group (based on the publications we could find).  It is possible that some of these ADLs have been used industrially but the case studies not published, however we feel that this is unlikely given the positive impact that publishing such case studies would have.  We believe that this finding in itself is cause for reflection within the ADL research community (and it is similar to a previous similar finding, some years ago, from a workshop at a major software architecture conference \cite{woodshilliard2005-adlsinpractice}).
 \end{description}
 
 \section{Prioritisation of Architectural Effort}
