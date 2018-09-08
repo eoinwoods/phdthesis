@@ -71,7 +71,7 @@ When a particular test scenario needed competing workload on the host machine, t
 Once test cases were available, the output archive data files were transferred to local machines and a scripted process to \emph{run Apollo on the test scenario output} was executed. This cleared the local MySQL and InfluxDB databases, loaded the trace and resource utilisation data from the scenario into these databases, unpacked the other data files from the scenario archive, and ran Apollo on these data sets.  The output of the Apollo calculator was then inspected to analyse the characteristics of the scenario and the energy allocation that it had been allotted.
 
 
-\section{Validating Calculation}
+\section{Validating the Allocation Calculation}
 \label{sec:validatingcalculation}
 
 Our first point of validation is to ensure that the allocation calculation performed by Apollo can be reproduced by hand, following the algorithm presented in the previous chapter, with an acceptable level of consistency between the two approaches.
@@ -140,7 +140,7 @@ The next step in the process was to estimate the energy usage of the underlying 
 
 The \texttt{mpstat} statistics were more useful as they contained a metric measurement for CPU usage percentage per CPU every second during the test period.  When we analysed this data set we found that the machine's utilisation was a very constant 27\% right through the test period, apart from one second (10 seconds into the test) when it jumped to 75\% usage and then back down to 27\% (for reasons we weren't able to identify).
 
-The CPU usage percentage allowed us to estimate the energy consumption of the machine using a representative set of SPEC Power benchmark results for a similar server model.  The benchmark results were 102W at 20\% and 120W at 30\%.  Therefore interpolation resulted in the value $((120 - 102) \times (7/10)) + 102 = 12.6 + 102 = 114.6$.  That is, the machine's power consumption during the test period was about 114 J/second.
+The CPU usage percentage allowed us to estimate the energy consumption of the machine using a representative set of SPEC Power benchmark results for a similar server model.  The benchmark results were 102W at 20\% and 120W at 30\%.  Therefore interpolation resulted in the value $((120 - 102) \times (7/10)) + 102 = 12.6 + 102 = 114.6W$.  That is, the machine's power consumption during the test period was about 114 J/second.
 
 Given that the test period was 126.30 seconds, this resulted in a power consumption value for the host machine of $126.30 \times 114 = 14473.98J$, which we rounded to 14474J.
 
@@ -196,7 +196,7 @@ The difference in the results will be familiar to anyone who has been involved i
 
 This result is well within our target result tolerance and so validates the Apollo proof-of-concept implementation's accuracy.
 
-\section{Validating Consistency}
+\section{Validating Allocation Consistency}
 \label{section:validatingconsistency}
 
 To validate consistency of energy allocation, our strategy is to run a known control workload under fixed host utilisation conditions (no other workload being the simplest case) and to run a range of other workloads that we know contain an equivalent amount of computational work but are structured differently.  The energy allocation should be the same for each case.
@@ -233,7 +233,7 @@ When no additional load is executing on the host, there is no other workload apa
 
 In contrast, when there is additional workload on the machine, the energy allocated to each trace is much more even, within a maximum of 4\% variation from the mean (min 157, max 164, mean 160, standard deviation of 2.66 which is 1.6\% of the mean).  This is also an expected result as during the execution of our test workload, there is other workload running on the machine which shares the allocation of the host's energy consumption.  As our workload runs longer, but is not using CPU during part of the period, it is allocated correspondingly less of the host's energy as there is other active workload on the machine which is allocated more of it.  This is the allocation we would expect and it is within our target consistency and again suggests that this is a consistent energy allocation mechanism.
 
-\section{Validating Allocation}
+\section{Validating Allocation Scenarios}
 \label{section:validatingallocation}
 
 Another aspect of energy allocation is how a fixed workload is allocated energy when the underlying host has varying amounts of other workload running on it concurrently.  We tested this aspect of allocation by running a single workload type under 5 different host utilisation conditions, namely when there was no other workload on the host, and when the host was 25\%, 50\%, 75\% and 100\% utilised before our workload started.  The results of this test are shown in the line graph in \fref{figure:validation-machineload}.
@@ -304,7 +304,7 @@ The result of these manual tests is shown in the scatter plot and trend line sho
 
 The combination of these test results shows that we were correct in our assumption that CPU is a good proxy for other resource utilisation by a process.
 
-\section{Summary}
+\section{Conclusions}
 
 In order to validate our proof-of-concept implementation of the Apollo Energy Allocator system, we identified four aspects of validation that we needed to perform.
 
