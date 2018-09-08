@@ -3,7 +3,7 @@
 
 \section{Introduction}
 
-In our practice in the field of software architecture, we have noticed and experienced how complex it is for software architects to prioritise their work.  The software architect's responsibilities are broad and in principle they can be involved in almost any technical aspect of a project from requirements to operational concerns.  In practice, this makes it difficult for an architecture practitioner to prioritise effort to achieve quality properties like energy consumption, which acquiring stakeholders and end-users rarely prioritise explicitly due their lack of immediate visibility.  Other important quality properties that suffer from similar prioritisation problems include security \cite{cisco2016-uksecprioritisation}, performance and availability \cite{ozkaya2008-qualityproperties}. 
+In our practice in the field of software architecture, we have noticed and experienced how complex it is for software architects to prioritise their work.  The software architect's responsibilities are broad and in principle they can be involved in almost any technical aspect of a project from requirements to operational concerns.  In practice, this makes it difficult for an architecture practitioner to prioritise effort to achieve quality properties like energy consumption, which acquiring stakeholders and end-users rarely prioritise explicitly due their lack of immediate visibility.  Other important quality properties that suffer from similar prioritisation problems include security \cite{cisco2016-uksecprioritisation} and performance and availability \cite{ozkaya2008-qualityproperties}. 
 
 However, we also observe that successful experienced software architects appear to be good at focusing their effort effectively, and do manage to create systems which are performant, secure, highly available and, in the future, no doubt energy efficient too. However not all architects are good at this and, anecdotally, we observe that inexperienced architects often find prioritisation of their focus very difficult.  This situation led us to wonder how the experienced architects achieve this balance.  As discussed in \sref{section:litreview-prioritisation}, there is little to guide them in the existing research literature, although they may use simple techniques like ad-hoc prioritisation or numeric grouping.  They may also use generic time management techniques (like \cite{allen2015-gettingthingsdone}) but we were interested in whether there are common role-specific heuristics which could be taught to new architects.
 
@@ -26,7 +26,7 @@ The process was organised into four distinct stages.
 
 We chose to gather our primary data using semi-structured interviews, where we provided the interviewees with a written introduction to the question we wanted to answer and then some specific questions to start their thought processes. 
 
-The analysis of the primary data was performed using a simple application of Grounded Theory as it is a suitable method for theory building, to understand the relationships between abstract concepts \cite{charmaz2006-groundedtheory}, which described our situation and needs very closely.  We performed initial coding on the primary data and then refined this with a focused coding exercise.  As suggested in \cite{lapan2012-qualitativeresearch}, the process of collection and analysis was a parallel, iterative process, rather than a linear one with fixed phases.  
+The analysis of the primary data was performed using a simple application of Grounded Theory as it is a suitable method for theory building, to understand the relationships between abstract concepts \cite{charmaz2006-groundedtheory}, which described our situation and needs very closely.  We performed initial coding on the primary data and then refined this with a more focused coding exercise.  As suggested in \cite{lapan2012-qualitativeresearch}, the process of collection and analysis was a parallel, iterative process, rather than a linear one with fixed phases.  
 
 This exercise produced a set of themes that classify the heuristics that the architects use, as well as the heuristics themselves.  A heuristic had to be mentioned by at least three of the participants (which represented a third of them) for us to consider it significant enough to be included in the model.  We combined the themes and heuristics to form a simple model (the "preliminary model") of how experienced architects go about prioritising their effort. 
 
@@ -74,7 +74,7 @@ Some characteristics of the participants in the study are summarised in the grap
    \label{figure:participants}
 \end{figure}  
 
-All of our initial practitioner set had over 10 years of post-graduate experience and some had over 30 years of experience, so ensuring that they all had a significant amount of professional practice upon which to base their answers.
+All of the members of our initial practitioner set had over 10 years of post-graduate experience and some had over 30 years of experience, so ensuring that they all had a significant amount of professional practice upon which to base their answers.
 
 We deliberately selected software and enterprise architects because this is who the model was primarily aimed at serving.
 
@@ -178,7 +178,8 @@ The closed-ended questions we asked to allow us to classify the respondents and 
 		\item Academic (teaching or researching in university or similar environments)
 		\item Other (please specify)
 	\end{itemize}
-	\item [Q8] How many years of post-graduation experience do you have?
+	\begin{minipage}{\textwidth} %nolinebreak ignored so force KWN via minipage
+	\item [Q8] How many years of post-graduation experience do you have? \nolinebreak
 	\begin{itemize}
 		\item 1-5 years
 		\item 5-10 years
@@ -186,7 +187,9 @@ The closed-ended questions we asked to allow us to classify the respondents and 
 		\item 15-20 years
 		\item More than 20 years
     \end{itemize}
-	\item [Q9] What is your main job role?
+    \end{minipage}
+    \vspace{1pt} % needed to make spacing look better after minipage
+	\item [Q9] What is your main job role? \nolinebreak
 	\begin{itemize}
 		\item Software Architect
 		\item Enterprise Architect
@@ -293,13 +296,14 @@ Given that we were interested in attracting experienced architects to validate t
 \caption{Similarity of the Model to Practice by Experience Level}
 \label{table:similaritybyexp}
 \footnotesize
-\begin{tabular}{l p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm}}
-                & Not at All Similar & Not Very Similar & Somewhat Similar & Quite Similar & Very Similar \\
-1 to 5 Years       & &          &           & 1 (100\%) &	        \\
-5 to 10 Years      & & 1 (17\%) & 2 (33\%)  & 1 (17\%)  & 2 (33\%)  \\
-10 to 15 Years     & & 1 (8\%)  & 3 (25\%)  & 7 (58\%)  & 1 (8\%)   \\
-15 to 20 Years     & &          & 1 (7\%)   & 11 (79\%) & 2 (14\%)  \\
-More than 20 Years & & 2 (4\%)  & 10 (21\%) & 22 (47\%) & 13 (28\%) \\
+% {l p{0.5cm} p{0.5cm} p{0.5cm} p{0.5cm} p{0.5cm} p{0.5cm} p{0.5cm} p{0.5cm} p{0.5cm} p{0.5cm}}
+\begin{tabular}{l rrrrrrrrrr}
+                & \multicolumn{2}{P{1.5cm}}{Not at All Similar} & \multicolumn{2}{P{1.5cm}}{Not Very Similar} & \multicolumn{2}{P{1.5cm}}{Somewhat Similar} & \multicolumn{2}{P{1.5cm}}{Quite Similar} & \multicolumn{2}{P{1.5cm}}{Very Similar} \\
+1 to 5 Years       && &   &        &    &       & 1  & (100\%) &	&        \\
+5 to 10 Years      && & 1 & (17\%) & 2  &(33\%) & 1  & (~17\%) & 2  & (33\%) \\
+10 to 15 Years     && & 1 & (8\%)  & 3  &(25\%) & 7  & (~58\%) & 1  & (8\%)  \\
+15 to 20 Years     && &   &        & 1  &(7\%)  & 11 & (~79\%) & 2  & (14\%) \\
+More than 20 Years && & 2 & (4\%)  & 10 &(21\%) & 22 & (~47\%) & 13 & (28\%) \\
 \end{tabular}
 \end{table}
 
@@ -323,13 +327,13 @@ We were interested in how the utility of the model might vary by the experience 
 \caption{Helpfulness of the Model by Experience Level}
 \label{table:helpfulness}
 \footnotesize
-\begin{tabular}{l p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm}}
+\begin{tabular}{l P{1.5cm} P{1.5cm} P{1.5cm} P{1.5cm} P{1.5cm}}
  & Definitely Not & Probably Not & Possibly & Probably Yes & Definitely Yes \\
 1 to 5 Years       & &          &           &           & 1 (100\%) \\
 5 to 10 Years      & & 1 (17\%) & 3 (50\%)  & 2 (33\%)  & \\
 10 to 15 Years	   & &          & 4 (33\%)  & 5 (42\%)  & 3 (25\%) \\
 15 to 20 Years     & &          & 4 (29\%)  & 5 (36\%)  & 5 (36\%) \\
-More than 20 Years & & 2 (4\%)  & 10 (26\%) & 23 (43\%) & 12 (26\%) \\
+More than 20 Years & & 2 (~4\%)  & 10 (26\%) & 23 (43\%) & 12 (26\%) \\
 \end{tabular}
 \end{table}
 
@@ -354,12 +358,12 @@ Again, we analysed the responses by experience level of the respondent, which is
 \caption{Value of Risk Factors by Experience Level}
 \label{table:valueofriskfactors}
 \footnotesize
-\begin{tabular}{l p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm}}
+\begin{tabular}{l P{1.5cm} P{1.5cm} P{1.5cm} P{1.5cm} P{1.5cm}}
  & Definitely Not & Probably Not & Somewhat & Probably Yes & Definitely Yes \\
 1 to 5 Years       &         &          &          &           & 1 (100\%) \\
-5 to 10 Years      &         & 1 (17\%) & 1 (17\%) & 2 (33\%)  & 2 (33\%) \\
-10 to 15 Years     & 1 (8\%) &          &          & 5 (42\%)  & 6 (50\%) \\
-15 to 20 Years     &         &          & 3 (21\%) & 6 (43\%)  & 5 (36\%) \\
+5 to 10 Years      &         & 1 (17\%) & 1 (17\%) & 2 (33\%)  & 2 (~33\%) \\
+10 to 15 Years     & 1 (8\%) &          &          & 5 (42\%)  & 6 (~50\%) \\
+15 to 20 Years     &         &          & 3 (21\%) & 6 (43\%)  & 5 (~36\%) \\
 More than 20 Years &         & 2 (4\%)  & 9 (19\%) & 17 (36\%) & 19 (40\%) \\
 \end{tabular}
 \end{table}
@@ -379,13 +383,13 @@ We have analysed the responses to the question "Would you find this model helpfu
 \caption{Usefulness of the Model by Role Type}
 \label{table:usefulnessbyrole}
 \footnotesize
-\begin{tabular}{l p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm} p{1.5cm}}
+\begin{tabular}{l P{1.5cm} P{1.5cm} P{1.5cm} P{1.5cm} P{1.5cm}}
  & Definitely Not & Probably Not & Possibly & Probably Yes & Definitely Yes \\
-Software Architect	 &  &  1 (3\%)  & 11 (35\%) & 13 (42\%) & 6 (19\%) \\
-Software Designer    &  &  1 (10\%) & 2 (20\%)  & 5 (50\%)	& 2 (20\%) \\
-Solution Architect   &  &           & 2 (25\%)  & 5 (63\%)  & 1 (12\%) \\
-Technical Architect	 &  &           &           & 2 (50\%)  & 2 (50\%) \\
-Enterprise Architect &  & 1 (4\%)   & 4 (17\%)  & 9 (39\%)  & 9 (39\%) \\
+Software Architect	 &  &  1 (~3\%) & 11 (35\%)  & 13 (42\%) & 6 (19\%) \\
+Software Designer    &  &  1 (10\%) &  ~2 (20\%) & ~5 (50\%) & 2 (20\%) \\
+Solution Architect   &  &           &  ~2 (25\%) & ~5 (63\%) & 1 (12\%) \\
+Technical Architect	 &  &           &            & ~2 (50\%) & 2 (50\%) \\
+Enterprise Architect &  & 1 (~4\%)  & ~4 (17\%)  & ~9 (39\%) & 9 (39\%) \\
 \end{tabular}
 \end{table}
 
@@ -413,10 +417,10 @@ Turning to the possible influence of geographical location, we analysed the same
    \centering Possibly & 
    \centering Probably Yes & 
    \centering Definitely Yes \tabularnewline
-Americas              & &         & 6 (23\%)  & 10 (38\%) & 10 (38\%) \\
-Asia-Pacific          & &         & 3 (50\%)  & 3 (50\%)  & \\
-Europe (inc. UK)      & & 3 (6\%) & 11 (23\%) & 22 (45\%) & 11 (23\%) \\
-Middle-East \& Africa & &         & 1 (100\%) &           & \\
+Americas              & &         & ~6 (23\%)  & 10 (38\%) & 10 (38\%) \\
+Asia-Pacific          & &         & ~3 (50\%)  & ~3 (50\%) & \\
+Europe (inc. UK)      & & 3 (6\%) & 11 (23\%)  & 22 (45\%) & 11 (23\%) \\
+Middle-East \& Africa & &         & ~1 (100\%) &           & \\
 \end{tabular}
 \end{table}
  
@@ -457,11 +461,11 @@ In this context, we felt that adding a completely new aspect to the model was a 
 
 Finally, we also received 37 general comments in the open-ended question at the end of the survey along with another 14 responses to the other open-ended questions which we judged to be general comments rather than specific answers to those earlier questions, making a total of 51 general comments.  We do not view these responses as part of the validation of the model, but some of them did provide useful commentary on the work.  Again, we used a grounded theory style coding approach to analyse the data and this resulted in 23 categories of comment.  Like the other open-ended questions, most of these categories were not judged as significant because less than four respondents mentioned them.
 
-The categories which had four or more respondents were general Positive Comments such as "nice and simple model" (14), comments on the How the Architect Should Work, such as "an architect must help implement what he/she helped to decide" (6) and comments on the Presentation of the Model, such as "this model […] does appear to be a rather linear, and distinct,  in reality it [the process] is quiet (sic) iterative and overlapping" (5).
+The categories which had four or more respondents were general Positive Comments such as "nice and simple model" (14), comments on the How the Architect Should Work, such as "an architect must help implement what he/she helped to decide" (6) and comments on the Presentation of the Model, such as "this model [\ldots] does appear to be a rather linear, and distinct,  in reality it [the process] is quiet iterative and overlapping" (sic) (5).
 
 We found all of the general comments interesting and potentially useful, but most of them did not lead us to conclude that further changes were needed to the model.  The exception was the group of comments categorised as Presentation of the Model.  These 5 comments suggested that the respondents interpreted our graphical presentation of the model as indicating a linear "upfront" process.  In fact, we had meant to communicate exactly the opposite through our diagram, and indicate that the process is iterative and continuous, happening right through the project's lifecycle.  We took this as an important indicator that we needed to change the graphical representation of the model and also describe its intended iterative and continuous nature more clearly in the supporting text.
 
-\section{Stage 4 - The Refined Model for Prioritising Architectural Effort}
+\section{Stage 4 - Refined Model for Prioritising Architectural Effort}
 
 We took the outputs of the open-ended question analysis described in section \ref{sec:openended} and used them to add missing features of the model, improve the list of risks to suggest for time prioritisation and improve the model using the advice provided in the general comment responses to the survey.
 The result of these additions is a refined model for prioritising architectural effort, with an additional feature of the model, "Team Effectiveness" and a refined list of risks for time prioritisation.  As mentioned earlier, we also decided to alter the graphical presentation of the model to try to emphasise that it is not a linear "process" but rather a set of activities to be performed throughout the project lifecycle.  The refined model is shown in Figure \ref{figure:refinedmodel}.
@@ -542,11 +546,11 @@ External validity is concerned with the generalisability of the results of the s
 
 Conclusion validity is concerned with the validity of the relationship between the data obtained in the study and the conclusions that have been drawn from it.  The threats that we identified in this area are whether we asked the right questions at each stage of the study, whether we made mistakes in analysing the data, and whether we introduced unconscious bias into the study which could invalidate our conclusions.  We mitigated the possibility of asking the wrong questions by using a semi-structured interview in the first stage and providing extensive opportunity for open-ended responses in the third stage.  We acknowledge that we could have made mistakes in our analysis and processing of the data, but we mitigated this by reviewing and cross checking our work and using a simple, repeatable process which was straightforward to follow.  The largest risk to conclusion validity is probably the chance of introducing unconscious bias, as much of the study involved interpreting open-ended responses from the interviews and the questionnaire.  We attempted to mitigate this risk through the use of the grounded theory process, which helped us to be led by the data rather than trying to fit the data into a pre-existing theory.  We also reviewed our conclusions several times and repeated parts of the analysis if we felt that there was any danger of an alternative outcome being more representative.  We also did not have any preconceived ideas about the likely outcome of this study at the beginning, so did not have an underlying theory we were trying to validate.  Overall, we do not feel that we have been likely to introduce unconscious bias in the study, but we accept that it is hard to be certain that this did not occur at all.
 
-In summary, we have designed and executed the study carefully, but do acknowledge that there are a number of threats to its validity which could threaten the generalisability of our results.  Probably the most severe threat to global applicability of the model is the lack of study participants from Asia.  However, this threat does not suggest that the model will not be useful in Europe and North America, which would still be a very valuable outcome.
+In summary, we have designed and executed the study carefully, but do acknowledge that there are a number of threats to its validity which could threaten the generalisability of our results.  Probably the most severe threat to global applicability of the model is the lack of study participants from Asia.  However, this threat does not suggest that the model will not be useful in Europe and North America, which would still be a valuable outcome.
 
 \section{Conclusion}
 
-Our experience and informal discussion with architects over many years suggested that they find it difficult to decide how to focus their effort to maximise their effectiveness and allow time to focus on architectural qualities, such as power consumption, that were not immediate priorities of key commercial stakeholders but were clearly important to the long-term success of the system they were working on.  We were interested in how experienced practitioners solved this problem and whether there were commonly used heuristics.  To investigate this, we used a four-step process of investigation.
+Our experience and informal discussion with architects over many years suggested that they find it difficult to decide how to focus their effort to maximise their effectiveness and allow time to focus on architectural qualities, such as power consumption, that were not immediate priorities of key commercial stakeholders but were clearly important to the long-term success of the system they were working on.  We were interested in how experienced practitioners solved this problem and whether they used common heuristics.  To investigate this, we used a four-step process of investigation.
 
 We started with a semi-structured interview process with eight experienced practitioners.  The conclusion of the initial study was that there are some shared heuristics which practitioners use, but that the community of practicing architects is not aware that the heuristics are common and shared.  We found that the heuristics clustered into three groups: focus the architects attention on stakeholders, use their time to address specific risks and delegate as much as possible, in order to give them as much time for architecture work as possible.
 
