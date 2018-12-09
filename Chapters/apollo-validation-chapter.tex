@@ -14,15 +14,18 @@
 
 As described in \cref{chapter:implementation} we have implemented a proof-of-concept version of the Apollo energy allocation system, to prove the usefulness of our approach for allocating the energy consumed by underlying host systems to individual application requests executing on them.  The software was tested during development to ensure correctness with respect to expected results through unit and integration tests but now needs to be validated by using it in realistic test cases.  This process is described in this chapter.
 
-In order to validate Apollo with realistic test cases, we need to define the kind of validation we are interested in achieving.  There are three main varieties of validation that we wish to achieve.
+In order to validate Apollo with realistic test cases, we need to define the kind of validation we are interested in achieving.  There are four validation goals that we wish to achieve, as listed below.
 
-Firstly, we wish to validate the \emph{calculation correctness} of Apollo's results, by running the calculator in one or more controlled scenarios where we can also gather additional runtime statistics that allow a separate independent calculation of a fair energy consumption and manually perform these calculations and use them to check the correctness of Apollo's results in the same scenarios.
+\begin{description}
+\item [V1] We need to validate the \emph{calculation correctness} of Apollo's results, by running the calculator in one or more controlled scenarios where we can also gather additional runtime statistics that allow a separate independent calculation of a fair energy consumption and manually perform these calculations and use them to check the correctness of Apollo's results in the same scenarios.
 
-We also need to validate the \emph{consistency} of Apollo's results across a range of scenarios, to ensure that energy is allocated consistently with respect to the workload in the execution scenarios and host utilisation levels that prevail during them.
+\item [V2] We also need to validate the \emph{calculation consistency} of Apollo's results across a range of scenarios, to ensure that the same result is calculated consistently for equivalent but different workloads (e.g. 5 tasks of 1 CPU second workload produce the same result as 1 task containing 5 CPU seconds of workload, when all other factors remain constant).
 
-Finally, another important area of validation is the \emph{allocation} of Apollo's results when a specific application scenario is run on a host machine with different amounts of competing workload.  As the competing workload rises, the energy allocation to the application scenario should fall, in proportion to its use of the machine.
+\item [V3] We need to validate the \emph{energy allocation algorithm} when an application scenario is run on a host machine with different amounts of competing workload.  Specifically, as competing workload on a machine rises and other factors are held constant, the energy allocation for an application scenario should fall, to reflect it's declining proportional usage of the machine.
 
-In addition, a secondary area of validation we wish to perform is to confirm that \emph{CPU is a valid proxy for overall resource usage} when performing energy allocation calculations.  For this validation, we focus on how CPU usage varies for disk IO intensive workloads.
+\item [V4] We want to validate \emph{CPU usage as a proxy for resource usage} when performing energy allocation calculations.  For this validation, we focus on how CPU usage varies for disk IO intensive workloads.
+
+\end{description}
 
 Throughout this validation testing, we aim to achieve consistency of results to within 5\% tolerance.  Long experience has taught us that a high degree of consistency is very difficult to achieve in any performance or resource utilisation testing due to the number of factors that can affect the results of a test on a modern multi-cpu, multi-core server machine.  Our experience in previous testing work is that a 5\% tolerance in most cases is the lowest degree of variation we are likely to achieve, being equivalent to equality plus the variation caused by factors outside our control.
 
@@ -71,10 +74,10 @@ When a particular test scenario needed competing workload on the host machine, t
 Once test cases were available, the output archive data files were transferred to local machines and a scripted process to \emph{run Apollo on the test scenario output} was executed. This cleared the local MySQL and InfluxDB databases, loaded the trace and resource utilisation data from the scenario into these databases, unpacked the other data files from the scenario archive, and ran Apollo on these data sets.  The output of the Apollo calculator was then inspected to analyse the characteristics of the scenario and the energy allocation that it had been allotted.
 
 
-\section{Validating the Allocation Calculation}
+\section{Validating the Allocation Calculation (V1)}
 \label{sec:validatingcalculation}
 
-Our first point of validation is to ensure that the allocation calculation performed by Apollo can be reproduced by hand, following the algorithm presented in the previous chapter, with an acceptable level of consistency between the two approaches.
+Our first validation goal, V1, is to ensure that the allocation calculation performed by Apollo can be reproduced by hand, following the algorithm presented in the previous chapter, with an acceptable level of consistency between the two approaches.
 
 We chose one of the simpler standard scenarios that we had used during the testing process, the \texttt{simple-cpu-x50} scenario, which repeatedly makes short calls to the CPU intensive service.  We decided to use a scenario based on just two services, the Gateway service and the CPU intensive service, both running on a single machine.  This was to keep the manual calculation process tractable and avoid inconsistencies and mistakes complicating the process.  The Apollo calculation algorithm is simply a process of aggregating results from individual application elements and so we were confident that if the result of calculation for a small number of application services was correct then this would result in a correct calculation process for more complex cases that were simply aggregations of the lower level calculations.
 
@@ -194,12 +197,12 @@ As can be seen from the results in the table, using a manual calculation techniq
 
 The difference in the results will be familiar to anyone who has been involved in performance testing, where repeatability of results is often very difficult to obtain (as evidenced by the subtle but constant inconsistencies in the numerical results from tools such as \texttt{sar}, \texttt{mpstat} and \texttt{pidstat}).  In our situation, as well as the normal difficulty of repeatability, we believe that most of the difference in these results is likely to be the result of Apollo using the finer grained Docker metrics, while the manual process relied on the coarser grained metrics from the standard system administration tools. 
 
-This result is well within our target result tolerance and so validates the Apollo proof-of-concept implementation's accuracy.
+This result is well within our target result tolerance and so validates the Apollo proof-of-concept implementation's accuracy and achieves validation goal V1.
 
-\section{Validating Allocation Consistency}
+\section{Validating Allocation Consistency (V2)}
 \label{section:validatingconsistency}
 
-To validate consistency of energy allocation, our strategy is to run a known control workload under fixed host utilisation conditions (no other workload being the simplest case) and to run a range of other workloads that we know contain an equivalent amount of computational work but are structured differently.  The energy allocation should be the same for each case.
+Our second validation goal, V2, is to validate consistency of energy allocation.  To achieve this, our strategy is to run a known control workload under fixed host utilisation conditions (no other workload being the simplest case) and to run a range of other workloads that we know contain an equivalent amount of computational work but are structured differently.  The energy allocation should be the same for each case.
 
 In our first test, we structured a workload into three cases, each of which involved the same amount of CPU workload but in three different scenarios.  The first scenario invoked a short service call (involving 50msec of CPU work) 1000 times, the second scenario invoked a longer service call (500msec of CPU work) 100 times and the third ran a long service call (5000msec of CPU work) 10 times.  Each scenario was called 6 times to ensure a consistent result.
 
@@ -233,10 +236,10 @@ When no additional load is executing on the host, there is no other workload apa
 
 In contrast, when there is additional workload on the machine, the energy allocated to each trace is much more even, within a maximum of 4\% variation from the mean (min 157, max 164, mean 160, with a standard deviation of 2.66 which is 1.6\% of the mean).  This is also an expected result as, during the execution of our test workload, there is other workload running on the machine which shares the allocation of the host's energy consumption.  As our workload runs longer but is not using CPU during part of the period, it is allocated correspondingly less of the host's energy as there is other active workload on the machine which is allocated more of it.  This is the allocation we would expect and it is within our target consistency and again suggests that this is a consistent energy allocation mechanism.
 
-\section{Validating Allocation Scenarios}
+\section{Validating Allocation Scenarios (V3)}
 \label{section:validatingallocation}
 
-Another aspect of energy allocation is how a fixed workload is allocated energy when the underlying host has varying amounts of other workload running on it concurrently.  We tested this aspect of allocation by running a single workload type under 5 different host utilisation conditions, namely when there was no other workload on the host, and when the host was 25\%, 50\%, 75\% and 100\% utilised before our workload started.  The results of this test are shown in the line graph in \fref{figure:validation-machineload}.
+Validation goal V3 involves validating that a fixed workload is allocated energy consistently when the underlying host has varying amounts of other workload running on it concurrently.  We tested this aspect of allocation by running a single workload type under 5 different host utilisation conditions, namely when there was no other workload on the host, and when the host was 25\%, 50\%, 75\% and 100\% utilised before our workload started.  The results of this test are shown in the line graph in \fref{figure:validation-machineload}.
 
 \begin{figure}
 \centering
@@ -259,11 +262,13 @@ The fourth point on the graph, at 75\% of other utilisation, actually goes up sl
 
 Finally at the fifth point on the graph, with 100\% other utilisation, our workload is competing with the existing workload to be scheduled for execution.  This results in our execution duration extending slightly (by 5\%), and our CPU utilisation percentage to drop slightly (to 23\%) with the result being a slight reduction in energy utilisation (to 167J).  This is the result of a relatively small increase in the host's energy utilisation (as it was already running close to 100\% utilisation at the previous sample) and there is now further workload to allocate the energy of the host across, so reducing our workload's allocation slightly.
 
-This phase of testing was an interesting process because it illustrated the usefulness of investigating energy allocation using practical testing and a quantitative data-based allocation mechanism like Apollo.  It would be quite possible to make a simplistic assumption that fair energy allocation would keep falling linearly as load increased, but our tool can be used to provide a more sophisticated analysis that reveals how a complex interaction of a number of factors (including load, scenario length and host energy characteristics) can result in a correct allocation that is more complex.  This is a useful insight for the application architect as they investigate the energy characteristics of their application.
+This phase of testing was an interesting process because it illustrated the usefulness of investigating energy allocation using practical testing and a quantitative data-based allocation mechanism like Apollo.  It would be quite possible to make a simplistic assumption that fair energy allocation would keep falling linearly as load increased, but our tool can be used to provide a more sophisticated analysis that reveals how a complex interaction of a number of factors (including load, scenario length and host energy characteristics) can result in a correct allocation that is more complex.  This is a useful insight for the application architect as they investigate the energy characteristics of their application and this process allowed us to achieve validation goal V3.
 
-\section{Validating CPU as a Resource Usage Proxy}
+\section{Validating CPU as a Resource Usage Proxy (V4)}
 
-When we explained how the energy allocation process for an application's elements was to work, in \cref{chapter:monitoring}, part of the design of the allocation approach was to make the simplifying assumption that CPU utilisation is a good proxy for overall resource consumption (\sref{sec:utilisingresourceusage}).  This allowed  the approach to rely on CPU usage to allocate energy fairly.  While this assumption is based on previous research work \cite{bashroush2018_hardwarerefresh} , we were interested to test this assumption for ourselves by comparing IO activity with CPU utilisation.
+Validation goal V4 involves ensuring that CPU usage is a good proxy for overall resource usage of a piece of application software.
+
+When we explained how the energy allocation process for an application's elements was to work, in \cref{chapter:monitoring}, part of the design of the allocation approach was to make the simplifying assumption that CPU utilisation is a good proxy for overall resource consumption (\sref{sec:utilisingresourceusage}).  This allowed  the approach to rely on CPU usage to allocate energy fairly.  While this assumption is based on previous research work \cite{bashroush2018_hardwarerefresh}, we were interested to test this assumption for ourselves by comparing IO activity with CPU utilisation.  
 
 To test the assumption that CPU utilisation acts as a good proxy for IO activity, we wanted to find whether the two values correlated well during an application workload.  To test this we ran IO intensive workloads of varying known sizes and measured the CPU utilisation of each one.  The results of this exercise are shown in the line graph in \fref{figure:validation-traceenergydatasize}.  The x-axis of this graph shows the test scenarios, the left-hand y-axis is the amount of CPU measured for each scenario, the right-hand y-axis is the amount of energy allocated to each scenario.
 
@@ -302,30 +307,30 @@ Finally, to provide some additional validation of the relationship of IO workloa
 
 The result of these manual tests is shown in the scatter plot and trend line shown in \fref{figure:validation-cpubydatasize}.  The y-axis shows the amount of CPU used by the service per request, the x-axis the amount of data written by each request and each point on the graph is a single service invocation.  As the graph shows there is a strong correlation between the amount of data written and the CPU consumed for the service call and when we calculated the correlation coefficient, it was found to be 0.9998, confirming this finding.  By using the difference in data size and CPU utilisation between samples, we were also able to calculate that 1 MB of file IO write activity appears to require approximately 2ms of CPU time on our test machine.
 
-The combination of these test results shows that we were correct in our assumption that CPU is a good proxy for other resource utilisation by a process.
+The combination of these test results shows that we were correct in our assumption that CPU is a good proxy for other resource utilisation by a process and achieves validation goal V4.
 
 \section{Conclusions}
 
-In order to validate our proof-of-concept implementation of the Apollo Energy Allocator system, we identified four aspects of validation that we needed to perform.
+In order to validate our proof-of-concept implementation of the Apollo Energy Allocator system, we identified four validation goals that we needed to achieve.
 
 \begin{itemize}
-	\item \textit{Calculation Correctness} which involves running the calculator in a realistic, but reasonably simple, scenario, under controlled conditions and replicating its calculation process as independently as possible.
-	\item \textit{Consistency} which involves running a number of test scenarios with different characteristics and comparing the energy allocation results provided by Apollo, to ensure consistency between different types of scenario.
-	\item \textit{Allocation} which requires us to run identical scenarios in situations with different amounts of controlled competing workload on the host machine(s) to allow us to validate that Apollo allocates energy fairly across these workload profiles.
-	\item \textit{CPU and Data Validation} which confirms that the previous research result that suggested that CPU usage was a valid proxy measure for overall resource utilisation, and in particular for disk IO activity.
+	\item \textit{Validation Goal V1 - Calculation Correctness} which involves running the calculator in a realistic, but reasonably simple, scenario, under controlled conditions and replicating its calculation process as independently as possible.
+	\item \textit{Validation Goal V2 - Calculation Consistency} which involves running a number of test scenarios with different characteristics and comparing the energy allocation results provided by Apollo, to ensure consistency between different types of scenario.
+	\item \textit{Validation Goal V3 - Energy Allocation Algorithm} which requires us to run identical scenarios in situations with different amounts of controlled competing workload on the host machine(s) to allow us to validate that Apollo allocates energy fairly across these workload profiles.
+	\item \textit{Validation Goal V4 - CPU Usage as a Proxy for Resource Usage} which confirms that the previous research result that suggested that CPU usage was a valid proxy measure for overall resource utilisation, and in particular for disk IO activity.
 \end{itemize}
 
 As stated earlier, our aim was to achieve consistency of results to within 5\% tolerance as practical experience has taught us that results within this tolerance level are effectively equal in performance and resource usage testing, given the number of dynamic factors outside our control.
 
 The testing presented in this chapter has specifically addressed each of these aspects of validation.
 
-We performed a manual data collection and calculation exercise in order to validate \textit{Calculation Correctness}, as described in \sref{sec:validatingcalculation}.  The result of this exercise, based on independent resource utilisation data sources, separate from the data used by Apollo, was an energy allocation value within 4\%  of the value calculated by Apollo.
+We performed a manual data collection and calculation exercise in order to validate goal \textit{V1 - Calculation Correctness}, as described in \sref{sec:validatingcalculation}.  The result of this exercise, based on independent resource utilisation data sources, separate from the data used by Apollo, was an energy allocation value within 4\%  of the value calculated by Apollo.
 
-We then investigated \textit{Consistency} by performing a series of CPU intensive workload tests, as described in \sref{section:validatingconsistency}, that ran controlled application workloads for different levels of resource consumption, in order to confirm that Apollo allocated energy correctly and consistently for all of the test cases.  These test cases proved that there was a very high degree of correlation between our different levels of application workload and the energy allocation that each received, so proving that the energy allocation was consistent across varying workload.
+We then investigated goal \textit{V2 - Calculation Consistency} by performing a series of CPU intensive workload tests, as described in \sref{section:validatingconsistency}, that ran controlled application workloads for different levels of resource consumption, in order to confirm that Apollo allocated energy correctly and consistently for all of the test cases.  These test cases proved that there was a very high degree of correlation between our different levels of application workload and the energy allocation that each received, so proving that the energy allocation was consistent across varying workload.
 
-The next step was to validate \textit{Allocation}, as described in \sref{section:validatingallocation}, by running controlled test workloads on host machines that had carefully controlled competing workload running on them already. These tests proved that when competing workload was present on a host machine, energy was allocated correctly between our test workload and the competing workload and was well within the 5\% level of consistency that we were aiming for.
+The next step was to validate goal \textit{V3 - Energy Allocation Algorithm}, as described in \sref{section:validatingallocation}, by running controlled test workloads on host machines that had carefully controlled competing workload running on them already. These tests proved that when competing workload was present on a host machine, energy was allocated correctly between our test workload and the competing workload and was well within the 5\% level of consistency that we were aiming for.
 
-Finally, we investigated whether \textit{CPU usage is a good proxy for resource usage} for an application trace.  We were aware of previous research results suggesting that this was the case, but we decided to investigate it empirically in our specific situation too.  We focused on file IO during this part of the investigation and ran a number of tests to investigate its relationship to CPU usage.  These tests confirmed that CPU usage is a very good proxy for file IO usage, with a correlation coefficient greater than 0.9 for the two values.
+Finally, we investigated whether validation goal \textit{V4 - CPU Usage as a Proxy for Resource Usage} was correct for an application trace.  We were aware of previous research results suggesting that this was the case, but we decided to investigate it empirically in our specific situation too.  We focused on file IO during this part of the investigation and ran a number of tests to investigate its relationship to CPU usage.  These tests confirmed that CPU usage is a very good proxy for file IO usage, with a correlation coefficient greater than 0.9 for the two values.
 
 In summary, we have investigated four different aspects of the correctness and utility of the Apollo Energy Allocation System's proof-of-concept implementation of our energy allocation approach for application-level energy monitoring.  All four of the testing exercises confirmed a different aspect of the correctness of the implementation.  Therefore, we conclude that the proof-of-concept implementation is sufficiently consistent and correct to validate the application energy allocation approach that we propose.
 
