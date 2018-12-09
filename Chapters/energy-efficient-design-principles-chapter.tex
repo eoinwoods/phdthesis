@@ -11,6 +11,14 @@ Individual hardware devices have experienced a similar trend and computations pe
 
 However, an aspect of energy efficiency that has been largely neglected is the efficiency of the software applications underpinning this digital revolution, and specifically how to provide the software architecture practitioners designing them with practical guidance on how to take energy properties into account as they design their systems.  In this chapter, we start to address this situation and present three simple design principles that software architects can use to address system-level energy efficiency. We also present a case study that inspired the creation of the principles and illustrates the energy savings possible with a holistic architecture-led approach.
 
+\section{Research Method}
+
+The aim of this aspect of the research was to identify design guidance that could assist architects in treating energy efficiency as an architectural concern as part of their normal architecting work.  Achieving this would allow us to answer research question RQ3.
+
+The work began with a narrative literature review to survey the state of research in this area, described earlier in section \sref{section:litreview-energyguidance}, which identified some useful ideas in the research literature, notably an architectural perspective for energy efficiency \cite{jagroep2017-energyperspective} containing some useful guidance for the architecture practitioner.  We found relatively little design guidance relevant to the software architect working on application software.
+
+We wanted to identify some useful design guidance to guide architects when considering energy efficiency and identified an industrial case study which had successfully improved energy efficiency to learn from.  We found a case study from eBay who had successfully reduced the energy consumption of key application services as part of their Digital Service Efficiency (DSE) initiative \cite{ebay2013-digitalefficiency}.  We analysed this scenario and synthesised key principles from it and described them.  These principles can now be integrated into practitioner-oriented literature such as the architectural perspective. 
+
 \section{The Challenge for Software Architects}
 
 We suspected that software architects might find it difficult to prioritize energy efficiency for three main reasons. 
