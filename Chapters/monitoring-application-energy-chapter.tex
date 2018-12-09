@@ -27,6 +27,17 @@ The specific advance achieved by this piece of work is the novel combination of 
 
 The goal of this is to provide a practical approach for software architects to estimate the energy impact of their applications and to evaluate different architectural design and deployment options in terms of their likely energy usage.
 
+\section{Research Method}
+\label{section:apollo-research-method}
+
+The research reported in Chapters \ref{chapter:monitoring}, \ref{chapter:implementation} and \ref{chapter:validation} was undertaken in order to answer research question RQ4 (\emph{How can we make architects aware of the runtime energy characteristics of their systems?}) by designing and building a proof-of-concept implementation of a technical solution to provide architects with visibility of the energy consumption of their systems.  This was an \emph{Improvement Problem to Develop a Useful Artefact} in TAR terminology \cite{wieringa2012-tar}, which involved problem investigation, the design of the solution (a piece of software) and the validation of it using realistic testing.  We excluded the further TAR steps of \emph{real-world implementation} and \emph{validation} from the scope of the work reported in this thesis due to the scale of the work required.
+
+The work began with a narrative literature review to survey the state of research in this area, reported in \sref{sec:litreviewenergy}.  This exercise discovered that some application energy measurement systems have been designed and reported in the literature, but most are not available for general use.  The other problem with the measurement systems found was that they do not allow the architect to understand the energy consumption of application execution scenarios, just of application components over a period of time.  From the architect's perspective, this limits the value of the information the tools produce and means that the tools are difficult to use in production environments with a synthetic workload.
+
+In response to these limitations, an approach to capturing representative energy usage for application execution scenarios was designed in a largely technology independent manner, as reported in \cref{chapter:monitoring}.  Our solution to the problem approaches it in a slightly different way to the existing systems and allocates estimated server energy usage to the applications running on that server, rather than trying to calculate an absolute energy consumption for each.  This sidesteps a number of problems with the existing approaches, as we will illustrate later.  We also performed the measurements and calculation from the perspective of the architect, using execution scenarios (tracing requests through the distributed application components), rather than measuring the energy usage of operating system processes. This design was then implemented using a specific set of technologies, including Linux, Docker and Java, as described in \cref{chapter:implementation}.  Once implemented, a set of practical tests was designed and executed to validate the implementation's internal consistency and external correctness with respect to its runtime environment, as described in \cref{chapter:validation}.
+
+This work enabled us to answer research question RQ4.
+
 \section{Microservice-Based Systems}
 
 The microservice architectural style \cite{richardson2018_microservices} is rapidly becoming a mainstream approach for building industrial software systems and it is systems built using this style that we are specifically targeting in this work.

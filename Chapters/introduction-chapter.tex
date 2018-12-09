@@ -73,13 +73,19 @@ This enabled us to answer research question RQ3.
 
 \subsection{Design and Implementation of Application Energy Monitoring}
 
-This section of the research aimed to design and create a proof-of-concept implementation of a technical solution to the problem of providing architects with visibility of the energy consumption of their systems.  This was an Improvement Problem to Develop a Useful Artefact in TAR terminology, which involved problem investigation, the design of the solution (a piece of software) and the validation of it using realistic testing.  We excluded the further TAR steps of \emph{real-world implementation} and \emph{validation} \cite{wieringa2012-tar} from the scope of the work reported in this thesis due to the scale of the work required.
+This section of the research aimed to answer research question RQ4 through the design and implementation of a proof-of-concept implementation of a technical solution to provide architects with visibility of the energy consumption of their systems.
 
-The work began with a narrative literature review to survey the state of research in this area, reported in \sref{sec:litreviewenergy}.  This exercise discovered that some application energy measurement systems have been designed and reported in the literature, but most are not available for general use.  The other problem with the measurement systems found was that they do not allow the architect to understand the energy consumption of application execution scenarios, just of application components over a period of time.  From the architect's perspective, this limits the value of the information the tools produce and means that the tools are difficult to use in production environments with a synthetic workload.
+The work began with a narrative literature review to survey the state of research in this area, reported in \sref{sec:litreviewenergy}.  This exercise discovered that some application energy measurement systems have been designed and reported in the literature, but most are not available for general use and the solutions proposed all had some significant limitations when their application to industrial systems was considered.
 
-In response to these limitations, an approach to capturing representative energy usage for application execution scenarios was designed in a largely technology independent manner, as reported in \cref{chapter:monitoring}.  Our solution to the problem approaches it in a slightly different way to the existing systems and allocates estimated server energy usage to the applications running on that server, rather than trying to calculate an absolute energy consumption for each.  This sidesteps a number of problems with the existing approaches, as we will illustrate later.  We also performed the measurements and calculation from the perspective of the architect, using execution scenarios (tracing requests through the distributed application components), rather than measuring the energy usage of operating system processes. This design was then implemented using a specific set of technologies, including Linux, Docker and Java, as described in \cref{chapter:implementation}.  Once implemented, a set of practical tests was designed and executed to validate the implementation's internal consistency and external correctness with respect to its runtime environment, as described in \cref{chapter:validation}.
 
-This enabled us to answer research question RQ4.
+
+This work designed a novel approach to capturing representative energy usage for application execution scenarios, that allocates estimated server energy usage to the applications running on that server, rather than trying to calculate an absolute energy consumption for each.  The approach was implemented using modern mainstream technology (such as Linux, Docker and Java) and then validated using a set of practical, realistic tests, to validate its internal consistency and external correctness with respect to its runtime environment.
+
+The design is presented in a technology independent way in \cref{chapter:monitoring}, the concrete implementation is described in \cref{chapter:implementation} and the validation process is described in \cref{chapter:validation}.
+
+A fuller description of the research methodology for the entire exercise, described in the three chapters, is presented in \sref{section:apollo-research-method} in \cref{chapter:monitoring}.
+
+The competion of this work enabled us to answer research question RQ4.
 
 \section{Contribution}
 
