@@ -9,6 +9,7 @@ The logical design of the calculator is independent of specific technologies and
 In this chapter, we explain how we went about the task of implementing our proof-of-concept calculator, the problems we set out to solve, the choices we made, some of the problems we had to solve and some of the tradeoffs that were necessary.
 
 \section{Defining the Context}
+\label{section:definingcontext}
 
 In order to allow an effective solution to be created in a reasonable amount of time, we needed to narrow the possible design space for our problem, to allow us to focus on the key decisions specific to our research and avoid being distracted by the generic decisions that all software projects need to make.
 
@@ -26,6 +27,7 @@ All of these decisions align us with mainstream industry practice and provide pr
 We discuss each of the more specific design problems we needed to solve and the decisions we made to solve each one in the following sections of this chapter.
 
 \section{Tracing Application Execution}
+\label{section:tracingexecution}
 
 Our aim is to provide the application architect with insight into the energy consumption implications of their design decisions, and so simply measuring the energy of the infrastructure hosting the application does not provide enough information for this purpose.  The architect needs to understand the energy implications of the execution of different parts of their application, and most importantly, the energy consumption of certain types of workload.  This will allow them to understand the energy-intensive parts of their application and workload and focus on improving the energy characteristics of these application elements.  Comparing the energy characteristics of different elements and workloads will also allow them to see the implications of particular design choices.
 
@@ -165,6 +167,21 @@ Apollo Energy Estimator & The Apollo module collects data and implements the ene
 \end{table}
 
 Most of the system described here is open source software (Docker, Telegraf, Zipkin, InfluxDB, MySQL and Linux) and so the only significant piece of custom software that had to be developed for this investigation was the Apollo Energy Estimator module.  The other significant software development effort was configuration and scripting to combine the different pieces of software into a single system.  We describe the software design of the Estimator module in the next section.
+
+\subsection{Technology Choices}
+
+In order to implement our solution efficiently, in a manner that would allow application in a mainstream industrial environment, we have chosen a number of pieces of reusable open source technology to base it upon.  These technologies and the reasons for choosing each are listed below:
+
+\begin{itemize}
+	\item \textbf{Docker} - the Docker container system is used to simplify the process of collecting resource statistics for our application elements. By packaging our application elements in containers we can use the statistics collection features of the Docker subsystem to collect accurate component-level statistics, while also aligning with mainstream industrial practice.  While there are other container systems with similar features to Docker, they do not have particular technical advantages and do not have the degree of acceptance and standarisation that makes Docker a defacto mainstream standard.
+	\item \textbf{InfluxDB} - the InfluxDB database is an open source timeseries database, used in our solution to collect resource usage statistics.  A timeseries database is important as we need to perform efficient temporal queries and this style of database provides strong support for this requirement.  While there are other timeseries databases availabel, we chose InfluxDB because it integrates closely with the Telegraf statistics collection server (see below).
+	\item \textbf{Linux} - as explained in \sref{section:definingcontext} we chose Linux as our operating system to align with mainstream industrial practice and because it provided the best command line (and so scriptable) resource usage collection facilities.
+	\item \textbf{MySQL} - the MySQL relational database is used by our solution to store the Zipkin execution traces.  Zipkin supports a limited number of databases for trace storage (Cassandra, ElasticSearch and MySQL) and we chose MySQL due to the relative ease of running the server and running complex queries against the data, which is necessary for our application.
+	\item \textbf{Telegraf} - our solution needs a mechanism for collecting resource usage statistics for both the application under investigation and the server machines that it is executing on.  There are a number of ways of achieving this including custom scripting, operating system tools and resource monitoring servers such as Telegraf, DD-Agent and Collectd.  After a short period of experimentation we quickly concluded that we needed to use a resource monitoring server given the complexity and effort required to collect statistics from both Docker and the operating system ourselves.  There are a number of such open source products available but after a brief survey of those available, we concluded that Telegraf (and InfluxDB) were widely used, reliable and suitable for our needs and so we decided to use it.
+	\item \textbf{Zipkin} - a key part of our approach is using execution trace records to identify the application elements involved in processing an application request. It is possible to create such a tracing system from scratch, but this would be a significant amount of work which would not contribute towards our research goals.  Therefore we needed to find a tracing system to use.  As we outlined in \sref{section:definingcontext} there are a small number of possible approaches but we quickly found that the practical solutions available to us were two open source systems (Zipkin and Jaeger).  We chose Zipkin simply because we found that it was reliable, accessible and had a friendly support community.  Almost certainly Jaeger would have been a workable solution too, but Zipkin was an effective solution for our needs.
+\end{itemize}
+
+While many of these technology decisions could be changed fairly easily, without significantly affecting our implementation, the choices we have made are pragmatic, allow efficient implementation and align with mainstream industrial practice and so support our research goals.
 
 \subsection{Data Design}
 \label{subsection:data-design}
