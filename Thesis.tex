@@ -73,24 +73,26 @@
 \abstract{
 \setstretch{1.1}  % Set to small inter-line spacing to get abstract on one page
 
-Digital-transformation initiatives have led to major efficiencies and cost savings but at the cost of consuming nearly 10 percent of the world's electricity.  Researchers have been studying IT energy consumption to increase datacentre, network, and hardware efficiency and as a result, datacentre energy efficiency has improved considerably. Individual hardware devices have experienced a similar trend and computations per joule of energy have doubled every 1.5 years over the past two decades. 
+Digital-transformation initiatives have led to major efficiencies and cost savings but at the cost of consuming nearly 10 percent of the world's electricity.  Energy consumption research has increased datacentre, network, and hardware efficiency, but a neglected aspect of energy research has been the energy consumption of the software applications that underpin digital transformation.  To date, software architects have lacked the knowledge, guidance, and tools to allow them to understand the energy properties of their systems.
 
-However, a neglected aspect of energy efficiency is the energy consumption of the software applications that provide the internet-connected services underpinning digital transformation.  So far we have largely failed to provide software architects with knowledge, guidance, and tools to allow them to understand the energy properties of their systems.
+The research reported in this thesis begins to address this situation by developing practical knowledge, techniques, and tools to allow software architects to play their part in controlling the energy consumption of our modern digital world.
 
-The research reported in this thesis starts to address this situation by developing practical knowledge, techniques, and tools to allow software architects to play their part in controlling the energy consumption of our modern digital world.
+The work commences with an investigation into formal architectural description languages, through a literature review and a case study, resulting in two research contributions, namely a comprehensive systematic survey of architecture description languages from 1991 to 2015, and a case study of practical ADL use at scale in industry.
 
-The work starts with a comprehensive survey of architectural description languages, a technology that could provide the basis of tools for addressing the energy consumption of complex systems.  During a major project to create a large industrial architectural description, existing research ADLs did not prove to be successful and instead a lightweight custom notation was created for the project.
+The second part of the research investigates how to assist architects in prioritising energy efficiency through a study of how experienced architects focus their attention for maximum effectiveness, which leads to the development of a model to guide architecture practitioners, which is validated and refined through a large survey of practising software architects.  The research contribution is a refined and validated model for architectural effort prioritisation.
 
-Our attention then turns to help architects to prioritise energy efficiency and we perform a study to investigate how experienced architects focus their attention for maximum effectiveness.  This leads to the development of a model to guide architecture practitioners which we validate and refine through a large survey of practising software architects.
+The third aspect of the research examines the energy-related guidance available to architects and having found little generally applicable advice, analyses a significant industrial case study to understand how leading-edge practitioners addressed energy efficiency, contributing a set of three energy-related architectural principles, which can be used to guide architects in improving application energy efficiency.
 
-We then examined the energy-related guidance available to architects and found little generally applicable information in the literature.  This led us to identify three energy-related architectural principles from analysis of a successful industrial case study.
+Finally, we consider the practical problem of understanding the runtime energy properties of a system, and designed a novel approach to estimate the energy consumption of execution scenarios via application execution tracing and a cost-based energy model.  We created a proof of concept implementation of the approach and validated its consistency and correctness through practical testing.  The contribution of this work was twofold, namely the design of a practical system for allocating energy to application execution scenarios, and a tested, open-source, proof-of-concept implementation of the system.
 
-Finally, we turned to the practical problem of assisting architects to understand the runtime energy properties of their systems and designed a novel approach to estimate the energy consumption of workload scenarios via application execution tracing and a cost-based energy model.  We created a proof of concept implementation of the approach and validated its consistency and correctness through practical testing.
-
-The result of this work is a collection of contributions to the fields of software architecture and energy efficiency that can help architecture practitioners to treat energy efficiency as a first class architectural concern in their work.
+Hence, the result of this work is six distinct contributions to knowledge in the area of ADLs (the survey and practical case study), architectural practice (the prioritisation model and the architectural principles for energy efficiency) and application energy efficiency (the design of the energy allocation system and the proof-of-concept implementation), which collectively can help architects to treat energy efficiency as a first class architectural concern in their work
 
 \begin{tiny}
-\textcolor{lightgray}{20180910.2}
+{\setlength{\parindent}{0cm}
+	\setlength{\parskip}{0em}
+	
+	\textcolor{lightgray}{20181218.3}
+}
 \end{tiny}
 
 \clearpage  % Abstract ended, start a new page
