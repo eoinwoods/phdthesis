@@ -8,7 +8,7 @@ The thesis was submitted in September 2018 and successfully defended at a viva v
 
 The final version of the thesis can be found in the [UEL ROAR repository](http://roar.uel.ac.uk/7951/).
 
-The thesis code is based on the "Thesis" template from [ShareLatex](https://www.sharelatex.com/templates/thesis/graduate-thesis) which in turn is apparently based on the legendary "ECS template" created by [Professor Steve Gunn](https://www.ecs.soton.ac.uk/people/srg) from the [Department of Electronics and Computer Science at the University of Southhampton](https://www.ecs.soton.ac.uk).
+The thesis code is based on the "Thesis" template from [ShareLatex](https://www.sharelatex.com/templates/thesis/graduate-thesis) which in turn is apparently based on the legendary "ECS template" created by [Professor Steve Gunn](https://www.ecs.soton.ac.uk/people/srg) from the [Department of Electronics and Computer Science at the University of Southhampton](https://www.ecs.soton.ac.uk).  A number of changes have been made to comply with UEL's PhD thesis guidelines.
 
 
 ![Creative Commons Licence](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)  This work is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/)
