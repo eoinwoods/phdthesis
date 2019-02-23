@@ -1,4 +1,4 @@
-# PhD Thesis
+# Eoin Woods' PhD Thesis
 This Github repository holds the LaTeX source code for Eoin Woods' PhD thesis completed at the [University of East London](https://www.eclab.uel.ac.uk/) between early 2012 and late 2018 under the supervision of [Dr Rabih Bashroush](https://www.uel.ac.uk/staff/b/rabih-bashroush).
 
 The title of the thesis is _Addressing Energy Efficiency in System Design: A Journey From
