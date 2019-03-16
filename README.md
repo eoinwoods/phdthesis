@@ -4,7 +4,7 @@ This Github repository holds the LaTeX source code for Eoin Woods' PhD thesis co
 The title of the thesis is _Addressing Energy Efficiency in System Design: A Journey From
  Architecture to Operation_ and the work investigates a number of aspects of how software architects can influence the energy efficiency of the systems that they design.
  
-The thesis was submitted in September 2018 and successfully defended at a viva voce examination in November 2018.  The degree was awarded on 22nd January 2029.
+The thesis was submitted in September 2018 and successfully defended at a viva voce examination in November 2018.  The degree was awarded on 22nd January 2019.
 
 The final version of the thesis can be found in the [UEL ROAR repository](http://roar.uel.ac.uk/7951/).
 
