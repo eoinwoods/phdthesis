@@ -63,6 +63,7 @@
 \widowpenalty=9999                % Almost no widows at bottom of page.
 \clubpenalty=9999                 % Almost no orphans at top of page.
 \interfootnotelinepenalty=9999    % Almost never break footnotes.
+\@beginparpenalty=10000           % Almost never break before list (EW)
 \usepackage{fancyhdr}
 %\lhead[\rm\thepage]{\fancyplain{}{\sl{\rightmark}}}
 \lhead[\fancyplain{}{\sl{\leftmark}}]{\rm\thepage}
