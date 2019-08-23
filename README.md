@@ -6,7 +6,7 @@ The title of the thesis is _Addressing Energy Efficiency in System Design: A Jou
  
 The thesis was submitted in September 2018 and successfully defended at a viva voce examination in November 2018.  The degree was awarded on 22nd January 2019.
  
-The final version of the thesis can be found in the [UEL ROAR repository](http://roar.uel.ac.uk/7951/) and in the British Library's [EThoS repository](https://ethos.bl.uk/OrderDetails.do?uin=uk.bl.ethos.768464).  Its [DOI](https://www.doi.org/) identifier is [doi:10.15123/PUB.7951](https://dx.doi.org/10.15123%2FPUB.7951).
+The final version of the thesis can be found in the [UEL ROAR repository](https://repository.uel.ac.uk/item/8459v) and in the British Library's [EThoS repository](https://ethos.bl.uk/OrderDetails.do?uin=uk.bl.ethos.768464).  Its [DOI](https://www.doi.org/) identifier is [doi:10.15123/PUB.7951](https://dx.doi.org/10.15123%2FPUB.7951).
 
 The thesis code is based on the "Thesis" template from [ShareLatex](https://www.sharelatex.com/templates/thesis/graduate-thesis) which in turn is apparently based on the legendary "ECS template" created by [Professor Steve Gunn](https://www.ecs.soton.ac.uk/people/srg) from the [Department of Electronics and Computer Science at the University of Southhampton](https://www.ecs.soton.ac.uk).  A number of changes have been made to comply with UEL's PhD thesis guidelines.
 
